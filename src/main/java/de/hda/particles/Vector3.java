@@ -5,6 +5,15 @@ public class Vector3 {
 	public Float x = 0.0f;
 	public Float y = 0.0f;
 	public Float z = 0.0f;
+	
+	public Vector3() {
+	}
+
+	public Vector3(Float x, Float y, Float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 
 	public Float getX() {
 		return x;
