@@ -1,7 +1,13 @@
-package de.hda.particles;
+package de.hda.particles.emitter;
+
+import de.hda.particles.Particle;
+import de.hda.particles.ParticleSystem;
+import de.hda.particles.Vector3;
 
 public class PlaneParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
+	private Float width = 10.0f;
+	private Float height = 10.0f;
 	private Integer rate = 3;
 	private Float maxScattering = 0.0f;
 
@@ -23,6 +29,22 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 
 	public void setMaxScattering(Float maxScattering) {
 		this.maxScattering = maxScattering;
+	}
+
+	public Float getWidth() {
+		return width;
+	}
+
+	public void setWidth(Float width) {
+		this.width = width;
+	}
+
+	public Float getHeight() {
+		return height;
+	}
+
+	public void setHeight(Float height) {
+		this.height = height;
 	}
 
 }
