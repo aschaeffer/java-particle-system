@@ -5,6 +5,7 @@ public class Particle {
 	private Vector3 position = new Vector3();
 	private Vector3 velocity = new Vector3();
 	private Integer remainingIterations;
+	private ParticleAttributes attributes = new ParticleAttributes();
 	
 	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, Integer lifetime) {
 		this.position.x = p_x;
@@ -68,8 +69,26 @@ public class Particle {
 		this.velocity = velocity;
 	}
 
+	public ParticleAttributes getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(ParticleAttributes attributes) {
+		this.attributes = attributes;
+	}
+	
+	public void setAttribute(String key, Object value) {
+		this.attributes.put(key, value);
+	}
+
 	public Boolean isAlive() {
 		return (remainingIterations <= 0);
+	}
+	
+	public String toString() {
+		String listOfAttributes = "";
+		for (String key: attributes.keySet()) listOfAttributes.concat(key + "=" + attributes.get(key).toString() + "; ");
+		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " attributes: "+listOfAttributes;
 	}
 
 }
