@@ -5,19 +5,15 @@ import de.hda.particles.domain.Vector3;
 
 public abstract class AbstractParticleEmitter implements ParticleEmitter {
 
-	protected Vector3 position = new Vector3();
-	protected Vector3 defaultVelocity = new Vector3();
-	protected Integer defaultLifetime = 5;
-	
 	protected ParticleSystem particleSystem;
+	protected Vector3 position = new Vector3();
+	protected Vector3 particleDefaultVelocity = new Vector3();
+	protected Integer particleLifetime = 5;
 	
-	public AbstractParticleEmitter(ParticleSystem particleSystem, Vector3 position, Vector3 defaultVelocity, Integer defaultLifetime) {
+	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
-		this.position = position;
-		this.defaultVelocity = defaultVelocity;
-		this.defaultLifetime = defaultLifetime;
 	}
-	
+
 	public Vector3 getPosition() {
 		return position;
 	}
@@ -26,20 +22,20 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 		this.position = position;
 	}
 
-	public Vector3 getDefaultVelocity() {
-		return defaultVelocity;
+	public Vector3 getParticleDefaultVelocity() {
+		return particleDefaultVelocity;
 	}
 
-	public void setDefaultVelocity(Vector3 defaultVelocity) {
-		this.defaultVelocity = defaultVelocity;
+	public void setParticleDefaultVelocity(Vector3 particleDefaultVelocity) {
+		this.particleDefaultVelocity = particleDefaultVelocity;
 	}
 
-	public long getDefaultLifetime() {
-		return defaultLifetime;
+	public long getParticleLifetime() {
+		return particleLifetime;
 	}
 
-	public void setDefaultLifetime(Integer defaultLifetime) {
-		this.defaultLifetime = defaultLifetime;
+	public void setParticleLifetime(Integer particleLifetime) {
+		this.particleLifetime = particleLifetime;
 	}
 
 
