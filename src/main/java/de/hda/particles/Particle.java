@@ -1,15 +1,12 @@
 package de.hda.particles;
 
-import java.util.Date;
-
 public class Particle {
 
 	private Vector3 position = new Vector3();
 	private Vector3 velocity = new Vector3();
-	private long birth;
-	private long lifetime;
+	private Integer remainingIterations;
 	
-	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, long lifetime) {
+	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, Integer lifetime) {
 		this.position.x = p_x;
 		this.position.y = p_y;
 		this.position.z = p_z;
@@ -18,8 +15,13 @@ public class Particle {
 		this.velocity.y = v_y;
 		this.velocity.z = v_z;
 		
-		this.birth = new Date().getTime();
-		this.lifetime = lifetime;
+		this.remainingIterations = lifetime;
+	}
+
+	public Particle(Vector3 position, Vector3 velocity, Integer lifetime) {
+		this.position = position;
+		this.velocity = velocity;
+		this.remainingIterations = lifetime;
 	}
 
 	public void setPosition(Float x, Float y, Float z) {
@@ -67,7 +69,7 @@ public class Particle {
 	}
 
 	public Boolean isAlive() {
-		return (lifetime < new Date().getTime());
+		return (remainingIterations <= 0);
 	}
 
 }
