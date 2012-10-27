@@ -1,7 +1,7 @@
 package de.hda.particles.emitter;
 
 import de.hda.particles.Updateable;
-import de.hda.particles.Vector3;
+import de.hda.particles.domain.Vector3;
 
 public interface ParticleEmitter extends Updateable {
 

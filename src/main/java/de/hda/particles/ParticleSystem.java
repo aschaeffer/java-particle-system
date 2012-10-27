@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import de.hda.particles.domain.Particle;
+import de.hda.particles.domain.Vector3;
 import de.hda.particles.emitter.ParticleEmitter;
 
 public class ParticleSystem implements Updateable {

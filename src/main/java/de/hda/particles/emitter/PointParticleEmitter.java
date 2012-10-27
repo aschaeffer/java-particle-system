@@ -1,8 +1,8 @@
 package de.hda.particles.emitter;
 
-import de.hda.particles.Particle;
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.Vector3;
+import de.hda.particles.domain.Particle;
+import de.hda.particles.domain.Vector3;
 
 public class PointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
