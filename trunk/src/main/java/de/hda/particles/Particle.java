@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class Particle {
 
-	Vector3 position = new Vector3();
-	Vector3 velocity = new Vector3();
-	long birth;
-	Integer lifetime;
+	private Vector3 position = new Vector3();
+	private Vector3 velocity = new Vector3();
+	private long birth;
+	private long lifetime;
 	
-	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, Integer lifetime) {
+	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, long lifetime) {
 		this.position.x = p_x;
 		this.position.y = p_y;
 		this.position.z = p_z;
