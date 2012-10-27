@@ -1,4 +1,4 @@
-package de.hda.particles;
+package de.hda.particles.domain;
 
 public class Particle {
 
