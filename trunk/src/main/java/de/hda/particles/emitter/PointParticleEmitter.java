@@ -1,7 +1,7 @@
 package de.hda.particles.emitter;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.domain.features.ParticleFeature;
+import de.hda.particles.features.ParticleFeature;
 
 /**
  * This particle emitter is  

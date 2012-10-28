@@ -8,8 +8,8 @@ import de.hda.particles.domain.Particle;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.domain.Vector3;
-import de.hda.particles.domain.features.ParticleFeature;
 import de.hda.particles.emitter.ParticleEmitter;
+import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.modifier.ParticleModifier;
 
 public class ParticleSystem implements Updateable {

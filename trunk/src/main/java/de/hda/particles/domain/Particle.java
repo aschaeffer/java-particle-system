@@ -1,6 +1,6 @@
 package de.hda.particles.domain;
 
-import de.hda.particles.domain.features.ParticleFeatures;
+import de.hda.particles.features.ParticleFeatures;
 
 public class Particle {
 

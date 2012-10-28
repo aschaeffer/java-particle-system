@@ -3,7 +3,7 @@ package de.hda.particles.modifier;
 import java.awt.Color;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.domain.features.ParticleColor;
+import de.hda.particles.features.ParticleColor;
 
 public class ParticleLinearColorTransformation extends AbstractParticleModifier implements ParticleModifier {
 
