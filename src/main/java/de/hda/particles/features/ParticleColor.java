@@ -1,4 +1,4 @@
-package de.hda.particles.domain.features;
+package de.hda.particles.features;
 
 import java.awt.Color;
 
@@ -8,10 +8,14 @@ public class ParticleColor implements ParticleFeature {
 
 	public static final String featureName = "currentColor";
 
-	public Object defaultValue = new Color(255, 255, 255);
+	public Color startColor = new Color(255, 255, 255);
+	
+	public ParticleColor(Color startColor) {
+		this.startColor = startColor;
+	}
 
 	public void init(Particle particle) {
-		particle.setFeature(featureName, defaultValue);
+		particle.setFeature(featureName, startColor);
 	}
 
 }

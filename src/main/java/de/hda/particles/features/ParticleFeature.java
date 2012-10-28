@@ -1,4 +1,4 @@
-package de.hda.particles.domain.features;
+package de.hda.particles.features;
 
 import de.hda.particles.domain.Particle;
 
