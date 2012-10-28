@@ -1,20 +1,22 @@
 package de.hda.particles.domain;
 
+import de.hda.particles.domain.features.ParticleFeatures;
+
 public class Particle {
 
 	private Vector3 position = new Vector3();
 	private Vector3 velocity = new Vector3();
 	private Integer remainingIterations;
-	private ParticleAttributes attributes = new ParticleAttributes();
+	private ParticleFeatures features = new ParticleFeatures();
 	
 	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, Integer lifetime) {
-		this.position.x = p_x;
-		this.position.y = p_y;
-		this.position.z = p_z;
+		position.x = p_x;
+		position.y = p_y;
+		position.z = p_z;
 		
-		this.velocity.x = v_x;
-		this.velocity.y = v_y;
-		this.velocity.z = v_z;
+		velocity.x = v_x;
+		velocity.y = v_y;
+		velocity.z = v_z;
 		
 		this.remainingIterations = lifetime;
 	}
@@ -69,26 +71,34 @@ public class Particle {
 		this.velocity = velocity;
 	}
 
-	public ParticleAttributes getAttributes() {
-		return attributes;
+	public ParticleFeatures getFeatures() {
+		return features;
 	}
 
-	public void setAttributes(ParticleAttributes attributes) {
-		this.attributes = attributes;
+	public void setFeatures(ParticleFeatures features) {
+		this.features = features;
 	}
 	
-	public void setAttribute(String key, Object value) {
-		this.attributes.put(key, value);
+	public Object getFeature(String key) {
+		return this.features.get(key);
+	}
+
+	public void setFeature(String key, Object value) {
+		this.features.put(key, value);
 	}
 
 	public Boolean isAlive() {
 		return (remainingIterations <= 0);
 	}
 	
+	public void decLifetime() {
+		remainingIterations--;
+	}
+	
 	public String toString() {
-		String listOfAttributes = "";
-		for (String key: attributes.keySet()) listOfAttributes.concat(key + "=" + attributes.get(key).toString() + "; ");
-		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " attributes: "+listOfAttributes;
+		String listOfFeatures = "";
+		for (String key: features.keySet()) listOfFeatures.concat(key + "=" + features.get(key).toString() + "; ");
+		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
 	}
 
 }
