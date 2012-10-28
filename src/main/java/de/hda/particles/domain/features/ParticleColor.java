@@ -6,7 +6,7 @@ import de.hda.particles.domain.Particle;
 
 public class ParticleColor implements ParticleFeature {
 
-	public static final String featureName = "COLOR";
+	public static final String featureName = "currentColor";
 
 	public Object defaultValue = new Color(255, 255, 255);
 
