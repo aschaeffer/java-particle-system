@@ -7,32 +7,16 @@ public class Particle {
 	private Vector3 position = new Vector3();
 	private Vector3 velocity = new Vector3();
 	private Integer remainingIterations;
+	private Integer pastIterations;
 	private ParticleFeatures features = new ParticleFeatures();
-	
-	public Particle(Float p_x, Float p_y, Float p_z, Float v_x, Float v_y, Float v_z, Integer lifetime) {
-		position.x = p_x;
-		position.y = p_y;
-		position.z = p_z;
-		
-		velocity.x = v_x;
-		velocity.y = v_y;
-		velocity.z = v_z;
-		
-		this.remainingIterations = lifetime;
-	}
 
 	public Particle(Vector3 position, Vector3 velocity, Integer lifetime) {
 		this.position = position;
 		this.velocity = velocity;
 		this.remainingIterations = lifetime;
+		this.pastIterations = 0;
 	}
 
-	public void setPosition(Float x, Float y, Float z) {
-		position.x = x;
-		position.y = y;
-		position.z = z;
-	}
-	
 	public Float getX() {
 		return position.x;
 	}
@@ -57,22 +41,20 @@ public class Particle {
 		position.z = z;
 	}
 
-	public Vector3 getVelocity() {
-		return velocity;
+	public Vector3 getPosition() {
+		return position.clone();
 	}
 
-	public void setVelocity(Float x, Float y, Float z) {
-		velocity.x = x;
-		velocity.y = y;
-		velocity.z = z;
+	public void setPosition(Vector3 position) {
+		this.position = position;
+	}
+
+	public Vector3 getVelocity() {
+		return velocity.clone();
 	}
 
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
-	}
-
-	public ParticleFeatures getFeatures() {
-		return features;
 	}
 
 	public void setFeatures(ParticleFeatures features) {
@@ -93,6 +75,11 @@ public class Particle {
 	
 	public void decLifetime() {
 		remainingIterations--;
+	}
+
+	public Float getLifetimePercent() {
+		if (pastIterations == 0) return 0.0f;
+		return (pastIterations.floatValue() + remainingIterations.floatValue()) / pastIterations.floatValue();
 	}
 	
 	public String toString() {
