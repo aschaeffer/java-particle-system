@@ -8,7 +8,7 @@ public class Vector3 {
 	
 	public Vector3() {
 	}
-
+	
 	public Vector3(Float x, Float y, Float z) {
 		this.x = x;
 		this.y = y;
@@ -34,4 +34,7 @@ public class Vector3 {
 		this.z = z;
 	}
 
+	public Vector3 clone() {
+		return new Vector3(x, y, z);
+	}
 }
