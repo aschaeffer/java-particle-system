@@ -2,11 +2,14 @@ package de.hda.particles.emitter;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
+import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.Vector3;
 
 public interface ParticleEmitter extends Updateable {
 
 	public void setParticleSystem(ParticleSystem particleSystem);
+	public void setConfiguration(ParticleEmitterConfiguration configuration);
+	public void updateConfiguration(String key, Object value);
 	public Vector3 getPosition();
 	public void setPosition(Vector3 position);
 	public Vector3 getParticleDefaultVelocity();

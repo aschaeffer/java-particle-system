@@ -5,17 +5,20 @@ import java.util.List;
 import java.util.ListIterator;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.domain.Vector3;
+import de.hda.particles.domain.features.ParticleFeature;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.modifier.ParticleModifier;
 
 public class ParticleSystem implements Updateable {
 
-	List<Particle> particles = new ArrayList<Particle>();
-	
-	List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
-	List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
+	public List<Particle> particles = new ArrayList<Particle>();
+	public List<ParticleFeature> particleFeatures = new ArrayList<ParticleFeature>();
+
+	public List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
+	public List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
 
 	public ParticleSystem() {
 	}
@@ -32,16 +35,21 @@ public class ParticleSystem implements Updateable {
 		ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
 		while (mIterator.hasNext()) {
 			ParticleModifier modifier = mIterator.next();
-			// remove death particles
 			ListIterator<Particle> pIterator = particles.listIterator(0);
 			while (pIterator.hasNext()) {
 				Particle particle = pIterator.next();
 				modifier.update(particle);
 			}
 		}
+
+		// decrease particle lifetimes
+		ListIterator<Particle> pIterator = particles.listIterator(0);
+		while (pIterator.hasNext()) {
+			pIterator.next().decLifetime();
+		}
 	}
 	
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3 position, Vector3 velocity, Integer lifetime) {
+	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3 position, Vector3 velocity, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		ParticleEmitter emitter;
 		try {
 			emitter = clazz.newInstance();
@@ -49,6 +57,7 @@ public class ParticleSystem implements Updateable {
 			emitter.setPosition(position);
 			emitter.setParticleDefaultVelocity(velocity);
 			emitter.setParticleLifetime(lifetime);
+			emitter.setConfiguration(configuration);
 			emitters.add(emitter);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +75,11 @@ public class ParticleSystem implements Updateable {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void addParticleFeature(ParticleFeature particleFeature) {
+		this.particleFeatures.add(particleFeature);
+	}
+
 	public void addParticle(Particle particle) {
 		particles.add(particle);
 	}
