@@ -17,11 +17,12 @@ public class PointParticleEmitter extends AbstractParticleEmitter implements Par
 	 * Creates new particles and adds them to the particle system
 	 */
 	public void update() {
+		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
 			Particle particle = new Particle(position, particleDefaultVelocity, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.particleFeatures) {
-				particleFeature.init(particle);
+				particleFeature.init(this, particle);
 			}
 			particleSystem.addParticle(particle);
 		}
@@ -33,6 +34,18 @@ public class PointParticleEmitter extends AbstractParticleEmitter implements Par
 
 	public void setMaxScattering(Float maxScattering) {
 		this.maxScattering = maxScattering;
+	}
+
+	@Override
+	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

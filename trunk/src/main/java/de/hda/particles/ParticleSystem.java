@@ -4,52 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import de.hda.particles.domain.Particle;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
-import de.hda.particles.domain.Vector3;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.timing.FpsLimiter;
 
-public class ParticleSystem implements Updateable {
+public class ParticleSystem extends FpsLimiter implements Updateable {
 
 	public List<Particle> particles = new ArrayList<Particle>();
 	public List<ParticleFeature> particleFeatures = new ArrayList<ParticleFeature>();
 
 	public List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
 	public List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
-
-	public ParticleSystem() {
-	}
-
+    
 	public void update() {
 		// call every particle emitter
 		ListIterator<ParticleEmitter> eIterator = emitters.listIterator(0);
-		while (eIterator.hasNext()) {
-			ParticleEmitter emitter = eIterator.next();
-			emitter.update();
-		}
-		
+		while (eIterator.hasNext()) eIterator.next().update();
+	
 		// modify existing particles
 		ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
 		while (mIterator.hasNext()) {
 			ParticleModifier modifier = mIterator.next();
-			ListIterator<Particle> pIterator = particles.listIterator(0);
-			while (pIterator.hasNext()) {
-				Particle particle = pIterator.next();
-				modifier.update(particle);
-			}
+			List<Particle> currentParticles = new ArrayList<Particle>(particles);
+			ListIterator<Particle> pIterator = currentParticles.listIterator(0);
+			while (pIterator.hasNext()) modifier.update(pIterator.next());
 		}
 
-		// decrease particle lifetimes
-		ListIterator<Particle> pIterator = particles.listIterator(0);
+		// decrease particle lifetimes and remove death particles
+		List<Particle> currentParticles = new ArrayList<Particle>(particles);
+		ListIterator<Particle> pIterator = currentParticles.listIterator(0);
 		while (pIterator.hasNext()) {
-			pIterator.next().decLifetime();
+			Particle particle = pIterator.next();
+			particle.decLifetime();
+			if (!particle.isAlive()) particles.remove(particle);
 		}
+		
+		calcFps();
+		limitFps();
 	}
 	
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3 position, Vector3 velocity, Integer lifetime, ParticleEmitterConfiguration configuration) {
+	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		ParticleEmitter emitter;
 		try {
 			emitter = clazz.newInstance();
@@ -86,6 +86,19 @@ public class ParticleSystem implements Updateable {
 	
 	public void removeParticle(Particle particle) {
 		particles.remove(particle);
+	}
+
+	@Override
+	public void setup() {
+	}
+
+	@Override
+	public void destroy() {
+	}
+
+	@Override
+	public Boolean isFinished() {
+		return false;
 	}
 	
 }

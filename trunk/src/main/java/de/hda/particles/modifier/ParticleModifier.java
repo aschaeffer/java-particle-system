@@ -7,6 +7,7 @@ public interface ParticleModifier extends ParticleUpdater {
 
 	public void setParticleSystem(ParticleSystem particleSystem);
 	public void setConfiguration(ParticleModifierConfiguration configuration);
+	public ParticleModifierConfiguration getConfiguration();
 	public void updateConfiguration(String key, Object value);
 
 }

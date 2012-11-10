@@ -1,21 +1,18 @@
 package de.hda.particles.features;
 
-import java.awt.Color;
-
 import de.hda.particles.domain.Particle;
+import de.hda.particles.emitter.ParticleEmitter;
 
 public class ParticleColor implements ParticleFeature {
 
-	public static final String featureName = "currentColor";
+	public static final String START_COLOR = "startColor";
+	public static final String END_COLOR = "endColor";
+	public static final String CURRENT_COLOR = "currentColor";
 
-	public Color startColor = new Color(255, 255, 255);
-	
-	public ParticleColor(Color startColor) {
-		this.startColor = startColor;
-	}
-
-	public void init(Particle particle) {
-		particle.setFeature(featureName, startColor);
+	public void init(ParticleEmitter emitter, Particle particle) {
+		particle.put(START_COLOR, emitter.getConfiguration().get(START_COLOR));
+		particle.put(END_COLOR, emitter.getConfiguration().get(END_COLOR));
+		particle.put(CURRENT_COLOR, emitter.getConfiguration().get(START_COLOR));
 	}
 
 }
