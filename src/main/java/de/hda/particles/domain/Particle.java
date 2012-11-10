@@ -1,16 +1,19 @@
 package de.hda.particles.domain;
 
-import de.hda.particles.features.ParticleFeatures;
+import java.util.HashMap;
+import org.lwjgl.util.vector.Vector3f;
 
-public class Particle {
+public class Particle extends HashMap<String, Object> {
 
-	private Vector3 position = new Vector3();
-	private Vector3 velocity = new Vector3();
+	private static final long serialVersionUID = -3288616878715170036L;
+
+	private Vector3f position = new Vector3f();
+	private Vector3f velocity = new Vector3f();
 	private Integer remainingIterations;
 	private Integer pastIterations;
-	private ParticleFeatures features = new ParticleFeatures();
+	private Float mass = 0.01f;
 
-	public Particle(Vector3 position, Vector3 velocity, Integer lifetime) {
+	public Particle(Vector3f position, Vector3f velocity, Integer lifetime) {
 		this.position = position;
 		this.velocity = velocity;
 		this.remainingIterations = lifetime;
@@ -41,50 +44,51 @@ public class Particle {
 		position.z = z;
 	}
 
-	public Vector3 getPosition() {
-		return position.clone();
+	public Vector3f getPosition() {
+		return new Vector3f(position);
 	}
 
-	public void setPosition(Vector3 position) {
+	public void setPosition(Vector3f position) {
 		this.position = position;
 	}
 
-	public Vector3 getVelocity() {
-		return velocity.clone();
+	public Vector3f getVelocity() {
+		return new Vector3f(velocity);
 	}
 
-	public void setVelocity(Vector3 velocity) {
+	public void setVelocity(Vector3f velocity) {
 		this.velocity = velocity;
 	}
-
-	public void setFeatures(ParticleFeatures features) {
-		this.features = features;
-	}
 	
-	public Object getFeature(String key) {
-		return this.features.get(key);
+	public Float getMass() {
+		return mass;
 	}
 
-	public void setFeature(String key, Object value) {
-		this.features.put(key, value);
+	public void setMass(Float mass) {
+		this.mass = mass;
 	}
 
 	public Boolean isAlive() {
-		return (remainingIterations <= 0);
+		return (remainingIterations > 0);
 	}
 	
 	public void decLifetime() {
 		remainingIterations--;
+		pastIterations++;
+	}
+	
+	public void setRemainingIterations(Integer remainingIterations) {
+		this.remainingIterations = remainingIterations;
 	}
 
 	public Float getLifetimePercent() {
 		if (pastIterations == 0) return 0.0f;
-		return (pastIterations.floatValue() + remainingIterations.floatValue()) / pastIterations.floatValue();
+		return pastIterations.floatValue() / (pastIterations.floatValue() + remainingIterations.floatValue());
 	}
 	
 	public String toString() {
 		String listOfFeatures = "";
-		for (String key: features.keySet()) listOfFeatures.concat(key + "=" + features.get(key).toString() + "; ");
+		for (String key: keySet()) listOfFeatures.concat(key + "=" + get(key).toString() + "; ");
 		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
 	}
 

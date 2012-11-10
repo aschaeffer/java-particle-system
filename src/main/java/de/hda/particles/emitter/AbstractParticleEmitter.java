@@ -1,16 +1,18 @@
 package de.hda.particles.emitter;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
-import de.hda.particles.domain.Vector3;
 
 public abstract class AbstractParticleEmitter implements ParticleEmitter {
 
 	protected ParticleSystem particleSystem;
 	protected ParticleEmitterConfiguration configuration = new ParticleEmitterConfiguration();
-	protected Vector3 position = new Vector3();
-	protected Vector3 particleDefaultVelocity = new Vector3();
+	protected Vector3f position = new Vector3f();
+	protected Vector3f particleDefaultVelocity = new Vector3f();
 	protected Integer particleLifetime = 5;
+	protected Integer pastIterations = 0;
 	
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
@@ -20,23 +22,27 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 		this.configuration = configuration;
 	}
 	
+	public ParticleEmitterConfiguration getConfiguration() {
+		return this.configuration;
+	}
+	
 	public void updateConfiguration(String key, Object value) {
 		this.configuration.put(key, value);
 	}
 
-	public Vector3 getPosition() {
+	public Vector3f getPosition() {
 		return position;
 	}
 
-	public void setPosition(Vector3 position) {
+	public void setPosition(Vector3f position) {
 		this.position = position;
 	}
 
-	public Vector3 getParticleDefaultVelocity() {
+	public Vector3f getParticleDefaultVelocity() {
 		return particleDefaultVelocity;
 	}
 
-	public void setParticleDefaultVelocity(Vector3 particleDefaultVelocity) {
+	public void setParticleDefaultVelocity(Vector3f particleDefaultVelocity) {
 		this.particleDefaultVelocity = particleDefaultVelocity;
 	}
 
@@ -47,5 +53,18 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	public void setParticleLifetime(Integer particleLifetime) {
 		this.particleLifetime = particleLifetime;
 	}
-	
+
+	public Integer getPastIterations() {
+		return pastIterations;
+	}
+
+	public void setPastIterations(Integer pastIterations) {
+		this.pastIterations = pastIterations;
+	}
+
+	@Override
+	public Boolean isFinished() {
+		return false;
+	}
+
 }

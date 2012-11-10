@@ -16,6 +16,10 @@ public abstract class AbstractParticleModifier {
 		this.configuration = configuration;
 	}
 	
+	public ParticleModifierConfiguration getConfiguration() {
+		return this.configuration;
+	}
+	
 	public void updateConfiguration(String key, Object value) {
 		this.configuration.put(key, value);
 	}
