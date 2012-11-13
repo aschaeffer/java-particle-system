@@ -3,20 +3,25 @@ package de.hda.particles.camera;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.renderer.Renderer;
+import de.hda.particles.scene.Scene;
 
 public interface Camera extends Renderer {
 
-	Vector3f getPosition();
-	Float getYaw();
-	Float getPitch();
-	Float getRoll();
-	void setPosition(Vector3f position);
-	void setYaw(float yaw);
-	void setPitch(float pitch);
-	void setRoll(float roll);
 	void reset();
+	void lookThrough();
+
+	void setScene(Scene scene);
 	String getName();
 	void setName(String name);
-	void lookThrough();
+	Vector3f getPosition();
+	void setPosition(Vector3f position);
+	Float getYaw();
+	void setYaw(Float yaw);
+	Float getPitch();
+	void setPitch(Float pitch);
+	Float getRoll();
+	void setRoll(Float roll);
+	Float getFov();
+	void setFov(Float fov);
 
 }

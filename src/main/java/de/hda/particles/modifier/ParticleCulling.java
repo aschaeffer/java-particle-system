@@ -9,6 +9,8 @@ public class ParticleCulling extends AbstractParticleModifier implements Particl
 	public final static String POINT1 = "point1";
 	public final static String POINT2 = "point2";
 
+	public ParticleCulling() {}
+
 	public void update(Particle particle) {
 		Vector3f position = particle.getPosition();
 		Vector3f bb1 = (Vector3f) this.configuration.get(POINT1);

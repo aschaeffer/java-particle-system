@@ -9,22 +9,17 @@ import java.util.ListIterator;
 import org.lwjgl.util.glu.Sphere;
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.ParticleSystem;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.modifier.ParticleModifier;
 
 public class GravityPointRenderer extends AbstractRenderer implements Renderer {
 
-	private ParticleSystem particleSystem;
-
-	public GravityPointRenderer(ParticleSystem particleSystem) {
-		this.particleSystem = particleSystem;
-	}
+	public GravityPointRenderer() {}
 
 	@Override
 	public void update() {
-		List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(particleSystem.modifiers);
+		List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().modifiers);
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();

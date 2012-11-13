@@ -16,6 +16,8 @@ public interface ParticleEmitter extends Updateable {
 	public void setPosition(Vector3f position);
 	public Vector3f getParticleDefaultVelocity();
 	public void setParticleDefaultVelocity(Vector3f defaultVelocity);
+	public Integer getParticleRenderTypeIndex();
+	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex);
 	public long getParticleLifetime();
 	public void setParticleLifetime(Integer defaultLifetime);
 	public Integer getPastIterations();

@@ -6,6 +6,8 @@ import java.util.ListIterator;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CameraManager extends AbstractCamera implements Camera {
 
@@ -13,11 +15,35 @@ public class CameraManager extends AbstractCamera implements Camera {
 	private Camera selectedCamera;
 	private Boolean blockSelection = false;
 	
+	private final Logger logger = LoggerFactory.getLogger(CameraManager.class);
+	
+	public CameraManager() {}
+
 	public void add(Camera camera) {
 		cameras.add(camera);
 		if(selectedCamera == null) selectedCamera = camera;
 	}
 	
+	public void add(Class<? extends Camera> cameraClass, String name, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
+		try {
+			Camera camera = cameraClass.newInstance();
+			camera.setScene(scene);
+			camera.setName(name);
+			camera.setPosition(position);
+			camera.setYaw(yaw);
+			camera.setPitch(pitch);
+			camera.setRoll(roll);
+			camera.setFov(fov);
+			cameras.add(camera);
+			if(selectedCamera == null) selectedCamera = camera;
+		} catch (InstantiationException e) {
+			logger.error("could not create camera: InstantiationException: " + e.getMessage(), e);
+		} catch (IllegalAccessException e) {
+			logger.error("could not create camera: IllegalAccessException: " + e.getMessage(), e);
+		}
+		
+	}
+
 	public void selectNextCamera() {
 		Integer currentIndex = cameras.lastIndexOf(selectedCamera);
 		if (currentIndex + 1 >= cameras.size()) {
@@ -29,6 +55,7 @@ public class CameraManager extends AbstractCamera implements Camera {
 
 	@Override
 	public void update() {
+		// camera selection
 		Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 			if (!blockSelection) {
@@ -41,7 +68,7 @@ public class CameraManager extends AbstractCamera implements Camera {
 		if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
 			selectedCamera.reset();
 		}
-		
+		// camera update
 		selectedCamera.update();
 	}
 
@@ -59,6 +86,22 @@ public class CameraManager extends AbstractCamera implements Camera {
 		while(iterator.hasNext()) {
 			iterator.next().destroy();
 		}
+	}
+	
+	public List<Camera> getCameras() {
+		return cameras;
+	}
+	
+	public Camera getSelectedCamera() {
+		return selectedCamera;
+	}
+	
+	public String getName() {
+		return selectedCamera.getName();
+	}
+
+	public void setName(String name) {
+		selectedCamera.setName(name);
 	}
 
 	public Vector3f getPosition() {
@@ -81,23 +124,23 @@ public class CameraManager extends AbstractCamera implements Camera {
 		return selectedCamera.getRoll();
 	}
 	
+	public Float getFov() {
+		return selectedCamera.getFov();
+	}
+	
 	public void setYaw(float yaw) {
 		selectedCamera.setYaw(yaw);
 	}
 
-	public void setPitch(float pitch) {
+	public void setPitch(Float pitch) {
 		selectedCamera.setPitch(pitch);
 	}
 
-	public void setRoll(float roll) {
+	public void setRoll(Float roll) {
 		selectedCamera.setRoll(roll);
 	}
-	public String getName() {
-		return selectedCamera.getName();
+	
+	public void setFov(Float fov) {
+		selectedCamera.setFov(fov);
 	}
-
-	public void setName(String name) {
-		selectedCamera.setName(name);
-	}
-
 }

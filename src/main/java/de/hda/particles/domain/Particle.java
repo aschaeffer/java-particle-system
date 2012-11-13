@@ -11,11 +11,13 @@ public class Particle extends HashMap<String, Object> {
 	private Vector3f velocity = new Vector3f();
 	private Integer remainingIterations;
 	private Integer pastIterations;
-	private Float mass = 0.01f;
+	private Float mass = 0.1f;
+	private Integer renderTypeIndex = 0;
 
-	public Particle(Vector3f position, Vector3f velocity, Integer lifetime) {
+	public Particle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
 		this.position = position;
 		this.velocity = velocity;
+		this.renderTypeIndex = renderTypeIndex;
 		this.remainingIterations = lifetime;
 		this.pastIterations = 0;
 	}
@@ -66,6 +68,14 @@ public class Particle extends HashMap<String, Object> {
 
 	public void setMass(Float mass) {
 		this.mass = mass;
+	}
+
+	public Integer getRenderTypeIndex() {
+		return renderTypeIndex;
+	}
+
+	public void setRenderTypeIndex(Integer renderTypeIndex) {
+		this.renderTypeIndex = renderTypeIndex;
 	}
 
 	public Boolean isAlive() {

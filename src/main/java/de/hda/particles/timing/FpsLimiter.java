@@ -4,12 +4,12 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 
-public abstract class FpsLimiter {
+public abstract class FpsLimiter implements FpsInformation {
 
     private DescriptiveStatistics fpsBuffer = new DescriptiveStatistics(10);
 	private long lastFrameTimeStamp = 0; // when the last frame was
 	public double fps = 0.0d;
-	public Integer maxFps = 45;
+	public Integer maxFps = 1000;
 	public Integer lastSleep = 5;
 
 	public void calcFps() {
@@ -38,5 +38,9 @@ public abstract class FpsLimiter {
 		this.maxFps = maxFps;
 	}
 
+	@Override
+	public Double getFps() {
+		return fps;
+	}
 
 }

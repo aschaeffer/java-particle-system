@@ -16,24 +16,41 @@ import de.hda.particles.timing.FpsLimiter;
 
 public class ParticleSystem extends FpsLimiter implements Updateable {
 
+	public final static String SYSTEM_NAME = "particle physics";
+
 	public List<Particle> particles = new ArrayList<Particle>();
 	public List<ParticleFeature> particleFeatures = new ArrayList<ParticleFeature>();
 
 	public List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
 	public List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
+	
+	public List<ParticleLifetimeListener> listeners = new ArrayList<ParticleLifetimeListener>();
+	
+	private Boolean paused = false;
+	private Boolean emittersEnabled = true;
+	private Boolean modifiersEnabled = true;
     
 	public void update() {
-		// call every particle emitter
-		ListIterator<ParticleEmitter> eIterator = emitters.listIterator(0);
-		while (eIterator.hasNext()) eIterator.next().update();
-	
-		// modify existing particles
-		ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
-		while (mIterator.hasNext()) {
-			ParticleModifier modifier = mIterator.next();
-			List<Particle> currentParticles = new ArrayList<Particle>(particles);
-			ListIterator<Particle> pIterator = currentParticles.listIterator(0);
-			while (pIterator.hasNext()) modifier.update(pIterator.next());
+		calcFps();
+		limitFps();
+
+		if (paused) return;
+
+		if (emittersEnabled) {
+			// call every particle emitter
+			ListIterator<ParticleEmitter> eIterator = emitters.listIterator(0);
+			while (eIterator.hasNext()) eIterator.next().update();
+		}
+
+		if (modifiersEnabled) {
+			// modify existing particles
+			ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
+			while (mIterator.hasNext()) {
+				ParticleModifier modifier = mIterator.next();
+				List<Particle> currentParticles = new ArrayList<Particle>(particles);
+				ListIterator<Particle> pIterator = currentParticles.listIterator(0);
+				while (pIterator.hasNext()) modifier.update(pIterator.next());
+			}
 		}
 
 		// decrease particle lifetimes and remove death particles
@@ -42,20 +59,19 @@ public class ParticleSystem extends FpsLimiter implements Updateable {
 		while (pIterator.hasNext()) {
 			Particle particle = pIterator.next();
 			particle.decLifetime();
-			if (!particle.isAlive()) particles.remove(particle);
+			if (!particle.isAlive()) removeParticle(particle);
 		}
 		
-		calcFps();
-		limitFps();
 	}
 	
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer lifetime, ParticleEmitterConfiguration configuration) {
+	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		ParticleEmitter emitter;
 		try {
 			emitter = clazz.newInstance();
 			emitter.setParticleSystem(this);
 			emitter.setPosition(position);
 			emitter.setParticleDefaultVelocity(velocity);
+			emitter.setParticleRenderTypeIndex(renderTypeIndex);
 			emitter.setParticleLifetime(lifetime);
 			emitter.setConfiguration(configuration);
 			emitters.add(emitter);
@@ -75,6 +91,10 @@ public class ParticleSystem extends FpsLimiter implements Updateable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addParticleListener(ParticleLifetimeListener particleListener) {
+		listeners.add(particleListener);
+	}
 
 	public void addParticleFeature(ParticleFeature particleFeature) {
 		this.particleFeatures.add(particleFeature);
@@ -82,10 +102,30 @@ public class ParticleSystem extends FpsLimiter implements Updateable {
 
 	public void addParticle(Particle particle) {
 		particles.add(particle);
+		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onParticleCreation(particle);
+		}
 	}
 	
 	public void removeParticle(Particle particle) {
 		particles.remove(particle);
+		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onParticleDeath(particle);
+		}
+	}
+	
+	public void pause() {
+		paused = !paused;
+	}
+	
+	public void toggleEmitters() {
+		emittersEnabled = !emittersEnabled;
+	}
+	
+	public void toggleModifiers() {
+		modifiersEnabled = !modifiersEnabled;
 	}
 
 	@Override
@@ -99,6 +139,11 @@ public class ParticleSystem extends FpsLimiter implements Updateable {
 	@Override
 	public Boolean isFinished() {
 		return false;
+	}
+
+	@Override
+	public String getSystemName() {
+		return SYSTEM_NAME;
 	}
 	
 }

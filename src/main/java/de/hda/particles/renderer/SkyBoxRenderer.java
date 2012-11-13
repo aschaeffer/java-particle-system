@@ -4,40 +4,27 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.opengl.GL13.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
-
-import de.hda.particles.camera.Camera;
 
 public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 
 	private static final String SKYBOX_NAME = "sleepyhollow";
 
 	private List<Texture> textures = new ArrayList<Texture>();
-	private Camera camera;
 
-	public SkyBoxRenderer(Camera camera) {
-		this.camera = camera;
-	}
-	
+	public SkyBoxRenderer() {}
+
 	@Override
 	public void setup() {
-		// load textures
-		try {
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_ft.jpg"), GL_LINEAR));
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_lf.jpg"), GL_LINEAR));
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_bk.jpg"), GL_LINEAR));
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_rt.jpg"), GL_LINEAR));
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_up.jpg"), GL_LINEAR));
-			textures.add(TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("images/skybox/" + SKYBOX_NAME + "_dn.jpg"), GL_LINEAR));
-		} catch (IOException e) {
-			throw new RuntimeException("skybox loading error");
-		}
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_ft.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_lf.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_bk.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_rt.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_up.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_dn.jpg"));
 	}
 
 	@Override
@@ -54,11 +41,11 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 
         glLoadIdentity();
 		// rotate the pitch around the X axis
-		glRotatef(this.camera.getPitch(), 1.0f, 0.0f, 0.0f);
+		glRotatef(scene.getCameraManager().getPitch(), 1.0f, 0.0f, 0.0f);
 		// rotate the yaw around the Y axis
-		glRotatef(this.camera.getYaw(), 0.0f, 1.0f, 0.0f);
+		glRotatef(scene.getCameraManager().getYaw(), 0.0f, 1.0f, 0.0f);
 		// rotate the yaw around the Y axis
-		glRotatef(this.camera.getRoll(), 0.0f, 0.0f, 1.0f);
+		glRotatef(scene.getCameraManager().getRoll(), 0.0f, 0.0f, 1.0f);
 		// translate to the position vector's location
 		// glTranslatef(this.camera.getPosition().x, this.camera.getPosition().y, this.camera.getPosition().z);
 

@@ -6,16 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import de.hda.particles.ParticleSystem;
 import de.hda.particles.domain.Particle;
 
-public class ParticleRenderer extends AbstractRenderer implements Renderer {
+public class SimpleParticleRenderer extends AbstractRenderer implements Renderer {
 
-	private ParticleSystem particleSystem;
-
-	public ParticleRenderer(ParticleSystem particleSystem) {
-		this.particleSystem = particleSystem;
-	}
+	public SimpleParticleRenderer() {}
 
 	@Override
 	public void update() {
@@ -26,7 +21,7 @@ public class ParticleRenderer extends AbstractRenderer implements Renderer {
 		glColor4f(0.8f, 0.8f, 0.8f, 0.3f);
 
 		glBegin(GL_POINTS);
-		List<Particle> currentParticles = new ArrayList<Particle>(particleSystem.particles);
+		List<Particle> currentParticles = new ArrayList<Particle>(scene.getParticleSystem().particles);
 		ListIterator<Particle> pIterator = currentParticles.listIterator(0);
 		while (pIterator.hasNext()) {
 			Particle particle = pIterator.next();

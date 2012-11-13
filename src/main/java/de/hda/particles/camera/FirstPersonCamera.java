@@ -3,6 +3,9 @@ package de.hda.particles.camera;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.util.vector.Vector3f;
+
+import de.hda.particles.scene.Scene;
 
 public class FirstPersonCamera extends AbstractCamera implements Camera {
 
@@ -15,14 +18,16 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 	float mouseSensitivity = 0.05f;
 	float movementSpeed = 20.0f; // move 10 units per second
 
+	public FirstPersonCamera() {}
+
 	// Constructor that takes the starting x, y, z location of the camera
-	public FirstPersonCamera(String name, float x, float y, float z) {
-		super(name, x, y, z);
+	public FirstPersonCamera(String name, Scene scene, Vector3f position) {
+		super(name, scene, position);
 	}
 
 	// Constructor that takes the starting x, y, z location of the camera
-	public FirstPersonCamera(String name, float x, float y, float z, float yaw, float pitch, float roll) {
-		super(name, x, y, z, yaw, pitch, roll);
+	public FirstPersonCamera(String name, Scene scene, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
+		super(name, scene, position, yaw, pitch, roll, fov);
 	}
 
 	// moves the camera forward relative to its current rotation (yaw)
@@ -80,13 +85,12 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 		// so if its a slow frame u move more then a fast frame
 		// so on a slow computer you move just as fast as on a fast computer
 		float movementModifier = 1.0f;
-		Boolean doRoll = false;
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 			movementModifier = movementModifier * 10.0f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			movementModifier = movementModifier * 10.0f;
-			doRoll = true;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			this.walkForward(movementModifier * movementSpeed * dt);
@@ -96,31 +100,25 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			this.strafeLeft(movementModifier * movementSpeed * dt);
+			this.roll(-1.0f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			this.strafeRight(movementModifier * movementSpeed * dt);
+			this.roll(1.0f);
 		}
 
-		float dw = Mouse.getDWheel();
+		Integer dw = Mouse.getDWheel();
 		if (dw < 0) {
-			if (doRoll) {
-				this.roll(dw / 60.0f);
-			} else {
-				this.moveDownwards(movementModifier * dw / 60.0f);
-			}
+			this.zoom(movementModifier * -dw / 60.0f);
 		} else if (dw > 0) {
-			if (doRoll) {
-				this.roll(dw / 60.0f);
-			} else {
-				this.moveUpwards(movementModifier * dw / 60.0f);
-			}
+			this.zoom(movementModifier * -dw / 60.0f);
 		}
-		
-
-		// System.out.println("camera.update() in " + dt + "ms; camera pos x=" + position.x + " y=" + position.y + " z=" + position.z + "; yaw=" + yaw + " pitch: " + pitch + "; mouse dx=" + dx + " dy=" + dy);
 
 		// look through the camera before you draw anything
 		this.lookThrough();
+
+		// reduce roll
+		this.rollReduce();
 	}
 
 	@Override

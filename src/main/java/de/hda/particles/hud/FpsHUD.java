@@ -1,22 +1,27 @@
 package de.hda.particles.hud;
 
-import de.hda.particles.ParticleSystem;
-import de.hda.particles.scene.ParticleSystemScene;
+import java.util.ListIterator;
+
+import de.hda.particles.scene.Scene;
+import de.hda.particles.timing.FpsInformation;
 
 public class FpsHUD extends AbstractHUD implements HUD {
 
-	ParticleSystemScene renderer;
-	ParticleSystem particleSystem;
+	public FpsHUD() {}
 
-	public FpsHUD(ParticleSystemScene renderer, ParticleSystem particleSystem, Integer width, Integer height) {
-		super(width, height);
-		this.renderer = renderer;
-		this.particleSystem = particleSystem;
+	public FpsHUD(Scene scene) {
+		super(scene);
 	}
 
 	@Override
 	public void update() {
-        font.drawString(10, height - 20, String.format("fps: %.0f physics: %.0f", renderer.fps, particleSystem.fps));
+		StringBuilder b = new StringBuilder();
+		ListIterator<FpsInformation> iterator = scene.getFpsInformationInstances().listIterator(0);
+		while (iterator.hasNext()) {
+			FpsInformation fpsInformationInstance = iterator.next();
+			b.append(String.format("%s: %.0f fps  ", fpsInformationInstance.getSystemName(), fpsInformationInstance.getFps()));
+		}
+        font.drawString(10, scene.getHeight() - 20, b.toString());
 	}
 
 	@Override

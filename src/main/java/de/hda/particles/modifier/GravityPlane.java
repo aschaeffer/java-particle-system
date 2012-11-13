@@ -10,6 +10,8 @@ public class GravityPlane extends AbstractParticleModifier implements ParticleMo
 	public final static String POINT_2 = "point2";
 	public final static String GRAVITY = "gravity";
 
+	public GravityPlane() {}
+
 	public void update(Particle particle) {
 		Vector3f point1 = (Vector3f) this.configuration.get(POINT_1);
 		Vector3f point2 = (Vector3f) this.configuration.get(POINT_2);

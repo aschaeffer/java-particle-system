@@ -1,10 +1,10 @@
 package de.hda.particles.hud;
 
 import de.hda.particles.renderer.Renderer;
+import de.hda.particles.scene.Scene;
 
 public interface HUD extends Renderer {
 
-	public void setWidth(Integer width);
-	public void setHeight(Integer height);
+	public void setScene(Scene scene);
 
 }

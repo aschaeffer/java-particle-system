@@ -8,20 +8,15 @@ import java.util.ListIterator;
 
 import org.lwjgl.util.glu.Sphere;
 
-import de.hda.particles.ParticleSystem;
 import de.hda.particles.emitter.ParticleEmitter;
 
 public class EmitterRenderer extends AbstractRenderer implements Renderer {
 
-	private ParticleSystem particleSystem;
-
-	public EmitterRenderer(ParticleSystem particleSystem) {
-		this.particleSystem = particleSystem;
-	}
+	public EmitterRenderer() {}
 
 	@Override
 	public void update() {
-		List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(particleSystem.emitters);
+		List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().emitters);
 		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
