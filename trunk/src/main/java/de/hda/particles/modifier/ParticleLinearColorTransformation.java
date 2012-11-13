@@ -7,9 +7,13 @@ import de.hda.particles.features.ParticleColor;
 
 public class ParticleLinearColorTransformation extends AbstractParticleModifier implements ParticleModifier {
 
+	public ParticleLinearColorTransformation() {}
+
 	public void update(Particle particle) {
 		Color s = (Color) particle.get(ParticleColor.START_COLOR);
+		if (s == null) return;
 		Color e = (Color) particle.get(ParticleColor.END_COLOR);
+		if (e == null) return;
 		Float p = particle.getLifetimePercent();
 		Integer r = (int) (s.getRed() * p + e.getRed() * (1.0f - p));
 		Integer g = (int) (s.getGreen() * p + e.getGreen() * (1.0f - p));

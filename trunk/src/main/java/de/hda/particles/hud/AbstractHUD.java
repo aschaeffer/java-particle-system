@@ -5,17 +5,24 @@ import java.awt.Font;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.hda.particles.scene.Scene;
 
 public abstract class AbstractHUD implements HUD {
 
-	protected Integer width = 800;
-	protected Integer height = 600;
+	protected Scene scene;
 
 	protected UnicodeFont font;
 
-	public AbstractHUD(Integer width, Integer height) {
-		this.width = width;
-		this.height = height;
+    private final Logger logger = LoggerFactory.getLogger(AbstractHUD.class);
+
+    public AbstractHUD() {
+    }
+
+    public AbstractHUD(Scene scene) {
+		this.scene = scene;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -28,7 +35,7 @@ public abstract class AbstractHUD implements HUD {
         try {
            font.loadGlyphs();
         } catch (SlickException e) {
-           e.printStackTrace();
+        	logger.error("could not load font glyphs", e);
         }
 	}
 
@@ -41,14 +48,8 @@ public abstract class AbstractHUD implements HUD {
 		return false;
 	}
 
-	@Override
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
-
-	@Override
-	public void setHeight(Integer height) {
-		this.height = height;
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 }

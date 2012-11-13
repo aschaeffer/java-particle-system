@@ -11,19 +11,20 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	protected ParticleEmitterConfiguration configuration = new ParticleEmitterConfiguration();
 	protected Vector3f position = new Vector3f();
 	protected Vector3f particleDefaultVelocity = new Vector3f();
+	protected Integer particleRenderTypeIndex = 0;
 	protected Integer particleLifetime = 5;
 	protected Integer pastIterations = 0;
 	
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
 	}
-
-	public void setConfiguration(ParticleEmitterConfiguration configuration) {
-		this.configuration = configuration;
-	}
 	
 	public ParticleEmitterConfiguration getConfiguration() {
 		return this.configuration;
+	}
+
+	public void setConfiguration(ParticleEmitterConfiguration configuration) {
+		this.configuration = configuration;
 	}
 	
 	public void updateConfiguration(String key, Object value) {
@@ -44,6 +45,14 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 
 	public void setParticleDefaultVelocity(Vector3f particleDefaultVelocity) {
 		this.particleDefaultVelocity = particleDefaultVelocity;
+	}
+
+	public Integer getParticleRenderTypeIndex() {
+		return particleRenderTypeIndex;
+	}
+
+	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex) {
+		this.particleRenderTypeIndex = particleRenderTypeIndex;
 	}
 
 	public long getParticleLifetime() {

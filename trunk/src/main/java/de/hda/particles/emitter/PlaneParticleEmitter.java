@@ -17,23 +17,25 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 
 	private Random random = new Random();
 
+	public PlaneParticleEmitter() {}
+
 	public void update() {
 		pastIterations++;
 		position2 = (Vector3f) this.configuration.get(POSITION2);
-		Float dx = Math.abs(position.x - position2.x);
-		Float dy = Math.abs(position.y - position2.y);
-		Float dz = Math.abs(position.z - position2.z);
+		Float dx = position.x - position2.x;
+		Float dy = position.y - position2.y;
+		Float dz = position.z - position2.z;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
 			Float rx = random.nextFloat() * dx;
 			Float ry = random.nextFloat() * dy;
 			Float rz = random.nextFloat() * dz;
-			Vector3f particleStartPosition = new Vector3f(rx, ry, rz);
+			Vector3f particleStartPosition = new Vector3f(position.x - rx, position.y - ry, position.z - rz);
 			// Vector3f particleStartVelocity = new Vector3f();
 			// Vector3f.cross(position, position2, particleStartVelocity);
 			// particleStartVelocity.scale((Float) this.configuration.get(VELOCITY));
 			
-			Particle particle = new Particle(particleStartPosition, particleDefaultVelocity, particleLifetime);
+			Particle particle = new Particle(particleStartPosition, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.particleFeatures) {
 				particleFeature.init(this, particle);
 			}

@@ -8,13 +8,44 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	public final static String POINT = "point";
 	public final static String MASS = "mass";
+	public final static String GRAVITY = "gravity";
 	public final static String MAX_DISTANCE = "maxDistance";
 	
 	public final float maxDistance = 100.0f;
 
+	public GravityPoint() {}
+
 	public void update(Particle particle) {
 		Vector3f gravityPoint = (Vector3f) this.configuration.get(POINT);
-		Float gravityMass = (Float) this.configuration.get(MASS);
+		Float mass = (Float) this.configuration.get(MASS);
+		Float gravity = (Float) this.configuration.get(GRAVITY);
+		
+		Float dx = particle.getX() - gravityPoint.x;
+		Float dy = particle.getY() - gravityPoint.y;
+		Float dz = particle.getZ() - gravityPoint.z;
+		Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		// System.out.println("distance: " + distance);
+		
+		Float force = -(particle.getMass()) * mass * gravity / (distance * distance);
+		// System.out.println("force: " + force);
+		Vector3f totalForce = new Vector3f(
+			force * (particle.getX() - gravityPoint.x) / distance,
+			force * (particle.getY() - gravityPoint.y) / distance,
+			force * (particle.getZ() - gravityPoint.z) / distance
+		);
+		// System.out.println("tforce: " + totalForce.x + ":" + totalForce.y + ":" + totalForce.z);
+		
+		Vector3f accelleration = new Vector3f(
+			totalForce.x / particle.getMass(),
+			totalForce.y / particle.getMass(),
+			totalForce.z / particle.getMass()
+		);
+		// System.out.println("acc: " + accelleration.x + ":" + accelleration.y + ":" + accelleration.z);
+		Vector3f newVelocity = new Vector3f();
+		Vector3f.add(particle.getVelocity(), accelleration, newVelocity);
+		// System.out.println("nvel: " + newVelocity.x + ":" + newVelocity.y + ":" + newVelocity.z);
+		particle.setVelocity(newVelocity);
+
 
 //		Vector3f impulse1 = new Vector3f();
 //		Vector3f.add(particle.getPosition(), particle.getVelocity(), impulse1);

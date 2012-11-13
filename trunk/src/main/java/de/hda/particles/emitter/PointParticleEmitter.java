@@ -11,7 +11,8 @@ import de.hda.particles.features.ParticleFeature;
 public class PointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
 	private Integer rate = 3;
-	private Float maxScattering = 0.0f;
+	
+	public PointParticleEmitter() {}
 
 	/**
 	 * Creates new particles and adds them to the particle system
@@ -20,7 +21,7 @@ public class PointParticleEmitter extends AbstractParticleEmitter implements Par
 		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
-			Particle particle = new Particle(position, particleDefaultVelocity, particleLifetime);
+			Particle particle = new Particle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.particleFeatures) {
 				particleFeature.init(this, particle);
 			}
@@ -28,24 +29,12 @@ public class PointParticleEmitter extends AbstractParticleEmitter implements Par
 		}
 	}
 
-	public Float getMaxScattering() {
-		return maxScattering;
-	}
-
-	public void setMaxScattering(Float maxScattering) {
-		this.maxScattering = maxScattering;
-	}
-
 	@Override
 	public void setup() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

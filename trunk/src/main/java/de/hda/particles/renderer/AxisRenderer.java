@@ -15,7 +15,9 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
 	
 	private Boolean activated = true;
 	
-	UnicodeFont font;
+	private UnicodeFont font;
+
+	public AxisRenderer() {}
 
 	@Override
 	public void update() {
