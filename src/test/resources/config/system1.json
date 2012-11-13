@@ -1,0 +1,60 @@
+{
+	"name": "System 1",
+	"features": [
+		"de.hda.particles.features.ParticleInitialVelocityScatter",
+		"de.hda.particles.features.ParticleColor",
+		"de.hda.particles.features.ParticleSize"
+	],
+	"emitters": [
+		{
+			"className": "de.hda.particles.emitter.PointParticleEmitter",
+			"renderType": "de.hda.particles.renderer.types.SimpleVelocityRenderType",
+			"lifetime": 1000,
+			"position": {
+				"x": 0.0,
+				"y": 200.0,
+				"z": 0.0
+			},
+			"velocity": {
+				"x": 0.0,
+				"y": 1.0,
+				"z": 0.0
+			},
+			"configuration": {
+				"scatter": {
+					"x": 0.5,
+					"y": 0.0,
+					"z": 0.5
+				},
+				"startColor": {
+					"r": 255,
+					"g": 0,
+					"b": 0,
+					"a": 48
+				},
+				"endColor": {
+					"r": 255,
+					"g": 255,
+					"b": 100,
+					"a": 48
+				},
+				"startSize": 5.0,
+				"endSize": 10.0
+			}
+		}
+	],
+	"modifiers": [
+		{
+			"className": "de.hda.particles.modifier.GravityPoint",
+			"configuration": {
+				"point": {
+					"x": -600.0,
+					"y": 100.0,
+					"z": 300.0
+				},
+				"mass": 1000.0,
+				"gravity": 2.0
+			}
+		}
+	]
+}
