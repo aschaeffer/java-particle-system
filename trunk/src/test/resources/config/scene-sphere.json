@@ -46,7 +46,7 @@
 		"de.hda.particles.hud.MessageHUD"
 	],
 	"renderTypes": [
-		"de.hda.particles.renderer.types.TriangleCircleRenderType"
+		"de.hda.particles.renderer.types.SimpleSphereRenderType"
 	],
 	"renderer" : [
 		"de.hda.particles.renderer.SkyBoxRenderer",

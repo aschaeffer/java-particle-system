@@ -1,0 +1,63 @@
+{
+	"name": "System 1",
+	"features": [
+		"de.hda.particles.features.ParticleInitialVelocityScatter",
+		"de.hda.particles.features.ParticleColor"
+	],
+	"emitters": [
+		{
+			"className": "de.hda.particles.emitter.PointParticleEmitter",
+			"renderType": "de.hda.particles.renderer.types.SimpleVelocityRenderType",
+			"rate": 1,
+			"lifetime": 5000,
+			"position_x": 0.0,
+			"position_y": 0.0,
+			"position_z": 200.0,
+			"velocity_x": 1.0,
+			"velocity_y": 0.0,
+			"velocity_z": 0.0,
+			"configuration": {
+				"scatter_x": 0.5,
+				"scatter_y": 1.0,
+				"scatter_z": 0.0,
+				"startColor_r": 255,
+				"startColor_g": 255,
+				"startColor_b": 0,
+				"startColor_a": 64,
+				"endColor_r": 255,
+				"endColor_g": 0,
+				"endColor_b": 0,
+				"endColor_a": 64,
+				"startSize": 5.0,
+				"endSize": 10.0
+			}
+		}
+	],
+	"modifiers": [
+		{
+			"className": "de.hda.particles.modifier.GravityPoint",
+			"configuration": {
+				"point_x": 0.0,
+				"point_y": -60.0,
+				"point_z": 0.0,
+				"mass": 2000.0,
+				"gravity": 0.5
+			}
+		}, {
+			"className": "de.hda.particles.modifier.GravityPoint",
+			"configuration": {
+				"point_x": 0.0,
+				"point_y": 60.0,
+				"point_z": 0.0,
+				"mass": 2000.0,
+				"gravity": 0.5
+			}
+		}, {
+			"className": "de.hda.particles.modifier.ParticleLinearColorTransformation",
+			"configuration": {}
+		}, {
+			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
+			"configuration": {}
+		}
+	]
+}

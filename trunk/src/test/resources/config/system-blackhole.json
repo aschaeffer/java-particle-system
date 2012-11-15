@@ -6,9 +6,9 @@
 	"emitters": [
 		{
 			"className": "de.hda.particles.emitter.SphereParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.StarRenderType",
-			"rate": 2,
-			"lifetime": 200,
+			"renderType": "de.hda.particles.renderer.types.FireBallRenderType",
+			"rate": 8,
+			"lifetime": 600,
 			"position_x": 0.0,
 			"position_y": -200.0,
 			"position_z": 0.0,
@@ -24,13 +24,13 @@
 	],
 	"modifiers": [
 		{
-			"className": "de.hda.particles.modifier.GravityPoint",
+			"className": "de.hda.particles.modifier.BlackHole",
 			"configuration": {
 				"point_x": 0.0,
-				"point_y": 0.0,
-				"point_z": 400.0,
-				"mass": 2000.0,
-				"gravity": 0.2
+				"point_y": 1200.0,
+				"point_z": 0.0,
+				"mass": 100.0,
+				"gravity": 150.0
 			}
 		}, {
 			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
