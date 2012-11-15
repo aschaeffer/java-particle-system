@@ -401,12 +401,12 @@ public class SimpleParticleSystemTest {
 //		gravityPointConfiguration5.put(GravityPoint.GRAVITY, new Float(2.0f));
 //		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration5);
 
-		ParticleModifierConfiguration blackHoleConfiguration1 = new ParticleModifierConfiguration();
-		blackHoleConfiguration1.put(BlackHole.POINT, new Vector3f(0.0f, 0.0f, 0.0f));
-		blackHoleConfiguration1.put(BlackHole.MASS, new Float(250.0f));
-		blackHoleConfiguration1.put(BlackHole.GRAVITY, new Float(1.25f));
-		// blackHoleConfiguration1.put(BlackHole.EVENT_HORIZON, new Float(80.0f));
-		particleSystem.addParticleModifier(BlackHole.class, blackHoleConfiguration1);
+//		ParticleModifierConfiguration blackHoleConfiguration1 = new ParticleModifierConfiguration();
+//		blackHoleConfiguration1.put(BlackHole.POINT, new Vector3f(0.0f, 0.0f, 0.0f));
+//		blackHoleConfiguration1.put(BlackHole.MASS, new Float(250.0f));
+//		blackHoleConfiguration1.put(BlackHole.GRAVITY, new Float(1.25f));
+//		// blackHoleConfiguration1.put(BlackHole.EVENT_HORIZON, new Float(80.0f));
+//		particleSystem.addParticleModifier(BlackHole.class, blackHoleConfiguration1);
 
 		ParticleModifierConfiguration gravityPlaneConfiguration1 = new ParticleModifierConfiguration();
 		// Liegt parallel zur x/z-Ebene

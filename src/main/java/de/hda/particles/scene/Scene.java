@@ -52,7 +52,7 @@ public interface Scene extends Updateable, FpsInformation {
  * 9. mouse zauberstab (emitter movement statt camera movement)
  * DONE 10. gravity points
  * DONE 11. gravity planes
- * 12. particle feature, das im emitter spherischen scatter erzeugt
+ * DONE 12. spherischer emitter
  * DONE 13. fov / zoom
  * DONE 14. crosshair
  * DONE 15. fullscreen
