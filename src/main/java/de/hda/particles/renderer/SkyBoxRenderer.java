@@ -1,11 +1,35 @@
 package de.hda.particles.renderer;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL11.glVertex3f;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.opengl.Texture;
 
@@ -13,22 +37,21 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 
 	private static final String SKYBOX_NAME = "sleepyhollow";
 
-	private List<Texture> textures = new ArrayList<Texture>();
+	private final List<Texture> textures = new ArrayList<Texture>();
+	
+	private Boolean ready = false;
 
 	public SkyBoxRenderer() {}
 
 	@Override
 	public void setup() {
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_ft.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_lf.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_bk.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_rt.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_up.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_dn.jpg"));
+		loadSkybox(SKYBOX_NAME);
 	}
 
 	@Override
 	public void update() {
+		
+		if (!ready) return;
 		
 		glPushMatrix();
 
@@ -151,6 +174,18 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 	private void clampToEdge() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	}
+	
+	public void loadSkybox(String name) {
+		ready = false;
+		textures.clear();
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_ft.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_lf.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_bk.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_rt.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_up.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_dn.jpg"));
+		ready = true;
 	}
 
 }

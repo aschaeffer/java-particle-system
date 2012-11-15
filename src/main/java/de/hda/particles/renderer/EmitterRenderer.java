@@ -16,7 +16,7 @@ public class EmitterRenderer extends AbstractRenderer implements Renderer {
 
 	@Override
 	public void update() {
-		List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().emitters);
+		List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().getParticleEmitters());
 		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();

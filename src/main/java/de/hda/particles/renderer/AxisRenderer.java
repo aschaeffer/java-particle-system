@@ -11,9 +11,10 @@ import org.newdawn.slick.font.effects.ColorEffect;
 
 public class AxisRenderer extends AbstractRenderer implements Renderer {
 
-	private final static float axisLength = 1000.0f;
+	private final static float axisLength = 100000.0f;
 	
 	private Boolean activated = true;
+	private Boolean blockActivatedSelection = false;
 	
 	private UnicodeFont font;
 
@@ -21,12 +22,21 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
 
 	@Override
 	public void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_X)) activated = !activated;
+		if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			if (!blockActivatedSelection) {
+				activated = !activated;
+				blockActivatedSelection = true;
+			}
+		} else {
+			blockActivatedSelection = false;
+		}
 
 		if (!activated) return;
 
 		// Axis
 		glPushMatrix();
+		
+		glDisable(GL_DEPTH_TEST);
 		
 		glPointSize(10.0f);
         glBegin(GL_POINTS);
@@ -61,6 +71,9 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
 
         // glTranslatef(100.0f, 0, 0);
         // font.drawString(0.0f, 0.0f, "X");
+
+		glEnable(GL_DEPTH_TEST);
+
         glPopMatrix();
         
         // Text Axis

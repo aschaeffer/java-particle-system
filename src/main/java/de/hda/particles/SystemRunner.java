@@ -8,7 +8,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SystemManager {
+public class SystemRunner {
 
 	private Map<String, Updateable> updateables = new HashMap<String, Updateable>();
 	private Map<String, SystemUpdater> systemUpdaters = new HashMap<String, SystemUpdater>();
@@ -16,7 +16,7 @@ public class SystemManager {
 	
 	private Boolean running = true;
 	
-	private final Logger logger = LoggerFactory.getLogger(SystemManager.class);
+	private final Logger logger = LoggerFactory.getLogger(SystemRunner.class);
 
 	/**
 	 * Adds a updateable to the list of system updaters and creates a thread.

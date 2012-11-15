@@ -6,10 +6,10 @@ import org.lwjgl.opengl.Display;
 
 public abstract class FpsLimiter implements FpsInformation {
 
-    private DescriptiveStatistics fpsBuffer = new DescriptiveStatistics(10);
+    private final DescriptiveStatistics fpsBuffer = new DescriptiveStatistics(10);
 	private long lastFrameTimeStamp = 0; // when the last frame was
 	public double fps = 0.0d;
-	public Integer maxFps = 1000;
+	public Integer maxFps = 45;
 	public Integer lastSleep = 5;
 
 	public void calcFps() {
@@ -17,7 +17,6 @@ public abstract class FpsLimiter implements FpsInformation {
 		fpsBuffer.addValue(frameTimeStamp - lastFrameTimeStamp);
 		fps = (1000.0f / fpsBuffer.getMean());
 		lastFrameTimeStamp = frameTimeStamp;
-		// logger.debug(String.format("render: %.1f fps", fps));
 	}
 	
 	public void limitFps() {
@@ -34,10 +33,16 @@ public abstract class FpsLimiter implements FpsInformation {
 //		}
 	}
 	
+	@Override
+	public Integer getMaxFps() {
+		return maxFps;
+	}
+
+	@Override
 	public void setMaxFps(Integer maxFps) {
 		this.maxFps = maxFps;
 	}
-
+	
 	@Override
 	public Double getFps() {
 		return fps;

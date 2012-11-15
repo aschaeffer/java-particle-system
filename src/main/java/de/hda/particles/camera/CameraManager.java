@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CameraManager extends AbstractCamera implements Camera {
 
-	private List<Camera> cameras = new ArrayList<Camera>();
+	private final List<Camera> cameras = new ArrayList<Camera>();
 	private Camera selectedCamera;
-	private Boolean blockSelection = false;
 	
 	private final Logger logger = LoggerFactory.getLogger(CameraManager.class);
 	
@@ -55,19 +53,6 @@ public class CameraManager extends AbstractCamera implements Camera {
 
 	@Override
 	public void update() {
-		// camera selection
-		Keyboard.next();
-		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
-			if (!blockSelection) {
-				selectNextCamera();
-				blockSelection = true;
-			}
-		} else {
-			blockSelection = false;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
-			selectedCamera.reset();
-		}
 		// camera update
 		selectedCamera.update();
 	}
@@ -96,34 +81,42 @@ public class CameraManager extends AbstractCamera implements Camera {
 		return selectedCamera;
 	}
 	
+	@Override
 	public String getName() {
 		return selectedCamera.getName();
 	}
 
+	@Override
 	public void setName(String name) {
 		selectedCamera.setName(name);
 	}
 
+	@Override
 	public Vector3f getPosition() {
 		return selectedCamera.getPosition();
 	}
 	
+	@Override
 	public void setPosition(Vector3f position) {
 		selectedCamera.setPosition(position);
 	}
 	
+	@Override
 	public Float getYaw() {
 		return selectedCamera.getYaw();
 	}
 	
+	@Override
 	public Float getPitch() {
 		return selectedCamera.getPitch();
 	}
 
+	@Override
 	public Float getRoll() {
 		return selectedCamera.getRoll();
 	}
 	
+	@Override
 	public Float getFov() {
 		return selectedCamera.getFov();
 	}
@@ -132,15 +125,28 @@ public class CameraManager extends AbstractCamera implements Camera {
 		selectedCamera.setYaw(yaw);
 	}
 
+	@Override
 	public void setPitch(Float pitch) {
 		selectedCamera.setPitch(pitch);
 	}
 
+	@Override
 	public void setRoll(Float roll) {
 		selectedCamera.setRoll(roll);
 	}
 	
+	@Override
 	public void setFov(Float fov) {
 		selectedCamera.setFov(fov);
 	}
+
+	@Override
+	public void reset() {
+		selectedCamera.setPosition(new Vector3f(DEFAULT_X, DEFAULT_Y, DEFAULT_Z));
+		selectedCamera.setYaw(DEFAULT_YAW);
+		selectedCamera.setPitch(DEFAULT_PITCH);
+		selectedCamera.setRoll(DEFAULT_ROLL);
+		selectedCamera.setFov(DEFAULT_FOV);
+	}
+
 }

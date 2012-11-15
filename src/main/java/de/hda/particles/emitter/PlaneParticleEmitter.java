@@ -13,12 +13,12 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 	public final static String VELOCITY = "startVelocity";
 	
 	private Vector3f position2;
-	private Integer rate = 3;
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
 	public PlaneParticleEmitter() {}
 
+	@Override
 	public void update() {
 		pastIterations++;
 		position2 = (Vector3f) this.configuration.get(POSITION2);
@@ -36,7 +36,7 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 			// particleStartVelocity.scale((Float) this.configuration.get(VELOCITY));
 			
 			Particle particle = new Particle(particleStartPosition, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
-			for (ParticleFeature particleFeature: particleSystem.particleFeatures) {
+			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}
 			particleSystem.addParticle(particle);

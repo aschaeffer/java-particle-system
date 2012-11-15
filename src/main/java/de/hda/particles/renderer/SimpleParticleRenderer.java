@@ -21,7 +21,7 @@ public class SimpleParticleRenderer extends AbstractRenderer implements Renderer
 		glColor4f(0.8f, 0.8f, 0.8f, 0.3f);
 
 		glBegin(GL_POINTS);
-		List<Particle> currentParticles = new ArrayList<Particle>(scene.getParticleSystem().particles);
+		List<Particle> currentParticles = new ArrayList<Particle>(scene.getParticleSystem().getParticles());
 		ListIterator<Particle> pIterator = currentParticles.listIterator(0);
 		while (pIterator.hasNext()) {
 			Particle particle = pIterator.next();
