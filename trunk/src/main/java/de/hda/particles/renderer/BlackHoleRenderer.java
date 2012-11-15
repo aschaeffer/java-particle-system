@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.ParticleModifierConfiguration;
-import de.hda.particles.modifier.GravityPoint;
+import de.hda.particles.modifier.BlackHole;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class GravityPointRenderer extends AbstractRenderer implements Renderer {
+public class BlackHoleRenderer extends AbstractRenderer implements Renderer {
 
-	public GravityPointRenderer() {}
+	public BlackHoleRenderer() {}
 
 	@Override
 	public void update() {
@@ -23,16 +24,17 @@ public class GravityPointRenderer extends AbstractRenderer implements Renderer {
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();
 			if (modifier != null) {
-				if (modifier.getClass().equals(GravityPoint.class)) {
+				if (modifier.getClass().equals(BlackHole.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
-					Float gravityPointX = new Float((Double) configuration.get(GravityPoint.POINT_X));
-					Float gravityPointY = new Float((Double) configuration.get(GravityPoint.POINT_Y));
-					Float gravityPointZ = new Float((Double) configuration.get(GravityPoint.POINT_Z));
+					Vector3f point = (Vector3f) configuration.get(BlackHole.POINT);
+					Float gravity = (Float) configuration.get(BlackHole.GRAVITY);
+					Float mass = (Float) configuration.get(BlackHole.MASS);
+					Float eventHorizon = gravity * mass / BlackHole.EVENT_HORIZON_FACTOR;
 					glPushMatrix();
-					glColor4f(2.0f, 0.3f, 9.3f, 0.8f);
-			        glTranslatef(gravityPointX, gravityPointY, gravityPointZ);
+					glColor4f(1.0f, 0.6f, 0.0f, 0.3f);
+			        glTranslatef(point.x, point.y, point.z);
 			        Sphere s = new Sphere();
-			        s.draw(10.0f, 16, 16);
+			        s.draw(eventHorizon, 16, 16);
 					glPopMatrix();
 				}
 			}

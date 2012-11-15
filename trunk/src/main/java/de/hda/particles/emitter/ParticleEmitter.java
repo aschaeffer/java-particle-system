@@ -8,6 +8,8 @@ import de.hda.particles.domain.ParticleEmitterConfiguration;
 
 public interface ParticleEmitter extends Updateable {
 
+	public Integer getRate();
+	public void setRate(Integer rate);
 	public void setParticleSystem(ParticleSystem particleSystem);
 	public void setConfiguration(ParticleEmitterConfiguration configuration);
 	public ParticleEmitterConfiguration getConfiguration();

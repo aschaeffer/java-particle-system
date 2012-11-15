@@ -48,8 +48,21 @@ public abstract class AbstractHUD implements HUD {
 		return false;
 	}
 
+	@Override
 	public void setScene(Scene scene) {
 		this.scene = scene;
+	}
+
+	@Override
+	public void executeCommand(HUDCommand command) {
+	}
+	
+	@Override
+	public void render1() {
+	}
+
+	@Override
+	public void render2() {
 	}
 
 }

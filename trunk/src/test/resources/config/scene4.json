@@ -46,11 +46,11 @@
 		"de.hda.particles.hud.MessageHUD"
 	],
 	"renderTypes": [
-		"de.hda.particles.renderer.types.SimpleVelocityRenderType",
 		"de.hda.particles.renderer.types.SimpleRainRenderType",
 		"de.hda.particles.renderer.types.SimpleTriangleRenderType",
 		"de.hda.particles.renderer.types.ColoredPointRenderType",
 		"de.hda.particles.renderer.types.ComplexPointRenderType",
+		"de.hda.particles.renderer.types.SimpleVelocityRenderType",
 		"de.hda.particles.renderer.types.SimplePointRenderType",
 		"de.hda.particles.renderer.types.SimpleTriangleStripRenderType",
 		"de.hda.particles.renderer.types.SimpleTriangleFanRenderType",

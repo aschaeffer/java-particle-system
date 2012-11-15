@@ -6,18 +6,18 @@
 	],
 	"emitters": [
 		{
-			"className": "de.hda.particles.emitter.RingParticleEmitter",
+			"className": "de.hda.particles.emitter.PointParticleEmitter",
 			"renderType": "de.hda.particles.renderer.types.SimpleVelocityRenderType",
 			"rate": 20,
 			"lifetime": 5000,
 			"position_x": 0.0,
 			"position_y": 0.0,
 			"position_z": 200.0,
-			"velocity_x": 3.5,
-			"velocity_y": 0.4,
+			"velocity_x": 1.0,
+			"velocity_y": 0.1,
 			"velocity_z": 0.0,
 			"configuration": {
-				"scatter_x": 0.5,
+				"scatter_x": 0.2,
 				"scatter_y": 0.0,
 				"scatter_z": 0.0,
 				"startColor_r": 255,
@@ -32,18 +32,18 @@
 				"endSize": 10.0
 			}
 		}, {
-			"className": "de.hda.particles.emitter.SphereParticleEmitter",
+			"className": "de.hda.particles.emitter.PointParticleEmitter",
 			"renderType": "de.hda.particles.renderer.types.SimpleVelocityRenderType",
 			"rate": 20,
 			"lifetime": 5000,
 			"position_x": 0.0,
-			"position_y": 0.0,
+			"position_y": -0.1,
 			"position_z": -200.0,
-			"velocity_x": -3.5,
-			"velocity_y": -0.4,
+			"velocity_x": -1.0,
+			"velocity_y": 0.0,
 			"velocity_z": 0.0,
 			"configuration": {
-				"scatter_x": -0.5,
+				"scatter_x": 0.2,
 				"scatter_y": 0.0,
 				"scatter_z": 0.0,
 				"startColor_r": 0,
@@ -61,6 +61,24 @@
 	],
 	"modifiers": [
 		{
+			"className": "de.hda.particles.modifier.GravityPoint",
+			"configuration": {
+				"point_x": 0.0,
+				"point_y": -40.0,
+				"point_z": 0.0,
+				"mass": 2000.0,
+				"gravity": 0.2
+			}
+		}, {
+			"className": "de.hda.particles.modifier.GravityPoint",
+			"configuration": {
+				"point_x": 0.0,
+				"point_y": 40.0,
+				"point_z": 0.0,
+				"mass": 2000.0,
+				"gravity": 0.2
+			}
+		}, {
 			"className": "de.hda.particles.modifier.ParticleLinearColorTransformation",
 			"configuration": {}
 		}, {

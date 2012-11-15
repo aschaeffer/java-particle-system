@@ -8,13 +8,14 @@ import de.hda.particles.features.ParticleFeature;
  * @author aschaeffer
  *
  */
-public class PointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
+public class WaveParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
-	public PointParticleEmitter() {}
+	public WaveParticleEmitter() {}
 
 	/**
 	 * Creates new particles and adds them to the particle system
 	 */
+	@Override
 	public void update() {
 		pastIterations++;
 		// create new particles (emit)

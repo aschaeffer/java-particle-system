@@ -9,12 +9,21 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 
 	protected ParticleSystem particleSystem;
 	protected ParticleEmitterConfiguration configuration = new ParticleEmitterConfiguration();
+	protected Integer rate = 3;
 	protected Vector3f position = new Vector3f();
 	protected Vector3f particleDefaultVelocity = new Vector3f();
 	protected Integer particleRenderTypeIndex = 0;
 	protected Integer particleLifetime = 5;
 	protected Integer pastIterations = 0;
 	
+	public Integer getRate() {
+		return rate;
+	}
+	
+	public void setRate(Integer rate) {
+		this.rate = rate;
+	}
+
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
 	}

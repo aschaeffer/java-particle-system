@@ -1,6 +1,25 @@
 package de.hda.particles.hud;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +33,10 @@ import de.hda.particles.scene.Scene;
 
 public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManager is a HUD by himself
 
-	private List<HUD> huds = new ArrayList<HUD>();
+	private final List<HUD> huds = new ArrayList<HUD>();
 	
 	private Boolean activated = true;
+	private Boolean blockActivatedSelection = false;
 	
 	private final Logger logger = LoggerFactory.getLogger(HUDManager.class);
 	
@@ -45,11 +65,25 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 	public List<HUD> getHUDs() {
 		return huds;
 	}
+	
+	public void addCommand(HUDCommand command) {
+		ListIterator<HUD> iterator = huds.listIterator(0);
+		while(iterator.hasNext()) {
+			iterator.next().executeCommand(command);
+		}
+	}
 
 	@Override
 	public void update() {
 		Keyboard.next();
-		if (Keyboard.isKeyDown(Keyboard.KEY_H)) activated = !activated;
+		if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+			if (!blockActivatedSelection) {
+				activated = !activated;
+				blockActivatedSelection = true;
+			}
+		} else {
+			blockActivatedSelection = false;
+		}
 
 		if (!activated) return;
 
@@ -61,6 +95,11 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 	    glTranslatef(0.375f, 0.375f, 0.0f);
 
 	    glPushMatrix();
+		// render all managed huds
+	    ListIterator<HUD> iterator = huds.listIterator(0);
+		while(iterator.hasNext()) {
+			iterator.next().render1();
+		}
 	    glColor4f(1.0f, 1.0f, 0.8f, 0.95f);
 	    glBegin(GL_QUADS);
 	    glVertex2f(0, 0);
@@ -74,10 +113,15 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		glVertex2f(scene.getWidth(), scene.getHeight());
 		glVertex2f(0, scene.getHeight());
 	    glEnd();
+		// render all managed huds
+	    iterator = huds.listIterator(0);
+		while(iterator.hasNext()) {
+			iterator.next().render2();
+		}
 	    glPopMatrix();
 
 		// render all managed huds
-	    ListIterator<HUD> iterator = huds.listIterator(0);
+	    iterator = huds.listIterator(0);
 		while(iterator.hasNext()) {
 			iterator.next().update();
 		}

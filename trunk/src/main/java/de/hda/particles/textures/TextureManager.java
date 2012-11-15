@@ -12,7 +12,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class TextureManager {
 
-	private List<Texture> cache = new ArrayList<Texture>();
+	private final List<Texture> cache = new ArrayList<Texture>();
 
 	public TextureManager() {}
 
