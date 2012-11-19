@@ -2,7 +2,6 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,13 +12,14 @@ import de.hda.particles.modifier.BlackHole;
 import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class BlackHoleRenderer extends AbstractRenderer implements Renderer {
+public class BlackHoleRenderer extends AbstractSelectable<BlackHole> implements Renderer {
 
 	public BlackHoleRenderer() {}
 
 	@Override
 	public void update() {
-		List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().getParticleModifiers());
+		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
+		// List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().getParticleModifiers());
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();

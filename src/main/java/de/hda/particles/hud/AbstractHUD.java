@@ -8,11 +8,10 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.scene.Scene;
 
-public abstract class AbstractHUD implements HUD {
-
-	protected Scene scene;
+public abstract class AbstractHUD extends AbstractRenderer implements HUD {
 
 	protected UnicodeFont font;
 
@@ -37,20 +36,6 @@ public abstract class AbstractHUD implements HUD {
         } catch (SlickException e) {
         	logger.error("could not load font glyphs", e);
         }
-	}
-
-	@Override
-	public void destroy() {
-	}
-
-	@Override
-	public Boolean isFinished() {
-		return false;
-	}
-
-	@Override
-	public void setScene(Scene scene) {
-		this.scene = scene;
 	}
 
 	@Override

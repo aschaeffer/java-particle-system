@@ -20,17 +20,26 @@ public class ParticleColor implements ParticleFeature {
 	public static final String END_COLOR = "endColor";
 	public static final String CURRENT_COLOR = "currentColor";
 
+	@Override
 	public void init(ParticleEmitter emitter, Particle particle) {
 		Integer startColorR = (Integer) emitter.getConfiguration().get(START_COLOR_R);
+		if (startColorR == null) startColorR = 255;
 		Integer startColorG = (Integer) emitter.getConfiguration().get(START_COLOR_G);
+		if (startColorG == null) startColorG = 255;
 		Integer startColorB = (Integer) emitter.getConfiguration().get(START_COLOR_B);
+		if (startColorB == null) startColorB = 255;
 		Integer startColorA = (Integer) emitter.getConfiguration().get(START_COLOR_A);
+		if (startColorA == null) startColorA = 48;
 		Color startColor = new Color(startColorR, startColorG, startColorB, startColorA);
 
 		Integer endColorR = (Integer) emitter.getConfiguration().get(END_COLOR_R);
+		if (endColorR == null) endColorR = 255;
 		Integer endColorG = (Integer) emitter.getConfiguration().get(END_COLOR_G);
+		if (endColorG == null) endColorG = 255;
 		Integer endColorB = (Integer) emitter.getConfiguration().get(END_COLOR_B);
+		if (endColorB == null) endColorB = 255;
 		Integer endColorA = (Integer) emitter.getConfiguration().get(END_COLOR_A);
+		if (endColorA == null) endColorA = 48;
 		Color endColor = new Color(endColorR, endColorG, endColorB, endColorA);
 
 		particle.put(START_COLOR, startColor);

@@ -15,23 +15,26 @@ import de.hda.particles.emitter.ParticleEmitter;
  */
 public class ParticleInitialVelocityScatter implements ParticleFeature {
 
-	// public static final String SCATTER = "scatter";
 	public static final String SCATTER_X = "scatter_x";
 	public static final String SCATTER_Y = "scatter_y";
 	public static final String SCATTER_Z = "scatter_z";
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
+	@Override
 	public void init(ParticleEmitter emitter, Particle particle) {
 		if (!emitter.getConfiguration().containsKey(SCATTER_X) || !emitter.getConfiguration().containsKey(SCATTER_Y) || !emitter.getConfiguration().containsKey(SCATTER_Z)) return;
-		Float scatterX = new Float((Double) emitter.getConfiguration().get(SCATTER_X));
-		Float scatterY = new Float((Double) emitter.getConfiguration().get(SCATTER_Y));
-		Float scatterZ = new Float((Double) emitter.getConfiguration().get(SCATTER_Z));
+		Double scatterX = (Double) emitter.getConfiguration().get(SCATTER_X);
+		Double scatterY = (Double) emitter.getConfiguration().get(SCATTER_Y);
+		Double scatterZ = (Double) emitter.getConfiguration().get(SCATTER_Z);
 		Vector3f velocity = particle.getVelocity();
-		velocity.setX(velocity.getX() + scatterX * random.nextFloat() - scatterX / 2.0f);
-		velocity.setY(velocity.getY() + scatterY * random.nextFloat() - scatterY / 2.0f);
-		velocity.setZ(velocity.getZ() + scatterZ * random.nextFloat() - scatterZ / 2.0f);
-		particle.setVelocity(velocity);
+		Float vdx = new Double(new Double(velocity.getX()) + scatterX * random.nextDouble() - scatterX / 2.0).floatValue();
+		Float vdy = new Double(new Double(velocity.getY()) + scatterY * random.nextDouble() - scatterY / 2.0).floatValue();
+		Float vdz = new Double(new Double(velocity.getZ()) + scatterZ * random.nextDouble() - scatterZ / 2.0).floatValue();
+		velocity.setX(vdx);
+		velocity.setY(vdy);
+		velocity.setZ(vdz);
+		particle.setVelocity(velocity); // apply velocity changes
 	}
 
 }

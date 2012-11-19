@@ -1,0 +1,83 @@
+package de.hda.particles.hud;
+
+import de.hda.particles.domain.GravityPointConfigurationFactory;
+import de.hda.particles.emitter.*;
+import de.hda.particles.features.*;
+import de.hda.particles.modifier.*;
+import de.hda.particles.renderer.*;
+import de.hda.particles.renderer.types.*;
+import de.hda.particles.scene.Scene;
+
+public class DefaultHUDMenu {
+
+	public HUDMenuEntry createMenu(Scene s) {
+		HUDMenuEntry root = HUDMenuEntry.createRoot("Particle System Main Menu");
+		HUDMenuEntry scene = HUDMenuEntry.create(root, "Scene");
+		HUDMenuEntry renderer = HUDMenuEntry.create(scene, "Renderer");
+		HUDMenuEntry addRenderer = HUDMenuEntry.create(renderer, "Add Renderer");
+		HUDMenuEntry.create(addRenderer, "Bounding Box Particle Culling Renderer", HUDCommandTypes.ADD_RENDERER, BoundingBoxParticleCullingRenderer.class);
+		HUDMenuEntry.create(addRenderer, "Emitter Renderer", HUDCommandTypes.ADD_RENDERER, EmitterRenderer.class);
+		HUDMenuEntry.create(addRenderer, "Gravity Point Renderer", HUDCommandTypes.ADD_RENDERER, GravityPointRenderer.class);
+		HUDMenuEntry.create(addRenderer, "Black Hole Renderer", HUDCommandTypes.ADD_RENDERER, BlackHoleRenderer.class);
+		HUDMenuEntry.create(addRenderer, "Axis Renderer", HUDCommandTypes.ADD_RENDERER, AxisRenderer.class);
+		HUDMenuEntry.create(addRenderer, "Camera Renderer", HUDCommandTypes.ADD_RENDERER, CameraRenderer.class);
+		HUDMenuEntry.create(addRenderer, "SkyBox Renderer", HUDCommandTypes.ADD_RENDERER, SkyBoxRenderer.class);
+		HUDMenuEntry camera = HUDMenuEntry.create(scene, "Cameras");
+		HUDMenuEntry.create(camera, "Add Camera", HUDCommandTypes.ADD_CAMERA);
+		HUDMenuEntry.create(camera, "Remove Camera", HUDCommandTypes.REMOVE_CAMERA);
+		HUDMenuEntry renderTypes = HUDMenuEntry.create(scene, "Render Types");
+		HUDMenuEntry addRenderTypes = HUDMenuEntry.create(renderTypes, "Add Simple Render Type");
+		HUDMenuEntry addPrimitiveRenderTypes = HUDMenuEntry.create(renderTypes, "Add Primtive Render Type");
+		HUDMenuEntry addPointSpriteRenderTypes = HUDMenuEntry.create(renderTypes, "Add Point Sprite Render Type");
+		HUDMenuEntry.create(addRenderTypes, "Colored Point", HUDCommandTypes.ADD_RENDER_TYPE, ColoredPointRenderType.class);
+		HUDMenuEntry.create(addRenderTypes, "Complex Point (Color & Size)", HUDCommandTypes.ADD_RENDER_TYPE, ComplexPointRenderType.class);
+		HUDMenuEntry.create(addRenderTypes, "Rain", HUDCommandTypes.ADD_RENDER_TYPE, SimpleRainRenderType.class);
+		HUDMenuEntry.create(addRenderTypes, "Velocity Indicator", HUDCommandTypes.ADD_RENDER_TYPE, SimpleVelocityRenderType.class);
+		HUDMenuEntry.create(addRenderTypes, "Null", HUDCommandTypes.ADD_RENDER_TYPE, SimplePointRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Point", HUDCommandTypes.ADD_RENDER_TYPE, SimplePointRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Triangle", HUDCommandTypes.ADD_RENDER_TYPE, SimpleTriangleRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Triangle Strip", HUDCommandTypes.ADD_RENDER_TYPE, SimpleTriangleStripRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Triangle Fan", HUDCommandTypes.ADD_RENDER_TYPE, SimpleTriangleFanRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Quads", HUDCommandTypes.ADD_RENDER_TYPE, SimpleQuadsRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Sphere", HUDCommandTypes.ADD_RENDER_TYPE, SimpleSphereRenderType.class);
+		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Line Strip", HUDCommandTypes.ADD_RENDER_TYPE, SimpleLineStripRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Ball", HUDCommandTypes.ADD_RENDER_TYPE, PointSpriteRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Electric", HUDCommandTypes.ADD_RENDER_TYPE, ElectricRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Explosion", HUDCommandTypes.ADD_RENDER_TYPE, ExplosionRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "FireBall", HUDCommandTypes.ADD_RENDER_TYPE, FireBallRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Flames", HUDCommandTypes.ADD_RENDER_TYPE, FlamesRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Star", HUDCommandTypes.ADD_RENDER_TYPE, StarRenderType.class);
+		HUDMenuEntry.create(scene, "Load Scene", HUDCommandTypes.LOAD_SCENE);
+		HUDMenuEntry.create(scene, "Save Scene", HUDCommandTypes.SAVE_SCENE);
+		HUDMenuEntry physics = HUDMenuEntry.create(root, "Physics");
+		HUDMenuEntry emitters = HUDMenuEntry.create(physics, "Emitters");
+		HUDMenuEntry addEmitters = HUDMenuEntry.create(emitters, "Add Emitter");
+		HUDMenuEntry.create(addEmitters, "Point", HUDCommandTypes.ADD_EMITTER, PointParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Plane", HUDCommandTypes.ADD_EMITTER, PlaneParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Ring", HUDCommandTypes.ADD_EMITTER, RingParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Sphere", HUDCommandTypes.ADD_EMITTER, SphereParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, WaveParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Point (Pulse Rate)", HUDCommandTypes.ADD_EMITTER, PulseRatePointParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Point (Fast)", HUDCommandTypes.ADD_EMITTER, FastPointParticleEmitter.class);
+		HUDMenuEntry.create(emitters, "Remove all Particles", HUDCommandTypes.ADD_CAMERA);
+		HUDMenuEntry modifiers = HUDMenuEntry.create(physics, "Modifiers");
+		HUDMenuEntry addModifiers = HUDMenuEntry.create(modifiers, "Add Modifier");
+		HUDMenuEntry.create(addModifiers, "Gravity Point", HUDCommandTypes.ADD_MODIFIER, GravityPoint.class, GravityPointConfigurationFactory.class);
+		HUDMenuEntry.create(addModifiers, "Gravity Plane", HUDCommandTypes.ADD_MODIFIER, GravityPlane.class);
+		HUDMenuEntry.create(addModifiers, "Black Hole", HUDCommandTypes.ADD_MODIFIER, BlackHole.class);
+		HUDMenuEntry.create(addModifiers, "Bounding Box Particle Culling", HUDCommandTypes.ADD_MODIFIER, BoundingBoxParticleCulling.class);
+		HUDMenuEntry.create(addModifiers, "Linear Color Transformation", HUDCommandTypes.ADD_MODIFIER, ParticleLinearColorTransformation.class);
+		HUDMenuEntry.create(addModifiers, "Linear Size Transformation", HUDCommandTypes.ADD_MODIFIER, ParticleLinearSizeTransformation.class);
+		HUDMenuEntry.create(addModifiers, "Velocity Transformation", HUDCommandTypes.ADD_MODIFIER, ParticleVelocityTransformation.class);
+		HUDMenuEntry.create(addModifiers, "Rainbow Color Transformation", HUDCommandTypes.ADD_MODIFIER, RainbowColorTransformation.class);
+		HUDMenuEntry.create(addModifiers, "Random Color Transformation", HUDCommandTypes.ADD_MODIFIER, RandomColorTransformation.class);
+		HUDMenuEntry.create(addModifiers, "Particle Debugger", HUDCommandTypes.ADD_MODIFIER, ParticleDebugger.class);
+		HUDMenuEntry features = HUDMenuEntry.create(physics, "Particle Features");
+		HUDMenuEntry addFeatures = HUDMenuEntry.create(features, "Add Feature");
+		HUDMenuEntry.create(addFeatures, "Color", HUDCommandTypes.ADD_FEATURE, ParticleColor.class);
+		HUDMenuEntry.create(addFeatures, "Size", HUDCommandTypes.ADD_FEATURE, ParticleSize.class);
+		HUDMenuEntry.create(addFeatures, "Initial Velocity Scatter", HUDCommandTypes.ADD_FEATURE, ParticleInitialVelocityScatter.class);
+		HUDMenuEntry.create(root, "Exit", HUDCommandTypes.EXIT);
+		return root;
+	}
+}

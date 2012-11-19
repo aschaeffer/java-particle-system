@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.camera.Camera;
+import de.hda.particles.camera.FirstPersonCamera;
 import de.hda.particles.scene.Scene;
 
 public class CameraHUD extends AbstractHUD implements HUD {
@@ -49,4 +50,16 @@ public class CameraHUD extends AbstractHUD implements HUD {
 	public void setup() {
 		super.setup();
 	}
+
+	@Override
+	public void executeCommand(HUDCommand command) {
+		if (command.getType() == HUDCommandTypes.ADD_CAMERA) {
+			Camera camera = new FirstPersonCamera("new cam", scene, scene.getCameraManager().getPosition());
+			scene.getCameraManager().add(camera);
+		}
+		if (command.getType() == HUDCommandTypes.REMOVE_CAMERA) {
+			scene.getCameraManager().removeSelectedCamera();
+		}
+	}
+
 }

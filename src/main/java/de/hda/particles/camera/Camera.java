@@ -10,6 +10,7 @@ public interface Camera extends Renderer {
 	void reset();
 	void lookThrough();
 
+	@Override
 	void setScene(Scene scene);
 	String getName();
 	void setName(String name);
@@ -23,5 +24,6 @@ public interface Camera extends Renderer {
 	void setRoll(Float roll);
 	Float getFov();
 	void setFov(Float fov);
+	Vector3f getDirectionVector();
 
 }

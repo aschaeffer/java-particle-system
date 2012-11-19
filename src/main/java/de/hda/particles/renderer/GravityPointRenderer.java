@@ -2,36 +2,45 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.hud.HUDCommand;
+import de.hda.particles.hud.HUDCommandTypes;
 import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class GravityPointRenderer extends AbstractRenderer implements Renderer {
+public class GravityPointRenderer extends AbstractMovable<GravityPoint> implements Renderer {
 
 	public GravityPointRenderer() {}
 
 	@Override
 	public void update() {
-		List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().getParticleModifiers());
+		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();
 			if (modifier != null) {
 				if (modifier.getClass().equals(GravityPoint.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
-					Float gravityPointX = new Float((Double) configuration.get(GravityPoint.POINT_X));
-					Float gravityPointY = new Float((Double) configuration.get(GravityPoint.POINT_Y));
-					Float gravityPointZ = new Float((Double) configuration.get(GravityPoint.POINT_Z));
+					if (!configuration.containsKey(GravityPoint.POINT_X) || !configuration.containsKey(GravityPoint.POINT_Y) || !configuration.containsKey(GravityPoint.POINT_Z)) continue;
+					Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
+					Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
+					Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
 					glPushMatrix();
-					glColor4f(2.0f, 0.3f, 9.3f, 0.8f);
-			        glTranslatef(gravityPointX, gravityPointY, gravityPointZ);
+			        glTranslated(gravityPointX, gravityPointY, gravityPointZ);
 			        Sphere s = new Sphere();
+			        if (modifier.equals(selected)) {
+						glColor4f(1.0f, 0.3f, 0.3f, 0.8f);
+				        s.setDrawStyle(GLU.GLU_LINE);
+			        } else {
+						glColor4f(0.8f, 0.3f, 0.8f, 0.8f);
+			        }
 			        s.draw(10.0f, 16, 16);
 					glPopMatrix();
 				}
@@ -39,4 +48,90 @@ public class GravityPointRenderer extends AbstractRenderer implements Renderer {
 		}
 	}
 
+	@Override
+	public void select(Vector3f position) {
+		GravityPoint oldSelected = selected;
+		selected = null;
+		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
+		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
+		while (pIterator.hasNext()) {
+			ParticleModifier modifier = pIterator.next();
+			if (modifier != null) {
+				if (modifier.getClass().equals(GravityPoint.class)) {
+					GravityPoint gravityPoint = (GravityPoint) modifier;
+					ParticleModifierConfiguration configuration = gravityPoint.getConfiguration();
+					Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
+					Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
+					Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+					Float dx = position.getX() - gravityPointX.floatValue();
+					Float dy = position.getY() - gravityPointY.floatValue();
+					Float dz = position.getZ() - gravityPointZ.floatValue();
+					Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+					if (distance < 20.0f) {
+						selected = gravityPoint;
+						scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT, gravityPoint));
+						break;
+					}
+				}
+			}
+		}
+		if (oldSelected != null && selected == null && oldSelected.equals(selected)) {
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
+		}
+	}
+
+	
+	@Override
+	public void remove(Vector3f position) {
+		scene.getParticleSystem().beginModification();
+		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
+		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
+		while (pIterator.hasNext()) {
+			ParticleModifier modifier = pIterator.next();
+			if (modifier.getClass().equals(GravityPoint.class)) {
+				GravityPoint gravityPoint = (GravityPoint) modifier;
+				ParticleModifierConfiguration configuration = gravityPoint.getConfiguration();
+				Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
+				Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
+				Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+				Float dx = position.getX() - gravityPointX.floatValue();
+				Float dy = position.getY() - gravityPointY.floatValue();
+				Float dz = position.getZ() - gravityPointZ.floatValue();
+				Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+				if (distance < 20.0f) {
+					scene.getParticleSystem().removeParticleModifier(gravityPoint);
+					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Removed Gravity Point"));
+					break;
+				}
+			}
+		}
+		scene.getParticleSystem().endModification();
+	}
+
+	
+	@Override
+	public void move(Vector3f pointerPosition) {
+		if (selected == null) return;
+		
+		Vector3f cameraPosition = scene.getCameraManager().getPosition();
+		
+		Vector3f cameraToTarget = new Vector3f();
+		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
+		ParticleModifierConfiguration configuration = selected.getConfiguration();
+		Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
+		Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
+		Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+		Float dx = cameraPosition.getX() - gravityPointX.floatValue();
+		Float dy = cameraPosition.getY() - gravityPointY.floatValue();
+		Float dz = cameraPosition.getZ() - gravityPointZ.floatValue();
+		Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		Float distanceCameraToTarget = cameraToTarget.length();
+		Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
+		cameraToTarget.scale(scaleFactor);
+		Vector3f newPosition = new Vector3f();
+		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
+		configuration.put(GravityPoint.POINT_X, new Double(newPosition.x));
+		configuration.put(GravityPoint.POINT_Y, new Double(newPosition.y));
+		configuration.put(GravityPoint.POINT_Z, new Double(newPosition.z));
+	}
 }

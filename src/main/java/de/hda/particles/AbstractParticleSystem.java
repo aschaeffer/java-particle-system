@@ -25,8 +25,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected List<ParticleLifetimeListener> listeners = new ArrayList<ParticleLifetimeListener>();
 
 	protected Boolean paused = false;
+	protected Boolean idle = true;
 	protected Boolean emittersEnabled = true;
 	protected Boolean modifiersEnabled = true;
+	protected Boolean clearParticlesAtNextIteration = false;
 
 	@Override
 	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
@@ -99,13 +101,29 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	
 	@Override
 	public void removeAllParticles() {
-		ListIterator<Particle> iterator = particles.listIterator(0);
-		while (iterator.hasNext()) {
-			Particle particle = iterator.next();
-			particle.setRemainingIterations(0);
-		}
+		clearParticlesAtNextIteration = true;
 	}
-	
+
+	@Override
+	public void removeParticleEmitter(ParticleEmitter particleEmitter) {
+		emitters.remove(particleEmitter);
+	}
+
+	@Override
+	public void removeParticleModifier(ParticleModifier particleModifier) {
+		modifiers.remove(particleModifier);
+	}
+
+	@Override
+	public void removeParticleFeature(ParticleFeature particleFeature) {
+		particleFeatures.remove(particleFeature);
+	}
+
+	@Override
+	public void removeParticleListener(ParticleLifetimeListener particleListener) {
+		listeners.remove(particleListener);
+	}
+
 	@Override
 	public void pause() {
 		paused = !paused;
@@ -135,13 +153,17 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	public Boolean areModifiersStopped() {
 		return !modifiersEnabled;
 	}
-
+	
 	@Override
 	public void update() {
 		calcFps();
 		limitFps();
-
-		if (paused) return;
+		
+		if (paused) {
+			idle = true;
+			return;
+		}
+		idle = false;
 
 		if (emittersEnabled) {
 			// call every particle emitter
@@ -154,19 +176,22 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
 			while (mIterator.hasNext()) {
 				ParticleModifier modifier = mIterator.next();
-				List<Particle> currentParticles = new ArrayList<Particle>(particles);
-				ListIterator<Particle> pIterator = currentParticles.listIterator(0);
-				while (pIterator.hasNext()) modifier.update(pIterator.next());
+				for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
+					modifier.update(particles.get(pIndex));
+				}
 			}
 		}
 
+		if (clearParticlesAtNextIteration) clearParticles(); // Thread Safety
+
 		// decrease particle lifetimes and remove death particles
-		List<Particle> currentParticles = new ArrayList<Particle>(particles);
-		ListIterator<Particle> pIterator = currentParticles.listIterator(0);
-		while (pIterator.hasNext()) {
-			Particle particle = pIterator.next();
+		for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
+			Particle particle = particles.get(pIndex);
 			particle.decLifetime();
-			if (!particle.isAlive()) removeParticle(particle);
+			if (particle.getRemainingIterations() <= 0) {
+				removeParticle(particle);
+				// pIndex--;
+			}
 		}
 		
 	}
@@ -203,5 +228,31 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	public List<ParticleModifier> getParticleModifiers() {
 		return modifiers;
 	}
+	
+	protected void clearParticles() {
+		for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
+			Particle particle = particles.get(pIndex);
+			particle.setRemainingIterations(0);
+		}
+		clearParticlesAtNextIteration = false;
+	}
 
+	@Override
+	public void beginModification() {
+		if (!isPaused()) {
+			paused = true;
+			while (!idle) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {}
+			}
+		}
+	}
+	
+	@Override
+	public void endModification() {
+		paused = false;
+	}
+	
+	
 }

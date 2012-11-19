@@ -2,38 +2,103 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.emitter.ParticleEmitter;
+import de.hda.particles.hud.HUDCommand;
+import de.hda.particles.hud.HUDCommandTypes;
 
-public class EmitterRenderer extends AbstractRenderer implements Renderer {
+public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements Renderer {
 
 	public EmitterRenderer() {}
 
 	@Override
 	public void update() {
-		List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().getParticleEmitters());
+		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
+		// List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().getParticleEmitters());
 		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
 			if (emitter != null) {
 				glPushMatrix();
-				glColor4f(0.3f, 0.3f, 1.0f, 0.8f);
-//				if (emitter.getConfiguration().containsKey("ROTATE_ORIGIN")) {
-//					glColor4f(0.3f, 1.0f, 1.0f, 0.8f);
-//					Float angle = (Float) emitter.getConfiguration().get("ROTATE_ORIGIN");
-//					glRotatef((float) angle*emitter.getPastIterations(), 0.0f, 1.0f, 0.0f);
-//				}
 		        glTranslatef(emitter.getPosition().x, emitter.getPosition().y, emitter.getPosition().z);
 		        Sphere s = new Sphere();
+				if (emitter.equals(selected)) {
+					glColor4f(1.0f, 0.3f, 0.3f, 0.8f);
+			        s.setDrawStyle(GLU.GLU_LINE);
+				} else {
+					glColor4f(0.3f, 0.3f, 1.0f, 0.8f);
+				}
 		        s.draw(10.0f, 16, 16);
 				glPopMatrix();
 			}
 		}
+	}
+
+	@Override
+	public void select(Vector3f position) {
+		selected = null;
+		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
+		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
+		while (pIterator.hasNext()) {
+			ParticleEmitter emitter = pIterator.next();
+			Float dx = position.getX() - emitter.getPosition().x;
+			Float dy = position.getY() - emitter.getPosition().y;
+			Float dz = position.getZ() - emitter.getPosition().z;
+			Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+			System.out.println("emitter: x:" + emitter.getPosition().x + " y:" + emitter.getPosition().y + " z:" + emitter.getPosition().z);
+			System.out.println("distance: " + distance);
+			if (distance < 20.0f) {
+				selected = emitter;
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT, emitter));
+				break;
+			}
+		}
+	}
+	
+	@Override
+	public void remove(Vector3f position) {
+		scene.getParticleSystem().beginModification();
+		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
+		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
+		while (pIterator.hasNext()) {
+			ParticleEmitter emitter = pIterator.next();
+			Float dx = position.getX() - emitter.getPosition().x;
+			Float dy = position.getY() - emitter.getPosition().y;
+			Float dz = position.getZ() - emitter.getPosition().z;
+			Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+			if (distance < 20.0f) {
+				scene.getParticleSystem().removeParticleEmitter(emitter);
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Removed Emitter"));
+				break;
+			}
+		}
+		scene.getParticleSystem().endModification();
+	}
+	
+	@Override
+	public void move(Vector3f pointerPosition) {
+		if (selected == null) return;
+		
+		Vector3f cameraPosition = scene.getCameraManager().getPosition();
+		
+		Vector3f cameraToTarget = new Vector3f();
+		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
+		Float dx = cameraPosition.getX() - selected.getPosition().x;
+		Float dy = cameraPosition.getY() - selected.getPosition().y;
+		Float dz = cameraPosition.getZ() - selected.getPosition().z;
+		Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		Float distanceCameraToTarget = cameraToTarget.length();
+		Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
+		cameraToTarget.scale(scaleFactor);
+		Vector3f newPosition = new Vector3f();
+		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
+		selected.setPosition(newPosition);
 	}
 
 }

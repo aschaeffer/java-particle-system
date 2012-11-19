@@ -19,7 +19,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_PAUSE)) {
 			if (!blockPauseSelection) {
 				scene.getParticleSystem().pause();
 				if (scene.getParticleSystem().isPaused()) {
@@ -58,7 +58,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		} else {
 			blockModifierSelection = false;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_DELETE)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			if (!blockClearSelection) {
 				scene.getParticleSystem().removeAllParticles();
 				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "All particles removed"));
