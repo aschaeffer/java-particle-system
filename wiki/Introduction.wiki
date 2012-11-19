@@ -1,0 +1,56 @@
+#summary About this project
+
+= Physics =
+
+  * domain pattern: particles are just data (no logic)
+  * flexible particles: you can add features to particles
+  * physic system contains multiple emitters, multiple modifiers, multiple particle features
+  * multiple types of emitters (PointEmitter, PlaneEmitter, RingEmitter, SphereEmitter)
+  * multiple types of modifiers:
+    * VelocityTransformation (important!)
+    * GravityPoint
+    * GravityPlane
+    * BlackHole
+    * ColorTransformation (linear, random, rainbow ...)
+    * SizeTransformation (linear, ...)
+    * ParticleCulling (bounding box, sphere, ...)
+  * listerner pattern: onParticleCreation, onParticleDeath
+  * configurable, loading / saving physics
+
+= Particle Rendering =
+
+  * using point sprites
+  * using sprite sheets
+  * billboarding: textures are aimed to the camera
+  * blending
+  * multiple render types for particles
+    * SimplePoint
+    * ColoredPoint
+    * ComplexPoint
+    * SimpleTriangle
+    * SimpleTriangleStrip
+    * SimpleLineStrip
+    * SimpleQuad
+    * PointSprite
+    * SmokeParticle (point sprite)
+    * FireParticle (point sprite, sprite sheet animation)
+    * ElectricParticle (point sprite, sprite sheet animation)
+
+= Scene =
+
+  * different types of renderers (cameras, huds, RenderTypeRenderer, EmitterRenderer, GravityPointRenderer)
+  * different types of cameras (FPSCamera)
+  * cycling through cameras at runtime
+  * multiple huds (Information about FPS, Cameras, ParticleCount ...)
+  * hud command system (for example to display notification   messages)
+  * picking/moving (e.g. selecting and moving emitters, gravity points ...)
+  * hud editor system (editing emitters, gravity points ...)
+  * configurable, loading / saving scenes
+
+= Overall =
+
+  * Physics independent from rendering
+  * Implementation in Java style (using interfaces, abstract classes, implementation classes, references, factory methods ...)
+  * Very flexible
+  * increased performance: physics and rendering are seperated into its own threads
+  * (optional:) increased performance: multiple physics threads operating on a bucket of particles
