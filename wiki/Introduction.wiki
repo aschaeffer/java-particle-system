@@ -1,4 +1,5 @@
 #summary About this project
+#labels Featured
 
 = Physics =
 
