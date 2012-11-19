@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.domain.DefaultHashMapParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleFeature;
 
@@ -35,7 +36,7 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 			// Vector3f.cross(position, position2, particleStartVelocity);
 			// particleStartVelocity.scale((Float) this.configuration.get(VELOCITY));
 			
-			Particle particle = new Particle(particleStartPosition, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(particleStartPosition, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}

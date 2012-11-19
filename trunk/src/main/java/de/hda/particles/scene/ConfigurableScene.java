@@ -34,8 +34,15 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glShadeModel;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
@@ -43,28 +50,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.ParticleSystem;
+import de.hda.particles.dao.SceneDAO;
+import de.hda.particles.hud.HUDCommand;
+import de.hda.particles.hud.HUDCommandTypes;
 
 public class ConfigurableScene extends AbstractScene implements Scene {
 
 	public final static String SYSTEM_NAME = "rendering";
+	
+	private final SceneDAO sceneDAO;
 
 	private Boolean blockFullscreenSelection = false;
+	private Boolean blockLoadSceneSelection = false;
+	private Boolean blockSaveSceneSelection = false;
+	private Boolean loadDialogOnNextIteration = false;
 
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableScene.class);
 
-    public ConfigurableScene(ParticleSystem particleSystem) {
+    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneManager) {
     	super();
     	this.particleSystem = particleSystem;
+    	this.sceneDAO = sceneManager;
     }
 
-    public ConfigurableScene(ParticleSystem particleSystem, Integer width, Integer height) {
+    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneManager, Integer width, Integer height) {
 		super(width, height);
 		this.particleSystem = particleSystem;
+    	this.sceneDAO = sceneManager;
 	}
 
 	@Override
 	public void setup() {
 		running = true;
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			logger.error("could not set native look and feel", e);
+		}
 		try {
 			Display.setDisplayMode(new DisplayMode(this.width, this.height));
 			Display.setFullscreen(fullscreen);
@@ -94,6 +116,7 @@ public class ConfigurableScene extends AbstractScene implements Scene {
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
+        // glOrtho(0.0, 8.0, 0.0, 8.0, -0.5, 2.5);
         
 		glEnable(GL_POINT_SMOOTH);
         glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
@@ -101,6 +124,7 @@ public class ConfigurableScene extends AbstractScene implements Scene {
         glEnable(GL_LINE_SMOOTH);
         glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
  
+        // starting with defaults...
         GLU.gluPerspective(90.0f, (float) width / (float) height, 0.1f, 5000.0f);
 
         glMatrixMode(GL_MODELVIEW);
@@ -119,8 +143,8 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 	@Override
 	public void update() {
 		Keyboard.next();
-		if (Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-			logger.info("close requested");
+		if (Display.isCloseRequested()) { //  || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
+			logger.debug("close requested");
 			running = false;
 			return;
 		}
@@ -132,6 +156,26 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 			}
 		} else {
 			blockFullscreenSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
+			if (!blockSaveSceneSelection) {
+				saveDialog();
+				blockSaveSceneSelection = true;
+			}
+		} else {
+			blockSaveSceneSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
+			if (!blockLoadSceneSelection) {
+				loadDialog();
+				blockLoadSceneSelection = true;
+			}
+		} else {
+			blockLoadSceneSelection = false;
+		}
+		if (loadDialogOnNextIteration) {
+			loadDialogOnNextIteration = !loadDialogOnNextIteration;
+			loadDialog();
 		}
 
         // Clear the screen and depth buffer
@@ -151,7 +195,59 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 
 	@Override
 	public String getSystemName() {
-		return SYSTEM_NAME;
+		return name;
+	}
+	
+	private void loadDialog() {
+		particleSystem.pause();
+		Mouse.setGrabbed(false);
+		try {
+			JFileChooser fileChooser = new JFileChooser("~/workspace4/particles/src/test/resources/config");
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Scene Configuration Files", "json"));
+			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				String filename = file.getAbsolutePath();
+				sceneDAO.load(this, file);
+				hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Successfully loaded scene " + filename));
+			}
+		} catch (Exception e) {
+			hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Failed loading scene"));
+			logger.error("Failed loading scene", e);
+		}
+		try {
+			DisplayMode newDisplayMode = new DisplayMode(width, height);
+			Display.setDisplayMode(newDisplayMode);
+			glViewport(0, 0, newDisplayMode.getWidth(), newDisplayMode.getHeight());
+		} catch (LWJGLException e) {
+			logger.error("Failed setting display mode", e);
+		}
+		Mouse.setGrabbed(true);
+		particleSystem.pause();
+	}
+
+	private void saveDialog() {
+		Mouse.setGrabbed(false);
+		try {
+			JFileChooser fileChooser = new JFileChooser("~/workspace4/particles/src/test/resources/config");
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Scene Configuration Files", "json"));
+			if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				String filename = file.getAbsolutePath();
+				sceneDAO.save(this, filename);
+				hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Successfully saved scene to " + filename));
+			}
+		} catch (Exception e) {
+			hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Failed saving scene"));
+		}
+		Mouse.setGrabbed(true);
+	}
+	
+	public void openLoadDialog() {
+		loadDialogOnNextIteration = true;
+	}
+
+	public void openSaveDialog() {
+		saveDialog();
 	}
 
 }

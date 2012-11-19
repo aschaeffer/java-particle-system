@@ -19,8 +19,14 @@ public interface Scene extends Updateable, FpsInformation {
 	void setWidth(Integer width);
 	Integer getHeight();
 	void setHeight(Integer height);
+	Float getNearPlane();
+	void setNearPlane(Float nearPlane);
+	Float getFarPlane();
+	void setFarPlane(Float farPlane);
 	Boolean getFullscreen();
 	void setFullscreen(Boolean fullscreen);
+	
+	void exit();
 	
 	ParticleSystem getParticleSystem();
 	HUDManager getHudManager();
@@ -40,16 +46,16 @@ public interface Scene extends Updateable, FpsInformation {
  * DONE 1. ---draw method per particle class--- render method index
  * DONE 2a. particle render type manager
  * DONE 2b. particle render type: 3d point
- * 3. particle render type: point sprites = billboard rendering
+ * DONE 3. particle render type: point sprites = billboard rendering
  * DONE 4a. scene loader
  * DONE 4b. scene saver
- * 5a. scene editor
- * 5b. moveables
- * 6a. particle system loader
- * 6b. particle system saver
- * 7. particle system editor
+ * DONE 5a. scene editor
+ * DONE 5b. moveables
+ * DONE 6a. particle system loader
+ * DONE 6b. particle system saver
+ * DONE 7. particle system editor
  * 8. ein paar scenes vorbereiten
- * 9. mouse zauberstab (emitter movement statt camera movement)
+ * DONE 9. maus zauberstab (emitter movement statt camera movement)
  * DONE 10. gravity points
  * DONE 11. gravity planes
  * DONE 12. spherischer emitter
@@ -57,9 +63,12 @@ public interface Scene extends Updateable, FpsInformation {
  * DONE 14. crosshair
  * DONE 15. fullscreen
  * 16. sprite sheet (sauerbraten fire)
- * 
- * 
- * 
+ * DONE 17. multiple physics threads
+ * DONE 18. picking
+ * DONE 19. movement von selectable
+ * 20. movement paths (cameras)
+ * 21. Mapping physics render type class <-> scene render type index
+ * 22. Frame Rate independent physics modification: http://thecodinguniverse.com/lwjgl-frame-rate-independent-movement/
  * 
 		// Notiz:
 		//   Masse-Feder-Emitter: Aktuell emittierter Partikel wird mit den vorigen

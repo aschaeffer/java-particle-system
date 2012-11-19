@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.domain.DefaultHashMapParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleFeature;
 
@@ -27,7 +28,7 @@ public class RingParticleEmitter extends AbstractParticleEmitter implements Part
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
 			Vector3f velocity = new Vector3f(random.nextFloat() * 2.0f - 1.0f, random.nextFloat() * 2.0f - 1.0f, 0.0f);
-			Particle particle = new Particle(position, velocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(position, velocity, particleRenderTypeIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}

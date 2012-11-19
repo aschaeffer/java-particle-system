@@ -163,6 +163,7 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 		glEnd();
 
 		// Restore enable bits and matrix
+		glEnable(GL_DEPTH_TEST);
 		glPopAttrib();
 		glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -179,12 +180,12 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 	public void loadSkybox(String name) {
 		ready = false;
 		textures.clear();
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_ft.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_lf.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_bk.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_rt.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_up.jpg"));
-		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + SKYBOX_NAME + "_dn.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_ft.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_lf.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_bk.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_rt.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_up.jpg"));
+		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_dn.jpg"));
 		ready = true;
 	}
 

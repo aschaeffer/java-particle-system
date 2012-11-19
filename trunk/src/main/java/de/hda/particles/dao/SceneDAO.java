@@ -1,6 +1,7 @@
-package de.hda.particles.scene;
+package de.hda.particles.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
@@ -20,18 +22,19 @@ import de.hda.particles.domain.SceneConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.renderer.types.RenderType;
+import de.hda.particles.scene.ConfigurableScene;
+import de.hda.particles.scene.Scene;
 
-public class SceneManager {
-
-	private ObjectMapper mapper = new ObjectMapper();
+public class SceneDAO {
 
 	@SuppressWarnings("unchecked")
-	public Scene load(String filename, ParticleSystem particleSystem) throws ClassNotFoundException, JsonParseException, JsonMappingException, IOException {
+	public Scene create(String filename, ParticleSystem particleSystem) throws ClassNotFoundException, JsonParseException, JsonMappingException, IOException {
 		// read json
 		InputStream in = this.getClass().getResourceAsStream(filename);
+		ObjectMapper mapper = new ObjectMapper();
 		SceneConfiguration sceneConfiguration = mapper.readValue(in, SceneConfiguration.class);
 		// init configurable scene
-		Scene scene = new ConfigurableScene(particleSystem);
+		Scene scene = new ConfigurableScene(particleSystem, this);
 		scene.setName(sceneConfiguration.name);
 		scene.setWidth(sceneConfiguration.width);
 		scene.setHeight(sceneConfiguration.height);
@@ -83,9 +86,62 @@ public class SceneManager {
 		// load obligatory renderers II
 		scene.getRendererManager().add(scene.getRenderTypeManager()); 
 		scene.getRendererManager().add(scene.getHudManager());
-		// setup scene
-		// scene.setup();
 		return scene;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void load(Scene scene, File file) throws ClassNotFoundException, JsonParseException, JsonMappingException, IOException {
+		// read json
+		InputStream in = new FileInputStream(file);
+		ObjectMapper mapper = new ObjectMapper();
+		SceneConfiguration sceneConfiguration = mapper.readValue(in, SceneConfiguration.class);
+		// init configurable scene
+		scene.setName(sceneConfiguration.name);
+		scene.setWidth(sceneConfiguration.width);
+		scene.setHeight(sceneConfiguration.height);
+		scene.setFullscreen(sceneConfiguration.fullscreen);
+		// reset managers
+		scene.getRendererManager().destroy(); // calls destroy methods recursive
+		// load cameras
+		ListIterator<HashMap<String, Object>> camerasIterator = sceneConfiguration.cameras.listIterator(0);
+		while (camerasIterator.hasNext()) {
+			Map<String, Object> cameraConfiguration = camerasIterator.next();
+			scene.getCameraManager().add(
+				(Class<? extends Camera>) Class.forName((String) cameraConfiguration.get("className")),
+				(String) cameraConfiguration.get("name"),
+				new Vector3f(
+					((Double) cameraConfiguration.get("x")).floatValue(),
+					((Double) cameraConfiguration.get("y")).floatValue(),
+					((Double) cameraConfiguration.get("z")).floatValue()
+				),
+				((Double) cameraConfiguration.get("yaw")).floatValue(),
+				((Double) cameraConfiguration.get("pitch")).floatValue(),
+				((Double) cameraConfiguration.get("roll")).floatValue(),
+				((Double) cameraConfiguration.get("fov")).floatValue()
+			);
+		}
+		// load huds
+		ListIterator<String> hudsIterator = sceneConfiguration.huds.listIterator(0);
+		while (hudsIterator.hasNext()) {
+			scene.getHudManager().add((Class<? extends HUD>) Class.forName(hudsIterator.next()));
+		}
+		// load render types
+		ListIterator<String> renderTypesIterator = sceneConfiguration.renderTypes.listIterator(0);
+		while (renderTypesIterator.hasNext()) {
+			scene.getRenderTypeManager().add((Class<? extends RenderType>) Class.forName(renderTypesIterator.next()));
+		}
+		// load obligatory renderers I
+		scene.getRendererManager().add(scene.getCameraManager());
+		// load dynamic renderers
+		ListIterator<String> rendererIterator = sceneConfiguration.renderer.listIterator(0);
+		while (rendererIterator.hasNext()) {
+			scene.getRendererManager().add((Class<? extends Renderer>) Class.forName(rendererIterator.next()));
+		}
+		// load obligatory renderers II
+		scene.getRendererManager().add(scene.getRenderTypeManager()); 
+		scene.getRendererManager().add(scene.getHudManager());
+		// setup all renderers, the cam and the hud
+		scene.getRendererManager().setup();
 	}
 	
 	public void save(Scene scene, String filename) throws JsonGenerationException, JsonMappingException, IOException {
@@ -128,6 +184,7 @@ public class SceneManager {
 			Renderer renderer = rendererIterator.next();
 			sceneConfiguration.renderer.add(renderer.getClass().getName());
 		}
-		mapper.writeValue(new File(filename), sceneConfiguration);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filename), sceneConfiguration);
 	}
 }

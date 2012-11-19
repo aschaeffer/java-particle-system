@@ -1,9 +1,6 @@
 package de.hda.particles.renderer.types;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +13,16 @@ import de.hda.particles.scene.Scene;
 
 public class RenderTypeManager extends AbstractRenderer implements Renderer, ParticleLifetimeListener {
 
-	private List<RenderType> renderTypes = new ArrayList<RenderType>();
+	private final ArrayList<RenderType> renderTypes = new ArrayList<RenderType>();
 
 	/**
-	 * The particle cache increases performance
+	 * The particle cache increases performance. Also, we need a seperate list for
+	 * incoming particles. The rare case, that one have to use LinkedList, is needed
+	 * for adding and removing particles in constant time. Using
 	 */
-	private HashMap<Integer, ArrayList<Particle>> renderTypeParticleCache = new HashMap<Integer, ArrayList<Particle>>();
-	
+	public HashMap<Integer, LinkedList<Particle>> renderTypeParticleCache = new HashMap<Integer, LinkedList<Particle>>();
+	public HashMap<Integer, ArrayList<Particle>> newParticles = new HashMap<Integer, ArrayList<Particle>>();
+
 	private final Logger logger = LoggerFactory.getLogger(RenderTypeManager.class);
 
 	public RenderTypeManager() {}
@@ -33,7 +33,8 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	
 	public Integer add(RenderType renderType) {
 		renderTypes.add(renderType);
-		renderTypeParticleCache.put(renderTypes.size(), new ArrayList<Particle>());
+		renderTypeParticleCache.put(renderTypes.size(), new LinkedList<Particle>());
+		newParticles.put(renderTypes.size(), new ArrayList<Particle>());
 		return renderTypes.size(); // index+1
 	}
 
@@ -41,7 +42,8 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 		try {
 			RenderType renderType = renderTypeClass.newInstance();
 			renderTypes.add(renderType);
-			renderTypeParticleCache.put(renderTypes.size(), new ArrayList<Particle>());
+			renderTypeParticleCache.put(renderTypes.size(), new LinkedList<Particle>());
+			newParticles.put(renderTypes.size(), new ArrayList<Particle>());
 			return renderTypes.size(); // index+1
 		} catch (Exception e) {
 			logger.error("could not create render type: " + e.getMessage(), e);
@@ -55,11 +57,20 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	
 	@Override
 	public void setup() {
+		// register listener to get updates about newly created particles and removed particles
 		scene.getParticleSystem().addParticleListener(this);
 		ListIterator<RenderType> iterator = renderTypes.listIterator(0);
 		while (iterator.hasNext()) {
 			iterator.next().setScene(scene);
 		}
+	}
+	
+	@Override
+	public void destroy() {
+		scene.getParticleSystem().removeParticleListener(this);
+		renderTypes.clear();
+		renderTypeParticleCache.clear();
+		newParticles.clear();
 	}
 
 	@Override
@@ -69,16 +80,17 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 			RenderType renderType = rIterator.next();
 			Integer renderTypeIndex = rIterator.nextIndex(); // index+1
 			renderType.before();
-			// List<Particle> currentParticles = new ArrayList<Particle>(particleSystem.particles);
-			List<Particle> currentParticles = new ArrayList<Particle>(renderTypeParticleCache.get(renderTypeIndex));
+			// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists
+			List<Particle> currentParticles = renderTypeParticleCache.get(renderTypeIndex);
+			currentParticles.addAll(newParticles.get(renderTypeIndex));
+			newParticles.get(renderTypeIndex).clear();
 			ListIterator<Particle> pIterator = currentParticles.listIterator(0);
 			while (pIterator.hasNext()) {
 				Particle particle = pIterator.next();
 				if (particle != null) {
-//					if (particle.getRenderTypeIndex() == renderTypeIndex) {
-//						renderType.render(particle);
-//					}
 					renderType.render(particle);
+					if (particle.getRemainingIterations() <= 5) // be sure they will be removed
+						pIterator.remove();
 				}
 			}
 			renderType.after();
@@ -90,8 +102,8 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	 */
 	@Override
 	public void onParticleCreation(Particle particle) {
-		ArrayList<Particle> cachedParticlesByRenderType = renderTypeParticleCache.get(particle.getRenderTypeIndex());
-		if (cachedParticlesByRenderType != null) cachedParticlesByRenderType.add(particle);
+		if (particle.getRenderTypeIndex() > 0 && particle.getRenderTypeIndex() <= renderTypes.size())
+			newParticles.get(particle.getRenderTypeIndex()).add(particle);
 	}
 
 	/**
@@ -99,8 +111,6 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	 */
 	@Override
 	public void onParticleDeath(Particle particle) {
-		ArrayList<Particle> cachedParticlesByRenderType = renderTypeParticleCache.get(particle.getRenderTypeIndex());
-		if (cachedParticlesByRenderType != null) cachedParticlesByRenderType.remove(particle);
 	}
 
 }

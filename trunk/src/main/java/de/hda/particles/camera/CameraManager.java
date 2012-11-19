@@ -41,6 +41,14 @@ public class CameraManager extends AbstractCamera implements Camera {
 		}
 		
 	}
+	
+	public void removeSelectedCamera() {
+		if (cameras.size() > 1) {
+			Integer currentIndex = cameras.lastIndexOf(selectedCamera);
+			selectNextCamera();
+			cameras.remove(currentIndex);
+		}
+	}
 
 	public void selectNextCamera() {
 		Integer currentIndex = cameras.lastIndexOf(selectedCamera);
@@ -54,7 +62,8 @@ public class CameraManager extends AbstractCamera implements Camera {
 	@Override
 	public void update() {
 		// camera update
-		selectedCamera.update();
+		if (selectedCamera != null)
+			selectedCamera.update();
 	}
 
 	@Override
@@ -71,6 +80,8 @@ public class CameraManager extends AbstractCamera implements Camera {
 		while(iterator.hasNext()) {
 			iterator.next().destroy();
 		}
+		cameras.clear();
+		selectedCamera = null;
 	}
 	
 	public List<Camera> getCameras() {

@@ -14,12 +14,19 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	public GravityPoint() {}
 
+	@Override
 	public void update(Particle particle) {
-		Float gravityPointX = new Float((Double) this.configuration.get(POINT_X));
-		Float gravityPointY = new Float((Double) this.configuration.get(POINT_Y));
-		Float gravityPointZ = new Float((Double) this.configuration.get(POINT_Z));
-		Float mass = new Float((Double) this.configuration.get(MASS));
-		Float gravity = new Float((Double) this.configuration.get(GRAVITY));
+		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z) || !configuration.containsKey(GRAVITY) || !configuration.containsKey(MASS)) return;
+		Double gravityPointXd = (Double) this.configuration.get(POINT_X);
+		Double gravityPointYd = (Double) this.configuration.get(POINT_Y);
+		Double gravityPointZd = (Double) this.configuration.get(POINT_Z);
+		Double massd = (Double) this.configuration.get(MASS);
+		Double gravityd = (Double) this.configuration.get(GRAVITY);
+		Float gravityPointX = gravityPointXd.floatValue();
+		Float gravityPointY = gravityPointYd.floatValue();
+		Float gravityPointZ = gravityPointZd.floatValue();
+		Float mass = massd.floatValue();
+		Float gravity = gravityd.floatValue();
 		Float dx = particle.getX() - gravityPointX;
 		Float dy = particle.getY() - gravityPointY;
 		Float dz = particle.getZ() - gravityPointZ;

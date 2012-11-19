@@ -1,5 +1,6 @@
 package de.hda.particles.emitter;
 
+import de.hda.particles.domain.DefaultHashMapParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleFeature;
 
@@ -20,7 +21,7 @@ public class WaveParticleEmitter extends AbstractParticleEmitter implements Part
 		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
-			Particle particle = new Particle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}

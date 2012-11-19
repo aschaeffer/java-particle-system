@@ -27,6 +27,10 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public void addParticle(Particle particle);
 	public void removeParticle(Particle particle);
 	public void removeAllParticles();
+	public void removeParticleEmitter(ParticleEmitter particleEmitter);
+	public void removeParticleModifier(ParticleModifier particleModifier);
+	public void removeParticleFeature(ParticleFeature particleFeature);
+	public void removeParticleListener(ParticleLifetimeListener particleListener);
 	
 	public void pause();
 	public void toggleEmitters();
@@ -34,5 +38,8 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public Boolean isPaused();
 	public Boolean areEmittersStopped();
 	public Boolean areModifiersStopped();
+	
+	public void beginModification();
+	public void endModification();
 
 }

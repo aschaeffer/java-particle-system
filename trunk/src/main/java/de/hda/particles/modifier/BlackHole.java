@@ -17,12 +17,12 @@ public class BlackHole extends AbstractParticleModifier implements ParticleModif
 
 	@Override
 	public void update(Particle particle) {
-		Float gravityPointX = new Float((Double) this.configuration.get(POINT_X));
-		Float gravityPointY = new Float((Double) this.configuration.get(POINT_Y));
-		Float gravityPointZ = new Float((Double) this.configuration.get(POINT_Z));
-		Float mass = new Float((Double) this.configuration.get(MASS));
-		Float gravity = new Float((Double) this.configuration.get(GRAVITY));
-		Float eventHorizon = gravity * mass / EVENT_HORIZON_FACTOR;
+		Double gravityPointX = (Double) configuration.get(POINT_X);
+		Double gravityPointY = (Double) configuration.get(POINT_Y);
+		Double gravityPointZ = (Double) configuration.get(POINT_Z);
+		Double mass = (Double) configuration.get(MASS);
+		Double gravity = (Double) configuration.get(GRAVITY);
+		Double eventHorizon = gravity * mass / EVENT_HORIZON_FACTOR;
 
 		// remove particles which are 
 		if (Math.abs(particle.getX() - gravityPointX) < eventHorizon && Math.abs(particle.getY() - gravityPointY) < eventHorizon && Math.abs(particle.getZ() - gravityPointZ) < eventHorizon) {
@@ -32,15 +32,15 @@ public class BlackHole extends AbstractParticleModifier implements ParticleModif
 			this.configuration.put(MASS, new Double(mass + particle.getMass()));
 		}
 		
-		Float dx = particle.getX() - gravityPointX;
-		Float dy = particle.getY() - gravityPointY;
-		Float dz = particle.getZ() - gravityPointZ;
+		Double dx = particle.getX() - gravityPointX;
+		Double dy = particle.getY() - gravityPointY;
+		Double dz = particle.getZ() - gravityPointZ;
 		Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
-		Float force = -(particle.getMass()) * mass * gravity / (distance * distance);
+		Double force = -(particle.getMass()) * mass * gravity / (distance * distance);
 		Vector3f totalForce = new Vector3f(
-			force * (particle.getX() - gravityPointX) / distance,
-			force * (particle.getY() - gravityPointY) / distance,
-			force * (particle.getZ() - gravityPointZ) / distance
+			new Double(force * (particle.getX() - gravityPointX) / distance).floatValue(),
+			new Double(force * (particle.getY() - gravityPointY) / distance).floatValue(),
+			new Double(force * (particle.getZ() - gravityPointZ) / distance).floatValue()
 		);
 		Vector3f accelleration = new Vector3f(
 			totalForce.x / particle.getMass(),

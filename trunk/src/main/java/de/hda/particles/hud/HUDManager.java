@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
@@ -142,6 +143,7 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		while(iterator.hasNext()) {
 			iterator.next().destroy();
 		}
+		huds.clear();
 	}
 
 	@Override
@@ -166,6 +168,7 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
  
 	private void leaveOrtho() {
         // restore the state of the renderer
+		glEnable(GL_DEPTH_TEST);
         glPopMatrix();
         glMatrixMode(GL_MODELVIEW);
         glPopMatrix();

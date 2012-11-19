@@ -10,9 +10,10 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.scene.Scene;
 
-public abstract class AbstractCamera implements Camera {
+public abstract class AbstractCamera extends AbstractRenderer implements Camera {
 
 	public final static Float DEFAULT_X = 0.0f;
 	public final static Float DEFAULT_Y = 0.0f;
@@ -57,8 +58,6 @@ public abstract class AbstractCamera implements Camera {
 	 * the field of view
 	 */
 	protected Float fov = DEFAULT_FOV;
-	
-	protected Scene scene;
 
 	/**
 	 * Default no arguments constructor.
@@ -136,10 +135,11 @@ public abstract class AbstractCamera implements Camera {
 
 	// translates and rotate the matrix so that it looks through the camera
 	// this dose basic what gluLookAt() does
+	@Override
 	public void lookThrough() {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-		GLU.gluPerspective(fov, (float) scene.getWidth() / (float) scene.getHeight(), 0.1f, 5000.0f);
+		GLU.gluPerspective(fov, (float) scene.getWidth() / (float) scene.getHeight(), scene.getNearPlane(), scene.getFarPlane());
 
         glMatrixMode(GL_MODELVIEW);
 		// set the modelview matrix back to the identity
@@ -151,72 +151,88 @@ public abstract class AbstractCamera implements Camera {
 		// rotate the yaw around the Y axis
 		glRotatef(roll, 0.0f, 0.0f, 1.0f);
 		// translate to the position vector's location
-		glTranslatef(position.x, position.y, position.z);
+		glTranslatef(-position.x, -position.y, -position.z);
 	}
 
 	@Override
-	public Boolean isFinished() {
-		return false;
-	}
-	
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
-	
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public Vector3f getPosition() {
-		return position;
+		return new Vector3f(position);
 	}
 	
+	@Override
 	public void setPosition(Vector3f position) {
 		this.position = position;
 	}
 	
+	@Override
 	public Float getYaw() {
 		return yaw;
 	}
 	
+	@Override
 	public void setYaw(Float yaw) {
 		this.yaw = yaw;
 	}
 
+	@Override
 	public Float getPitch() {
 		return pitch;
 	}
 
+	@Override
 	public void setPitch(Float pitch) {
 		this.pitch = pitch;
 	}
 
+	@Override
 	public Float getRoll() {
 		return roll;
 	}
 	
+	@Override
 	public void setRoll(Float roll) {
 		this.roll = roll;
 	}
 
+	@Override
 	public Float getFov() {
 		return fov;
 	}
 	
+	@Override
 	public void setFov(Float fov) {
 		this.fov = fov;
 	}
 
+	@Override
 	public void reset() {
 		this.setPosition(new Vector3f(DEFAULT_X, DEFAULT_Y, DEFAULT_Z));
 		this.setYaw(DEFAULT_YAW);
 		this.setPitch(DEFAULT_PITCH);
 		this.setRoll(DEFAULT_ROLL);
 		this.setFov(DEFAULT_FOV);
+	}
+	
+	@Override
+	public Vector3f getDirectionVector() {
+		Vector3f directionVector = new Vector3f(
+			new Double(Math.cos(yaw)*Math.cos(pitch)).floatValue(),
+			new Double(Math.sin(yaw)*Math.cos(pitch)).floatValue(),
+			new Double(Math.sin(pitch)).floatValue()
+		);
+		Vector3f normalisedDirectionVector = new Vector3f();
+		directionVector.normalise(normalisedDirectionVector);
+		return normalisedDirectionVector;
 	}
 
 }

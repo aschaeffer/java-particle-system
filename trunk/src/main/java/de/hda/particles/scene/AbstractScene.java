@@ -25,6 +25,8 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	
 	public final static Integer DEFAULT_WIDTH = 800;
 	public final static Integer DEFAULT_HEIGHT = 600;
+	public final static Float DEFAULT_NEAR_PLANE = 0.1f;
+	public final static Float DEFAULT_FAR_PLANE = 5000.0f;
 
 	protected ParticleSystem particleSystem;
 	
@@ -39,6 +41,8 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	protected String name = "Particle System";
 	protected Integer width = DEFAULT_WIDTH;
 	protected Integer height = DEFAULT_HEIGHT;
+	protected Float nearPlane = DEFAULT_NEAR_PLANE;
+	protected Float farPlane = DEFAULT_FAR_PLANE;
 	protected Boolean fullscreen = false;
 	protected Boolean running = true;
 
@@ -52,6 +56,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.height = height;
 	}
 	
+	@Override
 	public void update() {
 		calcFps();
 		limitFps();
@@ -106,11 +111,13 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 			logger.error("couldn't change fullscreen mode", e);
 		}
 	}
-
+	
+	@Override
 	public ParticleSystem getParticleSystem() {
 		return particleSystem;
 	}
 
+	@Override
 	public HUDManager getHudManager() {
 		return hudManager;
 	}
@@ -119,6 +126,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.hudManager = hudManager;
 	}
 
+	@Override
 	public CameraManager getCameraManager() {
 		return cameraManager;
 	}
@@ -127,6 +135,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.cameraManager = cameraManager;
 	}
 
+	@Override
 	public RendererManager getRendererManager() {
 		return rendererManager;
 	}
@@ -135,6 +144,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.rendererManager = rendererManager;
 	}
 
+	@Override
 	public RenderTypeManager getRenderTypeManager() {
 		return renderTypeManager;
 	}
@@ -143,6 +153,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.renderTypeManager = renderTypeManager;
 	}
 
+	@Override
 	public TextureManager getTextureManager() {
 		return textureManager;
 	}
@@ -151,44 +162,79 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 		this.textureManager = textureManager;
 	}
 	
+	@Override
 	public String getName() {
 		return name;
 	}
 	
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public Integer getWidth() {
 		return width;
 	}
 
+	@Override
 	public void setWidth(Integer width) {
 		this.width = width;
 	}
 
+	@Override
 	public Integer getHeight() {
 		return height;
 	}
 
+	@Override
 	public void setHeight(Integer height) {
 		this.height = height;
 	}
+	
+	@Override
+	public Float getNearPlane() {
+		return nearPlane;
+	}
+	
+	@Override
+	public void setNearPlane(Float nearPlane) {
+		this.nearPlane = nearPlane;
+	}
 
+	@Override
+	public Float getFarPlane() {
+		return farPlane;
+	}
+	
+	@Override
+	public void setFarPlane(Float farPlane) {
+		this.farPlane = farPlane;
+	}
+
+	@Override
 	public Boolean getFullscreen() {
 		return fullscreen;
 	}
 
+	@Override
 	public void setFullscreen(Boolean fullscreen) {
 		this.fullscreen = fullscreen;
 	}
 	
+	@Override
 	public List<FpsInformation> getFpsInformationInstances() {
 		return fpsInformationInstances;
 	}
 	
+	@Override
 	public void addFpsInformationInstance(FpsInformation fpsInformation) {
 		fpsInformationInstances.add(fpsInformation);
+	}
+	
+	@Override
+	public void exit() {
+		running = false;
 	}
 
 }

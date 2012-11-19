@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.dao.SceneDAO;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.emitter.PlaneParticleEmitter;
@@ -22,7 +23,7 @@ import de.hda.particles.features.ParticleSize;
 import de.hda.particles.modifier.BlackHole;
 import de.hda.particles.modifier.GravityPlane;
 import de.hda.particles.modifier.GravityPoint;
-import de.hda.particles.modifier.ParticleCulling;
+import de.hda.particles.modifier.BoundingBoxParticleCulling;
 import de.hda.particles.modifier.ParticleLinearColorTransformation;
 import de.hda.particles.modifier.ParticleLinearSizeTransformation;
 import de.hda.particles.modifier.ParticleVelocityTransformation;
@@ -30,7 +31,6 @@ import de.hda.particles.modifier.RainbowColorTransformation;
 import de.hda.particles.modifier.RandomColorTransformation;
 import de.hda.particles.scene.DefaultScene;
 import de.hda.particles.scene.Scene;
-import de.hda.particles.scene.SceneManager;
 
 public class SimpleParticleSystemTest {
 
@@ -169,10 +169,10 @@ public class SimpleParticleSystemTest {
 //				1300,
 //				pec7);
 
-		ParticleModifierConfiguration particleCullerConfiguration = new ParticleModifierConfiguration();
-		particleCullerConfiguration.put(ParticleCulling.POINT1, new Vector3f(-5000.0f, -5000.0f, -5000.0f));
-		particleCullerConfiguration.put(ParticleCulling.POINT2, new Vector3f(5000.0f, 5000.0f, 5000.0f));
-		particleSystem.addParticleModifier(ParticleCulling.class, particleCullerConfiguration);
+//		ParticleModifierConfiguration particleCullerConfiguration = new ParticleModifierConfiguration();
+//		particleCullerConfiguration.put(BoundingBoxParticleCulling.BOUNDING_BOX_POINT1, new Vector3f(-5000.0f, -5000.0f, -5000.0f));
+//		particleCullerConfiguration.put(BoundingBoxParticleCulling.BOUNDING_BOX_POINT2, new Vector3f(5000.0f, 5000.0f, 5000.0f));
+//		particleSystem.addParticleModifier(BoundingBoxParticleCulling.class, particleCullerConfiguration);
 
 		particleSystem.addParticleModifier(ParticleLinearColorTransformation.class, ParticleModifierConfiguration.EMPTY);
 
@@ -352,9 +352,9 @@ public class SimpleParticleSystemTest {
 //				1300,
 //				pec7);
 
-		ParticleModifierConfiguration particleCullerConfiguration = new ParticleModifierConfiguration();
-		particleCullerConfiguration.put(ParticleCulling.POINT1, new Vector3f(-5000.0f, -5000.0f, -5000.0f));
-		particleCullerConfiguration.put(ParticleCulling.POINT2, new Vector3f(5000.0f, 5000.0f, 5000.0f));
+//		ParticleModifierConfiguration particleCullerConfiguration = new ParticleModifierConfiguration();
+//		particleCullerConfiguration.put(BoundingBoxParticleCulling.BOUNDING_BOX_POINT1, new Vector3f(-5000.0f, -5000.0f, -5000.0f));
+//		particleCullerConfiguration.put(BoundingBoxParticleCulling.BOUNDING_BOX_POINT2, new Vector3f(5000.0f, 5000.0f, 5000.0f));
 		// particleSystem.addParticleModifier(ParticleCulling.class, particleCullerConfiguration);
 
 		// particleSystem.addParticleModifier(RainbowColorTransformation.class, ParticleModifierConfiguration.EMPTY);
@@ -433,8 +433,8 @@ public class SimpleParticleSystemTest {
 //		ParticleSystem particleSystem = particleSystemManager.create("config/system1.json");
 		
 		try {
-			SceneManager sceneManager = new SceneManager();
-			Scene scene = sceneManager.load("/config/scene1.json", particleSystem);
+			SceneDAO sceneManager = new SceneDAO();
+			Scene scene = sceneManager.create("/config/scene1.json", particleSystem);
 			sceneManager.save(scene, "/tmp/test.json");
 
 			SystemRunner systemRunner = new SystemRunner();
@@ -539,12 +539,12 @@ public class SimpleParticleSystemTest {
 
 // Future
 		ParticleSystemManager particleSystemManager = new ParticleSystemManager();
-		ParticleSystem particleSystem = particleSystemManager.load("/config/system1.json");
+		ParticleSystem particleSystem = particleSystemManager.load("/config/system7.json");
 		
 		try {
-			SceneManager sceneManager = new SceneManager();
-			Scene scene = sceneManager.load("/config/scene1.json", particleSystem);
-			sceneManager.save(scene, "/tmp/test.json");
+			SceneDAO sceneDAO = new SceneDAO();
+			Scene scene = sceneDAO.create("/config/scene7.json", particleSystem);
+			sceneDAO.save(scene, "/tmp/test.json");
 
 			SystemRunner systemRunner = new SystemRunner();
 			systemRunner.add(particleSystem.getSystemName(), particleSystem);
