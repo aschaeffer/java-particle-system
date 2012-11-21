@@ -17,6 +17,7 @@ public abstract class AbstractParticle implements Particle {
 	private Integer remainingIterations = DEFAULT_LIFETIME;
 	private Integer pastIterations = 0;
 	private Float mass = DEFAULT_MASS;
+	private Boolean visibility = true;
 	private Integer renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
 	public AbstractParticle() {
@@ -124,6 +125,16 @@ public abstract class AbstractParticle implements Particle {
 	public Float getLifetimePercent() {
 		if (pastIterations == 0) return 0.0f;
 		return pastIterations.floatValue() / (pastIterations.floatValue() + remainingIterations.floatValue());
+	}
+	
+	@Override
+	public Boolean isVisible() {
+		return visibility;
+	}
+	
+	@Override
+	public void setVisibility(Boolean visibility) {
+		this.visibility = visibility;
 	}
 	
 	@Override

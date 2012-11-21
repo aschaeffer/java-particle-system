@@ -36,6 +36,27 @@ public class SimpleParticleSystemTest {
 
 	private final Logger logger = LoggerFactory.getLogger(SimpleParticleSystemTest.class);
 
+	@Test
+	public void configurableParticleSystemTest() {
+		try {
+			ParticleSystemManager particleSystemManager = new ParticleSystemManager();
+			ParticleSystem particleSystem = particleSystemManager.load("/config/system-empty.json");
+
+			SceneDAO sceneDAO = new SceneDAO();
+			Scene scene = sceneDAO.create("/config/scene-empty.json", particleSystem);
+			sceneDAO.save(scene, "/tmp/test.json");
+
+			SystemRunner systemRunner = new SystemRunner();
+			systemRunner.add(particleSystem.getSystemName(), particleSystem);
+			systemRunner.add(scene.getSystemName(), scene);
+			systemRunner.start();
+			assertTrue(true);
+		} catch (Exception e) {
+			logger.error("hmm", e);
+		}
+	}
+
+
 //	@Test
 //	public void particleCreationTest() {
 //		IParticleSystem particleSystem = new IParticleSystem();
@@ -450,111 +471,5 @@ public class SimpleParticleSystemTest {
 	}
 
 
-	@Test
-	public void miniTest() throws InterruptedException, JsonParseException, JsonMappingException, ClassNotFoundException, IOException {
-		
-//		Integer defaultRenderType = 1;
-//		Integer complexPointRenderType = 2;
-//		Integer rainRenderType = 3;
-//		Integer coloredPointRenderType = 4;
-//		Integer triangleRenderType = 5;
-//		Integer triangleStripRenderType = 6;
-//		Integer triangleFanRenderType = 7;
-//		Integer quadsRenderType = 8;
-//		Integer lineStripRenderType = 9;
-//		Integer pointSpriteRenderType = 10;
-//		Integer velocityRenderType = 11;
-//		
-//		ParticleSystem particleSystem = new DefaultParticleSystem();
-//		particleSystem.addParticleFeature(new ParticleInitialVelocityScatter());
-//		particleSystem.addParticleFeature(new ParticleColor());
-//		
-//		ParticleEmitterConfiguration pec1 = new ParticleEmitterConfiguration();
-//		pec1.put(ParticleInitialVelocityScatter.SCATTER, new Vector3f(0.5f, 0.0f, 0.5f));
-//		particleSystem.addParticleEmitter(
-//				PointParticleEmitter.class,
-//				new Vector3f(0.0f, 200.0f, 0.0f),
-//				new Vector3f(0.0f, 2.0f, 0.0f),
-//				velocityRenderType,
-//				10000,
-//				pec1);
-//
-//		ParticleEmitterConfiguration pec3 = new ParticleEmitterConfiguration();
-//		pec3.put(ParticleInitialVelocityScatter.SCATTER, new Vector3f(0.0f, 0.5f, 0.5f));
-//		particleSystem.addParticleEmitter(
-//				PointParticleEmitter.class,
-//				new Vector3f(200.0f, 0.0f, 0.0f),
-//				new Vector3f(2.0f, 0.0f, 0.0f),
-//				velocityRenderType,
-//				10000,
-//				pec3);
-//
-//		ParticleEmitterConfiguration pec4 = new ParticleEmitterConfiguration();
-//		pec4.put(ParticleInitialVelocityScatter.SCATTER, new Vector3f(0.0f, -0.5f, -0.5f));
-//		particleSystem.addParticleEmitter(
-//				PointParticleEmitter.class,
-//				new Vector3f(-200.0f, 0.0f, 0.0f),
-//				new Vector3f(-2.0f, 0.0f, 0.0f),
-//				velocityRenderType,
-//				10000,
-//				pec4);
-//
-//		ParticleModifierConfiguration gravityPointConfiguration = new ParticleModifierConfiguration();
-//		gravityPointConfiguration.put(GravityPoint.POINT, new Vector3f(-1800.0f, 500.0f, 800.0f));
-//		gravityPointConfiguration.put(GravityPoint.MASS, new Float(1500.0f));
-//		gravityPointConfiguration.put(GravityPoint.GRAVITY, new Float(2.0f));
-//		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration);
-//
-//		ParticleModifierConfiguration gravityPointConfiguration2 = new ParticleModifierConfiguration();
-//		gravityPointConfiguration2.put(GravityPoint.POINT, new Vector3f(1100.0f, 750.0f, 50.0f));
-//		gravityPointConfiguration2.put(GravityPoint.MASS, new Float(1500.0f));
-//		gravityPointConfiguration2.put(GravityPoint.GRAVITY, new Float(2.0f));
-//		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration2);
-//
-//		ParticleModifierConfiguration gravityPointConfiguration3 = new ParticleModifierConfiguration();
-//		gravityPointConfiguration3.put(GravityPoint.POINT, new Vector3f(900.0f, -850.0f, -750.0f));
-//		gravityPointConfiguration3.put(GravityPoint.MASS, new Float(1500.0f));
-//		gravityPointConfiguration3.put(GravityPoint.GRAVITY, new Float(2.0f));
-//		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration3);
-//
-//		ParticleModifierConfiguration gravityPointConfiguration4 = new ParticleModifierConfiguration();
-//		gravityPointConfiguration4.put(GravityPoint.POINT, new Vector3f(-1500.0f, -750.0f, -1550.0f));
-//		gravityPointConfiguration4.put(GravityPoint.MASS, new Float(1500.0f));
-//		gravityPointConfiguration4.put(GravityPoint.GRAVITY, new Float(2.0f));
-//		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration4);
-//
-//		ParticleModifierConfiguration gravityPointConfiguration5 = new ParticleModifierConfiguration();
-//		gravityPointConfiguration5.put(GravityPoint.POINT, new Vector3f(400.0f, -950.0f, 850.0f));
-//		gravityPointConfiguration5.put(GravityPoint.MASS, new Float(1500.0f));
-//		gravityPointConfiguration5.put(GravityPoint.GRAVITY, new Float(2.0f));
-//		particleSystem.addParticleModifier(GravityPoint.class, gravityPointConfiguration5);
-//
-//		ParticleModifierConfiguration blackHoleConfiguration1 = new ParticleModifierConfiguration();
-//		blackHoleConfiguration1.put(BlackHole.POINT, new Vector3f(300.0f, 900.0f, 300.0f));
-//		blackHoleConfiguration1.put(BlackHole.MASS, new Float(1000.0f));
-//		blackHoleConfiguration1.put(BlackHole.GRAVITY, new Float(1.25f));
-//		particleSystem.addParticleModifier(BlackHole.class, blackHoleConfiguration1);
-//
-//		particleSystem.addParticleModifier(ParticleVelocityTransformation.class, ParticleModifierConfiguration.EMPTY);
 
-// Future
-		ParticleSystemManager particleSystemManager = new ParticleSystemManager();
-		ParticleSystem particleSystem = particleSystemManager.load("/config/system7.json");
-		
-		try {
-			SceneDAO sceneDAO = new SceneDAO();
-			Scene scene = sceneDAO.create("/config/scene7.json", particleSystem);
-			sceneDAO.save(scene, "/tmp/test.json");
-
-			SystemRunner systemRunner = new SystemRunner();
-			systemRunner.add(particleSystem.getSystemName(), particleSystem);
-			systemRunner.add(scene.getSystemName(), scene);
-			systemRunner.start();
-			assertTrue(true);
-		} catch (Exception e) {
-			logger.error("hmm", e);
-		}
-
-		
-	}
 }

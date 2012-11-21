@@ -2,11 +2,11 @@ package de.hda.particles.hud;
 
 import de.hda.particles.scene.Scene;
 
-public class RendererHUD extends AbstractHUD implements HUD {
+public class FeatureHUD extends AbstractHUD implements HUD {
 
-	public RendererHUD() {}
+	public FeatureHUD() {}
 
-	public RendererHUD(Scene scene) {
+	public FeatureHUD(Scene scene) {
 		super(scene);
 	}
 
@@ -22,9 +22,9 @@ public class RendererHUD extends AbstractHUD implements HUD {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void executeCommand(HUDCommand command) {
-		if (command.getType() == HUDCommandTypes.ADD_RENDERER) {
+		if (command.getType() == HUDCommandTypes.ADD_FEATURE) {
 			scene.getParticleSystem().beginModification();
-			scene.getRendererManager().add((Class) command.getPayLoad());
+			scene.getParticleSystem().addParticleFeature((Class) command.getPayLoad());
 			scene.getParticleSystem().endModification();
 		}
 	}

@@ -101,8 +101,8 @@ public class RendererManager extends AbstractRenderer implements Renderer {
         GL11.glReadPixels(mouseX, mouseY, 2, 2, GL11.GL_DEPTH_COMPONENT, GL11.GL_FLOAT, mouseZ);
         GLU.gluUnProject(mouseX, mouseY, mouseZ.get(0), modelViewMatrix, projectionMatrix, viewport, worldPosition);
         
-        System.out.println("mouse: " + mouseX + ", " + mouseY + ", " + mouseZ.get(0));
-        System.out.println("world: " + worldPosition.get(0) + ", " + worldPosition.get(1) + ", " + worldPosition.get(2));
+        // System.out.println("mouse: " + mouseX + ", " + mouseY + ", " + mouseZ.get(0));
+        // System.out.println("world: " + worldPosition.get(0) + ", " + worldPosition.get(1) + ", " + worldPosition.get(2));
 
         return new Vector3f(worldPosition.get(0), worldPosition.get(1), worldPosition.get(2));
     }

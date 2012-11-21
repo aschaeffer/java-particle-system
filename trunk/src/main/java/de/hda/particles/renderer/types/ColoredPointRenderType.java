@@ -11,6 +11,7 @@ public class ColoredPointRenderType extends AbstractRenderType implements Render
 
 	public ColoredPointRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -18,6 +19,7 @@ public class ColoredPointRenderType extends AbstractRenderType implements Render
 		glBegin(GL_POINTS);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -26,8 +28,8 @@ public class ColoredPointRenderType extends AbstractRenderType implements Render
 	@Override
 	public void render(Particle particle) {
 		Color color = (Color) particle.get(ParticleColor.CURRENT_COLOR);
-		// glColor4b(color.getRedByte(), color.getGreenByte(), color.getBlueByte(), color.getAlphaByte());
-		glColor4f((float) color.getRed() / 255.0f, (float) color.getGreen() / 255.0f, (float) color.getBlue() / 255.0f, (float) color.getAlpha() / 255.0f);
+		if (color != null)
+			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 	}
 

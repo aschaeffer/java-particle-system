@@ -18,7 +18,8 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	/**
 	 * The particle cache increases performance. Also, we need a seperate list for
 	 * incoming particles. The rare case, that one have to use LinkedList, is needed
-	 * for adding and removing particles in constant time. Using
+	 * for adding and removing particles in constant time. Using ArrayList we could
+	 * get a massive slowdown as soon as the first particles get removed.
 	 */
 	public HashMap<Integer, LinkedList<Particle>> renderTypeParticleCache = new HashMap<Integer, LinkedList<Particle>>();
 	public HashMap<Integer, ArrayList<Particle>> newParticles = new HashMap<Integer, ArrayList<Particle>>();
@@ -41,6 +42,7 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	public Integer add(Class<? extends RenderType> renderTypeClass) {
 		try {
 			RenderType renderType = renderTypeClass.newInstance();
+			renderType.setScene(scene);
 			renderTypes.add(renderType);
 			renderTypeParticleCache.put(renderTypes.size(), new LinkedList<Particle>());
 			newParticles.put(renderTypes.size(), new ArrayList<Particle>());
@@ -53,6 +55,29 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	
 	public List<RenderType> getRenderTypes() {
 		return renderTypes;
+	}
+	
+	public void clear() {
+		Iterator<Integer> rIterator = renderTypeParticleCache.keySet().iterator();
+		while(rIterator.hasNext()) {
+			Integer renderTypeIndex = rIterator.next();
+			renderTypeParticleCache.get(renderTypeIndex).clear();
+			newParticles.get(renderTypeIndex).clear();
+		}
+		logger.info("Cleared RenderType Cache");
+	}
+	
+	public void debug() {
+		Iterator<Integer> rIterator = renderTypeParticleCache.keySet().iterator();
+		while(rIterator.hasNext()) {
+			Integer renderTypeIndex = rIterator.next();
+			ListIterator<Particle> pIterator = renderTypeParticleCache.get(renderTypeIndex).listIterator(0);
+			while (pIterator.hasNext()) {
+				Particle p = pIterator.next();
+				logger.info("deleted? " + scene.getParticleSystem().getParticles().contains(p) + " --- " + p.toString());
+
+			}
+		}
 	}
 	
 	@Override
@@ -80,17 +105,18 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 			RenderType renderType = rIterator.next();
 			Integer renderTypeIndex = rIterator.nextIndex(); // index+1
 			renderType.before();
-			// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists
-			List<Particle> currentParticles = renderTypeParticleCache.get(renderTypeIndex);
-			currentParticles.addAll(newParticles.get(renderTypeIndex));
+			// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists and prevents synchronization issues
+			List<Particle> particlesByIndex = renderTypeParticleCache.get(renderTypeIndex);
+			particlesByIndex.addAll(newParticles.get(renderTypeIndex));
 			newParticles.get(renderTypeIndex).clear();
-			ListIterator<Particle> pIterator = currentParticles.listIterator(0);
+			ListIterator<Particle> pIterator = particlesByIndex.listIterator(0);
 			while (pIterator.hasNext()) {
 				Particle particle = pIterator.next();
-				if (particle != null) {
+				if (particle == null) continue;
+				if (particle.getRemainingIterations() <= 0) { // be sure they will be removed
+					pIterator.remove();
+				} else {
 					renderType.render(particle);
-					if (particle.getRemainingIterations() <= 5) // be sure they will be removed
-						pIterator.remove();
 				}
 			}
 			renderType.after();

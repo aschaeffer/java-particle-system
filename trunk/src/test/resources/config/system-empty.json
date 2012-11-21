@@ -1,0 +1,23 @@
+{
+	"name": "Empty Physics System",
+	"features": [
+	],
+	"emitters": [
+	],
+	"modifiers": [
+		{
+			"className": "de.hda.particles.modifier.BoundingBoxParticleCulling",
+			"configuration": {
+				"minX": -5000.0,
+				"minY": -5000.0,
+				"minZ": -5000.0,
+				"maxX": 5000.0,
+				"maxY": 5000.0,
+				"maxZ": 5000.0
+			}
+		}, {
+			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
+			"configuration": {}
+		}
+	]
+}

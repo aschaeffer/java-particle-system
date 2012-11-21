@@ -17,7 +17,7 @@ public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSys
 
 	protected List<ModifierWorker> modifierWorkers = new ArrayList<ModifierWorker>();
 	
-	protected Boolean synchronizeWorkers = false;
+	protected Boolean synchronizeWorkers = true;
 	protected Integer modifierWorkerReady = 0;
 	
 	@Override
@@ -25,7 +25,12 @@ public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSys
 		calcFps();
 		limitFps();
 		
-		if (paused) return;
+		if (paused) {
+			idle = true;
+			return;
+		}
+		idle = false;
+		pastIterations++;
 
 		if (emittersEnabled && particles.size() < MAX_PARTICLES) {
 			// call every particle emitter
@@ -47,14 +52,15 @@ public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSys
 		if (clearParticlesAtNextIteration) clearParticles(); // Thread Safety
 
 		// decrease particle lifetimes and remove death particles
+		// if (pastIterations % 500 == 0) {
 		for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
 			Particle particle = particles.get(pIndex);
 			particle.decLifetime();
 			if (particle.getRemainingIterations() <= 0) {
 				removeParticle(particle);
-				pIndex--;
 			}
 		}
+		// }
 		
 	}
 

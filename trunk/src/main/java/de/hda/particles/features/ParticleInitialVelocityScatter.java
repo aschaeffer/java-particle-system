@@ -1,11 +1,14 @@
 package de.hda.particles.features;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.emitter.ParticleEmitter;
+import de.hda.particles.hud.HUDEditorEntry;
 
 /**
  * This particle feature scatters the initial velocity.
@@ -35,6 +38,47 @@ public class ParticleInitialVelocityScatter implements ParticleFeature {
 		velocity.setY(vdy);
 		velocity.setZ(vdz);
 		particle.setVelocity(velocity); // apply velocity changes
+	}
+
+	@Override
+	public List<HUDEditorEntry> getEditorEntries() {
+		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
+		entries.add(HUDEditorEntry.create(SCATTER_X, "Scatter X"));
+		entries.add(HUDEditorEntry.create(SCATTER_Y, "Scatter Y"));
+		entries.add(HUDEditorEntry.create(SCATTER_Z, "Scatter Z"));
+		return entries;
+	}
+
+	@Override
+	public void decrease(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
+			return;
+		Double value = (Double) emitter.getConfiguration().get(fieldName);
+		if (value == null) value = 0.0;
+		value -= 0.1;
+		emitter.getConfiguration().put(fieldName, value);
+	}
+
+	@Override
+	public void increase(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
+			return;
+		Double value = (Double) emitter.getConfiguration().get(fieldName);
+		if (value == null) value = 0.0;
+		value += 0.1;
+		emitter.getConfiguration().put(fieldName, value);
+	}
+
+	@Override
+	public String getValue(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
+			return null;
+		Double value = (Double) emitter.getConfiguration().get(fieldName);
+		if (value == null) {
+			return null;
+		} else {
+			return String.format("%.2f", value);
+		}
 	}
 
 }

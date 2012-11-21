@@ -34,11 +34,6 @@ public class EmitterHUD extends AbstractHUD implements HUD {
 //		if (command.getType() == HUDCommandTypes.REMOVE_EMITTER) {
 //			scene.getParticleSystem().re
 //		}
-		if (command.getType() == HUDCommandTypes.REMOVE_ALL_PARTICLES) {
-			// scene.getParticleSystem().beginModification();
-			scene.getParticleSystem().removeAllParticles();
-			// scene.getParticleSystem().endModification();
-		}
 	}
 
 }

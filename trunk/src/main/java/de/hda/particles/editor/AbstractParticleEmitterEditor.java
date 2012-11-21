@@ -2,9 +2,10 @@ package de.hda.particles.editor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.features.ParticleInitialVelocityScatter;
+import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.hud.HUDEditorEntry;
 
 public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> implements Editor {
@@ -30,7 +31,6 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		// subject.setParticleLifetime(particleLifetime);
 		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
 		entries.add(HUDEditorEntry.create(LIFETIME, "Particle Lifetime"));
 		entries.add(HUDEditorEntry.create(RATE, "Rate"));
@@ -41,9 +41,11 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		entries.add(HUDEditorEntry.create(VELOCITY_X, "Velocity X"));
 		entries.add(HUDEditorEntry.create(VELOCITY_Y, "Velocity Y"));
 		entries.add(HUDEditorEntry.create(VELOCITY_Z, "Velocity Z"));
-		entries.add(HUDEditorEntry.create(ParticleInitialVelocityScatter.SCATTER_X, "Scatter X"));
-		entries.add(HUDEditorEntry.create(ParticleInitialVelocityScatter.SCATTER_Y, "Scatter Y"));
-		entries.add(HUDEditorEntry.create(ParticleInitialVelocityScatter.SCATTER_Z, "Scatter Z"));
+		ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+		while (iterator.hasNext()) {
+			ParticleFeature feature = iterator.next();
+			entries.addAll(feature.getEditorEntries());
+		}
 		return entries;
 	}
 
@@ -55,7 +57,13 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	@Override
 	public void decrease(String fieldName) {
 		if (fieldName.equals(LIFETIME)) {
-			subject.setParticleLifetime(new Long(subject.getParticleLifetime()).intValue() - 10);
+			Integer value = new Long(subject.getParticleLifetime()).intValue();
+			if (value >= 10) {
+				value -= 10;
+			} else if (value > 0) {
+				value -= 1;
+			}
+			subject.setParticleLifetime(value);
 		} else if (fieldName.equals(RATE)) {
 			subject.setRate(subject.getRate() - 1);
 		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
@@ -72,27 +80,26 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			subject.getParticleDefaultVelocity().y -= 0.1f;
 		} else if (fieldName.equals(VELOCITY_Z)) {
 			subject.getParticleDefaultVelocity().z -= 0.1f;
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_X)) {
-			Double scatterX = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_X);
-			if (scatterX == null) scatterX = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_X, scatterX - 0.1);
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Y)) {
-			Double scatterY = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Y);
-			if (scatterY == null) scatterY = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_Y, scatterY - 0.1);
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Z)) {
-			Double scatterZ = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Z);
-			if (scatterZ == null) scatterZ = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_Z, scatterZ - 0.1);
 		} else {
-			
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				ParticleFeature feature = iterator.next();
+				feature.decrease(subject, fieldName);
+			}
 		}
+
 	}
 
 	@Override
 	public void increase(String fieldName) {
 		if (fieldName.equals(LIFETIME)) {
-			subject.setParticleLifetime(new Long(subject.getParticleLifetime()).intValue() + 10);
+			Integer value = new Long(subject.getParticleLifetime()).intValue();
+			if (value >= 10) {
+				value += 10;
+			} else if (value > 0) {
+				value += 1;
+			}
+			subject.setParticleLifetime(value);
 		} else if (fieldName.equals(RATE)) {
 			subject.setRate(subject.getRate() + 1);
 		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
@@ -109,22 +116,15 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			subject.getParticleDefaultVelocity().y += 0.1f;
 		} else if (fieldName.equals(VELOCITY_Z)) {
 			subject.getParticleDefaultVelocity().z += 0.1f;
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_X)) {
-			Double scatterX = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_X);
-			if (scatterX == null) scatterX = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_X, scatterX + 0.1);
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Y)) {
-			Double scatterY = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Y);
-			if (scatterY == null) scatterY = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_Y, scatterY + 0.1);
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Z)) {
-			Double scatterZ = (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Z);
-			if (scatterZ == null) scatterZ = 0.0;
-			subject.getConfiguration().put(ParticleInitialVelocityScatter.SCATTER_Z, scatterZ + 0.1);
 		} else {
-			
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				ParticleFeature feature = iterator.next();
+				feature.increase(subject, fieldName);
+			}
 		}
 	}
+
 	@Override
 	public String getValue(String fieldName) {
 		if (fieldName.equals(LIFETIME)) {
@@ -145,14 +145,18 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			return String.format("%.2f", subject.getParticleDefaultVelocity().y);
 		} else if (fieldName.equals(VELOCITY_Z)) {
 			return String.format("%.2f", subject.getParticleDefaultVelocity().z);
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_X)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_X));
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Y)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Y));
-		} else if (fieldName.equals(ParticleInitialVelocityScatter.SCATTER_Z)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(ParticleInitialVelocityScatter.SCATTER_Z));
 		} else {
-			return "N/A";
+			String value = "N/A";
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				ParticleFeature feature = iterator.next();
+				String value2 = feature.getValue(subject, fieldName);
+				if (value2 != null) {
+					value = value2;
+					break;
+				}
+			}
+			return value;
 		}
 	}
 
