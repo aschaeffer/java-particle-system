@@ -5,9 +5,6 @@ import de.hda.particles.scene.Scene;
 
 public class GravityPointConfigurationFactory {
 
-	public static final Double DEFAULT_GRAVITY = 1.2;
-	public static final Double DEFAULT_MASS = 1000.0;
-
 	private GravityPointConfigurationFactory() {}
 
 	public static ParticleModifierConfiguration create(Scene scene) {
@@ -19,8 +16,9 @@ public class GravityPointConfigurationFactory {
 		configuration.put(GravityPoint.POINT_X, new Double(scene.getCameraManager().getPosition().x));
 		configuration.put(GravityPoint.POINT_Y, new Double(scene.getCameraManager().getPosition().y));
 		configuration.put(GravityPoint.POINT_Z, new Double(scene.getCameraManager().getPosition().z));
-		configuration.put(GravityPoint.GRAVITY, DEFAULT_GRAVITY);
-		configuration.put(GravityPoint.MASS, DEFAULT_MASS);
+		configuration.put(GravityPoint.GRAVITY, GravityPoint.DEFAULT_GRAVITY);
+		configuration.put(GravityPoint.MASS, GravityPoint.DEFAULT_MASS);
+		configuration.put(GravityPoint.MAX_FORCE, GravityPoint.DEFAULT_MAX_FORCE);
 		return configuration;
 	}
 

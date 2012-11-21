@@ -1,9 +1,13 @@
 package de.hda.particles.features;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.emitter.ParticleEmitter;
+import de.hda.particles.hud.HUDEditorEntry;
 
 public class ParticleColor implements ParticleFeature {
 
@@ -45,6 +49,73 @@ public class ParticleColor implements ParticleFeature {
 		particle.put(START_COLOR, startColor);
 		particle.put(END_COLOR, endColor);
 		particle.put(CURRENT_COLOR, startColor);
+	}
+
+	@Override
+	public List<HUDEditorEntry> getEditorEntries() {
+		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
+		entries.add(HUDEditorEntry.create(START_COLOR_R, "Start Color R"));
+		entries.add(HUDEditorEntry.create(START_COLOR_G, "Start Color G"));
+		entries.add(HUDEditorEntry.create(START_COLOR_B, "Start Color B"));
+		entries.add(HUDEditorEntry.create(START_COLOR_A, "Start Color A"));
+		entries.add(HUDEditorEntry.create(END_COLOR_R, "End Color R"));
+		entries.add(HUDEditorEntry.create(END_COLOR_G, "End Color G"));
+		entries.add(HUDEditorEntry.create(END_COLOR_B, "End Color B"));
+		entries.add(HUDEditorEntry.create(END_COLOR_A, "End Color A"));
+		return entries;
+	}
+
+	@Override
+	public void decrease(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(START_COLOR_R)
+			&& !fieldName.equals(START_COLOR_G)
+			&& !fieldName.equals(START_COLOR_B)
+			&& !fieldName.equals(START_COLOR_A)
+			&& !fieldName.equals(END_COLOR_R)
+			&& !fieldName.equals(END_COLOR_G)
+			&& !fieldName.equals(END_COLOR_B)
+			&& !fieldName.equals(END_COLOR_A)
+		) return;
+		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
+		if (value == null) value = 0;
+		if (value > 0) value--;
+		emitter.getConfiguration().put(fieldName, value);
+	}
+
+	@Override
+	public void increase(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(START_COLOR_R)
+			&& !fieldName.equals(START_COLOR_G)
+			&& !fieldName.equals(START_COLOR_B)
+			&& !fieldName.equals(START_COLOR_A)
+			&& !fieldName.equals(END_COLOR_R)
+			&& !fieldName.equals(END_COLOR_G)
+			&& !fieldName.equals(END_COLOR_B)
+			&& !fieldName.equals(END_COLOR_A)
+		) return;
+		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
+		if (value == null) value = 255;
+		if (value < 255) value++;
+		emitter.getConfiguration().put(fieldName, value);
+	}
+
+	@Override
+	public String getValue(ParticleEmitter emitter, String fieldName) {
+		if (!fieldName.equals(START_COLOR_R)
+			&& !fieldName.equals(START_COLOR_G)
+			&& !fieldName.equals(START_COLOR_B)
+			&& !fieldName.equals(START_COLOR_A)
+			&& !fieldName.equals(END_COLOR_R)
+			&& !fieldName.equals(END_COLOR_G)
+			&& !fieldName.equals(END_COLOR_B)
+			&& !fieldName.equals(END_COLOR_A)
+		) return null;
+		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
+		if (value == null) {
+			return null;
+		} else {
+			return value.toString();
+		}
 	}
 
 }

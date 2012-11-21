@@ -12,12 +12,25 @@ public class GravityPlane extends AbstractParticleModifier implements ParticleMo
 	public final static String MASS = "mass";
 	public final static String GRAVITY = "gravity";
 
+//	public static final Double DEFAULT_GRAVITY = 1.2;
+//	public static final Double DEFAULT_MASS = 1000.0;
+//
+//	public enum DIRECTION {
+//		NEGATIVE_X,
+//		NEGATIVE_Y,
+//		NEGATIVE_Z,
+//		POSITIVE_X,
+//		POSITIVE_Y,
+//		POSITIVE_Z
+//	}
+
 	public GravityPlane() {}
 
 	/**
 	 * Orthogonalprojektion des Partikels auf die Ebene, aufgespannt von
 	 * Punkt 1 und Punkt 2.
 	 */
+	@Override
 	public void update(Particle particle) {
 		Vector3f position = (Vector3f) this.configuration.get(POINT);
 		Vector3f vector1 = (Vector3f) this.configuration.get(VECTOR_1);

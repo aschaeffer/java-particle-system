@@ -16,66 +16,87 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	protected Integer particleLifetime = 5;
 	protected Integer pastIterations = 0;
 	
+	@Override
 	public Integer getRate() {
 		return rate;
 	}
 	
+	@Override
 	public void setRate(Integer rate) {
 		this.rate = rate;
 	}
+	
+	@Override
+	public ParticleSystem getParticleSystem() {
+		return particleSystem;
+	}
 
+	@Override
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
 	}
 	
+	@Override
 	public ParticleEmitterConfiguration getConfiguration() {
 		return this.configuration;
 	}
 
+	@Override
 	public void setConfiguration(ParticleEmitterConfiguration configuration) {
 		this.configuration = configuration;
 	}
 	
+	@Override
 	public void updateConfiguration(String key, Object value) {
 		this.configuration.put(key, value);
 	}
 
+	@Override
 	public Vector3f getPosition() {
 		return position;
 	}
 
+	@Override
 	public void setPosition(Vector3f position) {
 		this.position = position;
 	}
 
+	@Override
 	public Vector3f getParticleDefaultVelocity() {
 		return particleDefaultVelocity;
 	}
 
+	@Override
 	public void setParticleDefaultVelocity(Vector3f particleDefaultVelocity) {
 		this.particleDefaultVelocity = particleDefaultVelocity;
 	}
 
+	@Override
 	public Integer getParticleRenderTypeIndex() {
 		return particleRenderTypeIndex;
 	}
 
+	@Override
 	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex) {
 		this.particleRenderTypeIndex = particleRenderTypeIndex;
 	}
 
+	@Override
 	public long getParticleLifetime() {
 		return particleLifetime;
 	}
 
+	@Override
 	public void setParticleLifetime(Integer particleLifetime) {
 		this.particleLifetime = particleLifetime;
 	}
 
+	@Override
 	public Integer getPastIterations() {
 		return pastIterations;
 	}
 
+	@Override
 	public void setPastIterations(Integer pastIterations) {
 		this.pastIterations = pastIterations;
 	}

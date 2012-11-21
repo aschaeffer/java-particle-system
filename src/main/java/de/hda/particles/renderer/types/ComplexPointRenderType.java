@@ -12,22 +12,26 @@ public class ComplexPointRenderType extends AbstractRenderType implements Render
 
 	public ComplexPointRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
 	}
 	
+	@Override
 	public void after() {
 		glPopMatrix();
 	}
 
 	@Override
 	public void render(Particle particle) {
-		glPointSize((Float) particle.get(ParticleSize.CURRENT_SIZE));
+		Double size = (Double) particle.get(ParticleSize.CURRENT_SIZE);
+		if (size != null)
+			glPointSize(size.floatValue());
 		glBegin(GL_POINTS);
 		Color color = (Color) particle.get(ParticleColor.CURRENT_COLOR);
-		// glColor4b(color.getRedByte(), color.getGreenByte(), color.getBlueByte(), color.getAlphaByte());
-		glColor4f((float) color.getRed() / 255.0f, (float) color.getGreen() / 255.0f, (float) color.getBlue() / 255.0f, (float) color.getAlpha() / 255.0f);
+		if (color != null)
+			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glEnd();
 	}

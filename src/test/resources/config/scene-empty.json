@@ -1,0 +1,64 @@
+{
+	"name": "Scene 7",
+	"width": 1200,
+	"height": 600,
+	"fullscreen": false,
+	"cameras": [
+		{
+			"className": "de.hda.particles.camera.FirstPersonCamera",
+			"name": "top cam",
+			"x": 425.0,
+			"y": 195.0,
+			"z": 345.0,
+			"yaw": 305.0,
+			"pitch": -10.0,
+			"roll": 0.0,
+			"fov": 90.0
+		}, {
+			"className": "de.hda.particles.camera.FirstPersonCamera",
+			"name": "origin cam",
+			"x": 0.0,
+			"y": 0.0,
+			"z": 0.0,
+			"yaw": 0.0,
+			"pitch": 0.0,
+			"roll": 0.0,
+			"fov": 90.0
+		}, {
+			"className": "de.hda.particles.camera.FirstPersonCamera",
+			"name": "bottom cam",
+			"x": 270.0,
+			"y": -300.0,
+			"z": 270.0,
+			"yaw": 0.0,
+			"pitch": 0.0,
+			"roll": 0.0,
+			"fov": 90.0
+		}
+	],
+	"huds": [
+		"de.hda.particles.hud.CrosshairHUD",
+		"de.hda.particles.hud.CameraHUD",
+		"de.hda.particles.hud.FpsHUD",
+		"de.hda.particles.hud.ParticleSystemControlHUD",
+		"de.hda.particles.hud.MessageHUD",
+		"de.hda.particles.hud.MenuHUD",
+		"de.hda.particles.hud.EmitterHUD",
+		"de.hda.particles.hud.ModifierHUD",
+		"de.hda.particles.hud.FeatureHUD",
+		"de.hda.particles.hud.RendererHUD",
+		"de.hda.particles.hud.RenderTypeHUD",
+		"de.hda.particles.hud.EditorHUD"
+	],
+	"renderTypes": [
+		"de.hda.particles.renderer.types.SimplePointRenderType"
+	],
+	"renderer" : [
+		"de.hda.particles.renderer.SkyBoxRenderer",
+		"de.hda.particles.renderer.AxisRenderer",
+		"de.hda.particles.renderer.EmitterRenderer",
+		"de.hda.particles.renderer.GravityPointRenderer",
+		"de.hda.particles.renderer.BoundingBoxParticleCullingRenderer",
+		"de.hda.particles.renderer.BlackHoleRenderer"
+	]
+}

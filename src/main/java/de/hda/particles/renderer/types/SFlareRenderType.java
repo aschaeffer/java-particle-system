@@ -13,15 +13,15 @@ import static org.lwjgl.opengl.ARBPointSprite.*;
 import static org.lwjgl.opengl.ARBPointParameters.*;
 import de.hda.particles.domain.Particle;
 
-public class FireBallRenderType extends AbstractRenderType implements RenderType {
+public class SFlareRenderType extends AbstractRenderType implements RenderType {
 	
-	public FireBallRenderType() {}
+	public SFlareRenderType() {}
 
 	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
-		scene.getTextureManager().load("PNG", "images/particles/ball1.png").bind();
+		scene.getTextureManager().load("PNG", "images/particles/sflare.png").bind();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_POINT_SPRITE_ARB);
@@ -40,7 +40,7 @@ public class FireBallRenderType extends AbstractRenderType implements RenderType
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
 		glBegin(GL_POINTS);
-		glColor4f(1.0f, 0.5f, 0.5f, 0.05f);
+		glColor4f(0.8f, 0.8f, 1.0f, 0.1f);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ public interface ParticleEmitter extends Updateable {
 
 	public Integer getRate();
 	public void setRate(Integer rate);
+	public ParticleSystem getParticleSystem();
 	public void setParticleSystem(ParticleSystem particleSystem);
 	public void setConfiguration(ParticleEmitterConfiguration configuration);
 	public ParticleEmitterConfiguration getConfiguration();

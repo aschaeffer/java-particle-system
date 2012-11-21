@@ -29,6 +29,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected Boolean emittersEnabled = true;
 	protected Boolean modifiersEnabled = true;
 	protected Boolean clearParticlesAtNextIteration = false;
+	protected Integer pastIterations = 0;
 
 	@Override
 	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
@@ -93,10 +94,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void removeParticle(Particle particle) {
 		particles.remove(particle);
-		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
-		while (iterator.hasNext()) {
-			iterator.next().onParticleDeath(particle);
-		}
+//		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
+//		while (iterator.hasNext()) {
+//			iterator.next().onParticleDeath(particle);
+//		}
 	}
 	
 	@Override
@@ -164,6 +165,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			return;
 		}
 		idle = false;
+		pastIterations++;
 
 		if (emittersEnabled) {
 			// call every particle emitter
@@ -185,15 +187,14 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 		if (clearParticlesAtNextIteration) clearParticles(); // Thread Safety
 
 		// decrease particle lifetimes and remove death particles
-		for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
-			Particle particle = particles.get(pIndex);
+		ListIterator<Particle> particlesIterator = particles.listIterator();
+		while (particlesIterator.hasNext()) {
+			Particle particle = particlesIterator.next();
 			particle.decLifetime();
 			if (particle.getRemainingIterations() <= 0) {
-				removeParticle(particle);
-				// pIndex--;
+				particlesIterator.remove();
 			}
 		}
-		
 	}
 
 	@Override

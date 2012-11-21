@@ -10,7 +10,8 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 	private Boolean blockEmitterSelection = false;
 	private Boolean blockModifierSelection = false;
 	private Boolean blockClearSelection = false;
-
+	private Boolean blockDebugSelection = false;
+	
 	public ParticleSystemControlHUD() {}
 
 	public ParticleSystemControlHUD(Scene scene) {
@@ -19,7 +20,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_PAUSE)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
 			if (!blockPauseSelection) {
 				scene.getParticleSystem().pause();
 				if (scene.getParticleSystem().isPaused()) {
@@ -61,11 +62,20 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			if (!blockClearSelection) {
 				scene.getParticleSystem().removeAllParticles();
+				scene.getRenderTypeManager().clear();
 				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "All particles removed"));
 				blockClearSelection = true;
 			}
 		} else {
 			blockClearSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
+			if (!blockDebugSelection) {
+				scene.getRenderTypeManager().debug();
+				blockDebugSelection = true;
+			}
+		} else {
+			blockDebugSelection = false;
 		}
 
 		String text = String.format("particles: %d", scene.getParticleSystem().getParticles().size());
@@ -75,6 +85,16 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 	@Override
 	public void setup() {
 		super.setup();
+	}
+
+	@Override
+	public void executeCommand(HUDCommand command) {
+		if (command.getType() == HUDCommandTypes.REMOVE_ALL_PARTICLES) {
+			scene.getParticleSystem().beginModification();
+			scene.getParticleSystem().removeAllParticles();
+			scene.getRenderTypeManager().clear();
+			scene.getParticleSystem().endModification();
+		}
 	}
 
 }
