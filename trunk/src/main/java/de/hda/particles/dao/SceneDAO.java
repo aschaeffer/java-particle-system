@@ -13,7 +13,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
@@ -144,7 +143,7 @@ public class SceneDAO {
 		scene.getRendererManager().setup();
 	}
 	
-	public void save(Scene scene, String filename) throws JsonGenerationException, JsonMappingException, IOException {
+	public void save(Scene scene, File file) throws JsonGenerationException, JsonMappingException, IOException {
 		SceneConfiguration sceneConfiguration = new SceneConfiguration();
 		sceneConfiguration.name = scene.getName();
 		sceneConfiguration.width = scene.getWidth();
@@ -185,6 +184,7 @@ public class SceneDAO {
 			sceneConfiguration.renderer.add(renderer.getClass().getName());
 		}
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filename), sceneConfiguration);
+		mapper.writerWithDefaultPrettyPrinter().writeValue(file, sceneConfiguration);
 	}
+
 }

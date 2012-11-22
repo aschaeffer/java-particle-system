@@ -42,7 +42,14 @@ public interface Scene extends Updateable, FpsInformation {
 
 
 /**
- * Notizen:
+ * TODO:
+ * 8. ein paar scenes vorbereiten
+ * 16. sprite sheet (sauerbraten flames) / loading grayscale textures
+ * 20. movement paths (cameras)
+ * 21. Mapping physics render type class <-> scene render type index
+ * 22. Frame Rate independent physics modification: http://thecodinguniverse.com/lwjgl-frame-rate-independent-movement/
+ * 
+ * 
  * DONE 1. ---draw method per particle class--- render method index
  * DONE 2a. particle render type manager
  * DONE 2b. particle render type: 3d point
@@ -54,7 +61,6 @@ public interface Scene extends Updateable, FpsInformation {
  * DONE 6a. particle system loader
  * DONE 6b. particle system saver
  * DONE 7. particle system editor
- * 8. ein paar scenes vorbereiten
  * DONE 9. maus zauberstab (emitter movement statt camera movement)
  * DONE 10. gravity points
  * DONE 11. gravity planes
@@ -62,15 +68,8 @@ public interface Scene extends Updateable, FpsInformation {
  * DONE 13. fov / zoom
  * DONE 14. crosshair
  * DONE 15. fullscreen
- * 16. sprite sheet (sauerbraten fire)
  * DONE 17. multiple physics threads
  * DONE 18. picking
  * DONE 19. movement von selectable
- * 20. movement paths (cameras)
- * 21. Mapping physics render type class <-> scene render type index
- * 22. Frame Rate independent physics modification: http://thecodinguniverse.com/lwjgl-frame-rate-independent-movement/
  * 
-		// Notiz:
-		//   Masse-Feder-Emitter: Aktuell emittierter Partikel wird mit den vorigen
-		//   drei ausgestoßenen partikeln verbunden -> so bildet sich eine Kette
  **/

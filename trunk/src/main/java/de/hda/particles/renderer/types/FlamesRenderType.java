@@ -9,19 +9,29 @@ import java.nio.FloatBuffer;
 import org.lwjgl.opengl.ARBPointParameters;
 import org.lwjgl.opengl.ARBPointSprite;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.opengl.Texture;
+
 import static org.lwjgl.opengl.ARBPointSprite.*;
 import static org.lwjgl.opengl.ARBPointParameters.*;
 import de.hda.particles.domain.Particle;
 
 public class FlamesRenderType extends AbstractRenderType implements RenderType {
+
+	private static Integer SPRITES_PER_ROW = 2;
+	private static Integer SPRITES_PER_COLUM = 2;
+	private static Integer ITERATIONS_PER_SPRITE = 1;
+	private static Float QUAD_WIDTH = 10.0f;
 	
+	private Texture texture;
+
 	public FlamesRenderType() {}
 
 	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
-		scene.getTextureManager().load("PNG", "images/particles/flames.png").bind();
+		texture = scene.getTextureManager().load("PNG", "images/particles/flames.png");
+		texture.bind();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_POINT_SPRITE_ARB);
@@ -39,7 +49,7 @@ public class FlamesRenderType extends AbstractRenderType implements RenderType {
 		glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
-		glBegin(GL_POINTS);
+		glBegin(GL_QUADS);
 		glColor4f(1.0f, 0.5f, 0.5f, 0.05f);
 	}
 	
@@ -55,8 +65,33 @@ public class FlamesRenderType extends AbstractRenderType implements RenderType {
 
 	@Override
 	public void render(Particle particle) {
-		 glTexCoord2f(0.5f, 0.5f);
-		 glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+		
+		Integer texNo = particle.getPastIterations() / ITERATIONS_PER_SPRITE;
+		Integer row = texNo / SPRITES_PER_ROW;
+		Integer col = texNo % SPRITES_PER_COLUM;
+		
+		float u0 = row / SPRITES_PER_ROW;
+		float u1 = (row + 1) / SPRITES_PER_ROW;
+
+		float v0 = col / SPRITES_PER_COLUM;
+		float v1 = (col + 1) / SPRITES_PER_COLUM; 
+
+		glTexCoord2f(u1, v0);
+		glVertex3f(particle.getX() + QUAD_WIDTH, particle.getY() + QUAD_WIDTH, particle.getZ());
+		glTexCoord2f(u0, v0);
+		glVertex3f(particle.getX(), particle.getY() + QUAD_WIDTH, particle.getZ());
+		glTexCoord2f(u0, v1);
+		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+		glTexCoord2f(u1, v1);
+		glVertex3f(particle.getX() + QUAD_WIDTH, particle.getY(), particle.getZ());
+
+//		glMatrixMode(GL_TEXTURE);
+//        glLoadIdentity();
+//        glScalef(row/2f, col/2f, 1f);
+//		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+        
+//		glTexCoord2f(0.5f, 0.5f);
+//		glVertex3f(particle.getX(), particle.getY(), );
 	}
 
 }

@@ -37,12 +37,6 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
 		glPushMatrix();
 		
 		glDisable(GL_DEPTH_TEST);
-		
-		glPointSize(10.0f);
-        glBegin(GL_POINTS);
-        glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glEnd();
 
 		glLineWidth(3.0f);
         glBegin (GL_LINES);
@@ -66,30 +60,9 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
         glVertex3f (0.0f, 0.0f, -axisLength); // Z
         glEnd ();
 
-//        glLoadIdentity();
-//        glMatrixMode(GL_PROJECTION); 
-
-        // glTranslatef(100.0f, 0, 0);
-        // font.drawString(0.0f, 0.0f, "X");
-
 		glEnable(GL_DEPTH_TEST);
 
         glPopMatrix();
-        
-        // Text Axis
-
-//      glRasterPos3f (axisLength, 0.0f, 0.0f);
-//      font.drawString(0.0f, 0.0f, "X");
-//      glRasterPos3f (-1000.0f, 0.0f, 0.0f);
-//      font.drawString(0.0f, 0.0f, "-X");
-//      glRasterPos3f (0.0f, 1000.0f, 0.0f);
-//      font.drawString(0.0f, 0.0f, "Y");
-//      glRasterPos3f (0.0f, -1000.0f, 0.0f);
-//      font.drawString(0.0f, 0.0f, "-Y");
-//      glRasterPos3f (0.0f, 0.0f, 1000.0f);
-//      font.drawString(0.0f, 0.0f, "Z");
-//      glRasterPos3f (0.0f, 0.0f, -1000.0f);
-//      font.drawString(0.0f, 0.0f, "-Z");
 
 	}
 

@@ -67,16 +67,16 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableScene.class);
 
-    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneManager) {
+    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneDAO) {
     	super();
     	this.particleSystem = particleSystem;
-    	this.sceneDAO = sceneManager;
+    	this.sceneDAO = sceneDAO;
     }
 
-    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneManager, Integer width, Integer height) {
+    public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneDAO, Integer width, Integer height) {
 		super(width, height);
 		this.particleSystem = particleSystem;
-    	this.sceneDAO = sceneManager;
+    	this.sceneDAO = sceneDAO;
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 			if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 				String filename = file.getAbsolutePath();
-				sceneDAO.save(this, filename);
+				sceneDAO.save(this, file);
 				hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Successfully saved scene to " + filename));
 			}
 		} catch (Exception e) {
