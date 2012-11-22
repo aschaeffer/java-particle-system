@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.dao.ParticleSystemDAO;
 import de.hda.particles.dao.SceneDAO;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
@@ -39,12 +40,11 @@ public class SimpleParticleSystemTest {
 	@Test
 	public void configurableParticleSystemTest() {
 		try {
-			ParticleSystemManager particleSystemManager = new ParticleSystemManager();
-			ParticleSystem particleSystem = particleSystemManager.load("/config/system-empty.json");
+			ParticleSystemDAO particleSystemDAO = new ParticleSystemDAO();
+			ParticleSystem particleSystem = particleSystemDAO.create("/config/system-empty.json");
 
 			SceneDAO sceneDAO = new SceneDAO();
 			Scene scene = sceneDAO.create("/config/scene-empty.json", particleSystem);
-			sceneDAO.save(scene, "/tmp/test.json");
 
 			SystemRunner systemRunner = new SystemRunner();
 			systemRunner.add(particleSystem.getSystemName(), particleSystem);
@@ -456,7 +456,6 @@ public class SimpleParticleSystemTest {
 		try {
 			SceneDAO sceneManager = new SceneDAO();
 			Scene scene = sceneManager.create("/config/scene1.json", particleSystem);
-			sceneManager.save(scene, "/tmp/test.json");
 
 			SystemRunner systemRunner = new SystemRunner();
 			systemRunner.add(particleSystem.getSystemName(), particleSystem);

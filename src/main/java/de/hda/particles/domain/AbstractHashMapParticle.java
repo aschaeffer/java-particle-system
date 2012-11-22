@@ -120,6 +120,11 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	public void setRemainingIterations(Integer remainingIterations) {
 		this.remainingIterations = remainingIterations;
 	}
+	
+	@Override
+	public Integer getPastIterations() {
+		return pastIterations;
+	}
 
 	@Override
 	public Float getLifetimePercent() {

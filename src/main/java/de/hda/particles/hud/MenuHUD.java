@@ -12,6 +12,7 @@ import org.newdawn.slick.font.effects.ColorEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.ConfigurableParticleSystem;
 import de.hda.particles.scene.ConfigurableScene;
 import de.hda.particles.scene.Scene;
 
@@ -236,6 +237,18 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		if (command.getType() == HUDCommandTypes.SAVE_SCENE) {
 			ConfigurableScene cScene = (ConfigurableScene) scene;
 			cScene.openSaveDialog();
+		}
+		if (command.getType() == HUDCommandTypes.LOAD_SYSTEM) {
+			ConfigurableParticleSystem cParticleSystem = (ConfigurableParticleSystem) scene.getParticleSystem();
+			scene.getParticleSystem().beginModification();
+			cParticleSystem.openLoadDialog();
+			scene.getParticleSystem().endModification();
+		}
+		if (command.getType() == HUDCommandTypes.SAVE_SYSTEM) {
+			ConfigurableParticleSystem cParticleSystem = (ConfigurableParticleSystem) scene.getParticleSystem();
+			scene.getParticleSystem().beginModification();
+			cParticleSystem.openSaveDialog();
+			scene.getParticleSystem().endModification();
 		}
 	}
 }

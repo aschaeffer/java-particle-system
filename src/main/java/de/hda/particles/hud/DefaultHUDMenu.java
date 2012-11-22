@@ -88,6 +88,8 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addFeatures, "Size", HUDCommandTypes.ADD_FEATURE, ParticleSize.class);
 		HUDMenuEntry.create(addFeatures, "Initial Velocity Scatter", HUDCommandTypes.ADD_FEATURE, ParticleInitialVelocityScatter.class);
 		HUDMenuEntry.create(addFeatures, "MassSpring", HUDCommandTypes.ADD_FEATURE, MassSpring.class);
+		HUDMenuEntry.create(physics, "Load System", HUDCommandTypes.LOAD_SYSTEM);
+		HUDMenuEntry.create(physics, "Save System", HUDCommandTypes.SAVE_SYSTEM);
 		HUDMenuEntry.create(physics, "Remove all Particles", HUDCommandTypes.REMOVE_ALL_PARTICLES);
 		HUDMenuEntry.create(root, "Exit", HUDCommandTypes.EXIT);
 		return root;

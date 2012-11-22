@@ -120,6 +120,11 @@ public abstract class AbstractParticle implements Particle {
 	public void setRemainingIterations(Integer remainingIterations) {
 		this.remainingIterations = remainingIterations;
 	}
+	
+	@Override
+	public Integer getPastIterations() {
+		return pastIterations;
+	}
 
 	@Override
 	public Float getLifetimePercent() {

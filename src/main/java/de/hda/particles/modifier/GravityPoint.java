@@ -21,13 +21,16 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	@Override
 	public void update(Particle particle) {
-		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z) || !configuration.containsKey(GRAVITY) || !configuration.containsKey(MASS) || !configuration.containsKey(MAX_FORCE)) return;
+		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
 		Double gravityPointXd = (Double) this.configuration.get(POINT_X);
 		Double gravityPointYd = (Double) this.configuration.get(POINT_Y);
 		Double gravityPointZd = (Double) this.configuration.get(POINT_Z);
-		Double massd = (Double) this.configuration.get(MASS);
 		Double gravityd = (Double) this.configuration.get(GRAVITY);
+		if (gravityd == null) gravityd = DEFAULT_GRAVITY;
+		Double massd = (Double) this.configuration.get(MASS);
+		if (massd == null) massd = DEFAULT_MASS;
 		Double maxForce = (Double) this.configuration.get(MAX_FORCE);
+		if (maxForce == null) maxForce = DEFAULT_MAX_FORCE;
 		Float gravityPointX = gravityPointXd.floatValue();
 		Float gravityPointY = gravityPointYd.floatValue();
 		Float gravityPointZ = gravityPointZd.floatValue();

@@ -32,7 +32,7 @@ public class MassSpringRenderType extends AbstractRenderType implements RenderTy
 	@Override
 	public void render(Particle particle) {
 		@SuppressWarnings("unchecked")
-		List<Particle> connectedParticles = (List<Particle>) particle.get(MassSpring.CONNECTED_PARTICLES);
+		List<Particle> connectedParticles = (List<Particle>) particle.get(MassSpring.SPRING_CONNECTED_PARTICLES);
 		if (connectedParticles == null) return;
 		ListIterator<Particle> iterator = connectedParticles.listIterator();
 		while (iterator.hasNext()) {
