@@ -19,6 +19,8 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 
 	@Override
 	public void update() {
+		if (!visible) return;
+
 		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
 		// List<ParticleEmitter> currentEmitters = new ArrayList<ParticleEmitter>(scene.getParticleSystem().getParticleEmitters());
 		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);

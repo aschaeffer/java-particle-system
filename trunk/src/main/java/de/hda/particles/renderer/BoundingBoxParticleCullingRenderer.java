@@ -13,23 +13,22 @@ import de.hda.particles.modifier.ParticleModifier;
 
 public class BoundingBoxParticleCullingRenderer extends AbstractSelectable<BoundingBoxParticleCulling> implements Renderer {
 
-	private Boolean activated = true;
-	private Boolean blockActivatedSelection = false;
+	private Boolean blockVisibilitySelection = false;
 	
 	public BoundingBoxParticleCullingRenderer() {}
 
 	@Override
 	public void update() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_Y)) {
-			if (!blockActivatedSelection) {
-				activated = !activated;
-				blockActivatedSelection = true;
+			if (!blockVisibilitySelection) {
+				visible = !visible;
+				blockVisibilitySelection = true;
 			}
 		} else {
-			blockActivatedSelection = false;
+			blockVisibilitySelection = false;
 		}
 
-		if (!activated) return;
+		if (!visible) return;
 
 		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);

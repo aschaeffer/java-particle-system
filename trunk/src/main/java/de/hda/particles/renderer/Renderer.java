@@ -13,5 +13,8 @@ public interface Renderer extends Updateable {
 	Object getSelected();
 	void move(Vector3f position);
 	void remove(Vector3f position);
+	
+	void setVisible(Boolean visibility);
+	Boolean isVisible();
 
 }

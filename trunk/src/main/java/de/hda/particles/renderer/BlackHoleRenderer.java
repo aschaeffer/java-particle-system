@@ -18,6 +18,9 @@ public class BlackHoleRenderer extends AbstractSelectable<BlackHole> implements 
 
 	@Override
 	public void update() {
+
+		if (!visible) return;
+
 		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
 		// List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().getParticleModifiers());
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
