@@ -7,6 +7,7 @@ import de.hda.particles.scene.Scene;
 public abstract class AbstractRenderer implements Renderer {
 
 	protected Scene scene;
+	protected Boolean visible = true;
 
 	@Override
 	public void setup() {
@@ -46,6 +47,16 @@ public abstract class AbstractRenderer implements Renderer {
 
 	@Override
 	public void remove(Vector3f position) {
+	}
+	
+	@Override
+	public void setVisible(Boolean visibility) {
+		this.visible = visibility;
+	}
+
+	@Override
+	public Boolean isVisible() {
+		return visible;
 	}
 
 }

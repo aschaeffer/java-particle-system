@@ -35,7 +35,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 
-	private static final String SKYBOX_NAME = "sleepyhollow";
+	private static final String DEFAULT_SKYBOX_NAME = "sleepyhollow";
 
 	private final List<Texture> textures = new ArrayList<Texture>();
 	
@@ -45,14 +45,14 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer {
 
 	@Override
 	public void setup() {
-		loadSkybox(SKYBOX_NAME);
+		loadSkybox(DEFAULT_SKYBOX_NAME);
 	}
 
 	@Override
 	public void update() {
 		
-		if (!ready) return;
-		
+		if (!ready || !visible) return;
+
 		glPushMatrix();
 
 		glPushAttrib(GL_ENABLE_BIT);

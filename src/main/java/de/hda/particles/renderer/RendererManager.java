@@ -47,8 +47,29 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 		}
 	}
 	
+	public void setVisibility(Class<? extends Renderer> rendererClass, Boolean visibility) {
+		ListIterator<Renderer> iterator = renderers.listIterator();
+		while (iterator.hasNext()) {
+			Renderer renderer = iterator.next();
+			if (renderer.getClass().equals(rendererClass)) {
+				renderer.setVisible(visibility);
+			}
+		}
+	}
+	
 	public List<Renderer> getRenderer() {
 		return renderers;
+	}
+	
+	public Renderer getRendererByClass(Class<? extends Renderer> rendererClass) {
+		ListIterator<Renderer> iterator = renderers.listIterator();
+		while (iterator.hasNext()) {
+			Renderer renderer = iterator.next();
+			if (renderer.getClass().equals(rendererClass)) {
+				return renderer;
+			}
+		}
+		return null;
 	}
 
 	@Override

@@ -15,6 +15,8 @@ public class CameraRenderer extends AbstractSelectable<Camera> implements Render
 
 	@Override
 	public void update() {
+		if (!visible) return;
+
 		List<Camera> cameras = scene.getCameraManager().getCameras();
 		// List<Camera> cameras = new ArrayList<Camera>(scene.getCameraManager().getCameras());
 		ListIterator<Camera> pIterator = cameras.listIterator(0);
