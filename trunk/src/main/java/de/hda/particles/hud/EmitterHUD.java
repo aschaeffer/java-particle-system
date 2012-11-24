@@ -28,7 +28,14 @@ public class EmitterHUD extends AbstractHUD implements HUD {
 		if (command.getType() == HUDCommandTypes.ADD_EMITTER) {
 			scene.getParticleSystem().beginModification();
 			Vector3f position = new Vector3f(scene.getCameraManager().getPosition());
-			scene.getParticleSystem().addParticleEmitter((Class) command.getPayLoad(), position, scene.getCameraManager().getDirectionVector(), 1, 10, 300, ParticleEmitterConfiguration.EMPTY);
+			ParticleEmitterConfiguration configuration = new ParticleEmitterConfiguration();
+			Class configurationFactoryClass = (Class) command.getPayLoad2();
+			if (configurationFactoryClass != null) {
+				try {
+					configuration = (ParticleEmitterConfiguration) configurationFactoryClass.getMethod("create", Scene.class).invoke(null, scene);
+				} catch (Exception e) {}
+			}
+			scene.getParticleSystem().addParticleEmitter((Class) command.getPayLoad(), position, scene.getCameraManager().getDirectionVector(), 1, 10, 300, configuration);
 			scene.getParticleSystem().endModification();
 		}
 //		if (command.getType() == HUDCommandTypes.REMOVE_EMITTER) {

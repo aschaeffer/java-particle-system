@@ -9,7 +9,7 @@ import de.hda.particles.domain.Particle;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.hud.HUDEditorEntry;
 
-public class MassSpring implements ParticleFeature {
+public class MassSpring extends AbstractParticleFeature implements ParticleFeature {
 
 	public static final String NUMBER_SPRINGS = "numberSprings";   // The number of springs
 	public static final String SPRING_LENGTH = "springLength";     // The length that the spring does not exert any force
@@ -26,6 +26,17 @@ public class MassSpring implements ParticleFeature {
 	public static final Integer DEFAULT_SPRING_CONSTRUCTION_RULE = 0;
 
 	private final HashMap<ParticleEmitter, Buffer> buffers = new HashMap<ParticleEmitter, Buffer>();
+
+	@Override
+	public List<HUDEditorEntry> getEditorEntries() {
+		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
+		entries.add(HUDEditorEntry.create(SPRING_CONSTRUCTION_RULE, "Spring Construction Rule"));
+		entries.add(HUDEditorEntry.create(NUMBER_SPRINGS, "Number Of Springs"));
+		entries.add(HUDEditorEntry.create(SPRING_LENGTH, "Spring Length"));
+		entries.add(HUDEditorEntry.create(SPRING_FRICTION, "Spring Friction"));
+		entries.add(HUDEditorEntry.create(SPRING_CONSTANT, "Spring Constant"));
+		return entries;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -66,109 +77,113 @@ public class MassSpring implements ParticleFeature {
 	}
 
 	@Override
-	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(SPRING_CONSTRUCTION_RULE, "Spring Construction Rule"));
-		entries.add(HUDEditorEntry.create(NUMBER_SPRINGS, "Number Of Springs"));
-		entries.add(HUDEditorEntry.create(SPRING_LENGTH, "Spring Length"));
-		entries.add(HUDEditorEntry.create(SPRING_FRICTION, "Spring Friction"));
-		entries.add(HUDEditorEntry.create(SPRING_CONSTANT, "Spring Constant"));
-		return entries;
+	public void decrease(ParticleEmitter emitter, String fieldName) {
+		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
+			Integer value = decreaseValue(emitter, SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE, 0);
+			if (value == 3) {
+				setNumberOfSprings(emitter, 3);
+			} else if (value == 4) {
+				setNumberOfSprings(emitter, 5);
+			}
+		} else if (fieldName.equals(NUMBER_SPRINGS)) {
+			setNumberOfSprings(emitter, decreaseValue(emitter, NUMBER_SPRINGS, DEFAULT_NUMBER_SPRINGS, 0));
+		} else if (fieldName.equals(SPRING_LENGTH)) {
+			decreaseValue(emitter, SPRING_LENGTH, DEFAULT_SPRING_LENGTH, 0.01);
+		} else if (fieldName.equals(SPRING_FRICTION)) {
+			decreaseValue(emitter, SPRING_FRICTION, DEFAULT_SPRING_FRICTION, 0.01);
+		} else if (fieldName.equals(SPRING_CONSTANT)) {
+			decreaseValue(emitter, SPRING_CONSTANT, DEFAULT_SPRING_CONSTANT, 0.01);
+		}
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
-			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_CONSTRUCTION_RULE;
-			if (value > 0) value -= 1;
-			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, value);
+			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, 0);
 		} else if (fieldName.equals(NUMBER_SPRINGS)) {
-			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_NUMBER_SPRINGS;
-			if (value > 0) value -= 1;
-			if (value > 0) {
-				emitter.getConfiguration().put(NUMBER_SPRINGS, value);
-				Buffer buffer = buffers.get(emitter);
-				if (buffer != null) buffer.clear();
-				buffer = new CircularFifoBuffer(value);
-				buffers.put(emitter, buffer);
-			}
-			emitter.getConfiguration().put(NUMBER_SPRINGS, value);
+			emitter.getConfiguration().put(NUMBER_SPRINGS, 0);
 		} else if (fieldName.equals(SPRING_LENGTH)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_LENGTH;
-			if (value >= 0.1) value -= 0.1;
-			emitter.getConfiguration().put(SPRING_LENGTH, value);
+			emitter.getConfiguration().put(SPRING_LENGTH, 0.01);
 		} else if (fieldName.equals(SPRING_FRICTION)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_FRICTION;
-			if (value >= 0.01) value -= 0.01;
-			emitter.getConfiguration().put(SPRING_FRICTION, value);
+			emitter.getConfiguration().put(SPRING_FRICTION, 0.01);
 		} else if (fieldName.equals(SPRING_CONSTANT)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_CONSTANT;
-			if (value >= 0.01) value -= 0.01;
-			emitter.getConfiguration().put(SPRING_CONSTANT, value);
+			emitter.getConfiguration().put(SPRING_CONSTANT, 0.01);
 		}
 	}
 
 	@Override
 	public void increase(ParticleEmitter emitter, String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
-			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_CONSTRUCTION_RULE;
-			value += 1;
-			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, value);
+			Integer value = increaseValue(emitter, SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE);
 			if (value == 3) {
-				emitter.getConfiguration().put(NUMBER_SPRINGS, 4);
+				setNumberOfSprings(emitter, 3);
 			} else if (value == 4) {
-				emitter.getConfiguration().put(NUMBER_SPRINGS, 9);
+				setNumberOfSprings(emitter, 5);
 			}
 		} else if (fieldName.equals(NUMBER_SPRINGS)) {
-			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_NUMBER_SPRINGS;
-			value += 1;
-			emitter.getConfiguration().put(NUMBER_SPRINGS, value);
-			Buffer buffer = buffers.get(emitter);
-			if (buffer != null) buffer.clear();
-			buffer = new CircularFifoBuffer(value);
-			buffers.put(emitter, buffer);
-			emitter.getConfiguration().put(NUMBER_SPRINGS, value);
+			setNumberOfSprings(emitter, increaseValue(emitter, NUMBER_SPRINGS, DEFAULT_NUMBER_SPRINGS));
 		} else if (fieldName.equals(SPRING_LENGTH)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_LENGTH;
-			value += 0.1;
-			emitter.getConfiguration().put(SPRING_LENGTH, value);
+			increaseValue(emitter, SPRING_LENGTH, DEFAULT_SPRING_LENGTH);
 		} else if (fieldName.equals(SPRING_FRICTION)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_FRICTION;
-			if (value < 1.0) value += 0.01;
-			emitter.getConfiguration().put(SPRING_FRICTION, value);
+			increaseValue(emitter, SPRING_FRICTION, DEFAULT_SPRING_FRICTION, 1.0);
 		} else if (fieldName.equals(SPRING_CONSTANT)) {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) value = DEFAULT_SPRING_CONSTANT;
-			value += 0.01;
-			emitter.getConfiguration().put(SPRING_CONSTANT, value);
+			increaseValue(emitter, SPRING_CONSTANT, DEFAULT_SPRING_CONSTANT);
+		}
+	}
+
+	@Override
+	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
+			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, 4);
+		} else if (fieldName.equals(NUMBER_SPRINGS)) {
+			emitter.getConfiguration().put(NUMBER_SPRINGS, 100);
+		} else if (fieldName.equals(SPRING_LENGTH)) {
+			emitter.getConfiguration().put(SPRING_LENGTH, 1000.0);
+		} else if (fieldName.equals(SPRING_FRICTION)) {
+			emitter.getConfiguration().put(SPRING_FRICTION, 1.00);
+		} else if (fieldName.equals(SPRING_CONSTANT)) {
+			emitter.getConfiguration().put(SPRING_CONSTANT, 1.00);
+		}
+	}
+	
+	@Override
+	public void setDefault(ParticleEmitter emitter, String fieldName) {
+		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
+			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE);
+		} else if (fieldName.equals(NUMBER_SPRINGS)) {
+			emitter.getConfiguration().put(NUMBER_SPRINGS, DEFAULT_NUMBER_SPRINGS);
+		} else if (fieldName.equals(SPRING_LENGTH)) {
+			emitter.getConfiguration().put(SPRING_LENGTH, DEFAULT_SPRING_LENGTH);
+		} else if (fieldName.equals(SPRING_FRICTION)) {
+			emitter.getConfiguration().put(SPRING_FRICTION, DEFAULT_SPRING_FRICTION);
+		} else if (fieldName.equals(SPRING_CONSTANT)) {
+			emitter.getConfiguration().put(SPRING_CONSTANT, DEFAULT_SPRING_CONSTANT);
 		}
 	}
 
 	@Override
 	public String getValue(ParticleEmitter emitter, String fieldName) {
-		if (!fieldName.equals(SPRING_CONSTRUCTION_RULE)
-			&& !fieldName.equals(NUMBER_SPRINGS)
-			&& !fieldName.equals(SPRING_LENGTH)
-			&& !fieldName.equals(SPRING_FRICTION)
-			&& !fieldName.equals(SPRING_CONSTANT)
-		) return null;
+		if (!validFieldName(fieldName)) return null;
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE) || fieldName.equals(NUMBER_SPRINGS)) {
-			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-			if (value == null) return "N/A";
-			return value.toString();
+			return getIntegerValueAsString(emitter, fieldName);
+//			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
+//			if (value == null) return "N/A";
+//			return value.toString();
 		} else {
-			Double value = (Double) emitter.getConfiguration().get(fieldName);
-			if (value == null) return "N/A";
-			return String.format("%.2f", value);
+			return getDoubleValueAsString(emitter, fieldName);
+//			Double value = (Double) emitter.getConfiguration().get(fieldName);
+//			if (value == null) return "N/A";
+//			return String.format("%.2f", value);
+		}
+	}
+	
+	private void setNumberOfSprings(ParticleEmitter emitter, Integer numberOfSprings) {
+		if (numberOfSprings > 0) {
+			emitter.getConfiguration().put(NUMBER_SPRINGS, numberOfSprings);
+			Buffer buffer = buffers.get(emitter);
+			if (buffer != null) buffer.clear();
+			buffer = new CircularFifoBuffer(numberOfSprings);
+			buffers.put(emitter, buffer);
 		}
 	}
 	
@@ -208,13 +223,16 @@ public class MassSpring implements ParticleFeature {
 			 *    *---*---*---*---*---
 			 */
 			ArrayList<Particle> previousParticles = new ArrayList<Particle>(buffers.get(emitter));
-			Particle previousParticle = previousParticles.get(previousParticles.size() - 1);
-			if (previousParticle.containsKey("SPRING_MOD_2")) {
-				springConnectedParticles.add(previousParticles.get(previousParticles.size() - 2));
-			} else {
-				springConnectedParticles.add(previousParticles.get(previousParticles.size() - 2));
-				springConnectedParticles.add(previousParticle);
-				particle.put("SPRING_MOD_2", true);
+			Integer lastIndex = previousParticles.size() - 1;
+			if (previousParticles.size() == 3) {
+				Particle previousParticle = previousParticles.get(lastIndex);
+				if (previousParticle.containsKey("SPRING_MOD_2")) {
+					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
+				} else {
+					springConnectedParticles.add(previousParticles.get(lastIndex));
+					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
+					particle.put("SPRING_MOD_2", true);
+				}
 			}
 		} else if (springContructionRule == 4) {
 			/**
@@ -226,27 +244,36 @@ public class MassSpring implements ParticleFeature {
 			 */
 			ArrayList<Particle> previousParticles = new ArrayList<Particle>(buffers.get(emitter));
 			Integer lastIndex = previousParticles.size() - 1;
-			if (previousParticles.size() >= 5) {
+			if (previousParticles.size() == 5) {
 				Particle previousParticle = previousParticles.get(lastIndex);
-				if (previousParticle.containsKey("SPRING_MOD_4")) { // step 4
-					springConnectedParticles.add(previousParticles.get(4));
-				} else if (previousParticle.containsKey("SPRING_MOD_3")) { // step 3
+				if (previousParticle.containsKey("SPRING_MOD_4")) { // step 1
 					springConnectedParticles.add(previousParticles.get(lastIndex));
+					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
+					springConnectedParticles.add(previousParticles.get(lastIndex - 4));
+				} else if (previousParticle.containsKey("SPRING_MOD_3")) { // step 2
+					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
 					springConnectedParticles.add(previousParticles.get(lastIndex - 4));
 					particle.put("SPRING_MOD_4", true);
-				} else if (previousParticle.containsKey("SPRING_MOD_2")) { // step 2
-					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
+				} else if (previousParticle.containsKey("SPRING_MOD_2")) { // step 3
+					springConnectedParticles.add(previousParticles.get(lastIndex));
 					springConnectedParticles.add(previousParticles.get(lastIndex - 4));
 					particle.put("SPRING_MOD_3", true);
-				} else { // step 1
-					springConnectedParticles.add(previousParticles.get(lastIndex));
-					springConnectedParticles.add(previousParticles.get(lastIndex - 1));
+				} else { // step 4
 					springConnectedParticles.add(previousParticles.get(lastIndex - 4));
 					particle.put("SPRING_MOD_2", true);
 				}
 			}
 		}
 		particle.put(SPRING_CONNECTED_PARTICLES, springConnectedParticles);
+	}
+	
+	@Override
+	public Boolean validFieldName(String fieldName) {
+		return (fieldName.equals(SPRING_CONSTRUCTION_RULE)
+			|| fieldName.equals(NUMBER_SPRINGS)
+			|| fieldName.equals(SPRING_LENGTH)
+			|| fieldName.equals(SPRING_FRICTION)
+			|| fieldName.equals(SPRING_CONSTANT));
 	}
 
 }

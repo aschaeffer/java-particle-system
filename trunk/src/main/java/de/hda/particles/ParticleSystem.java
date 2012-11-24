@@ -33,6 +33,7 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public void removeParticleListener(ParticleLifetimeListener particleListener);
 	
 	public void pause();
+	public void next();
 	public void toggleEmitters();
 	public void toggleModifiers();
 	public Boolean isPaused();

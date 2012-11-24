@@ -25,6 +25,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected List<ParticleLifetimeListener> listeners = new ArrayList<ParticleLifetimeListener>();
 
 	protected Boolean paused = false;
+	protected Boolean next = false;
 	protected Boolean idle = true;
 	protected Boolean emittersEnabled = true;
 	protected Boolean modifiersEnabled = true;
@@ -129,6 +130,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	public void pause() {
 		paused = !paused;
 	}
+	
+	@Override
+	public void next() {
+		next = true;
+	}
 
 	@Override
 	public void toggleEmitters() {
@@ -160,11 +166,15 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 		calcFps();
 		limitFps();
 		
-		if (paused) {
-			idle = true;
-			return;
+		if (next) {
+			next = false;
+		} else {
+			if (paused) {
+				idle = true;
+				return;
+			}
+			idle = false;
 		}
-		idle = false;
 		pastIterations++;
 
 		if (emittersEnabled) {
@@ -179,6 +189,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			while (mIterator.hasNext()) {
 				ParticleModifier modifier = mIterator.next();
 				for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
+					particles.get(pIndex).setIndex(pIndex);
 					modifier.update(particles.get(pIndex));
 				}
 			}

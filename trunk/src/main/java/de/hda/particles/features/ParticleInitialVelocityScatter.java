@@ -16,29 +16,21 @@ import de.hda.particles.hud.HUDEditorEntry;
  * @author aschaeffer
  *
  */
-public class ParticleInitialVelocityScatter implements ParticleFeature {
+public class ParticleInitialVelocityScatter extends AbstractParticleFeature implements ParticleFeature {
 
 	public static final String SCATTER_X = "scatter_x";
 	public static final String SCATTER_Y = "scatter_y";
 	public static final String SCATTER_Z = "scatter_z";
+	public static final String SCATTER_PULSE = "scatterPulse";
+	public static final String SCATTER_PULSE_RESOLUTION = "scatterPulseResolution";
+
+	public static final Double DEFAULT_SCATTER_X = 0.0;
+	public static final Double DEFAULT_SCATTER_Y = 0.0;
+	public static final Double DEFAULT_SCATTER_Z = 0.0;
+	public static final Double DEFAULT_SCATTER_PULSE = 1.0;
+	public static final Double DEFAULT_SCATTER_PULSE_RESOLUTION = 0.0;
 
 	private final Random random = new Random();
-
-	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
-		if (!emitter.getConfiguration().containsKey(SCATTER_X) || !emitter.getConfiguration().containsKey(SCATTER_Y) || !emitter.getConfiguration().containsKey(SCATTER_Z)) return;
-		Double scatterX = (Double) emitter.getConfiguration().get(SCATTER_X);
-		Double scatterY = (Double) emitter.getConfiguration().get(SCATTER_Y);
-		Double scatterZ = (Double) emitter.getConfiguration().get(SCATTER_Z);
-		Vector3f velocity = particle.getVelocity();
-		Float vdx = new Double(new Double(velocity.getX()) + scatterX * random.nextDouble() - scatterX / 2.0).floatValue();
-		Float vdy = new Double(new Double(velocity.getY()) + scatterY * random.nextDouble() - scatterY / 2.0).floatValue();
-		Float vdz = new Double(new Double(velocity.getZ()) + scatterZ * random.nextDouble() - scatterZ / 2.0).floatValue();
-		velocity.setX(vdx);
-		velocity.setY(vdy);
-		velocity.setZ(vdz);
-		particle.setVelocity(velocity); // apply velocity changes
-	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
@@ -46,39 +38,87 @@ public class ParticleInitialVelocityScatter implements ParticleFeature {
 		entries.add(HUDEditorEntry.create(SCATTER_X, "Scatter X"));
 		entries.add(HUDEditorEntry.create(SCATTER_Y, "Scatter Y"));
 		entries.add(HUDEditorEntry.create(SCATTER_Z, "Scatter Z"));
+		entries.add(HUDEditorEntry.create(SCATTER_PULSE, "Scatter Pulse"));
+		entries.add(HUDEditorEntry.create(SCATTER_PULSE_RESOLUTION, "Scatter Pulse Resolution"));
 		return entries;
 	}
 
 	@Override
+	public void init(ParticleEmitter emitter, Particle particle) {
+		if (!emitter.getConfiguration().containsKey(SCATTER_X) || !emitter.getConfiguration().containsKey(SCATTER_Y) || !emitter.getConfiguration().containsKey(SCATTER_Z)) return;
+		Double scatterX = (Double) emitter.getConfiguration().get(SCATTER_X);
+		Double scatterY = (Double) emitter.getConfiguration().get(SCATTER_Y);
+		Double scatterZ = (Double) emitter.getConfiguration().get(SCATTER_Z);
+		Double scatterPulse = (Double) emitter.getConfiguration().get(SCATTER_PULSE);
+		Double scatterPulseResolution = (Double) emitter.getConfiguration().get(SCATTER_PULSE_RESOLUTION);
+		if (scatterPulse == null)
+			scatterPulse = DEFAULT_SCATTER_PULSE;
+		if (scatterPulseResolution == null)
+			scatterPulseResolution = DEFAULT_SCATTER_PULSE_RESOLUTION;
+		Double pulsedScatterX = scatterX - Math.sin(emitter.getPastIterations() * scatterPulseResolution) * scatterX * scatterPulse;
+		Double pulsedScatterY = scatterY - Math.sin(emitter.getPastIterations() * scatterPulseResolution) * scatterY * scatterPulse;
+		Double pulsedScatterZ = scatterZ - Math.sin(emitter.getPastIterations() * scatterPulseResolution) * scatterZ * scatterPulse;
+		Vector3f velocity = particle.getVelocity();
+		Float vdx = new Double(new Double(velocity.getX()) + pulsedScatterX * random.nextDouble() - pulsedScatterX / 2.0).floatValue();
+		Float vdy = new Double(new Double(velocity.getY()) + pulsedScatterY * random.nextDouble() - pulsedScatterY / 2.0).floatValue();
+		Float vdz = new Double(new Double(velocity.getZ()) + pulsedScatterZ * random.nextDouble() - pulsedScatterZ / 2.0).floatValue();
+		velocity.setX(vdx);
+		velocity.setY(vdy);
+		velocity.setZ(vdz);
+		particle.setVelocity(velocity); // apply velocity changes
+	}
+
+	@Override
 	public void decrease(ParticleEmitter emitter, String fieldName) {
-		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
-			return;
-		Double value = (Double) emitter.getConfiguration().get(fieldName);
-		if (value == null) value = 0.0;
-		value -= 0.1;
-		emitter.getConfiguration().put(fieldName, value);
+		if (!validFieldName(fieldName)) return;
+		decreaseDoubleValue(emitter, fieldName);
+	}
+
+	@Override
+	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+		if (!validFieldName(fieldName)) return;
+		emitter.getConfiguration().put(fieldName, 0.0);
 	}
 
 	@Override
 	public void increase(ParticleEmitter emitter, String fieldName) {
-		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
-			return;
-		Double value = (Double) emitter.getConfiguration().get(fieldName);
-		if (value == null) value = 0.0;
-		value += 0.1;
-		emitter.getConfiguration().put(fieldName, value);
+		if (!validFieldName(fieldName)) return;
+		increaseDoubleValue(emitter, fieldName);
+	}
+
+	@Override
+	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+		if (!validFieldName(fieldName)) return;
+		emitter.getConfiguration().put(fieldName, 100.0);
+	}
+	
+	@Override
+	public void setDefault(ParticleEmitter emitter, String fieldName) {
+		if (fieldName.equals(SCATTER_X)) {
+			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_X);
+		} else if (fieldName.equals(SCATTER_Y)) {
+			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_Y);
+		} else if (fieldName.equals(SCATTER_Z)) {
+			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_Z);
+		} else if (fieldName.equals(SCATTER_PULSE)) {
+			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_PULSE);
+		} else if (fieldName.equals(SCATTER_PULSE_RESOLUTION)) {
+			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_PULSE_RESOLUTION);
+		}
 	}
 
 	@Override
 	public String getValue(ParticleEmitter emitter, String fieldName) {
-		if (!fieldName.equals(SCATTER_X) && !fieldName.equals(SCATTER_Y) && !fieldName.equals(SCATTER_Z))
-			return null;
-		Double value = (Double) emitter.getConfiguration().get(fieldName);
-		if (value == null) {
-			return null;
-		} else {
-			return String.format("%.2f", value);
-		}
+		return getDoubleValueAsString(emitter, fieldName);
+	}
+	
+	@Override
+	public Boolean validFieldName(String fieldName) {
+		return (fieldName.equals(SCATTER_X)
+			|| fieldName.equals(SCATTER_Y)
+			|| fieldName.equals(SCATTER_Z)
+			|| fieldName.equals(SCATTER_PULSE)
+			|| fieldName.equals(SCATTER_PULSE_RESOLUTION));
 	}
 
 }

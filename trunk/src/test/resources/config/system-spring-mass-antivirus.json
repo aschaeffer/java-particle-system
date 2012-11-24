@@ -1,0 +1,59 @@
+{
+  "name" : "Empty Physics System",
+  "features" : [ "de.hda.particles.features.MassSpring", "de.hda.particles.features.ParticleInitialVelocityScatter" ],
+  "emitters" : [ {
+    "lifetime" : 3090,
+    "rate" : 1,
+    "velocity_y" : 0.0,
+    "velocity_x" : 3.4999988,
+    "position_y" : 344.1581,
+    "velocity_z" : 0.0,
+    "position_x" : -33.58287,
+    "className" : "de.hda.particles.emitter.PointParticleEmitter",
+    "configuration" : {
+      "springConstructionRule" : 3,
+      "springFriction" : 0.09999999999999935,
+      "springLength" : 9.999999999999984,
+      "springConstant" : 0.08,
+      "numberSprings" : 3
+    },
+    "position_z" : 463.92892
+  } ],
+  "modifiers" : [ {
+    "className" : "de.hda.particles.modifier.BoundingBoxParticleCulling",
+    "configuration" : {
+      "minZ" : -5000.0,
+      "maxZ" : 5000.0,
+      "maxY" : 5000.0,
+      "maxX" : 5000.0,
+      "minX" : -5000.0,
+      "minY" : -5000.0
+    }
+  }, {
+    "className" : "de.hda.particles.modifier.VelocityTransformation",
+    "configuration" : { }
+  }, {
+    "className" : "de.hda.particles.modifier.MassSpringTransformation",
+    "configuration" : { }
+  }, {
+    "className" : "de.hda.particles.modifier.GravityPoint",
+    "configuration" : {
+      "maxForce" : 2.0,
+      "mass" : 1000.0,
+      "point_x" : 1326.2818603515625,
+      "point_y" : 109.84003448486328,
+      "point_z" : 304.938232421875,
+      "gravity" : 1.2
+    }
+  }, {
+    "className" : "de.hda.particles.modifier.GravityPoint",
+    "configuration" : {
+      "maxForce" : 1.0,
+      "mass" : 2100.0,
+      "point_x" : 1349.9136962890625,
+      "point_y" : -27.710891723632812,
+      "point_z" : 163.36883544921875,
+      "gravity" : 1.2
+    }
+  } ]
+}

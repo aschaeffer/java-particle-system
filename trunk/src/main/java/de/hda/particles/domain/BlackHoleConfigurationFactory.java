@@ -3,9 +3,9 @@ package de.hda.particles.domain;
 import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.scene.Scene;
 
-public class GravityPointConfigurationFactory {
+public class BlackHoleConfigurationFactory {
 
-	private GravityPointConfigurationFactory() {}
+	private BlackHoleConfigurationFactory() {}
 
 	public static ParticleModifierConfiguration create(Scene scene) {
 		ParticleModifierConfiguration configuration = new ParticleModifierConfiguration();

@@ -9,13 +9,16 @@ import de.hda.particles.features.ParticleColor;
 
 public class RandomColorTransformation extends AbstractParticleModifier implements ParticleModifier {
 
+	public final static Integer CHANGE_COLOR_AFTER_ITERATIONS = 30;
+
 	private final Random random = new Random();
 	
 	public RandomColorTransformation() {}
 
 	@Override
 	public void update(Particle particle) {
-		particle.put(ParticleColor.CURRENT_COLOR, new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256), 255));
+		if (particle.getPastIterations() % CHANGE_COLOR_AFTER_ITERATIONS == 0)
+			particle.put(ParticleColor.CURRENT_COLOR, new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256), 100));
 	}
 
 }

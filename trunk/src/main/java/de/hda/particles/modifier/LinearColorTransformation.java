@@ -5,9 +5,9 @@ import org.lwjgl.util.Color;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
 
-public class ParticleLinearColorTransformation extends AbstractParticleModifier implements ParticleModifier {
+public class LinearColorTransformation extends AbstractParticleModifier implements ParticleModifier {
 
-	public ParticleLinearColorTransformation() {}
+	public LinearColorTransformation() {}
 
 	public void update(Particle particle) {
 		Color s = (Color) particle.get(ParticleColor.START_COLOR);

@@ -9,11 +9,13 @@ public class RainbowColorTransformation extends AbstractParticleModifier impleme
 
 	public RainbowColorTransformation() {}
 
+	@Override
 	public void update(Particle particle) {
 		Float p = particle.getLifetimePercent();
 		Color c = (Color) particle.get(ParticleColor.CURRENT_COLOR);
 		if (c == null) c = new Color();
-		c.fromHSB(1.0f - (p / 100.0f), 1.0f, 0.8f);
+		c.fromHSB(p, 1.0f, 0.8f);
+		c.setAlpha(100);
 		particle.put(ParticleColor.CURRENT_COLOR, c);
 	}
 

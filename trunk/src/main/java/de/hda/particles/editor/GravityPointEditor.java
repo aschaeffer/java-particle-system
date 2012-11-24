@@ -54,8 +54,24 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 		} else if (fieldName.equals(GravityPoint.MAX_FORCE)) {
 			Double maxForce = (Double) subject.getConfiguration().get(GravityPoint.MAX_FORCE);
 			if (maxForce == null) maxForce = GravityPoint.DEFAULT_MAX_FORCE;
-			if (maxForce >= 1.0)
+			if (maxForce >= 1.0) {
 				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce - 1.0);
+			} else if (maxForce >= 0.1) {
+				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce - 0.1);
+			} else if (maxForce >= 0.0) {
+				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce - 0.01);
+			}
+		}
+	}
+
+	@Override
+	public void setMin(String fieldName) {
+		if (fieldName.equals(GravityPoint.GRAVITY)) {
+			subject.getConfiguration().put(GravityPoint.GRAVITY, 0.1);
+		} else if (fieldName.equals(GravityPoint.MASS)) {
+			subject.getConfiguration().put(GravityPoint.MASS, 0);
+		} else if (fieldName.equals(GravityPoint.MAX_FORCE)) {
+			subject.getConfiguration().put(GravityPoint.MAX_FORCE, 0.01);
 		}
 	}
 
@@ -85,7 +101,24 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 		} else if (fieldName.equals(GravityPoint.MAX_FORCE)) {
 			Double maxForce = (Double) subject.getConfiguration().get(GravityPoint.MAX_FORCE);
 			if (maxForce == null) maxForce = GravityPoint.DEFAULT_MAX_FORCE;
-			subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce + 1.0);
+			if (maxForce >= 1.0) {
+				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce + 1.0);
+			} else if (maxForce >= 0.1) {
+				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce + 0.1);
+			} else {
+				subject.getConfiguration().put(GravityPoint.MAX_FORCE, maxForce + 0.01);
+			}
+		}
+	}
+
+	@Override
+	public void setMax(String fieldName) {
+		if (fieldName.equals(GravityPoint.GRAVITY)) {
+			subject.getConfiguration().put(GravityPoint.GRAVITY, 100.0);
+		} else if (fieldName.equals(GravityPoint.MASS)) {
+			subject.getConfiguration().put(GravityPoint.MASS, 10000.0);
+		} else if (fieldName.equals(GravityPoint.MAX_FORCE)) {
+			subject.getConfiguration().put(GravityPoint.MAX_FORCE, 100.0);
 		}
 	}
 

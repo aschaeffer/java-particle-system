@@ -53,10 +53,10 @@
 				"gravity": 0.5
 			}
 		}, {
-			"className": "de.hda.particles.modifier.ParticleLinearColorTransformation",
+			"className": "de.hda.particles.modifier.LinearColorTransformation",
 			"configuration": {}
 		}, {
-			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
+			"className": "de.hda.particles.modifier.VelocityTransformation",
 			"configuration": {}
 		}
 	]

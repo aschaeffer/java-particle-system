@@ -12,12 +12,13 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	public final static Integer DEFAULT_RENDER_TYPE_INDEX = 1;
 	public final static Float DEFAULT_MASS = 0.1f;
 	
-	private Vector3f position = new Vector3f();
-	private Vector3f velocity = new Vector3f();
+	public Vector3f position = new Vector3f();
+	public Vector3f velocity = new Vector3f();
 	private Integer remainingIterations = DEFAULT_LIFETIME;
 	private Integer pastIterations = 0;
 	private Float mass = DEFAULT_MASS;
 	private Boolean visibility = true;
+	private Integer index = 0;
 	private Integer renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
 	public AbstractHashMapParticle() {
@@ -140,6 +141,16 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	@Override
 	public void setVisibility(Boolean visibility) {
 		this.visibility = visibility;
+	}
+	
+	@Override
+	public Integer getIndex() {
+		return index;
+	}
+	
+	@Override
+	public void setIndex(Integer index) {
+		this.index = index;
 	}
 	
 	@Override

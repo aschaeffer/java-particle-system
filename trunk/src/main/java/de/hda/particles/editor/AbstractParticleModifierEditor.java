@@ -33,7 +33,15 @@ public abstract class AbstractParticleModifierEditor<T extends ParticleModifier>
 	}
 
 	@Override
+	public void setMin(String fieldName) {
+	}
+
+	@Override
 	public void increase(String fieldName) {
+	}
+
+	@Override
+	public void setMax(String fieldName) {
 	}
 
 	@Override
