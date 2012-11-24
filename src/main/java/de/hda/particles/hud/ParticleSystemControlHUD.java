@@ -7,6 +7,7 @@ import de.hda.particles.scene.Scene;
 public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 
 	private Boolean blockPauseSelection = false;
+	private Boolean blockNextSelection = false;
 	private Boolean blockEmitterSelection = false;
 	private Boolean blockModifierSelection = false;
 	private Boolean blockClearSelection = false;
@@ -32,6 +33,16 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			}
 		} else {
 			blockPauseSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_N)) {
+			if (!blockNextSelection) {
+				if (scene.getParticleSystem().isPaused()) {
+					scene.getParticleSystem().next();
+				}
+				blockNextSelection = true;
+			}
+		} else {
+			blockNextSelection = false;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
 			if (!blockEmitterSelection) {

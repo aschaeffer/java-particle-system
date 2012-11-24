@@ -16,7 +16,7 @@
 				"maxZ": 5000.0
 			}
 		}, {
-			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
+			"className": "de.hda.particles.modifier.VelocityTransformation",
 			"configuration": {}
 		}
 	]

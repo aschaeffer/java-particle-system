@@ -28,5 +28,7 @@ public interface Particle extends Map<String, Object> {
 	public Float getLifetimePercent();
 	public Boolean isVisible();
 	public void setVisibility(Boolean visibility);
+	public Integer getIndex();
+	public void setIndex(Integer index);
 
 }

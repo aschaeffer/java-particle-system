@@ -33,7 +33,8 @@ public abstract class AbstractRenderer implements Renderer {
 	}
 	
 	@Override
-	public void select(Vector3f position) {
+	public Boolean select(Vector3f position) {
+		return false;
 	}
 	
 	@Override

@@ -25,13 +25,12 @@ public class ModifierHUD extends AbstractHUD implements HUD {
 	public void executeCommand(HUDCommand command) {
 		if (command.getType() == HUDCommandTypes.ADD_MODIFIER) {
 			scene.getParticleSystem().beginModification();
-			ParticleModifierConfiguration configuration = ParticleModifierConfiguration.EMPTY;
+			ParticleModifierConfiguration configuration = new ParticleModifierConfiguration();
 			Class configurationFactoryClass = (Class) command.getPayLoad2();
 			if (configurationFactoryClass != null) {
 				try {
 					configuration = (ParticleModifierConfiguration) configurationFactoryClass.getMethod("create", Scene.class).invoke(null, scene);
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 			scene.getParticleSystem().addParticleModifier((Class) command.getPayLoad(), configuration);
 			scene.getParticleSystem().endModification();

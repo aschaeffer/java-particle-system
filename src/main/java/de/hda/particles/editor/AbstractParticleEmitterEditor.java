@@ -61,13 +61,21 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			if (value >= 10) {
 				value -= 10;
 			} else if (value > 0) {
-				value -= 1;
+				value--;
 			}
 			subject.setParticleLifetime(value);
 		} else if (fieldName.equals(RATE)) {
-			subject.setRate(subject.getRate() - 1);
+			Integer value = subject.getRate();
+			if (value >= 20) {
+				value -= 10;
+			} else if (value > 0) {
+				value--;
+			}
+			subject.setRate(value);
 		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
-			subject.setParticleRenderTypeIndex(subject.getParticleRenderTypeIndex() - 1);
+			Integer value = subject.getParticleRenderTypeIndex();
+			if (value > 0) value--;
+			subject.setParticleRenderTypeIndex(value);
 		} else if (fieldName.equals(POSITION_X)) {
 			subject.getPosition().x -= 10.0f;
 		} else if (fieldName.equals(POSITION_Y)) {
@@ -91,17 +99,43 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	}
 
 	@Override
+	public void setMin(String fieldName) {
+		if (fieldName.equals(POSITION_X) || fieldName.equals(POSITION_Y) || fieldName.equals(POSITION_Z) || fieldName.equals(VELOCITY_X) || fieldName.equals(VELOCITY_Y) || fieldName.equals(VELOCITY_Z))
+			return;
+		if (fieldName.equals(LIFETIME)) {
+			subject.setParticleLifetime(0);
+		} else if (fieldName.equals(RATE)) {
+			subject.setRate(0);
+		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
+			subject.setParticleRenderTypeIndex(1);
+		} else {
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				ParticleFeature feature = iterator.next();
+				feature.decreaseMin(subject, fieldName);
+			}
+		}
+
+	}
+
+	@Override
 	public void increase(String fieldName) {
 		if (fieldName.equals(LIFETIME)) {
 			Integer value = new Long(subject.getParticleLifetime()).intValue();
 			if (value >= 10) {
 				value += 10;
-			} else if (value > 0) {
-				value += 1;
+			} else {
+				value++;
 			}
 			subject.setParticleLifetime(value);
 		} else if (fieldName.equals(RATE)) {
-			subject.setRate(subject.getRate() + 1);
+			Integer value = subject.getRate();
+			if (value >= 20) {
+				value += 10;
+			} else {
+				value++;
+			}
+			subject.setRate(value);
 		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
 			subject.setParticleRenderTypeIndex(subject.getParticleRenderTypeIndex() + 1);
 		} else if (fieldName.equals(POSITION_X)) {
@@ -117,10 +151,27 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		} else if (fieldName.equals(VELOCITY_Z)) {
 			subject.getParticleDefaultVelocity().z += 0.1f;
 		} else {
-			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator();
 			while (iterator.hasNext()) {
 				ParticleFeature feature = iterator.next();
 				feature.increase(subject, fieldName);
+			}
+		}
+	}
+
+	@Override
+	public void setMax(String fieldName) {
+		if (fieldName.equals(POSITION_X) || fieldName.equals(POSITION_Y) || fieldName.equals(POSITION_Z) || fieldName.equals(VELOCITY_X) || fieldName.equals(VELOCITY_Y) || fieldName.equals(VELOCITY_Z) || fieldName.equals(RENDER_TYPE_INDEX))
+			return;
+		if (fieldName.equals(LIFETIME)) {
+			subject.setParticleLifetime(2000); // just a big number, not maximum
+		} else if (fieldName.equals(RATE)) {
+			subject.setRate(200); // just a big number, not maximum
+		} else {
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				ParticleFeature feature = iterator.next();
+				feature.increaseMax(subject, fieldName);
 			}
 		}
 	}

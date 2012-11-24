@@ -18,19 +18,21 @@ import de.hda.particles.scene.Scene;
 
 public class MenuHUD extends AbstractHUD implements HUD {
 
+	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 15;
 	private final static Float DEFAULT_WIDTH_PERCENT = 0.3f;
 	private final static Integer margin = 10;
 
 	private Boolean show = false;
 	private Boolean blocked = false;
+	private Integer blockedFor = 0;
 	
 	protected HUDMenuEntry menu;
 	protected HUDMenuEntry currentMenu;
 	protected Integer selectedIndex = 0;
 
 	private Boolean blockEscSelection = false;
-	private Boolean blockUpSelection = false;
-	private Boolean blockDownSelection = false;
+	private Integer blockUpSelection = 0;
+	private Integer blockDownSelection = 0;
 	private Boolean blockInSelection = false;
 	private Boolean blockOutSelection = false;
 	private Boolean blockSelectSelection = false;
@@ -54,18 +56,20 @@ public class MenuHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
-		// camera selection
+		if (blocked) return;
+		if (blockedFor > 0) {
+			blockedFor--;
+			return;
+		}
 		Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
-				if (!blocked) {
-					if (show) {
-						show = false;
-					} else {
-						show = true;
-						currentMenu = menu;
-						selectedIndex = 0;
-					}
+				if (show) {
+					show = false;
+				} else {
+					show = true;
+					currentMenu = menu;
+					selectedIndex = 0;
 				}
 				blockEscSelection = true;
 			}
@@ -73,28 +77,32 @@ public class MenuHUD extends AbstractHUD implements HUD {
 			blockEscSelection = false;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			if (!blockUpSelection) {
-				if (show && !blocked && selectedIndex > 0) {
+			if (show && (blockUpSelection == 0 || blockUpSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex > 0) {
 					selectedIndex--;
+				} else {
+					selectedIndex = currentMenu.childs.size() - 1;
 				}
-				blockUpSelection = true;
 			}
+			blockUpSelection++;
 		} else {
-			blockUpSelection = false;
+			blockUpSelection = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			if (!blockDownSelection) {
-				if (show && !blocked && selectedIndex+1 < currentMenu.childs.size()) {
+			if (show && (blockDownSelection == 0 || blockDownSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex+1 < currentMenu.childs.size()) {
 					selectedIndex++;
+				} else {
+					selectedIndex = 0;
 				}
-				blockDownSelection = true;
 			}
+			blockDownSelection++;
 		} else {
-			blockDownSelection = false;
+			blockDownSelection = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 			if (!blockInSelection) {
-				if (show && !blocked) {
+				if (show) {
 					if (currentMenu.equals(currentMenu.parent)) {
 						show = false;
 					} else {
@@ -109,22 +117,20 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
 			if (!blockOutSelection) {
-				if (!blocked) {
-					if (!show) {
-						show = true;
-						currentMenu = menu;
-						selectedIndex = 0;
-					} else {
-						if (currentMenu != null && currentMenu.childs.size() > selectedIndex) {
-							if (currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
-								if (currentMenu.childs.get(selectedIndex) != null) {
-									currentMenu = currentMenu.childs.get(selectedIndex);
-									selectedIndex = 0;
-								}
-							} else {
-								scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
-								show = false;
+				if (!show) {
+					show = true;
+					currentMenu = menu;
+					selectedIndex = 0;
+				} else {
+					if (currentMenu != null && currentMenu.childs.size() > selectedIndex) {
+						if (currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
+							if (currentMenu.childs.get(selectedIndex) != null) {
+								currentMenu = currentMenu.childs.get(selectedIndex);
+								selectedIndex = 0;
 							}
+						} else {
+							scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
+							show = false;
 						}
 					}
 				}
@@ -135,7 +141,7 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
 			if (!blockSelectSelection) {
-				if (show && !blocked && currentMenu.childs.size() > selectedIndex) {
+				if (show && currentMenu.childs.size() > selectedIndex) {
 					if (!currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
 						scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
 						show = false;
@@ -169,7 +175,11 @@ public class MenuHUD extends AbstractHUD implements HUD {
 	
 	@Override
 	public void render2() {
-		if (!show) return;
+		if (!show || blocked) return;
+		if (blockedFor > 0) {
+			blockedFor--;
+			return;
+		}
 		
 		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
 		Integer height = font.getHeight(currentMenu.title);
@@ -226,6 +236,7 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		}
 		if (command.getType() == HUDCommandTypes.EDIT_DONE) {
 			blocked = false;
+			blockedFor = KEYPRESS_REPEAT_THRESHOLD;
 		}
 		if (command.getType() == HUDCommandTypes.EXIT) {
 			scene.exit();

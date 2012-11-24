@@ -22,30 +22,30 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 	@Override
 	public void update(Particle particle) {
 		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
-		Double gravityPointXd = (Double) this.configuration.get(POINT_X);
-		Double gravityPointYd = (Double) this.configuration.get(POINT_Y);
-		Double gravityPointZd = (Double) this.configuration.get(POINT_Z);
-		Double gravityd = (Double) this.configuration.get(GRAVITY);
-		if (gravityd == null) gravityd = DEFAULT_GRAVITY;
-		Double massd = (Double) this.configuration.get(MASS);
-		if (massd == null) massd = DEFAULT_MASS;
+		Double gravityPointX = (Double) this.configuration.get(POINT_X);
+		Double gravityPointY = (Double) this.configuration.get(POINT_Y);
+		Double gravityPointZ = (Double) this.configuration.get(POINT_Z);
+		Double gravity = (Double) this.configuration.get(GRAVITY);
+		if (gravity == null) gravity = DEFAULT_GRAVITY;
+		Double mass = (Double) this.configuration.get(MASS);
+		if (mass == null) mass = DEFAULT_MASS;
 		Double maxForce = (Double) this.configuration.get(MAX_FORCE);
 		if (maxForce == null) maxForce = DEFAULT_MAX_FORCE;
-		Float gravityPointX = gravityPointXd.floatValue();
-		Float gravityPointY = gravityPointYd.floatValue();
-		Float gravityPointZ = gravityPointZd.floatValue();
-		Float mass = massd.floatValue();
-		Float gravity = gravityd.floatValue();
-		Float dx = particle.getX() - gravityPointX;
-		Float dy = particle.getY() - gravityPointY;
-		Float dz = particle.getZ() - gravityPointZ;
+		updateParticleVelocity(particle, new Vector3f(gravityPointX.floatValue(), gravityPointY.floatValue(), gravityPointZ.floatValue()), mass.floatValue(), gravity.floatValue(), maxForce.floatValue());
+	}
+	
+	public void updateParticleVelocity(Particle particle, Vector3f gravityPoint, Float mass, Float gravity, Float maxForce) {
+		Float dx = particle.getX() - gravityPoint.x;
+		Float dy = particle.getY() - gravityPoint.y;
+		Float dz = particle.getZ() - gravityPoint.z;
 		Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+		if (distance == 0.0f) distance = 0.00000000001f;
 		Float force = -(particle.getMass()) * mass * gravity / (distance * distance);
-		if (Math.abs(force) > maxForce) force = maxForce.floatValue();
+		if (Math.abs(force) > maxForce) force = maxForce;
 		Vector3f totalForce = new Vector3f(
-			force * (particle.getX() - gravityPointX) / distance,
-			force * (particle.getY() - gravityPointY) / distance,
-			force * (particle.getZ() - gravityPointZ) / distance
+			force * (particle.getX() - gravityPoint.x) / distance,
+			force * (particle.getY() - gravityPoint.y) / distance,
+			force * (particle.getZ() - gravityPoint.z) / distance
 		);
 		Vector3f accelleration = new Vector3f(
 			totalForce.x / particle.getMass(),

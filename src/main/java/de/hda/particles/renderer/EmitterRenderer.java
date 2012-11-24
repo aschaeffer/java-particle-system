@@ -43,7 +43,8 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 	}
 
 	@Override
-	public void select(Vector3f position) {
+	public Boolean select(Vector3f position) {
+		ParticleEmitter oldSelected = selected;
 		selected = null;
 		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
 		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
@@ -61,6 +62,11 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 				break;
 			}
 		}
+		if (selected != null)
+			return true;
+		if (oldSelected != null)
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
+		return false;
 	}
 	
 	@Override

@@ -11,7 +11,9 @@ public interface Editor {
 	void select(Object subject);
 	String getTitle();
 	void decrease(String fieldName);
+	void setMin(String fieldName);
 	void increase(String fieldName);
+	void setMax(String fieldName);
 	String getValue(String fieldName);
 
 }

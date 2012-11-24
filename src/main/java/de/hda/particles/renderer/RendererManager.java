@@ -15,6 +15,9 @@ import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.hud.HUDCommand;
+import de.hda.particles.hud.HUDCommandTypes;
+
 public class RendererManager extends AbstractRenderer implements Renderer {
 
 	private final List<Renderer> renderers = new ArrayList<Renderer>();
@@ -84,10 +87,11 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 		
 		// check for selecting
 		if (Mouse.isButtonDown(0) && !lastMouseDown) {
+			Boolean somethingSelected = false;
 			Vector3f position = getPickWorldPosition(scene.getWidth() / 2, scene.getHeight() / 2);
 		    ListIterator<Renderer> iterator2 = renderers.listIterator(0);
 			while(iterator2.hasNext()) {
-				iterator2.next().select(position);
+				if (iterator2.next().select(position)) somethingSelected = true;
 			}
 		} else if (Mouse.isButtonDown(0)) {
 			Vector3f position = getPickWorldPosition(scene.getWidth() / 2, scene.getHeight() / 2);
@@ -101,7 +105,8 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 				Vector3f position = getPickWorldPosition(scene.getWidth() / 2, scene.getHeight() / 2);
 			    ListIterator<Renderer> iterator2 = renderers.listIterator(0);
 				while(iterator2.hasNext()) {
-					iterator2.next().remove(position);
+					Renderer renderer = iterator2.next();
+					renderer.remove(position);
 				}
 				blockRemoveSelection = true;
 			}

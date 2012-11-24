@@ -51,7 +51,7 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 	}
 
 	@Override
-	public void select(Vector3f position) {
+	public Boolean select(Vector3f position) {
 		GravityPoint oldSelected = selected;
 		selected = null;
 		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
@@ -77,9 +77,11 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 				}
 			}
 		}
-		if (oldSelected != null && selected == null && oldSelected.equals(selected)) {
+		if (selected != null)
+			return true;
+		if (oldSelected != null)
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
-		}
+		return false;
 	}
 
 	

@@ -33,7 +33,7 @@
 				"gravity": 0.2
 			}
 		}, {
-			"className": "de.hda.particles.modifier.ParticleVelocityTransformation",
+			"className": "de.hda.particles.modifier.VelocityTransformation",
 			"configuration": {}
 		}
 	]

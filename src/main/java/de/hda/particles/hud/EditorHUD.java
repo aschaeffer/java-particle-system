@@ -18,6 +18,7 @@ import de.hda.particles.scene.Scene;
 
 public class EditorHUD extends AbstractHUD implements HUD {
 
+	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 15;
 	private final static Float DEFAULT_WIDTH_PERCENT = 0.2f;
 	private final static Integer margin = 10;
 
@@ -28,10 +29,13 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	protected Integer selectedIndex = 0;
 
 	private Boolean blockEscSelection = false;
-	private Boolean blockUpSelection = false;
-	private Boolean blockDownSelection = false;
+	private Integer blockUpSelection = 0;
+	private Integer blockDownSelection = 0;
 	private Integer blockDecreaseSelection = 0;
 	private Integer blockIncreaseSelection = 0;
+	private Boolean blockDecreaseMinSelection = false;
+	private Boolean blockIncreaseMaxSelection = false;
+	private Boolean blockRemoveSelection = false;
 	
 	private final Logger logger = LoggerFactory.getLogger(EditorHUD.class);
 
@@ -52,8 +56,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
 				if (show) {
-					show = false;
-					currentEditor = null;
+					hideEditor();
 					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
 				}
 				blockEscSelection = true;
@@ -62,40 +65,72 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			blockEscSelection = false;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			if (!blockUpSelection) {
-				if (show && selectedIndex > 0) {
+			if (show && (blockUpSelection == 0 || blockUpSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex > 0) {
 					selectedIndex--;
+				} else {
+					selectedIndex = editorEntries.size() - 1;
 				}
-				blockUpSelection = true;
 			}
+			blockUpSelection++;
 		} else {
-			blockUpSelection = false;
+			blockUpSelection = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			if (!blockDownSelection) {
-				if (show && selectedIndex+1 < editorEntries.size()) {
+			if (show && (blockDownSelection == 0 || blockDownSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex + 1 < editorEntries.size()) {
 					selectedIndex++;
+				} else {
+					selectedIndex = 0;
 				}
-				blockDownSelection = true;
 			}
+			blockDownSelection++;
 		} else {
-			blockDownSelection = false;
+			blockDownSelection = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-			if (show && (blockDecreaseSelection == 0 || blockDecreaseSelection > 15)) {
+			if (show && (blockDecreaseSelection == 0 || blockDecreaseSelection > KEYPRESS_REPEAT_THRESHOLD)) {
 				currentEditor.decrease(editorEntries.get(selectedIndex).key);
+				if (blockDecreaseSelection > KEYPRESS_REPEAT_THRESHOLD * 5)
+					currentEditor.decrease(editorEntries.get(selectedIndex).key);
 			}
 			blockDecreaseSelection++;
 		} else {
 			blockDecreaseSelection = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-			if (show && (blockIncreaseSelection == 0 || blockIncreaseSelection > 15)) {
+			if (show && (blockIncreaseSelection == 0 || blockIncreaseSelection > KEYPRESS_REPEAT_THRESHOLD)) {
 				currentEditor.increase(editorEntries.get(selectedIndex).key);
+				if (blockIncreaseSelection > KEYPRESS_REPEAT_THRESHOLD * 5)
+					currentEditor.increase(editorEntries.get(selectedIndex).key);
 			}
 			blockIncreaseSelection++;
 		} else {
 			blockIncreaseSelection = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_HOME)) {
+			if (show && !blockDecreaseMinSelection) {
+				currentEditor.setMin(editorEntries.get(selectedIndex).key);
+			}
+			blockDecreaseMinSelection = true;
+		} else {
+			blockDecreaseMinSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_END)) {
+			if (show && !blockIncreaseMaxSelection) {
+				currentEditor.setMax(editorEntries.get(selectedIndex).key);
+			}
+			blockIncreaseMaxSelection = true;
+		} else {
+			blockIncreaseMaxSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_DELETE)) {
+			if (!blockRemoveSelection) {
+				hideEditor();
+				blockRemoveSelection = true;
+			}
+		} else {
+			blockRemoveSelection = false;
 		}
 		
 		if (!show) return;
@@ -138,11 +173,11 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
 		    	String currentValue = currentEditor.getValue(entry.key);
-		    	if (iterator.previousIndex() == nextColumn) {
+		    	if (iterator.previousIndex() == nextColumn - 1) {
 		    		top = top2;
 		    		left = left2;
 		    	}
-		    	if (iterator.previousIndex() >= nextColumn) {
+		    	if (iterator.previousIndex() >= nextColumn - 1) {
 			    	rightAligned = scene.getWidth() - 2*margin - font.getWidth(currentValue);
 		    	} else {
 			    	rightAligned = 2*margin + width - font.getWidth(currentValue);
@@ -194,7 +229,6 @@ public class EditorHUD extends AbstractHUD implements HUD {
 				glVertex2f(left - margin, top + height + margin);
 			    glEnd();
 		    }
-
 		} else {
 			Integer halfHeight = fullHeight / 2;
 			Integer top = (scene.getHeight() / 2) - (halfHeight / 2);
@@ -222,7 +256,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
-		    	if (iterator.previousIndex() == nextColumn) {
+		    	if (iterator.previousIndex() == nextColumn - 1) {
 		    		top = top2;
 		    		left = left2;
 		    	}
@@ -240,10 +274,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 				glVertex2f(left - margin, top + height + margin);
 			    glEnd();
 		    }
-
 		}
-
-
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -262,7 +293,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	
 	@Override
 	public void executeCommand(HUDCommand command) {
-		if (command.getType() == HUDCommandTypes.EDIT) {
+		if (command.getType().equals(HUDCommandTypes.EDIT)) {
 			Class<? extends Object> objectClass = command.getPayLoad().getClass();
 			ListIterator<Editor> iterator = editors.listIterator(0);
 			while (iterator.hasNext()) {
@@ -275,6 +306,13 @@ public class EditorHUD extends AbstractHUD implements HUD {
 					return;
 				}
 			}
+		} else if (command.getType().equals(HUDCommandTypes.EDIT_DONE)) {
+			hideEditor();
 		}
+	}
+	
+	private void hideEditor() {
+		show = false;
+		currentEditor = null;
 	}
 }

@@ -12,8 +12,9 @@ public abstract class AbstractSelectable<T> extends AbstractRenderer {
 	}
 
 	@Override
-	public void select(Vector3f position) {
+	public Boolean select(Vector3f position) {
 		selected = null;
+		return false;
 	}
 
 	@Override
