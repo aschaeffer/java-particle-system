@@ -5,6 +5,7 @@ import de.hda.particles.domain.ParticleModifierConfiguration;
 
 public interface ParticleModifier extends ParticleUpdater {
 
+	public void prepare();
 	public void setParticleSystem(ParticleSystem particleSystem);
 	public void setConfiguration(ParticleModifierConfiguration configuration);
 	public ParticleModifierConfiguration getConfiguration();

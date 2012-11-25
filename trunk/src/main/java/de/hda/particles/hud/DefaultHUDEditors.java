@@ -12,9 +12,12 @@ public class DefaultHUDEditors {
 		editors.add(new PointParticleEmitterEditor());
 		editors.add(new PlaneParticleEmitterEditor());
 		editors.add(new PulseRatePointParticleEmitterEditor());
+		editors.add(new FastPointParticleEmitterEditor());
+		editors.add(new PooledPointParticleEmitterEditor());
 		editors.add(new RingParticleEmitterEditor());
 		editors.add(new SphereParticleEmitterEditor());
 		editors.add(new GravityPointEditor());
+		editors.add(new BlackHoleEditor());
 		return editors;
 	}
 }

@@ -8,6 +8,9 @@ public abstract class AbstractParticleModifier {
 	protected ParticleSystem particleSystem;
 	protected ParticleModifierConfiguration configuration = new ParticleModifierConfiguration();
 
+	public void prepare() {
+	}
+
 	public void setParticleSystem(ParticleSystem particleSystem) {
 		this.particleSystem = particleSystem;
 	}

@@ -29,13 +29,11 @@ public class MassSpringTransformation extends AbstractParticleModifier implement
 		ListIterator<Particle> iterator = connectedParticles.listIterator();
 		while (iterator.hasNext()) {
 			Particle c = iterator.next();
-
 			Vector3f springVector = new Vector3f();
 			Vector3f.sub(particle.getPosition(), c.getPosition(), springVector);
 			Float r = springVector.length();
 			Vector3f force = new Vector3f(); // force initially has a zero value
 			Vector3f temp = new Vector3f();
-
 			if (r != 0) { //to avoid a division by zero check if r is zero
 				temp = new Vector3f(springVector.x / r, springVector.y / r, springVector.z / r);
 				Float temp1 = (r - springLengthF) * (-springConstantF);
@@ -51,7 +49,6 @@ public class MassSpringTransformation extends AbstractParticleModifier implement
 			Vector3f newForce = new Vector3f();
 			Vector3f.add(force, temp, newForce);
 			force = new Vector3f(newForce);
-
 			Vector3f newVelocity = new Vector3f();
 			Vector3f.add(particle.getVelocity(), force, newVelocity);
 			particle.setVelocity(newVelocity);
@@ -59,9 +56,7 @@ public class MassSpringTransformation extends AbstractParticleModifier implement
 			newVelocity = new Vector3f();
 			Vector3f.add(c.getVelocity(), force, newVelocity);
 			c.setVelocity(newVelocity);
-
 		}
-
 	}
 
 }

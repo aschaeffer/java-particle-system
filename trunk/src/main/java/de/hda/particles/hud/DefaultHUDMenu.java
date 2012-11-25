@@ -76,6 +76,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Explosion", HUDCommandTypes.ADD_RENDER_TYPE, ExplosionRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "FireBall", HUDCommandTypes.ADD_RENDER_TYPE, FireBallRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Flames", HUDCommandTypes.ADD_RENDER_TYPE, FlamesRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Hair", HUDCommandTypes.ADD_RENDER_TYPE, HairRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "SFlare", HUDCommandTypes.ADD_RENDER_TYPE, SFlareRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Snow", HUDCommandTypes.ADD_RENDER_TYPE, SnowRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Star", HUDCommandTypes.ADD_RENDER_TYPE, StarRenderType.class);
@@ -94,7 +95,8 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addEmitters, "Sphere", HUDCommandTypes.ADD_EMITTER, SphereParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, WaveParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Point (Pulse Rate)", HUDCommandTypes.ADD_EMITTER, PulseRatePointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
-		HUDMenuEntry.create(addEmitters, "Point (Fast)", HUDCommandTypes.ADD_EMITTER, FastPointParticleEmitter.class);
+		HUDMenuEntry.create(addEmitters, "Point (Fast)", HUDCommandTypes.ADD_EMITTER, FastPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addEmitters, "Point (Pooled)", HUDCommandTypes.ADD_EMITTER, PooledPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry modifiers = HUDMenuEntry.create(physics, "Modifiers");
 		HUDMenuEntry addModifiers = HUDMenuEntry.create(modifiers, "Add Modifier");
 		HUDMenuEntry addModifiersGravity = HUDMenuEntry.create(addModifiers, "Gravity");
@@ -109,12 +111,14 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addModifiersVelocity, "Velocity Damper", HUDCommandTypes.ADD_MODIFIER, VelocityDamper.class);
 		HUDMenuEntry.create(addModifiersVelocity, "Mass Spring Transformation", HUDCommandTypes.ADD_MODIFIER, MassSpringTransformation.class);
 		HUDMenuEntry.create(addModifiersVelocity, "Particle Gravity Transformation", HUDCommandTypes.ADD_MODIFIER, ParticleGravityTransformation.class);
+		HUDMenuEntry.create(addModifiersColors, "Random Start Color", HUDCommandTypes.ADD_MODIFIER, RandomStartColor.class);
 		HUDMenuEntry.create(addModifiersColors, "Linear Color Transformation", HUDCommandTypes.ADD_MODIFIER, LinearColorTransformation.class);
 		HUDMenuEntry.create(addModifiersColors, "Rainbow Color Transformation", HUDCommandTypes.ADD_MODIFIER, RainbowColorTransformation.class);
 		HUDMenuEntry.create(addModifiersColors, "Random Color Transformation", HUDCommandTypes.ADD_MODIFIER, RandomColorTransformation.class);
 		HUDMenuEntry.create(addModifiersSize, "Linear Size Transformation", HUDCommandTypes.ADD_MODIFIER, LinearSizeTransformation.class);
 		HUDMenuEntry.create(addModifiersSize, "Pulse Size Transformation", HUDCommandTypes.ADD_MODIFIER, PulseSizeTransformation.class);
 		HUDMenuEntry.create(addModifiersOther, "Bounding Box Particle Culling", HUDCommandTypes.ADD_MODIFIER, BoundingBoxParticleCulling.class);
+		HUDMenuEntry.create(addModifiersOther, "Position Trace Transformation", HUDCommandTypes.ADD_MODIFIER, PositionTraceTransformation.class);
 		HUDMenuEntry.create(addModifiersOther, "Particle Debugger", HUDCommandTypes.ADD_MODIFIER, ParticleDebugger.class);
 		HUDMenuEntry features = HUDMenuEntry.create(physics, "Particle Features");
 		HUDMenuEntry addFeatures = HUDMenuEntry.create(features, "Add Feature");
@@ -122,6 +126,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addFeatures, "Size", HUDCommandTypes.ADD_FEATURE, ParticleSize.class);
 		HUDMenuEntry.create(addFeatures, "Initial Velocity Scatter", HUDCommandTypes.ADD_FEATURE, ParticleInitialVelocityScatter.class);
 		HUDMenuEntry.create(addFeatures, "MassSpring", HUDCommandTypes.ADD_FEATURE, MassSpring.class);
+		HUDMenuEntry.create(addFeatures, "PositionTrace", HUDCommandTypes.ADD_FEATURE, PositionTrace.class);
 		HUDMenuEntry.create(physics, "Load System", HUDCommandTypes.LOAD_SYSTEM);
 		HUDMenuEntry.create(physics, "Save System", HUDCommandTypes.SAVE_SYSTEM);
 		HUDMenuEntry.create(physics, "Remove all Particles", HUDCommandTypes.REMOVE_ALL_PARTICLES);
