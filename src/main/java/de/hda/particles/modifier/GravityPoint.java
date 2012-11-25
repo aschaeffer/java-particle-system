@@ -16,22 +16,35 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 	public static final Double DEFAULT_GRAVITY = 1.2;
 	public static final Double DEFAULT_MASS = 1000.0;
 	public final static Double DEFAULT_MAX_FORCE = 10.0;
+	
+	protected Vector3f position = new Vector3f();
+	protected Float gravity = 0.0f;
+	protected Float mass = 0.0f;
+	protected Float maxForce = 0.0f;
 
 	public GravityPoint() {}
 
 	@Override
+	public void prepare() {
+		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
+		position.setX(((Double) this.configuration.get(POINT_X)).floatValue());
+		position.setY(((Double) this.configuration.get(POINT_Y)).floatValue());
+		position.setZ(((Double) this.configuration.get(POINT_Z)).floatValue());
+		Double g = (Double) this.configuration.get(GRAVITY);
+		if (g == null) g = DEFAULT_GRAVITY;
+		gravity = g.floatValue();
+		Double m = (Double) this.configuration.get(MASS);
+		if (m == null) m = DEFAULT_MASS;
+		mass = m.floatValue();
+		Double mf = (Double) this.configuration.get(MAX_FORCE);
+		if (mf == null) mf = DEFAULT_MAX_FORCE;
+		maxForce = mf.floatValue();
+	}
+
+	@Override
 	public void update(Particle particle) {
 		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
-		Double gravityPointX = (Double) this.configuration.get(POINT_X);
-		Double gravityPointY = (Double) this.configuration.get(POINT_Y);
-		Double gravityPointZ = (Double) this.configuration.get(POINT_Z);
-		Double gravity = (Double) this.configuration.get(GRAVITY);
-		if (gravity == null) gravity = DEFAULT_GRAVITY;
-		Double mass = (Double) this.configuration.get(MASS);
-		if (mass == null) mass = DEFAULT_MASS;
-		Double maxForce = (Double) this.configuration.get(MAX_FORCE);
-		if (maxForce == null) maxForce = DEFAULT_MAX_FORCE;
-		updateParticleVelocity(particle, new Vector3f(gravityPointX.floatValue(), gravityPointY.floatValue(), gravityPointZ.floatValue()), mass.floatValue(), gravity.floatValue(), maxForce.floatValue());
+		updateParticleVelocity(particle, position, mass, gravity, maxForce);
 	}
 	
 	public void updateParticleVelocity(Particle particle, Vector3f gravityPoint, Float mass, Float gravity, Float maxForce) {

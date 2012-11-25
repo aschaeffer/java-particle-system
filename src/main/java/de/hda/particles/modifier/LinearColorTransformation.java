@@ -9,16 +9,17 @@ public class LinearColorTransformation extends AbstractParticleModifier implemen
 
 	public LinearColorTransformation() {}
 
+	@Override
 	public void update(Particle particle) {
 		Color s = (Color) particle.get(ParticleColor.START_COLOR);
 		if (s == null) return;
 		Color e = (Color) particle.get(ParticleColor.END_COLOR);
 		if (e == null) return;
 		Float p = particle.getLifetimePercent();
-		Integer r = (int) (e.getRed() * p + s.getRed() * (1.0f - p));
-		Integer g = (int) (e.getGreen() * p + s.getGreen() * (1.0f - p));
-		Integer b = (int) (e.getBlue() * p + s.getBlue() * (1.0f - p));
-		Integer a = (int) (e.getAlpha() * p + s.getAlpha() * (1.0f - p));
+		Integer r = (int) (p * e.getRed()   + (1.0f - p) * s.getRed());
+		Integer g = (int) (p * e.getGreen() + (1.0f - p) * s.getGreen());
+		Integer b = (int) (p * e.getBlue()  + (1.0f - p) * s.getBlue());
+		Integer a = (int) (p * e.getAlpha() + (1.0f - p) * s.getAlpha());
 		particle.put(ParticleColor.CURRENT_COLOR, new Color(r, g, b, a));
 	}
 

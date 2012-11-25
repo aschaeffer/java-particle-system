@@ -6,6 +6,10 @@ import org.lwjgl.util.vector.Vector3f;
 
 public interface Particle extends Map<String, Object> {
 
+	public final static Integer DEFAULT_LIFETIME = 100;
+	public final static Integer DEFAULT_RENDER_TYPE_INDEX = 1;
+	public final static Float DEFAULT_MASS = 0.1f;
+	
 	public Float getX();
 	public void setX(Float x);
 	public Float getY();
@@ -25,6 +29,7 @@ public interface Particle extends Map<String, Object> {
 	public Integer getRemainingIterations();
 	public void setRemainingIterations(Integer remainingIterations);
 	public Integer getPastIterations();
+	public void setPastIterations(Integer pastIterations);
 	public Float getLifetimePercent();
 	public Boolean isVisible();
 	public void setVisibility(Boolean visibility);

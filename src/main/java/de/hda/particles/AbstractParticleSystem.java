@@ -22,6 +22,8 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
 	protected List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
 	
+	protected ParticlePool pool = new ParticlePool();
+	
 	protected List<ParticleLifetimeListener> listeners = new ArrayList<ParticleLifetimeListener>();
 
 	protected Boolean paused = false;
@@ -95,10 +97,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void removeParticle(Particle particle) {
 		particles.remove(particle);
-//		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
-//		while (iterator.hasNext()) {
-//			iterator.next().onParticleDeath(particle);
-//		}
+		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onParticleDeath(particle);
+		}
 	}
 	
 	@Override
@@ -188,6 +190,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			ListIterator<ParticleModifier> mIterator = modifiers.listIterator(0);
 			while (mIterator.hasNext()) {
 				ParticleModifier modifier = mIterator.next();
+				modifier.prepare();
 				for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
 					particles.get(pIndex).setIndex(pIndex);
 					modifier.update(particles.get(pIndex));
@@ -239,6 +242,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public List<ParticleModifier> getParticleModifiers() {
 		return modifiers;
+	}
+	
+	@Override
+	public ParticlePool getParticlePool() {
+		return pool;
 	}
 	
 	protected void clearParticles() {

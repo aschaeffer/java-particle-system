@@ -6,8 +6,12 @@ import de.hda.particles.features.ParticleSize;
 public class PulseSizeTransformation extends AbstractParticleModifier implements ParticleModifier {
 
 	private final static Double DEFAULT_PULSE_INTERVAL_FACTOR = 25.0;
-
+	
 	public PulseSizeTransformation() {}
+
+// TODO: make the pulse interval configurable
+//	public void prepare() {
+//	}
 
 	@Override
 	public void update(Particle particle) {
@@ -16,8 +20,7 @@ public class PulseSizeTransformation extends AbstractParticleModifier implements
 		if (sizeBirth == null) return;
 		Double sizeDeath = (Double) particle.get(ParticleSize.SIZE_DEATH);
 		if (sizeDeath == null) return;
-		Double diff = sizeDeath - sizeBirth;
-		Double size = sizeBirth + Math.sin(p / DEFAULT_PULSE_INTERVAL_FACTOR) * diff; 
+		Double size = sizeBirth + Math.sin(p / DEFAULT_PULSE_INTERVAL_FACTOR) * (sizeDeath - sizeBirth); 
 		particle.put(ParticleSize.CURRENT_SIZE, size);
 	}
 

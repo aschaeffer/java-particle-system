@@ -18,6 +18,7 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public List<ParticleFeature> getParticleFeatures();
 	public List<ParticleEmitter> getParticleEmitters();
 	public List<ParticleModifier> getParticleModifiers();
+	public ParticlePool getParticlePool();
 
 	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration);

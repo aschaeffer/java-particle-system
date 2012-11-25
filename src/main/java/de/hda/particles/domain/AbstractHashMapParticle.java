@@ -8,10 +8,6 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 
 	private static final long serialVersionUID = -721118895224811054L;
 
-	public final static Integer DEFAULT_LIFETIME = 100;
-	public final static Integer DEFAULT_RENDER_TYPE_INDEX = 1;
-	public final static Float DEFAULT_MASS = 0.1f;
-	
 	public Vector3f position = new Vector3f();
 	public Vector3f velocity = new Vector3f();
 	private Integer remainingIterations = DEFAULT_LIFETIME;
@@ -125,6 +121,11 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	@Override
 	public Integer getPastIterations() {
 		return pastIterations;
+	}
+	
+	@Override
+	public void setPastIterations(Integer pastIterations) {
+		this.pastIterations = pastIterations;
 	}
 
 	@Override

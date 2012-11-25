@@ -132,11 +132,10 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 			newParticles.get(particle.getRenderTypeIndex()).add(particle);
 	}
 
-	/**
-	 * Remove particle from cache
-	 */
 	@Override
 	public void onParticleDeath(Particle particle) {
+		// nothing to do, because the render type manager itself removes particles
+		// from the cache
 	}
 
 }
