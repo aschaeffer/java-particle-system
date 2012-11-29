@@ -8,13 +8,13 @@
   * physic system contains multiple emitters, multiple modifiers, multiple particle features
   * multiple types of emitters (PointEmitter, PlaneEmitter, RingEmitter, SphereEmitter)
   * multiple types of modifiers:
-    * VelocityTransformation (important!)
-    * GravityPoint
-    * GravityPlane
-    * BlackHole
-    * ColorTransformation (linear, random, rainbow ...)
-    * SizeTransformation (linear, ...)
-    * ParticleCulling (bounding box, sphere, ...)
+    * Velocity Transformation (important!)
+    * Gravity Point
+    * Gravity Plane
+    * Black Hole
+    * Color Transformation (linear, random, rainbow ...)
+    * Size Transformation (linear, ...)
+    * Particle Culling (bounding box, sphere, ...)
   * listerner pattern: onParticleCreation, onParticleDeath
   * configurable, loading / saving physics
 
@@ -25,17 +25,17 @@
   * billboarding: textures are aimed to the camera
   * blending
   * multiple render types for particles
-    * SimplePoint
-    * ColoredPoint
-    * ComplexPoint
-    * SimpleTriangle
-    * SimpleTriangleStrip
-    * SimpleLineStrip
-    * SimpleQuad
-    * PointSprite
-    * SmokeParticle (point sprite)
-    * FireParticle (point sprite, sprite sheet animation)
-    * ElectricParticle (point sprite, sprite sheet animation)
+    * Simple Point
+    * Colored Point
+    * Complex Point (Color & Size)
+    * Simple Triangle
+    * Simple Triangle Strip
+    * Simple Line Strip
+    * Simple Quad
+    * Point Sprite
+    * Smoke Particle (point sprite)
+    * Fire Particle (point sprite, sprite sheet animation)
+    * Electric Particle (point sprite, sprite sheet animation)
 
 = Scene =
 
