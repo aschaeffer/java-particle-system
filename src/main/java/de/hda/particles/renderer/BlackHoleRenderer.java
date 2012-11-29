@@ -29,9 +29,9 @@ public class BlackHoleRenderer extends AbstractSelectable<BlackHole> implements 
 			if (modifier != null) {
 				if (modifier.getClass().equals(BlackHole.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
-					Float gravityPointX = new Float((Double) configuration.get(GravityPoint.POINT_X));
-					Float gravityPointY = new Float((Double) configuration.get(GravityPoint.POINT_Y));
-					Float gravityPointZ = new Float((Double) configuration.get(GravityPoint.POINT_Z));
+					Float gravityPointX = new Float((Double) configuration.get(GravityPoint.POSITION_X));
+					Float gravityPointY = new Float((Double) configuration.get(GravityPoint.POSITION_Y));
+					Float gravityPointZ = new Float((Double) configuration.get(GravityPoint.POSITION_Z));
 					Float gravity = new Float((Double) configuration.get(BlackHole.GRAVITY));
 					Float mass = new Float((Double) configuration.get(BlackHole.MASS));
 					Float eventHorizon = gravity * mass / BlackHole.EVENT_HORIZON_FACTOR.floatValue();

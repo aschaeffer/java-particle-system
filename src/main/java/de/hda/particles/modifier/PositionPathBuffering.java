@@ -3,15 +3,15 @@ package de.hda.particles.modifier;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.features.PositionTrace;
+import de.hda.particles.features.PositionPath;
 
-public class PositionTraceTransformation extends AbstractParticleModifier implements ParticleModifier {
+public class PositionPathBuffering extends AbstractParticleModifier implements ParticleModifier {
 
-	public PositionTraceTransformation() {}
+	public PositionPathBuffering() {}
 
 	@Override
 	public void update(Particle particle) {
-		CircularFifoBuffer tracedParticlesBuffer = (CircularFifoBuffer) particle.get(PositionTrace.POSITIONS);
+		CircularFifoBuffer tracedParticlesBuffer = (CircularFifoBuffer) particle.get(PositionPath.BUFFERED_POSITIONS);
 		if (tracedParticlesBuffer == null) return;
 		tracedParticlesBuffer.add(particle.getPosition());
 	}

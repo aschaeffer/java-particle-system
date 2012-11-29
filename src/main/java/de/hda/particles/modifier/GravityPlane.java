@@ -4,67 +4,71 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
 
-public class GravityPlane extends AbstractParticleModifier implements ParticleModifier {
+public class GravityPlane extends GravityPoint implements ParticleModifier {
 
-	public final static String POINT = "point";
-	public final static String VECTOR_1 = "vector1";
-	public final static String VECTOR_2 = "vector2";
-	public final static String MASS = "mass";
-	public final static String GRAVITY = "gravity";
+	public final static String NORMAL_X = "normal_x";
+	public final static String NORMAL_Y = "normal_y";
+	public final static String NORMAL_Z = "normal_z";
 
-//	public static final Double DEFAULT_GRAVITY = 1.2;
-//	public static final Double DEFAULT_MASS = 1000.0;
-//
-//	public enum DIRECTION {
-//		NEGATIVE_X,
-//		NEGATIVE_Y,
-//		NEGATIVE_Z,
-//		POSITIVE_X,
-//		POSITIVE_Y,
-//		POSITIVE_Z
-//	}
+	public final static Double DEFAULT_GRAVITY = 1.8;
+	public final static Double DEFAULT_MASS = 2000.0;
+	public final static Double DEFAULT_MAX_FORCE = 1.0;
+
+	public Vector3f normal = new Vector3f(0.0f, 1.0f, 0.0f);
+	public Vector3f normalizedNormal = new Vector3f(0.0f, 1.0f, 0.0f);
+	// public Vector3f inverseNormalizedNormal = new Vector3f(0.0f, -1.0f, 0.0f);
 
 	public GravityPlane() {}
 
+	@Override
+	public void prepare() {
+		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
+		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
+		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
+		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
+		if (!configuration.containsKey(NORMAL_X) || !configuration.containsKey(NORMAL_Y) || !configuration.containsKey(NORMAL_Z)) return;
+		normal.setX(((Double) this.configuration.get(NORMAL_X)).floatValue());
+		normal.setY(((Double) this.configuration.get(NORMAL_Y)).floatValue());
+		normal.setZ(((Double) this.configuration.get(NORMAL_Z)).floatValue());
+		normal.normalise(normalizedNormal);
+		// normalizedNormal.negate(inverseNormalizedNormal);
+		Double g = (Double) this.configuration.get(GRAVITY);
+		if (g == null) g = DEFAULT_GRAVITY;
+		gravity = g.floatValue();
+		Double m = (Double) this.configuration.get(MASS);
+		if (m == null) m = DEFAULT_MASS;
+		mass = m.floatValue();
+		Double mf = (Double) this.configuration.get(MAX_FORCE);
+		if (mf == null) mf = DEFAULT_MAX_FORCE;
+		maxForce = mf.floatValue();
+	}
+
 	/**
-	 * Orthogonalprojektion des Partikels auf die Ebene, aufgespannt von
-	 * Punkt 1 und Punkt 2.
+	 * Apply plane gravity to particle:
+	 * 1. normalize plane normal (done only once in prepare)
+	 * 2. inverse normalized plane normal (done only once in prepare)
+	 * 3. scale inverse normalized plane normal (per particle)
+	 * 4. add scale inverse normalized plane normal to particle velocity (per particle)
 	 */
 	@Override
 	public void update(Particle particle) {
-		Vector3f position = (Vector3f) this.configuration.get(POINT);
-		Vector3f vector1 = (Vector3f) this.configuration.get(VECTOR_1);
-		Vector3f vector2 = (Vector3f) this.configuration.get(VECTOR_2);
-		Float mass = (Float) this.configuration.get(MASS);
-		Float gravity = (Float) this.configuration.get(GRAVITY);
-
-		// Normalenvektor auf Ebene
-		Vector3f normal = new Vector3f();
-		Vector3f.cross(vector1, vector2, normal);
-		normal.normalise();
-		
-		// Abstand des Partikels zur Ebene
-		Vector3f diff = new Vector3f();
-		diff.x = particle.getX() - position.x;
-		diff.y = particle.getY() - position.y;
-		diff.z = particle.getZ() - position.z;
-		Float distance = Vector3f.dot(diff, normal);
-		
+		// particle to
+		// q (plane point) to p (particle point)
+		Vector3f planePointToParticle = new Vector3f();
+		Vector3f.sub(particle.getPosition(), position, planePointToParticle);
+		// distance p to nearest point on the plane
+		Float distance = Vector3f.dot(planePointToParticle, normalizedNormal);
 		Float force = -(particle.getMass()) * mass * gravity / (distance * distance);
-		Vector3f totalForce = new Vector3f(
-			force * (particle.getX() - position.x) / distance, // nicht 100% richtig (statt position muesste
-			force * (particle.getY() - position.y) / distance, // eigentlich der partikel auf die ebene pro-
-			force * (particle.getZ() - position.z) / distance  // jiziert werden)
+		// velocity change vector
+		Vector3f n = new Vector3f(
+			(force * normalizedNormal.x) / (distance * particle.getMass()),
+			(force * normalizedNormal.y) / (distance * particle.getMass()),
+			(force * normalizedNormal.z) / (distance * particle.getMass())
 		);
-		Vector3f accelleration = new Vector3f(
-			totalForce.x / particle.getMass(),
-			totalForce.y / particle.getMass(),
-			totalForce.z / particle.getMass()
-		);
+		// new velocity
 		Vector3f newVelocity = new Vector3f();
-		Vector3f.add(particle.getVelocity(), accelleration, newVelocity);
+		Vector3f.add(particle.getVelocity(), n, newVelocity);
 		particle.setVelocity(newVelocity);
-
 	}
 
 }

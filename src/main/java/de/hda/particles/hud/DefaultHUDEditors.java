@@ -17,7 +17,9 @@ public class DefaultHUDEditors {
 		editors.add(new RingParticleEmitterEditor());
 		editors.add(new SphereParticleEmitterEditor());
 		editors.add(new GravityPointEditor());
+		editors.add(new GravityPlaneEditor());
 		editors.add(new BlackHoleEditor());
+		editors.add(new CollisionPlaneEditor());
 		return editors;
 	}
 }

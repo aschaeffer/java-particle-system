@@ -18,9 +18,9 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
 		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(BlackHole.POINT_X, "Position X"));
-		entries.add(HUDEditorEntry.create(BlackHole.POINT_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(BlackHole.POINT_Z, "Position Z"));
+		entries.add(HUDEditorEntry.create(BlackHole.POSITION_X, "Position X"));
+		entries.add(HUDEditorEntry.create(BlackHole.POSITION_Y, "Position Y"));
+		entries.add(HUDEditorEntry.create(BlackHole.POSITION_Z, "Position Z"));
 		entries.add(HUDEditorEntry.create(BlackHole.GRAVITY, "Gravity"));
 		entries.add(HUDEditorEntry.create(BlackHole.MASS, "Mass"));
 		entries.add(HUDEditorEntry.create(BlackHole.MAX_FORCE, "Max Force"));
@@ -31,18 +31,18 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 	@Override
 	public void decrease(String fieldName) {
 		super.decrease(fieldName);
-		if (fieldName.equals(BlackHole.POINT_X)) {
-			Double positionX = (Double) subject.getConfiguration().get(BlackHole.POINT_X);
+		if (fieldName.equals(BlackHole.POSITION_X)) {
+			Double positionX = (Double) subject.getConfiguration().get(BlackHole.POSITION_X);
 			if (positionX == null) positionX = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_X, positionX - 10.0);
-		} else if (fieldName.equals(BlackHole.POINT_Y)) {
-			Double positionY = (Double) subject.getConfiguration().get(BlackHole.POINT_Y);
+			subject.getConfiguration().put(BlackHole.POSITION_X, positionX - 10.0);
+		} else if (fieldName.equals(BlackHole.POSITION_Y)) {
+			Double positionY = (Double) subject.getConfiguration().get(BlackHole.POSITION_Y);
 			if (positionY == null) positionY = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_Y, positionY - 10.0);
-		} else if (fieldName.equals(BlackHole.POINT_Z)) {
-			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POINT_Z);
+			subject.getConfiguration().put(BlackHole.POSITION_Y, positionY - 10.0);
+		} else if (fieldName.equals(BlackHole.POSITION_Z)) {
+			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_Z, positionZ - 10.0);
+			subject.getConfiguration().put(BlackHole.POSITION_Z, positionZ - 10.0);
 		} else if (fieldName.equals(BlackHole.GRAVITY)) {
 			Double gravity = (Double) subject.getConfiguration().get(BlackHole.GRAVITY);
 			if (gravity == null) gravity = BlackHole.DEFAULT_GRAVITY;
@@ -78,18 +78,18 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 	@Override
 	public void increase(String fieldName) {
 		super.decrease(fieldName);
-		if (fieldName.equals(BlackHole.POINT_X)) {
-			Double positionX = (Double) subject.getConfiguration().get(BlackHole.POINT_X);
+		if (fieldName.equals(BlackHole.POSITION_X)) {
+			Double positionX = (Double) subject.getConfiguration().get(BlackHole.POSITION_X);
 			if (positionX == null) positionX = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_X, positionX + 10.0);
-		} else if (fieldName.equals(BlackHole.POINT_Y)) {
-			Double positionY = (Double) subject.getConfiguration().get(BlackHole.POINT_Y);
+			subject.getConfiguration().put(BlackHole.POSITION_X, positionX + 10.0);
+		} else if (fieldName.equals(BlackHole.POSITION_Y)) {
+			Double positionY = (Double) subject.getConfiguration().get(BlackHole.POSITION_Y);
 			if (positionY == null) positionY = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_Y, positionY + 10.0);
-		} else if (fieldName.equals(BlackHole.POINT_Z)) {
-			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POINT_Z);
+			subject.getConfiguration().put(BlackHole.POSITION_Y, positionY + 10.0);
+		} else if (fieldName.equals(BlackHole.POSITION_Z)) {
+			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
-			subject.getConfiguration().put(BlackHole.POINT_Z, positionZ + 10.0);
+			subject.getConfiguration().put(BlackHole.POSITION_Z, positionZ + 10.0);
 		} else if (fieldName.equals(BlackHole.GRAVITY)) {
 			Double gravity = (Double) subject.getConfiguration().get(BlackHole.GRAVITY);
 			if (gravity == null) gravity = BlackHole.DEFAULT_GRAVITY;
@@ -127,12 +127,12 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 		String superValue = super.getValue(fieldName);
 		if (! "N/A".equals(superValue)) {
 			return superValue;
-		} else if (fieldName.equals(BlackHole.POINT_X)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POINT_X));
-		} else if (fieldName.equals(BlackHole.POINT_Y)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POINT_Y));
-		} else if (fieldName.equals(BlackHole.POINT_Z)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POINT_Z));
+		} else if (fieldName.equals(BlackHole.POSITION_X)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POSITION_X));
+		} else if (fieldName.equals(BlackHole.POSITION_Y)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POSITION_Y));
+		} else if (fieldName.equals(BlackHole.POSITION_Z)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POSITION_Z));
 		} else if (fieldName.equals(BlackHole.GRAVITY)) {
 			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.GRAVITY));
 		} else if (fieldName.equals(BlackHole.MASS)) {

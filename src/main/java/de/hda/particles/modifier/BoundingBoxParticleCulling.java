@@ -6,18 +6,19 @@ import de.hda.particles.domain.Particle;
 
 public class BoundingBoxParticleCulling extends AbstractParticleModifier implements ParticleModifier {
 
-	public final static Double DEFAULT_BOUNDING_BOX_MIN_X = 1000.0;
 	public final static String BOUNDING_BOX_MIN_X = "minX";
-	public final static Double DEFAULT_BOUNDING_BOX_MIN_Y = 1000.0;
 	public final static String BOUNDING_BOX_MIN_Y = "minY";
-	public final static Double DEFAULT_BOUNDING_BOX_MIN_Z = 1000.0;
 	public final static String BOUNDING_BOX_MIN_Z = "minZ";
-	public final static Double DEFAULT_BOUNDING_BOX_MAX_X = 1000.0;
 	public final static String BOUNDING_BOX_MAX_X = "maxX";
-	public final static Double DEFAULT_BOUNDING_BOX_MAX_Y = 1000.0;
 	public final static String BOUNDING_BOX_MAX_Y = "maxY";
-	public final static Double DEFAULT_BOUNDING_BOX_MAX_Z = 1000.0;
 	public final static String BOUNDING_BOX_MAX_Z = "maxZ";
+
+	public final static Double DEFAULT_BOUNDING_BOX_MIN_X = -1000.0;
+	public final static Double DEFAULT_BOUNDING_BOX_MIN_Y = -1000.0;
+	public final static Double DEFAULT_BOUNDING_BOX_MIN_Z = -1000.0;
+	public final static Double DEFAULT_BOUNDING_BOX_MAX_X = 1000.0;
+	public final static Double DEFAULT_BOUNDING_BOX_MAX_Y = 1000.0;
+	public final static Double DEFAULT_BOUNDING_BOX_MAX_Z = 1000.0;
 	
 	protected Vector3f bbMin = new Vector3f();
 	protected Vector3f bbMax = new Vector3f();

@@ -18,7 +18,7 @@ public class BlackHole extends GravityPoint implements ParticleModifier {
 	}
 	@Override
 	public void update(Particle particle) {
-		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
+		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
 
 		if (Math.abs(particle.getX() - position.x) < eventHorizon
 			&& Math.abs(particle.getY() - position.y) < eventHorizon

@@ -10,9 +10,9 @@ import org.lwjgl.util.vector.Vector3f;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.MassSpring;
 
-public class MassSpringRenderType extends AbstractRenderType implements RenderType {
+public class SpringLinesRenderType extends AbstractRenderType implements RenderType {
 
-	public MassSpringRenderType() {}
+	public SpringLinesRenderType() {}
 
 	@Override
 	public void before() {

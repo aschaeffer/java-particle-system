@@ -22,7 +22,7 @@ import org.lwjgl.util.vector.Vector3f;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.MassSpring;
 import de.hda.particles.features.ParticleColor;
-import de.hda.particles.features.PositionTrace;
+import de.hda.particles.features.PositionPath;
 
 public class HairRenderType extends AbstractRenderType implements RenderType {
 
@@ -44,13 +44,13 @@ public class HairRenderType extends AbstractRenderType implements RenderType {
 		//Tell it the max and min sizes we can use using our pre-filled array.
 		glPointParameterfARB( GL_POINT_SIZE_MIN_ARB, 1.0f );
 		glPointParameterfARB( GL_POINT_SIZE_MAX_ARB, 150.0f );
-		glPointSize(150);
+//		glPointSize(150);
         glEnable(ARBPointSprite.GL_POINT_SPRITE_ARB);
 		//Tell OGL to replace the coordinates upon drawing.
 		glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
-		glLineWidth(3.0f);
+		glLineWidth(30.0f);
 		glBegin(GL_LINES);
 		glColor4f(1.0f, 1.0f, 1.0f, 0.2f);
 	}
@@ -67,28 +67,27 @@ public class HairRenderType extends AbstractRenderType implements RenderType {
 
 	@Override
 	public void render(Particle particle) {
-		CircularFifoBuffer tracedParticlesBuffer = (CircularFifoBuffer) particle.get(PositionTrace.POSITIONS);
-		if (tracedParticlesBuffer == null) return;
-		ArrayList<Particle> tracedParticles = new ArrayList<Particle>(tracedParticlesBuffer);
+		CircularFifoBuffer positionPathBuffer = (CircularFifoBuffer) particle.get(PositionPath.BUFFERED_POSITIONS);
+		if (positionPathBuffer == null) return;
+		ArrayList<Vector3f> positionPath = new ArrayList<Vector3f>(positionPathBuffer);
 
 		Color color = (Color) particle.get(ParticleColor.CURRENT_COLOR);
 		if (color != null)
 			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
-
 		
-		@SuppressWarnings("unchecked")
-		ListIterator<Particle> iterator = tracedParticles.listIterator();
-		Particle lastParticle = null;
-		Particle nextParticle = null;
-		if (iterator.hasNext()) nextParticle = iterator.next();
+		ListIterator<Vector3f> iterator = positionPath.listIterator();
+		Vector3f lastPosition = null;
+		Vector3f nextPosition = null;
+		if (iterator.hasNext()) nextPosition = iterator.next();
 		while (iterator.hasNext()) {
-			lastParticle = nextParticle;
-			nextParticle = iterator.next();
+			lastPosition = nextPosition;
+			nextPosition = iterator.next();
 			Vector3f direction = new Vector3f();
-			Vector3f.sub(nextParticle.getPosition(), particle.getPosition(), direction);
+			if (nextPosition == null || lastPosition == null) continue;
+			Vector3f.sub(nextPosition, lastPosition, direction);
 			glTexCoord2f(0.5f, 0.5f);
-			glVertex3f(particle.getX(), particle.getY(), particle.getZ());
-			glVertex3f(particle.getX() + direction.x, particle.getY() + direction.y, particle.getZ() + direction.z);
+			glVertex3f(lastPosition.x, lastPosition.y, lastPosition.z);
+			glVertex3f(lastPosition.x + direction.x, lastPosition.y + direction.y, lastPosition.z + direction.z);
 		}
 	}
 
