@@ -30,10 +30,10 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 			if (modifier != null) {
 				if (modifier.getClass().equals(GravityPoint.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
-					if (!configuration.containsKey(GravityPoint.POINT_X) || !configuration.containsKey(GravityPoint.POINT_Y) || !configuration.containsKey(GravityPoint.POINT_Z)) continue;
-					Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
-					Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
-					Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+					if (!configuration.containsKey(GravityPoint.POSITION_X) || !configuration.containsKey(GravityPoint.POSITION_Y) || !configuration.containsKey(GravityPoint.POSITION_Z)) continue;
+					Double gravityPointX = (Double) configuration.get(GravityPoint.POSITION_X);
+					Double gravityPointY = (Double) configuration.get(GravityPoint.POSITION_Y);
+					Double gravityPointZ = (Double) configuration.get(GravityPoint.POSITION_Z);
 					glPushMatrix();
 			        glTranslated(gravityPointX, gravityPointY, gravityPointZ);
 			        Sphere s = new Sphere();
@@ -62,9 +62,9 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 				if (modifier.getClass().equals(GravityPoint.class)) {
 					GravityPoint gravityPoint = (GravityPoint) modifier;
 					ParticleModifierConfiguration configuration = gravityPoint.getConfiguration();
-					Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
-					Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
-					Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+					Double gravityPointX = (Double) configuration.get(GravityPoint.POSITION_X);
+					Double gravityPointY = (Double) configuration.get(GravityPoint.POSITION_Y);
+					Double gravityPointZ = (Double) configuration.get(GravityPoint.POSITION_Z);
 					Float dx = position.getX() - gravityPointX.floatValue();
 					Float dy = position.getY() - gravityPointY.floatValue();
 					Float dz = position.getZ() - gravityPointZ.floatValue();
@@ -95,9 +95,9 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 			if (modifier.getClass().equals(GravityPoint.class)) {
 				GravityPoint gravityPoint = (GravityPoint) modifier;
 				ParticleModifierConfiguration configuration = gravityPoint.getConfiguration();
-				Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
-				Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
-				Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+				Double gravityPointX = (Double) configuration.get(GravityPoint.POSITION_X);
+				Double gravityPointY = (Double) configuration.get(GravityPoint.POSITION_Y);
+				Double gravityPointZ = (Double) configuration.get(GravityPoint.POSITION_Z);
 				Float dx = position.getX() - gravityPointX.floatValue();
 				Float dy = position.getY() - gravityPointY.floatValue();
 				Float dz = position.getZ() - gravityPointZ.floatValue();
@@ -122,9 +122,9 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 		Vector3f cameraToTarget = new Vector3f();
 		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
 		ParticleModifierConfiguration configuration = selected.getConfiguration();
-		Double gravityPointX = (Double) configuration.get(GravityPoint.POINT_X);
-		Double gravityPointY = (Double) configuration.get(GravityPoint.POINT_Y);
-		Double gravityPointZ = (Double) configuration.get(GravityPoint.POINT_Z);
+		Double gravityPointX = (Double) configuration.get(GravityPoint.POSITION_X);
+		Double gravityPointY = (Double) configuration.get(GravityPoint.POSITION_Y);
+		Double gravityPointZ = (Double) configuration.get(GravityPoint.POSITION_Z);
 		Float dx = cameraPosition.getX() - gravityPointX.floatValue();
 		Float dy = cameraPosition.getY() - gravityPointY.floatValue();
 		Float dz = cameraPosition.getZ() - gravityPointZ.floatValue();
@@ -134,8 +134,8 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 		cameraToTarget.scale(scaleFactor);
 		Vector3f newPosition = new Vector3f();
 		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
-		configuration.put(GravityPoint.POINT_X, new Double(newPosition.x));
-		configuration.put(GravityPoint.POINT_Y, new Double(newPosition.y));
-		configuration.put(GravityPoint.POINT_Z, new Double(newPosition.z));
+		configuration.put(GravityPoint.POSITION_X, new Double(newPosition.x));
+		configuration.put(GravityPoint.POSITION_Y, new Double(newPosition.y));
+		configuration.put(GravityPoint.POSITION_Z, new Double(newPosition.z));
 	}
 }

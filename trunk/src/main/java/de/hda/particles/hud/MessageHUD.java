@@ -93,7 +93,7 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 		if (command.getType() == HUDCommandTypes.MESSAGE) {
 			message = (String) command.getPayLoad();
 			endFrame = Sys.getTime() + lifetime + fadeLength;
-			logger.info("show message (" + message + ") till " + endFrame);
+			logger.debug("show message (" + message + ") till " + endFrame);
 		}
 	}
 

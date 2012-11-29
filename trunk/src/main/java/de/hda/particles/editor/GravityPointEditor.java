@@ -6,7 +6,7 @@ import java.util.List;
 import de.hda.particles.hud.HUDEditorEntry;
 import de.hda.particles.modifier.GravityPoint;
 
-public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityPoint> implements Editor {
+public class GravityPointEditor extends AbstractParticleModifierEditor<GravityPoint> implements Editor {
 
 	private final static String title = "Gravity Point";
 
@@ -18,9 +18,9 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
 		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(GravityPoint.POINT_X, "Position X"));
-		entries.add(HUDEditorEntry.create(GravityPoint.POINT_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(GravityPoint.POINT_Z, "Position Z"));
+		entries.add(HUDEditorEntry.create(GravityPoint.POSITION_X, "Position X"));
+		entries.add(HUDEditorEntry.create(GravityPoint.POSITION_Y, "Position Y"));
+		entries.add(HUDEditorEntry.create(GravityPoint.POSITION_Z, "Position Z"));
 		entries.add(HUDEditorEntry.create(GravityPoint.GRAVITY, "Gravity"));
 		entries.add(HUDEditorEntry.create(GravityPoint.MASS, "Mass"));
 		entries.add(HUDEditorEntry.create(GravityPoint.MAX_FORCE, "Max Force"));
@@ -31,18 +31,18 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 	@Override
 	public void decrease(String fieldName) {
 		super.decrease(fieldName);
-		if (fieldName.equals(GravityPoint.POINT_X)) {
-			Double positionX = (Double) subject.getConfiguration().get(GravityPoint.POINT_X);
+		if (fieldName.equals(GravityPoint.POSITION_X)) {
+			Double positionX = (Double) subject.getConfiguration().get(GravityPoint.POSITION_X);
 			if (positionX == null) positionX = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_X, positionX - 10.0);
-		} else if (fieldName.equals(GravityPoint.POINT_Y)) {
-			Double positionY = (Double) subject.getConfiguration().get(GravityPoint.POINT_Y);
+			subject.getConfiguration().put(GravityPoint.POSITION_X, positionX - 10.0);
+		} else if (fieldName.equals(GravityPoint.POSITION_Y)) {
+			Double positionY = (Double) subject.getConfiguration().get(GravityPoint.POSITION_Y);
 			if (positionY == null) positionY = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_Y, positionY - 10.0);
-		} else if (fieldName.equals(GravityPoint.POINT_Z)) {
-			Double positionZ = (Double) subject.getConfiguration().get(GravityPoint.POINT_Z);
+			subject.getConfiguration().put(GravityPoint.POSITION_Y, positionY - 10.0);
+		} else if (fieldName.equals(GravityPoint.POSITION_Z)) {
+			Double positionZ = (Double) subject.getConfiguration().get(GravityPoint.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_Z, positionZ - 10.0);
+			subject.getConfiguration().put(GravityPoint.POSITION_Z, positionZ - 10.0);
 		} else if (fieldName.equals(GravityPoint.GRAVITY)) {
 			Double gravity = (Double) subject.getConfiguration().get(GravityPoint.GRAVITY);
 			if (gravity == null) gravity = GravityPoint.DEFAULT_GRAVITY;
@@ -78,18 +78,18 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 	@Override
 	public void increase(String fieldName) {
 		super.decrease(fieldName);
-		if (fieldName.equals(GravityPoint.POINT_X)) {
-			Double positionX = (Double) subject.getConfiguration().get(GravityPoint.POINT_X);
+		if (fieldName.equals(GravityPoint.POSITION_X)) {
+			Double positionX = (Double) subject.getConfiguration().get(GravityPoint.POSITION_X);
 			if (positionX == null) positionX = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_X, positionX + 10.0);
-		} else if (fieldName.equals(GravityPoint.POINT_Y)) {
-			Double positionY = (Double) subject.getConfiguration().get(GravityPoint.POINT_Y);
+			subject.getConfiguration().put(GravityPoint.POSITION_X, positionX + 10.0);
+		} else if (fieldName.equals(GravityPoint.POSITION_Y)) {
+			Double positionY = (Double) subject.getConfiguration().get(GravityPoint.POSITION_Y);
 			if (positionY == null) positionY = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_Y, positionY + 10.0);
-		} else if (fieldName.equals(GravityPoint.POINT_Z)) {
-			Double positionZ = (Double) subject.getConfiguration().get(GravityPoint.POINT_Z);
+			subject.getConfiguration().put(GravityPoint.POSITION_Y, positionY + 10.0);
+		} else if (fieldName.equals(GravityPoint.POSITION_Z)) {
+			Double positionZ = (Double) subject.getConfiguration().get(GravityPoint.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
-			subject.getConfiguration().put(GravityPoint.POINT_Z, positionZ + 10.0);
+			subject.getConfiguration().put(GravityPoint.POSITION_Z, positionZ + 10.0);
 		} else if (fieldName.equals(GravityPoint.GRAVITY)) {
 			Double gravity = (Double) subject.getConfiguration().get(GravityPoint.GRAVITY);
 			if (gravity == null) gravity = GravityPoint.DEFAULT_GRAVITY;
@@ -127,12 +127,12 @@ public class GravityPointEditor  extends AbstractParticleModifierEditor<GravityP
 		String superValue = super.getValue(fieldName);
 		if (! "N/A".equals(superValue)) {
 			return superValue;
-		} else if (fieldName.equals(GravityPoint.POINT_X)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POINT_X));
-		} else if (fieldName.equals(GravityPoint.POINT_Y)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POINT_Y));
-		} else if (fieldName.equals(GravityPoint.POINT_Z)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POINT_Z));
+		} else if (fieldName.equals(GravityPoint.POSITION_X)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POSITION_X));
+		} else if (fieldName.equals(GravityPoint.POSITION_Y)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POSITION_Y));
+		} else if (fieldName.equals(GravityPoint.POSITION_Z)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.POSITION_Z));
 		} else if (fieldName.equals(GravityPoint.GRAVITY)) {
 			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityPoint.GRAVITY));
 		} else if (fieldName.equals(GravityPoint.MASS)) {

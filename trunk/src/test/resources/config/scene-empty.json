@@ -58,7 +58,8 @@
 		"de.hda.particles.renderer.AxisRenderer",
 		"de.hda.particles.renderer.EmitterRenderer",
 		"de.hda.particles.renderer.GravityPointRenderer",
-		"de.hda.particles.renderer.BoundingBoxParticleCullingRenderer",
-		"de.hda.particles.renderer.BlackHoleRenderer"
+		"de.hda.particles.renderer.GravityPlaneRenderer",
+		"de.hda.particles.renderer.BlackHoleRenderer",
+		"de.hda.particles.renderer.CollisionPlaneRenderer"
 	]
 }

@@ -6,16 +6,17 @@ import de.hda.particles.domain.Particle;
 
 public class GravityPoint extends AbstractParticleModifier implements ParticleModifier {
 
-	public final static String POINT_X = "point_x";
-	public final static String POINT_Y = "point_y";
-	public final static String POINT_Z = "point_z";
+	public final static String POSITION_X = "position_x";
+	public final static String POSITION_Y = "position_y";
+	public final static String POSITION_Z = "position_z";
+
 	public final static String MASS = "mass";
 	public final static String GRAVITY = "gravity";
 	public final static String MAX_FORCE = "maxForce";
 	
-	public static final Double DEFAULT_GRAVITY = 1.2;
-	public static final Double DEFAULT_MASS = 1000.0;
-	public final static Double DEFAULT_MAX_FORCE = 10.0;
+	public final static Double DEFAULT_GRAVITY = 0.8;
+	public final static Double DEFAULT_MASS = 1000.0;
+	public final static Double DEFAULT_MAX_FORCE = 3.0;
 	
 	protected Vector3f position = new Vector3f();
 	protected Float gravity = 0.0f;
@@ -26,10 +27,10 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	@Override
 	public void prepare() {
-		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
-		position.setX(((Double) this.configuration.get(POINT_X)).floatValue());
-		position.setY(((Double) this.configuration.get(POINT_Y)).floatValue());
-		position.setZ(((Double) this.configuration.get(POINT_Z)).floatValue());
+		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
+		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
+		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
+		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
 		Double g = (Double) this.configuration.get(GRAVITY);
 		if (g == null) g = DEFAULT_GRAVITY;
 		gravity = g.floatValue();
@@ -43,7 +44,7 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	@Override
 	public void update(Particle particle) {
-		if (!configuration.containsKey(POINT_X) || !configuration.containsKey(POINT_Y) || !configuration.containsKey(POINT_Z)) return;
+		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
 		updateParticleVelocity(particle, position, mass, gravity, maxForce);
 	}
 	
