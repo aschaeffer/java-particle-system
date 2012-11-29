@@ -39,6 +39,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Explosion", HUDCommandTypes.ADD_RENDER_TYPE, ExplosionRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "FireBall", HUDCommandTypes.ADD_RENDER_TYPE, FireBallRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Flames", HUDCommandTypes.ADD_RENDER_TYPE, FlamesRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Poison", HUDCommandTypes.ADD_RENDER_TYPE, PoisonRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "SFlare", HUDCommandTypes.ADD_RENDER_TYPE, SFlareRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Snow", HUDCommandTypes.ADD_RENDER_TYPE, SnowRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Star", HUDCommandTypes.ADD_RENDER_TYPE, StarRenderType.class);
