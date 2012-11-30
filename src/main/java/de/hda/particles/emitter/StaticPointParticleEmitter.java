@@ -1,6 +1,6 @@
 package de.hda.particles.emitter;
 
-import de.hda.particles.domain.DefaultParticle;
+import de.hda.particles.domain.StaticParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleFeature;
 
@@ -9,11 +9,11 @@ import de.hda.particles.features.ParticleFeature;
  * @author aschaeffer
  *
  */
-public class FastPointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
+public class StaticPointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
 	private final Boolean initParticleFeatures = false;
 
-	public FastPointParticleEmitter() {}
+	public StaticPointParticleEmitter() {}
 
 	/**
 	 * Creates new particles and adds them to the particle system
@@ -23,7 +23,7 @@ public class FastPointParticleEmitter extends AbstractParticleEmitter implements
 		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
-			Particle particle = new DefaultParticle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new StaticParticle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
 			if (initParticleFeatures) {
 				for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 					particleFeature.init(this, particle);

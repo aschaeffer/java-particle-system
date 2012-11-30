@@ -1,6 +1,7 @@
 package de.hda.particles.hud;
 
 import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.scene.Scene;
 
 public class ModifierHUD extends AbstractHUD implements HUD {
@@ -32,8 +33,10 @@ public class ModifierHUD extends AbstractHUD implements HUD {
 					configuration = (ParticleModifierConfiguration) configurationFactoryClass.getMethod("create", Scene.class).invoke(null, scene);
 				} catch (Exception e) {}
 			}
-			scene.getParticleSystem().addParticleModifier((Class) command.getPayLoad(), configuration);
+			Class<? extends ParticleModifier> clazz = (Class<? extends ParticleModifier>) command.getPayLoad();
+			scene.getParticleSystem().addParticleModifier(clazz, configuration);
 			scene.getParticleSystem().endModification();
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Added Modifier: " + clazz.getSimpleName()));
 		}
 //		if (command.getType() == HUDCommandTypes.REMOVE_MODIFIER) {
 //			scene.getParticleSystem().re

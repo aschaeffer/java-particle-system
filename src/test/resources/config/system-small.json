@@ -1,0 +1,62 @@
+{
+  "name" : "Empty Physics System",
+  "features" : [ "de.hda.particles.features.ParticleInitialVelocityScatter", "de.hda.particles.features.ParticleColor", "de.hda.particles.features.PositionPath" ],
+  "emitters" : [ {
+    "lifetime" : 500,
+    "rate" : 1,
+    "velocity_y" : 0.0,
+    "velocity_x" : 1.0,
+    "position_y" : 183.14311,
+    "velocity_z" : 0.0,
+    "position_x" : 428.6252,
+    "className" : "de.hda.particles.emitter.PointParticleEmitter",
+    "configuration" : {
+      "scatter_x" : 0.21000000000000005,
+      "scatter_z" : 0.20000000000000004,
+      "scatterPulseResolution" : 0.0,
+      "scatter_y" : 0.23000000000000007,
+      "scatterPulse" : 1.0
+    },
+    "position_z" : 345.0232
+  } ],
+  "modifiers" : [ {
+    "className" : "de.hda.particles.modifier.BoundingBoxParticleCulling",
+    "configuration" : {
+      "minZ" : -5000.0,
+      "maxZ" : 5000.0,
+      "maxY" : 5000.0,
+      "maxX" : 5000.0,
+      "minX" : -5000.0,
+      "minY" : -5000.0
+    }
+  }, {
+    "className" : "de.hda.particles.modifier.VelocityTransformation",
+    "configuration" : { }
+  }, {
+    "className" : "de.hda.particles.modifier.RandomStartColor",
+    "configuration" : { }
+  }, {
+    "className" : "de.hda.particles.modifier.PositionPathBuffering",
+    "configuration" : { }
+  }, {
+    "className" : "de.hda.particles.modifier.GravityPoint",
+    "configuration" : {
+      "maxForce" : 0.09999999999999999,
+      "mass" : 1000.0,
+      "position_y" : 152.88087463378906,
+      "position_x" : 453.1691589355469,
+      "gravity" : 0.10000000000000014,
+      "position_z" : 406.02752685546875
+    }
+  }, {
+    "className" : "de.hda.particles.modifier.GravityPoint",
+    "configuration" : {
+      "maxForce" : 0.09999999999999999,
+      "mass" : 1000.0,
+      "position_y" : 126.59010314941406,
+      "position_x" : 429.11737060546875,
+      "gravity" : 0.10000000000000014,
+      "position_z" : 385.56561279296875
+    }
+  } ]
+}

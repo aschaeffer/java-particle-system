@@ -34,6 +34,7 @@ public class RendererHUD extends AbstractHUD implements HUD {
 		} else if (command.getType() == HUDCommandTypes.SELECT_SKYBOX) {
 			SkyBoxRenderer skyBoxRenderer = (SkyBoxRenderer) scene.getRendererManager().getRendererByClass(SkyBoxRenderer.class);
 			if (skyBoxRenderer != null) {
+				skyBoxRenderer.clearSkybox();
 				skyBoxRenderer.loadSkybox((String) command.getPayLoad());
 			}
 		}

@@ -15,10 +15,10 @@ public class DefaultHUDMenu {
 		HUDMenuEntry scene = HUDMenuEntry.create(root, "Scene");
 		HUDMenuEntry renderTypes = HUDMenuEntry.create(scene, "Render Types");
 		HUDMenuEntry addPointSpriteRenderTypes = HUDMenuEntry.create(renderTypes, "Add Point Sprite Render Type");
-		HUDMenuEntry addPositionPathRenderTypes = HUDMenuEntry.create(renderTypes, "Add Position Path Render Type");
-		HUDMenuEntry addMassSpringRenderTypes = HUDMenuEntry.create(renderTypes, "Add Mass Spring Render Type");
 		HUDMenuEntry addPrimitiveRenderTypes = HUDMenuEntry.create(renderTypes, "Add Primtive Render Type");
 		HUDMenuEntry addComplexRenderTypes = HUDMenuEntry.create(renderTypes, "Add Complex Render Type");
+		HUDMenuEntry addMassSpringRenderTypes = HUDMenuEntry.create(renderTypes, "Add Mass Spring Render Type");
+		HUDMenuEntry addPositionPathRenderTypes = HUDMenuEntry.create(renderTypes, "Add Position Path Render Type");
 		HUDMenuEntry addTechnicalRenderTypes = HUDMenuEntry.create(renderTypes, "Add Technical Render Type");
 		HUDMenuEntry.create(addComplexRenderTypes, "Colored Point", HUDCommandTypes.ADD_RENDER_TYPE, ColoredPointRenderType.class);
 		HUDMenuEntry.create(addComplexRenderTypes, "Complex Point (Color & Size)", HUDCommandTypes.ADD_RENDER_TYPE, ComplexPointRenderType.class);
@@ -40,6 +40,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "FireBall", HUDCommandTypes.ADD_RENDER_TYPE, FireBallRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Flames", HUDCommandTypes.ADD_RENDER_TYPE, FlamesRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Poison", HUDCommandTypes.ADD_RENDER_TYPE, PoisonRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Ring", HUDCommandTypes.ADD_RENDER_TYPE, RingRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "SFlare", HUDCommandTypes.ADD_RENDER_TYPE, SFlareRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Snow", HUDCommandTypes.ADD_RENDER_TYPE, SnowRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Star", HUDCommandTypes.ADD_RENDER_TYPE, StarRenderType.class);
@@ -96,14 +97,14 @@ public class DefaultHUDMenu {
 		HUDMenuEntry physics = HUDMenuEntry.create(root, "Physics");
 		HUDMenuEntry emitters = HUDMenuEntry.create(physics, "Emitters");
 		HUDMenuEntry addEmitters = HUDMenuEntry.create(emitters, "Add Emitter");
-		HUDMenuEntry.create(addEmitters, "Point", HUDCommandTypes.ADD_EMITTER, PointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addEmitters, "Point", HUDCommandTypes.ADD_EMITTER, PooledPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Plane", HUDCommandTypes.ADD_EMITTER, PlaneParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Ring", HUDCommandTypes.ADD_EMITTER, RingParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Sphere", HUDCommandTypes.ADD_EMITTER, SphereParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, WaveParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Point (Pulse Rate)", HUDCommandTypes.ADD_EMITTER, PulseRatePointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
-		HUDMenuEntry.create(addEmitters, "Point (Fast)", HUDCommandTypes.ADD_EMITTER, FastPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
-		HUDMenuEntry.create(addEmitters, "Point (Pooled)", HUDCommandTypes.ADD_EMITTER, PooledPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addEmitters, "Point (Static)", HUDCommandTypes.ADD_EMITTER, StaticPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addEmitters, "Point (Slow)", HUDCommandTypes.ADD_EMITTER, PointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry modifiers = HUDMenuEntry.create(physics, "Modifiers");
 		HUDMenuEntry addModifiers = HUDMenuEntry.create(modifiers, "Add Modifier");
 		HUDMenuEntry addModifiersGravity = HUDMenuEntry.create(addModifiers, "Gravity");
@@ -135,10 +136,13 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addFeatures, "Size", HUDCommandTypes.ADD_FEATURE, ParticleSize.class);
 		HUDMenuEntry.create(addFeatures, "Initial Velocity Scatter", HUDCommandTypes.ADD_FEATURE, ParticleInitialVelocityScatter.class);
 		HUDMenuEntry.create(addFeatures, "Mass-Spring", HUDCommandTypes.ADD_FEATURE, MassSpring.class);
-		HUDMenuEntry.create(addFeatures, "Position Path", HUDCommandTypes.ADD_FEATURE, PositionPath.class);
+		HUDMenuEntry.create(addFeatures, "Position Path Buffer", HUDCommandTypes.ADD_FEATURE, PositionPath.class);
+		HUDMenuEntry.create(addFeatures, "Tube Segments", HUDCommandTypes.ADD_FEATURE, TubeSegments.class);
+		HUDMenuEntry.create(addFeatures, "Replication", HUDCommandTypes.ADD_FEATURE, Replication.class);
 		HUDMenuEntry.create(physics, "Load System", HUDCommandTypes.LOAD_SYSTEM);
 		HUDMenuEntry.create(physics, "Save System", HUDCommandTypes.SAVE_SYSTEM);
 		HUDMenuEntry.create(physics, "Remove all Particles", HUDCommandTypes.REMOVE_ALL_PARTICLES);
+		HUDMenuEntry.create(root, "Help", HUDCommandTypes.HELP);
 		HUDMenuEntry.create(root, "Exit", HUDCommandTypes.EXIT);
 		return root;
 	}

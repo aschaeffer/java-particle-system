@@ -4,10 +4,12 @@ public enum HUDCommandTypes {
 
 	NOOP,
 	MESSAGE,
+	NOTICE,
 	MENU,
 	EDIT,
 	EDIT_DONE,
 	EXIT,
+	HELP,
 	LOAD_SCENE,
 	SAVE_SCENE,
 	LOAD_SYSTEM,

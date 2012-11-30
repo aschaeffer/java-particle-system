@@ -37,6 +37,7 @@
 		}
 	],
 	"huds": [
+		"de.hda.particles.hud.HelpHUD",
 		"de.hda.particles.hud.CrosshairHUD",
 		"de.hda.particles.hud.CameraHUD",
 		"de.hda.particles.hud.FpsHUD",

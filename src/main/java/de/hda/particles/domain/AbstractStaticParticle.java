@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.lwjgl.util.vector.Vector3f;
 
-public abstract class AbstractParticle implements Particle {
+public abstract class AbstractStaticParticle implements Particle {
 
 	public Vector3f position = new Vector3f();
 	public Vector3f velocity = new Vector3f();
@@ -17,10 +17,10 @@ public abstract class AbstractParticle implements Particle {
 	private Integer index = 0;
 	private Integer renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
-	public AbstractParticle() {
+	public AbstractStaticParticle() {
 	}
 
-	public AbstractParticle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
+	public AbstractStaticParticle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
 		this.position = position;
 		this.velocity = velocity;
 		this.renderTypeIndex = renderTypeIndex;

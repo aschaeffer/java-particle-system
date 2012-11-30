@@ -25,7 +25,7 @@ public class CameraHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 			if (!blockCameraSelection) {
 				scene.getCameraManager().selectNextCamera();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Selected Camera \"" + scene.getCameraManager().getName() + "\""));
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Selected Camera \"" + scene.getCameraManager().getName() + "\""));
 				blockCameraSelection = true;
 			}
 		} else {
