@@ -262,4 +262,5 @@ public class MenuHUD extends AbstractHUD implements HUD {
 			scene.getParticleSystem().endModification();
 		}
 	}
+
 }

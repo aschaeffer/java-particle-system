@@ -15,9 +15,6 @@ import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hda.particles.hud.HUDCommand;
-import de.hda.particles.hud.HUDCommandTypes;
-
 public class RendererManager extends AbstractRenderer implements Renderer {
 
 	private final List<Renderer> renderers = new ArrayList<Renderer>();

@@ -74,7 +74,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockClearSelection) {
 				scene.getParticleSystem().removeAllParticles();
 				scene.getRenderTypeManager().clear();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "All particles removed"));
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles removed"));
 				blockClearSelection = true;
 			}
 		} else {
@@ -105,6 +105,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			scene.getParticleSystem().removeAllParticles();
 			scene.getRenderTypeManager().clear();
 			scene.getParticleSystem().endModification();
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles removed"));
 		}
 	}
 

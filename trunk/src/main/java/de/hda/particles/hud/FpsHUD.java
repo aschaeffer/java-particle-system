@@ -24,13 +24,13 @@ public class FpsHUD extends AbstractHUD implements HUD {
 			if (!blockMaxFpsSelection) {
 				normalFps = scene.getParticleSystem().getMaxFps();
 				scene.getParticleSystem().setMaxFps(1000);
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Disabled FPS Limitation"));
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Disabled FPS Limitation"));
 				blockMaxFpsSelection = true;
 			}
 		} else {
 			if (blockMaxFpsSelection) {
 				scene.getParticleSystem().setMaxFps(normalFps);
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Enabled FPS Limitation"));
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Enabled FPS Limitation"));
 				blockMaxFpsSelection = false;
 			}
 		}

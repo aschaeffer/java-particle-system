@@ -1,14 +1,14 @@
 package de.hda.particles.editor;
 
-import de.hda.particles.emitter.FastPointParticleEmitter;
+import de.hda.particles.emitter.StaticPointParticleEmitter;
 
-public class FastPointParticleEmitterEditor extends AbstractParticleEmitterEditor<FastPointParticleEmitter> implements Editor {
+public class FastPointParticleEmitterEditor extends AbstractParticleEmitterEditor<StaticPointParticleEmitter> implements Editor {
 
 	private final static String title = "Point Particle Emitter (Fast)";
 
 	@Override
 	public Boolean accept(Class<? extends Object> clazz) {
-		return clazz.equals(FastPointParticleEmitter.class);
+		return clazz.equals(StaticPointParticleEmitter.class);
 	}
 
 	@Override

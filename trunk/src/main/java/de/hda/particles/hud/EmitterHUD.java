@@ -3,6 +3,7 @@ package de.hda.particles.hud;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.ParticleEmitterConfiguration;
+import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.scene.Scene;
 
 public class EmitterHUD extends AbstractHUD implements HUD {
@@ -35,8 +36,10 @@ public class EmitterHUD extends AbstractHUD implements HUD {
 					configuration = (ParticleEmitterConfiguration) configurationFactoryClass.getMethod("create", Scene.class).invoke(null, scene);
 				} catch (Exception e) {}
 			}
-			scene.getParticleSystem().addParticleEmitter((Class) command.getPayLoad(), position, scene.getCameraManager().getDirectionVector(), 1, 10, 300, configuration);
+			Class<? extends ParticleEmitter> clazz = (Class<? extends ParticleEmitter>) command.getPayLoad();
+			scene.getParticleSystem().addParticleEmitter(clazz, position, scene.getCameraManager().getDirectionVector(), 1, 10, 300, configuration);
 			scene.getParticleSystem().endModification();
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Added Emitter: " + clazz.getSimpleName()));
 		}
 //		if (command.getType() == HUDCommandTypes.REMOVE_EMITTER) {
 //			scene.getParticleSystem().re

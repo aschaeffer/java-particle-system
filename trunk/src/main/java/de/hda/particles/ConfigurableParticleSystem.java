@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.dao.ParticleSystemDAO;
-import de.hda.particles.hud.HUDCommand;
-import de.hda.particles.hud.HUDCommandTypes;
 
 public class ConfigurableParticleSystem extends AbstractParticleSystem implements ParticleSystem {
 
