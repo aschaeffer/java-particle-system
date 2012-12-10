@@ -1,7 +1,9 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.size;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleSize;
+import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.ParticleModifier;
 
 public class PulseSizeTransformation extends AbstractParticleModifier implements ParticleModifier {
 
