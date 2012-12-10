@@ -1,8 +1,10 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.gravity;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.ParticleModifier;
 
 public class GravityPoint extends AbstractParticleModifier implements ParticleModifier {
 

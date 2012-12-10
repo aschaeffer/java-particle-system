@@ -1,6 +1,7 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.gravity;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.modifier.ParticleModifier;
 
 public class BlackHole extends GravityPoint implements ParticleModifier {
 
