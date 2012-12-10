@@ -1,8 +1,9 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.gravity;
 
 import java.util.List;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.modifier.ParticleModifier;
 
 /**
  * This transformation calculates the gravity forces between each particle.
