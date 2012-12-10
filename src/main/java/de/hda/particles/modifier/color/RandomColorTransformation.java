@@ -1,4 +1,4 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.color;
 
 import java.util.Random;
 
@@ -6,6 +6,8 @@ import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
+import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.ParticleModifier;
 
 public class RandomColorTransformation extends AbstractParticleModifier implements ParticleModifier {
 
