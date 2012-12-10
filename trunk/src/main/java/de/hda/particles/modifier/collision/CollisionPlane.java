@@ -1,8 +1,10 @@
-package de.hda.particles.modifier;
+package de.hda.particles.modifier.collision;
 
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.ParticleModifier;
 
 /**
  * Calculates if a particle position is in front or behind of the plane.
