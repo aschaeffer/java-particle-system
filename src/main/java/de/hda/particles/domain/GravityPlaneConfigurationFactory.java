@@ -1,6 +1,6 @@
 package de.hda.particles.domain;
 
-import de.hda.particles.modifier.GravityPlane;
+import de.hda.particles.modifier.gravity.GravityPlane;
 import de.hda.particles.scene.Scene;
 
 public class GravityPlaneConfigurationFactory {

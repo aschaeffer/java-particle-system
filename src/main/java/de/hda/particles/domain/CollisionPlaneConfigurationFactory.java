@@ -1,6 +1,6 @@
 package de.hda.particles.domain;
 
-import de.hda.particles.modifier.CollisionPlane;
+import de.hda.particles.modifier.collision.CollisionPlane;
 import de.hda.particles.scene.Scene;
 
 public class CollisionPlaneConfigurationFactory {

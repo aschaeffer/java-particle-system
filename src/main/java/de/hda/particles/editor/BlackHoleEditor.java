@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
-import de.hda.particles.modifier.BlackHole;
+import de.hda.particles.modifier.gravity.BlackHole;
 
 public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> implements Editor {
 

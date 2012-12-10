@@ -8,9 +8,9 @@ import java.util.ListIterator;
 import org.lwjgl.util.glu.Sphere;
 
 import de.hda.particles.domain.ParticleModifierConfiguration;
-import de.hda.particles.modifier.BlackHole;
-import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.modifier.gravity.BlackHole;
+import de.hda.particles.modifier.gravity.GravityPoint;
 
 public class BlackHoleRenderer extends AbstractSelectable<BlackHole> implements Renderer {
 
