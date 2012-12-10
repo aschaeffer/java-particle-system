@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
-import de.hda.particles.modifier.GravityPlane;
+import de.hda.particles.modifier.gravity.GravityPlane;
 
 public class GravityPlaneEditor extends AbstractParticleModifierEditor<GravityPlane> implements Editor {
 

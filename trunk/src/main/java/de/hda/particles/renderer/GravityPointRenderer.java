@@ -12,8 +12,8 @@ import org.lwjgl.util.vector.Vector3f;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.hud.HUDCommand;
 import de.hda.particles.hud.HUDCommandTypes;
-import de.hda.particles.modifier.GravityPoint;
 import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.modifier.gravity.GravityPoint;
 
 public class GravityPointRenderer extends AbstractMovable<GravityPoint> implements Renderer {
 

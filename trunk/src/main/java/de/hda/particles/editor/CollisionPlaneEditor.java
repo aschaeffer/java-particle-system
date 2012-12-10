@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
-import de.hda.particles.modifier.CollisionPlane;
+import de.hda.particles.modifier.collision.CollisionPlane;
 
 public class CollisionPlaneEditor  extends AbstractParticleModifierEditor<CollisionPlane> implements Editor {
 
