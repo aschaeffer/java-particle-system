@@ -40,23 +40,23 @@ public class AxisRenderer extends AbstractRenderer implements Renderer {
 		glLineWidth(3.0f);
         glBegin (GL_LINES);
         glColor4f (1.0f, 1.0f, 0.5f, 0.8f);
-        glVertex3f (-axisLength, 0.0f, 0.0f);
-        glVertex3f (axisLength, 0.0f, 0.0f);
+        glVertex4f (-axisLength, 0.0f, 0.0f, 1.0f);
+        glVertex4f (axisLength, 0.0f, 0.0f, 1.0f);
         glColor4f (0.75f, 0.75f, 0.5f, 0.8f);
-        glVertex3f (axisLength, 0.0f, 0.0f);
-        glVertex3f (-axisLength, 0.0f, 0.0f); // X
+        glVertex4f (axisLength, 0.0f, 0.0f, 1.0f);
+        glVertex4f (-axisLength, 0.0f, 0.0f, 1.0f); // X
         glColor4f (1.0f, 0.5f, 1.0f, 0.8f);
-        glVertex3f (0.0f, -axisLength, 0.0f);
-        glVertex3f (0.0f, axisLength, 0.0f);
+        glVertex4f (0.0f, -axisLength, 0.0f, 1.0f);
+        glVertex4f (0.0f, axisLength, 0.0f, 1.0f);
         glColor4f (0.75f, 0.5f, 0.75f, 0.8f);
-        glVertex3f (0.0f, axisLength, 0.0f);
-        glVertex3f (0.0f, -axisLength, 0.0f); // Y
+        glVertex4f (0.0f, axisLength, 0.0f, 1.0f);
+        glVertex4f (0.0f, -axisLength, 0.0f, 1.0f); // Y
         glColor4f (0.5f, 1.0f, 1.0f, 0.8f);
-        glVertex3f (0.0f, 0.0f, -axisLength);
-        glVertex3f (0.0f, 0.0f, axisLength);
+        glVertex4f (0.0f, 0.0f, -axisLength, 1.0f);
+        glVertex4f (0.0f, 0.0f, axisLength, 1.0f);
         glColor4f (0.5f, 0.75f, 0.75f, 0.8f);
-        glVertex3f (0.0f, 0.0f, axisLength);
-        glVertex3f (0.0f, 0.0f, -axisLength); // Z
+        glVertex4f (0.0f, 0.0f, axisLength, 1.0f);
+        glVertex4f (0.0f, 0.0f, -axisLength, 1.0f); // Z
         glEnd ();
 
 		glEnable(GL_DEPTH_TEST);
