@@ -32,16 +32,16 @@ public class ColorCycleTransformation extends AbstractParticleModifier implement
 		e = (Color) particle.get(ParticleColor.END_COLOR);
 		if (e == null) return;
 		p = particle.getLifetimePercent();
-		if (p < 0.5f) {
-			r = (int) (p * e.getRed()   + (0.5f - p) * s.getRed());
-			g = (int) (p * e.getGreen() + (0.5f - p) * s.getGreen());
-			b = (int) (p * e.getBlue()  + (0.5f - p) * s.getBlue());
-			a = (int) (p * e.getAlpha() + (0.5f - p) * s.getAlpha());
+		if (p <= 0.5f) {
+			r = (int) (p * e.getRed()   + (1.0f - p) * s.getRed());
+			g = (int) (p * e.getGreen() + (1.0f - p) * s.getGreen());
+			b = (int) (p * e.getBlue()  + (1.0f - p) * s.getBlue());
+			a = (int) (p * e.getAlpha() + (1.0f - p) * s.getAlpha());
 		} else {
-			r = (int) ((0.5f - p) * e.getRed()   + (1.0f - p) * s.getRed());
-			g = (int) ((0.5f - p) * e.getGreen() + (1.0f - p) * s.getGreen());
-			b = (int) ((0.5f - p) * e.getBlue()  + (1.0f - p) * s.getBlue());
-			a = (int) ((0.5f - p) * e.getAlpha() + (1.0f - p) * s.getAlpha());
+			r = (int) (p * s.getRed()   + (1.0f - p) * e.getRed());
+			g = (int) (p * s.getGreen() + (1.0f - p) * e.getGreen());
+			b = (int) (p * s.getBlue()  + (1.0f - p) * e.getBlue());
+			a = (int) (p * s.getAlpha() + (1.0f - p) * e.getAlpha());
 		}
 		particle.put(ParticleColor.CURRENT_COLOR, new Color(r, g, b, a));
 	}
