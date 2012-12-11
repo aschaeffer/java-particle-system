@@ -61,8 +61,8 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 	private final SceneDAO sceneDAO;
 
 	private Boolean blockFullscreenSelection = false;
-	private Boolean blockLoadSceneSelection = false;
-	private Boolean blockSaveSceneSelection = false;
+//	private final Boolean blockLoadSceneSelection = false;
+//	private final Boolean blockSaveSceneSelection = false;
 	private Boolean loadDialogOnNextIteration = false;
 
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableScene.class);
@@ -116,7 +116,6 @@ public class ConfigurableScene extends AbstractScene implements Scene {
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        // glOrtho(0.0, 8.0, 0.0, 8.0, -0.5, 2.5);
         
 		glEnable(GL_POINT_SMOOTH);
         glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
@@ -157,22 +156,22 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 		} else {
 			blockFullscreenSelection = false;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
-			if (!blockSaveSceneSelection) {
-				saveDialog();
-				blockSaveSceneSelection = true;
-			}
-		} else {
-			blockSaveSceneSelection = false;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
-			if (!blockLoadSceneSelection) {
-				loadDialog();
-				blockLoadSceneSelection = true;
-			}
-		} else {
-			blockLoadSceneSelection = false;
-		}
+//		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
+//			if (!blockSaveSceneSelection) {
+//				saveDialog();
+//				blockSaveSceneSelection = true;
+//			}
+//		} else {
+//			blockSaveSceneSelection = false;
+//		}
+//		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
+//			if (!blockLoadSceneSelection) {
+//				loadDialog();
+//				blockLoadSceneSelection = true;
+//			}
+//		} else {
+//			blockLoadSceneSelection = false;
+//		}
 		if (loadDialogOnNextIteration) {
 			loadDialogOnNextIteration = !loadDialogOnNextIteration;
 			loadDialog();

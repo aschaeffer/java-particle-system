@@ -98,6 +98,8 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addRenderer, "Axis Renderer", HUDCommandTypes.ADD_RENDERER, AxisRenderer.class);
 		HUDMenuEntry.create(addRenderer, "Camera Renderer", HUDCommandTypes.ADD_RENDERER, CameraRenderer.class);
 		HUDMenuEntry.create(addRenderer, "SkyBox Renderer", HUDCommandTypes.ADD_RENDERER, SkyBoxRenderer.class);
+		HUDMenuEntry.create(renderer, "Show Text Overlay", HUDCommandTypes.SHOW_TEXT_OVERLAY);
+		HUDMenuEntry.create(renderer, "Hide Text Overlay", HUDCommandTypes.HIDE_TEXT_OVERLAY);
 		HUDMenuEntry camera = HUDMenuEntry.create(scene, "Cameras");
 		HUDMenuEntry.create(camera, "Add Camera", HUDCommandTypes.ADD_CAMERA);
 		HUDMenuEntry.create(camera, "Remove Camera", HUDCommandTypes.REMOVE_CAMERA);

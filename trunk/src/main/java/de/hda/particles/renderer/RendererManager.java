@@ -27,6 +27,7 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	private final FloatBuffer mouseZ = BufferUtils.createFloatBuffer(1);
 	private Boolean lastMouseDown = false;
 	private Boolean blockRemoveSelection = false;
+	private Boolean textOverlay = true;
 
 	private final Logger logger = LoggerFactory.getLogger(RendererManager.class);
 
@@ -74,6 +75,13 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 
 	@Override
 	public void update() {
+
+		// update buffers
+		if (textOverlay) {
+	        GL11.glGetInteger(GL11.GL_VIEWPORT, viewport);
+	        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelViewMatrix);
+	        GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, projectionMatrix);
+		}
 
 		// render all managed renderers
 		List<Renderer> currentRenderers = new ArrayList<Renderer>(renderers);
@@ -150,6 +158,26 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	@Override
 	public Boolean isFinished() {
 		return false;
+	}
+
+	public Boolean getTextOverlay() {
+		return textOverlay;
+	}
+
+	public void setTextOverlay(Boolean textOverlay) {
+		this.textOverlay = textOverlay;
+	}
+
+	public IntBuffer getViewport() {
+		return viewport;
+	}
+
+	public FloatBuffer getModelViewMatrix() {
+		return modelViewMatrix;
+	}
+
+	public FloatBuffer getProjectionMatrix() {
+		return projectionMatrix;
 	}
 
 }
