@@ -124,7 +124,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 		}
 	}
 	
-	public void rollReduce() {
+	public void reduceRoll() {
 		if (roll != 0.0f) {
 			roll = roll / ROLL_REDUCE;
 		}
