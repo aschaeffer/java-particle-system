@@ -132,6 +132,16 @@ public class CameraManager extends AbstractCamera implements Camera {
 		return selectedCamera.getFov();
 	}
 	
+	@Override
+	public Integer getMode() {
+		return selectedCamera.getMode();
+	}
+	
+	@Override
+	public String getModeName() {
+		return selectedCamera.getModeName();
+	}
+	
 	public void setYaw(float yaw) {
 		selectedCamera.setYaw(yaw);
 	}
@@ -150,6 +160,11 @@ public class CameraManager extends AbstractCamera implements Camera {
 	public void setFov(Float fov) {
 		selectedCamera.setFov(fov);
 	}
+	
+	@Override
+	public void setMode(Integer mode) {
+		selectedCamera.setMode(mode);
+	}
 
 	@Override
 	public void reset() {
@@ -158,6 +173,12 @@ public class CameraManager extends AbstractCamera implements Camera {
 		selectedCamera.setPitch(DEFAULT_PITCH);
 		selectedCamera.setRoll(DEFAULT_ROLL);
 		selectedCamera.setFov(DEFAULT_FOV);
+		selectedCamera.setMode(DEFAULT_MODE);
+	}
+	
+	@Override
+	public void nextMode() {
+		selectedCamera.nextMode();
 	}
 
 }

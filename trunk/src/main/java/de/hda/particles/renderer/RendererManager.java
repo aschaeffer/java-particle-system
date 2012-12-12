@@ -27,7 +27,7 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	private final FloatBuffer mouseZ = BufferUtils.createFloatBuffer(1);
 	private Boolean lastMouseDown = false;
 	private Boolean blockRemoveSelection = false;
-	private Boolean textOverlay = true;
+	private Boolean textOverlay = false;
 
 	private final Logger logger = LoggerFactory.getLogger(RendererManager.class);
 
