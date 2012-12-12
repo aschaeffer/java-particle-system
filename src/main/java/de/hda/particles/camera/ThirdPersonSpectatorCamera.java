@@ -21,5 +21,9 @@ public class ThirdPersonSpectatorCamera extends AbstractCamera implements Camera
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void nextMode() {
+	}
 
 }

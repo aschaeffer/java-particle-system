@@ -27,6 +27,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	public final static Float DEFAULT_FOV = 90.0f;
 	public final static Float MIN_FOV = 15.0f;
 	public final static Float MAX_FOV = 150.0f;
+	public final static Integer DEFAULT_MODE = 0;
 	
 
 	/**
@@ -58,6 +59,11 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	 * the field of view
 	 */
 	protected Float fov = DEFAULT_FOV;
+	
+	/**
+	 * the default mode
+	 */
+	protected Integer mode = DEFAULT_MODE;
 
 	/**
 	 * Default no arguments constructor.
@@ -212,6 +218,21 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	@Override
 	public void setFov(Float fov) {
 		this.fov = fov;
+	}
+
+	@Override
+	public Integer getMode() {
+		return mode;
+	}
+
+	@Override
+	public void setMode(Integer mode) {
+		this.mode = mode;
+	}
+	
+	@Override
+	public String getModeName() {
+		return "Default Mode";
 	}
 
 	@Override

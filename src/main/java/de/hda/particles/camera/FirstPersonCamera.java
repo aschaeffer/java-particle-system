@@ -32,14 +32,50 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 
 	// moves the camera forward relative to its current rotation (yaw)
 	public void walkForward(float distance) {
-		position.x += distance * (float) Math.sin(Math.toRadians(yaw));
-		position.z -= distance * (float) Math.cos(Math.toRadians(yaw));
+		switch (mode) {
+			default:
+			case 0:
+				position.x += distance * (float) Math.sin(Math.toRadians(yaw));
+				position.z -= distance * (float) Math.cos(Math.toRadians(yaw));
+				break;
+			case 1:
+				position.x += distance * (float) Math.sin(Math.toRadians(yaw));
+				position.y -= distance * (float) Math.sin(Math.toRadians(pitch));
+				position.z -= distance * (float) Math.cos(Math.toRadians(yaw));
+//				position.x += distance * new Double(Math.cos(Math.toRadians(yaw))*Math.cos(Math.toRadians(pitch))).floatValue();
+//				position.y += distance * new Double(Math.sin(Math.toRadians(yaw))*Math.cos(Math.toRadians(pitch))).floatValue();
+//				position.z -= distance * new Double(Math.sin(Math.toRadians(pitch))).floatValue();
+//				Vector3f nextPosition = new Vector3f();
+//				Vector3f directionVector = getDirectionVector();
+//				directionVector.scale(distance);
+//				Vector3f.add(getPosition(), directionVector, nextPosition);
+//				setPosition(nextPosition);
+				break;
+		}
 	}
 
 	// moves the camera backward relative to its current rotation (yaw)
 	public void walkBackwards(float distance) {
-		position.x -= distance * (float) Math.sin(Math.toRadians(yaw));
-		position.z += distance * (float) Math.cos(Math.toRadians(yaw));
+		switch (mode) {
+			default:
+			case 0:
+				position.x -= distance * (float) Math.sin(Math.toRadians(yaw));
+				position.z += distance * (float) Math.cos(Math.toRadians(yaw));
+				break;
+			case 1:
+				position.x -= distance * (float) Math.sin(Math.toRadians(yaw));
+				position.y += distance * (float) Math.sin(Math.toRadians(pitch));
+				position.z += distance * (float) Math.cos(Math.toRadians(yaw));
+//				position.x -= distance * new Double(Math.cos(Math.toRadians(yaw))*Math.cos(Math.toRadians(pitch))).floatValue();
+//				position.y -= distance * new Double(Math.sin(Math.toRadians(yaw))*Math.cos(Math.toRadians(pitch))).floatValue();
+//				position.z += distance * new Double(Math.sin(Math.toRadians(pitch))).floatValue();
+//				Vector3f nextPosition = new Vector3f();
+//				Vector3f directionVector = getDirectionVector();
+//				directionVector.scale(distance);
+//				Vector3f.sub(getPosition(), directionVector, nextPosition);
+//				setPosition(nextPosition);
+				break;
+		}
 	}
 
 	// strafes the camera left relitive to its current rotation (yaw)
@@ -129,6 +165,24 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 	@Override
 	public void destroy() {
 	    Mouse.setGrabbed(false);
+	}
+	
+	@Override
+	public void nextMode() {
+		mode++;
+		if (mode > 1) mode = 0;
+	}
+	
+	@Override
+	public String getModeName() {
+		switch (mode) {
+			case 0:
+				return "First Person Movement Mode";
+			case 1:
+				return "Fly Movement Mode";
+			default:
+				return "Default Mode";
+		}
 	}
 
 }

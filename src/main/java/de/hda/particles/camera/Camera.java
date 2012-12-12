@@ -9,6 +9,7 @@ public interface Camera extends Renderer {
 
 	void reset();
 	void lookThrough();
+	void nextMode();
 
 	@Override
 	void setScene(Scene scene);
@@ -25,5 +26,8 @@ public interface Camera extends Renderer {
 	Float getFov();
 	void setFov(Float fov);
 	Vector3f getDirectionVector();
+	void setMode(Integer mode);
+	Integer getMode();
+	String getModeName();
 
 }
