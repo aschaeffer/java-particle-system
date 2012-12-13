@@ -96,7 +96,7 @@ public abstract class AbstractRenderer implements Renderer {
         Float y = result.get();
         Float y2 = scene.getHeight() - y;
         Float z = result.get();
-        if (z > 1.0f) return;
+        if (x == null || y == null || z == null || title == null || z > 1.0f) return;
         if (!debug) {
             font.drawString(x, y2, title);
         } else {
