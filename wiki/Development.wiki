@@ -1,0 +1,6 @@
+  * Interfaces, Abstract Class, Implementation Class
+  * Domain Classes
+  * DAOs
+  * return early
+  * move object definitions to class level
+  * recycle objects using pooling
