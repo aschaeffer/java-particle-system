@@ -77,6 +77,15 @@ public abstract class AbstractRenderer implements Renderer {
 		Vector3f.sub(position, scene.getCameraManager().getPosition(), cameraToObject);
 		if (Math.abs(cameraToObject.length()) > maxDist && maxDist > 0) return;
 
+        FloatBuffer result = ByteBuffer.allocateDirect(3*8).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        GLU.gluProject(position.x, position.y, position.z, scene.getRendererManager().getModelViewMatrix(), scene.getRendererManager().getProjectionMatrix(), scene.getRendererManager().getViewport(), result);
+        result.rewind();
+        Float x = result.get();
+        Float y = result.get();
+        Float y2 = scene.getHeight() - y;
+        Float z = result.get();
+        if (x == null || y == null || z == null || title == null || z > 1.0f) return;
+
         // store the current state of the renderer
         glPushAttrib(GL_DEPTH_BUFFER_BIT | GL_ENABLE_BIT);
         glPushMatrix();
@@ -89,19 +98,14 @@ public abstract class AbstractRenderer implements Renderer {
         glOrtho(0, scene.getWidth(), scene.getHeight(), 0, -1, 1);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
-        FloatBuffer result = ByteBuffer.allocateDirect(3*8).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        GLU.gluProject(position.x, position.y, position.z, scene.getRendererManager().getModelViewMatrix(), scene.getRendererManager().getProjectionMatrix(), scene.getRendererManager().getViewport(), result);
-        result.rewind();
-        Float x = result.get();
-        Float y = result.get();
-        Float y2 = scene.getHeight() - y;
-        Float z = result.get();
-        if (x == null || y == null || z == null || title == null || z > 1.0f) return;
+
         if (!debug) {
             font.drawString(x, y2, title);
         } else {
             font.drawString(x, y2, title + "\nx:"+x+"\ny:"+y+"\ny2:"+y2+"\nz:"+z);
         }
+        
+        // back to old state
 		glEnable(GL_DEPTH_TEST);
         glPopMatrix();
         glMatrixMode(GL_MODELVIEW);
