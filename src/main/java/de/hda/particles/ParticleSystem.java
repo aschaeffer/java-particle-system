@@ -13,6 +13,7 @@ import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.timing.FpsInformation;
 
 /**
+ * Interface for particle systems.
  * 
  * @author aschaeffer
  *
