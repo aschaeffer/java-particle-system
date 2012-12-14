@@ -33,16 +33,43 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 
 	public RendererManager() {}
 
-	public void add(Renderer renderer) {
+	public void insert(Renderer renderer) {
 		renderers.add(renderer);
 		renderer.setScene(scene);
+	}
+
+	public void insertAt(Renderer renderer, Integer index) {
+		renderers.add(index, renderer);
+		renderer.setScene(scene);
+	}
+
+	public void insertFirst(Class<? extends Renderer> rendererClass) {
+		try {
+			insertAt(rendererClass.newInstance(), 0);
+		} catch (Exception e) {
+			logger.error("could not create renderer: " + e.getMessage(), e);
+		}
+	}
+	
+	public void insertLast(Class<? extends Renderer> rendererClass) {
+		try {
+			insert(rendererClass.newInstance());
+		} catch (Exception e) {
+			logger.error("could not create renderer: " + e.getMessage(), e);
+		}
+	}
+	
+	public void add(Renderer renderer) {
+		// we have to insert the renderer one before the HudManager
+		Integer index = renderers.size() - 2;
+		if (index < 0) index = 0;
+		logger.info("insert renderer at index " + index);
+		insertAt(renderer, index);
 	}
 	
 	public void add(Class<? extends Renderer> rendererClass) {
 		try {
-			Renderer renderer = rendererClass.newInstance();
-			renderers.add(renderer);
-			renderer.setScene(scene);
+			add(rendererClass.newInstance());
 		} catch (Exception e) {
 			logger.error("could not create renderer: " + e.getMessage(), e);
 		}
