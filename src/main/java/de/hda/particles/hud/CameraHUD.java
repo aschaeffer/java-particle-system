@@ -52,8 +52,7 @@ public class CameraHUD extends AbstractHUD implements HUD {
 		}
 		
 		Camera camera = scene.getCameraManager();
-	    Vector3f position = camera.getPosition();
-        font.drawString(10, 10, String.format("%s x:%.2f y:%.2f z:%.2f yaw:%.2f pitch:%.2f roll:%.2f fov:%.2f", camera.getName(), position.x, position.y, position.z, camera.getYaw(), camera.getPitch(), camera.getRoll(), camera.getFov()));
+        font.drawString(10, 10, String.format("%s x:%.2f y:%.2f z:%.2f yaw:%.2f pitch:%.2f roll:%.2f fov:%.2f", camera.getName(), camera.getX(), camera.getY(), camera.getZ(), camera.getYaw(), camera.getPitch(), camera.getRoll(), camera.getFov()));
 	}
 
 	@Override
