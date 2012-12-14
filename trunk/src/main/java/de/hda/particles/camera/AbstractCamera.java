@@ -237,11 +237,13 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 
 	@Override
 	public void reset() {
-		this.setPosition(new Vector3f(DEFAULT_X, DEFAULT_Y, DEFAULT_Z));
-		this.setYaw(DEFAULT_YAW);
-		this.setPitch(DEFAULT_PITCH);
-		this.setRoll(DEFAULT_ROLL);
-		this.setFov(DEFAULT_FOV);
+		position.x = DEFAULT_X;
+		position.y = DEFAULT_Y;
+		position.z = DEFAULT_Z;
+		setYaw(DEFAULT_YAW);
+		setPitch(DEFAULT_PITCH);
+		setRoll(DEFAULT_ROLL);
+		setFov(DEFAULT_FOV);
 	}
 	
 	@Override

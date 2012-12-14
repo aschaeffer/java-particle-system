@@ -326,8 +326,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	
 	protected void clearParticles() {
 		for (Integer pIndex = 0; pIndex < particles.size(); pIndex++) {
-			Particle particle = particles.get(pIndex);
-			particle.setRemainingIterations(0);
+			particles.get(pIndex).setRemainingIterations(0);
 		}
 		clearParticlesAtNextIteration = false;
 	}
