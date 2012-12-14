@@ -174,7 +174,22 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	public Vector3f getPosition() {
 		return new Vector3f(position);
 	}
-	
+
+	@Override
+	public Float getX() {
+		return position.x;
+	}
+
+	@Override
+	public Float getY() {
+		return position.y;
+	}
+
+	@Override
+	public Float getZ() {
+		return position.z;
+	}
+
 	@Override
 	public void setPosition(Vector3f position) {
 		this.position = position;
