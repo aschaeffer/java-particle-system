@@ -55,6 +55,21 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	public Vector3f getPosition() {
 		return position;
 	}
+	
+	@Override
+	public Float getX() {
+		return position.x;
+	}
+
+	@Override
+	public Float getY() {
+		return position.y;
+	}
+
+	@Override
+	public Float getZ() {
+		return position.z;
+	}
 
 	@Override
 	public void setPosition(Vector3f position) {

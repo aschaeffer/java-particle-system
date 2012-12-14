@@ -1,6 +1,5 @@
 package de.hda.particles.hud;
 
-import de.hda.particles.domain.*;
 import de.hda.particles.domain.factory.*;
 import de.hda.particles.emitter.*;
 import de.hda.particles.features.*;

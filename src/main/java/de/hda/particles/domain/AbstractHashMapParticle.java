@@ -8,97 +8,109 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 
 	private static final long serialVersionUID = -721118895224811054L;
 
-	public Vector3f position = new Vector3f();
-	public Vector3f velocity = new Vector3f();
-	private Integer remainingIterations = DEFAULT_LIFETIME;
-	private Integer pastIterations = 0;
-	private Float mass = DEFAULT_MASS;
-	private Boolean visibility = true;
-	private Integer index = 0;
-	private Integer renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
+	private float positionX = 0.0f;
+	private float positionY = 0.0f;
+	private float positionZ = 0.0f;
+	private float velocityX = 0.0f;
+	private float velocityY = 0.0f;
+	private float velocityZ = 0.0f;
+	private int remainingIterations = DEFAULT_LIFETIME;
+	private int pastIterations = 0;
+	private float mass = DEFAULT_MASS;
+	private boolean visibility = true;
+	private int index = 0;
+	private int renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
 	public AbstractHashMapParticle() {
 	}
 
-	public AbstractHashMapParticle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
-		this.position = position;
-		this.velocity = velocity;
+	public AbstractHashMapParticle(Vector3f position, Vector3f velocity, int renderTypeIndex, int lifetime) {
+		positionX = position.x;
+		positionY = position.y;
+		positionZ = position.z;
+		velocityX = velocity.x;
+		velocityY = velocity.y;
+		velocityZ = velocity.z;
 		this.renderTypeIndex = renderTypeIndex;
 		this.remainingIterations = lifetime;
 	}
 
 	@Override
-	public Float getX() {
-		return position.x;
+	public float getX() {
+		return positionX;
 	}
 
 	@Override
-	public void setX(Float x) {
-		position.x = x;
+	public void setX(float x) {
+		positionX = x;
 	}
 
 	@Override
-	public Float getY() {
-		return position.y;
+	public float getY() {
+		return positionY;
 	}
 
 	@Override
-	public void setY(Float y) {
-		position.y = y;
+	public void setY(float y) {
+		positionY = y;
 	}
 
 	@Override
-	public Float getZ() {
-		return position.z;
+	public float getZ() {
+		return positionZ;
 	}
 
 	@Override
-	public void setZ(Float z) {
-		position.z = z;
+	public void setZ(float z) {
+		positionZ = z;
 	}
 
 	@Override
 	public Vector3f getPosition() {
-		return new Vector3f(position);
+		return new Vector3f(positionX, positionY, positionZ);
 	}
 
 	@Override
 	public void setPosition(Vector3f position) {
-		this.position = position;
+		positionX = position.x;
+		positionY = position.y;
+		positionZ = position.z;
 	}
 
 	@Override
 	public Vector3f getVelocity() {
-		return new Vector3f(velocity);
+		return new Vector3f(velocityX, velocityY, velocityZ);
 	}
 
 	@Override
 	public void setVelocity(Vector3f velocity) {
-		this.velocity = velocity;
+		velocityX = velocity.x;
+		velocityY = velocity.y;
+		velocityZ = velocity.z;
 	}
 	
 	@Override
-	public Float getMass() {
+	public float getMass() {
 		return mass;
 	}
 
 	@Override
-	public void setMass(Float mass) {
+	public void setMass(float mass) {
 		this.mass = mass;
 	}
 
 	@Override
-	public Integer getRenderTypeIndex() {
+	public int getRenderTypeIndex() {
 		return renderTypeIndex;
 	}
 
 	@Override
-	public void setRenderTypeIndex(Integer renderTypeIndex) {
+	public void setRenderTypeIndex(int renderTypeIndex) {
 		this.renderTypeIndex = renderTypeIndex;
 	}
 
 	@Override
-	public Boolean isAlive() {
+	public boolean isAlive() {
 		return (remainingIterations > 0);
 	}
 	
@@ -109,48 +121,50 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	}
 	
 	@Override
-	public Integer getRemainingIterations() {
+	public int getRemainingIterations() {
 		return remainingIterations;
 	}
 	
 	@Override
-	public void setRemainingIterations(Integer remainingIterations) {
+	public void setRemainingIterations(int remainingIterations) {
 		this.remainingIterations = remainingIterations;
 	}
 	
 	@Override
-	public Integer getPastIterations() {
+	public int getPastIterations() {
 		return pastIterations;
 	}
 	
 	@Override
-	public void setPastIterations(Integer pastIterations) {
+	public void setPastIterations(int pastIterations) {
 		this.pastIterations = pastIterations;
 	}
 
 	@Override
-	public Float getLifetimePercent() {
+	public float getLifetimePercent() {
 		if (pastIterations == 0) return 0.0f;
-		return pastIterations.floatValue() / (pastIterations.floatValue() + remainingIterations.floatValue());
+		float pastIterationsF = pastIterations;
+		float remainingIterationsF = remainingIterations;
+		return pastIterationsF / (pastIterationsF + remainingIterationsF);
 	}
 	
 	@Override
-	public Boolean isVisible() {
+	public boolean isVisible() {
 		return visibility;
 	}
 	
 	@Override
-	public void setVisibility(Boolean visibility) {
+	public void setVisibility(boolean visibility) {
 		this.visibility = visibility;
 	}
 	
 	@Override
-	public Integer getIndex() {
+	public int getIndex() {
 		return index;
 	}
 	
 	@Override
-	public void setIndex(Integer index) {
+	public void setIndex(int index) {
 		this.index = index;
 	}
 	
@@ -158,7 +172,7 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	public String toString() {
 		String listOfFeatures = "";
 		for (String key: keySet()) listOfFeatures.concat(key + "=" + get(key).toString() + "; ");
-		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
+		return "particle pos: ("+positionX+","+positionY+","+positionZ+") vel: ("+velocityX+","+velocityY+","+velocityZ+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
 	}
 
 }
