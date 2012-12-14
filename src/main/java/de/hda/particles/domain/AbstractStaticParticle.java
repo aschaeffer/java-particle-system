@@ -88,13 +88,28 @@ public abstract class AbstractStaticParticle implements Particle {
 	}
 
 	@Override
+	public void setVelX(float x) {
+		velocityX = x;
+	}
+
+	@Override
 	public float getVelY() {
 		return velocityY;
 	}
 
 	@Override
+	public void setVelY(float y) {
+		velocityY = y;
+	}
+
+	@Override
 	public float getVelZ() {
 		return velocityZ;
+	}
+
+	@Override
+	public void setVelZ(float z) {
+		velocityZ = z;
 	}
 
 	@Override
