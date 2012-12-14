@@ -1,7 +1,6 @@
 package de.hda.particles.hud;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.camera.Camera;
 import de.hda.particles.camera.FirstPersonCamera;

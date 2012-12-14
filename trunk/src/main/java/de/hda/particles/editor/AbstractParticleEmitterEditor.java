@@ -22,6 +22,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 
 	protected final static String title = "Particle Emitter";
 	protected ParticleEmitter subject;
+	protected List<HUDEditorEntry> editorEntries = new ArrayList<HUDEditorEntry>();;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -31,22 +32,22 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(LIFETIME, "Particle Lifetime"));
-		entries.add(HUDEditorEntry.create(RATE, "Rate"));
-		entries.add(HUDEditorEntry.create(RENDER_TYPE_INDEX, "RenderType"));
-		entries.add(HUDEditorEntry.create(POSITION_X, "Position X"));
-		entries.add(HUDEditorEntry.create(POSITION_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(POSITION_Z, "Position Z"));
-		entries.add(HUDEditorEntry.create(VELOCITY_X, "Velocity X"));
-		entries.add(HUDEditorEntry.create(VELOCITY_Y, "Velocity Y"));
-		entries.add(HUDEditorEntry.create(VELOCITY_Z, "Velocity Z"));
+		editorEntries.clear();
+		editorEntries.add(HUDEditorEntry.create(LIFETIME, "Particle Lifetime"));
+		editorEntries.add(HUDEditorEntry.create(RATE, "Rate"));
+		editorEntries.add(HUDEditorEntry.create(RENDER_TYPE_INDEX, "RenderType"));
+		editorEntries.add(HUDEditorEntry.create(POSITION_X, "Position X"));
+		editorEntries.add(HUDEditorEntry.create(POSITION_Y, "Position Y"));
+		editorEntries.add(HUDEditorEntry.create(POSITION_Z, "Position Z"));
+		editorEntries.add(HUDEditorEntry.create(VELOCITY_X, "Velocity X"));
+		editorEntries.add(HUDEditorEntry.create(VELOCITY_Y, "Velocity Y"));
+		editorEntries.add(HUDEditorEntry.create(VELOCITY_Z, "Velocity Z"));
 		ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
 		while (iterator.hasNext()) {
 			ParticleFeature feature = iterator.next();
-			entries.addAll(feature.getEditorEntries());
+			editorEntries.addAll(feature.getEditorEntries());
 		}
-		return entries;
+		return editorEntries;
 	}
 
 	@Override
@@ -91,8 +92,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		} else {
 			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
 			while (iterator.hasNext()) {
-				ParticleFeature feature = iterator.next();
-				feature.decrease(subject, fieldName);
+				iterator.next().decrease(subject, fieldName);
 			}
 		}
 
@@ -111,8 +111,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		} else {
 			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
 			while (iterator.hasNext()) {
-				ParticleFeature feature = iterator.next();
-				feature.decreaseMin(subject, fieldName);
+				iterator.next().decreaseMin(subject, fieldName);
 			}
 		}
 
@@ -153,8 +152,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		} else {
 			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator();
 			while (iterator.hasNext()) {
-				ParticleFeature feature = iterator.next();
-				feature.increase(subject, fieldName);
+				iterator.next().increase(subject, fieldName);
 			}
 		}
 	}
@@ -170,8 +168,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		} else {
 			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
 			while (iterator.hasNext()) {
-				ParticleFeature feature = iterator.next();
-				feature.increaseMax(subject, fieldName);
+				iterator.next().increaseMax(subject, fieldName);
 			}
 		}
 	}
@@ -200,8 +197,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			String value = "N/A";
 			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
 			while (iterator.hasNext()) {
-				ParticleFeature feature = iterator.next();
-				String value2 = feature.getValue(subject, fieldName);
+				String value2 = iterator.next().getValue(subject, fieldName);
 				if (value2 != null) {
 					value = value2;
 					break;

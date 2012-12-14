@@ -10,17 +10,17 @@ public abstract class AbstractStaticParticle implements Particle {
 
 	public Vector3f position = new Vector3f();
 	public Vector3f velocity = new Vector3f();
-	private Integer remainingIterations = DEFAULT_LIFETIME;
-	private Integer pastIterations = 0;
-	private Float mass = DEFAULT_MASS;
-	private Boolean visibility = true;
-	private Integer index = 0;
-	private Integer renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
+	private int remainingIterations = DEFAULT_LIFETIME;
+	private int pastIterations = 0;
+	private float mass = DEFAULT_MASS;
+	private boolean visibility = true;
+	private int index = 0;
+	private int renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
 	public AbstractStaticParticle() {
 	}
 
-	public AbstractStaticParticle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
+	public AbstractStaticParticle(Vector3f position, Vector3f velocity, int renderTypeIndex, int lifetime) {
 		this.position = position;
 		this.velocity = velocity;
 		this.renderTypeIndex = renderTypeIndex;
@@ -28,32 +28,32 @@ public abstract class AbstractStaticParticle implements Particle {
 	}
 
 	@Override
-	public Float getX() {
+	public float getX() {
 		return position.x;
 	}
 
 	@Override
-	public void setX(Float x) {
+	public void setX(float x) {
 		position.x = x;
 	}
 
 	@Override
-	public Float getY() {
+	public float getY() {
 		return position.y;
 	}
 
 	@Override
-	public void setY(Float y) {
+	public void setY(float y) {
 		position.y = y;
 	}
 
 	@Override
-	public Float getZ() {
+	public float getZ() {
 		return position.z;
 	}
 
 	@Override
-	public void setZ(Float z) {
+	public void setZ(float z) {
 		position.z = z;
 	}
 
@@ -78,27 +78,27 @@ public abstract class AbstractStaticParticle implements Particle {
 	}
 	
 	@Override
-	public Float getMass() {
+	public float getMass() {
 		return mass;
 	}
 
 	@Override
-	public void setMass(Float mass) {
+	public void setMass(float mass) {
 		this.mass = mass;
 	}
 
 	@Override
-	public Integer getRenderTypeIndex() {
+	public int getRenderTypeIndex() {
 		return renderTypeIndex;
 	}
 
 	@Override
-	public void setRenderTypeIndex(Integer renderTypeIndex) {
+	public void setRenderTypeIndex(int renderTypeIndex) {
 		this.renderTypeIndex = renderTypeIndex;
 	}
 
 	@Override
-	public Boolean isAlive() {
+	public boolean isAlive() {
 		return (remainingIterations > 0);
 	}
 	
@@ -109,48 +109,50 @@ public abstract class AbstractStaticParticle implements Particle {
 	}
 	
 	@Override
-	public Integer getRemainingIterations() {
+	public int getRemainingIterations() {
 		return remainingIterations;
 	}
 	
 	@Override
-	public void setRemainingIterations(Integer remainingIterations) {
+	public void setRemainingIterations(int remainingIterations) {
 		this.remainingIterations = remainingIterations;
 	}
 	
 	@Override
-	public Integer getPastIterations() {
+	public int getPastIterations() {
 		return pastIterations;
 	}
 	
 	@Override
-	public void setPastIterations(Integer pastIterations) {
+	public void setPastIterations(int pastIterations) {
 		this.pastIterations = pastIterations;
 	}
 
 	@Override
-	public Float getLifetimePercent() {
+	public float getLifetimePercent() {
 		if (pastIterations == 0) return 0.0f;
-		return pastIterations.floatValue() / (pastIterations.floatValue() + remainingIterations.floatValue());
+		float pastIterationsF = pastIterations;
+		float remainingIterationsF = remainingIterations;
+		return pastIterationsF / (pastIterationsF + remainingIterationsF);
 	}
 	
 	@Override
-	public Boolean isVisible() {
+	public boolean isVisible() {
 		return visibility;
 	}
 	
 	@Override
-	public void setVisibility(Boolean visibility) {
+	public void setVisibility(boolean visibility) {
 		this.visibility = visibility;
 	}
 	
 	@Override
-	public Integer getIndex() {
+	public int getIndex() {
 		return index;
 	}
 	
 	@Override
-	public void setIndex(Integer index) {
+	public void setIndex(int index) {
 		this.index = index;
 	}
 	

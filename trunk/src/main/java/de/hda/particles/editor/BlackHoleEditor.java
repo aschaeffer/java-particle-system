@@ -9,6 +9,8 @@ import de.hda.particles.modifier.gravity.BlackHole;
 public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> implements Editor {
 
 	private final static String title = "Black Hole";
+	
+	private final List<HUDEditorEntry> editorEntries = new ArrayList<HUDEditorEntry>();
 
 	@Override
 	public Boolean accept(Class<? extends Object> clazz) {
@@ -17,15 +19,15 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(BlackHole.POSITION_X, "Position X"));
-		entries.add(HUDEditorEntry.create(BlackHole.POSITION_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(BlackHole.POSITION_Z, "Position Z"));
-		entries.add(HUDEditorEntry.create(BlackHole.GRAVITY, "Gravity"));
-		entries.add(HUDEditorEntry.create(BlackHole.MASS, "Mass"));
-		entries.add(HUDEditorEntry.create(BlackHole.MAX_FORCE, "Max Force"));
-		entries.addAll(super.getEditorEntries());
-		return entries;
+		editorEntries.clear();
+		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_X, "Position X"));
+		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_Y, "Position Y"));
+		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_Z, "Position Z"));
+		editorEntries.add(HUDEditorEntry.create(BlackHole.GRAVITY, "Gravity"));
+		editorEntries.add(HUDEditorEntry.create(BlackHole.MASS, "Mass"));
+		editorEntries.add(HUDEditorEntry.create(BlackHole.MAX_FORCE, "Max Force"));
+		editorEntries.addAll(super.getEditorEntries());
+		return editorEntries;
 	}
 	
 	@Override

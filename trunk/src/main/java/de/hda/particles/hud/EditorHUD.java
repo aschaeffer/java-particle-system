@@ -37,6 +37,20 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	private Boolean blockIncreaseMaxSelection = false;
 	private Boolean blockRemoveSelection = false;
 	
+	private List<HUDEditorEntry> editorEntries;
+	private Integer width = 0;
+	private Integer height = 0;
+	private Integer left = 0;
+	private Integer fullHeight = 0;
+	private Integer top = 0;
+	private Integer centered = 0;
+	private Integer halfHeight = 0;
+	private Integer top2 = 0;
+	private Integer left2 = 0;
+	private Integer rightAligned = 0;
+	private Integer nextColumn = 0;
+	private String currentValue = "";
+
 	private final Logger logger = LoggerFactory.getLogger(EditorHUD.class);
 
 	public EditorHUD() {
@@ -51,7 +65,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	@Override
 	public void update() {
 		if (currentEditor == null) return;
-		List<HUDEditorEntry> editorEntries = currentEditor.getEditorEntries();
+		editorEntries = currentEditor.getEditorEntries();
 		Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
@@ -135,14 +149,14 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		
 		if (!show) return;
 		
-		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
-		Integer height = font.getHeight(currentEditor.getTitle());
-		Integer left = scene.getWidth() - width - 2*margin;
-		Integer fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
+		width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
+		height = font.getHeight(currentEditor.getTitle());
+		left = scene.getWidth() - width - 2*margin;
+		fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
 		
 		if (fullHeight < (scene.getHeight() * 3) / 4) {
-			Integer top = (scene.getHeight() / 2) - (((editorEntries.size() + 1) * (height + 3*margin)) / 2);
-			Integer centered = left + (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
+			top = (scene.getHeight() / 2) - (((editorEntries.size() + 1) * (height + 3*margin)) / 2);
+			centered = left + (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
 
 		    font.drawString(centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 
@@ -150,29 +164,28 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
 		    	top = top + height + 3*margin;
-		    	String currentValue = currentEditor.getValue(entry.key);
-				Integer rightAligned = scene.getWidth() - 2*margin - font.getWidth(currentValue);
+		    	currentValue = currentEditor.getValue(entry.key);
+				rightAligned = scene.getWidth() - 2*margin - font.getWidth(currentValue);
 				height = font.getHeight(entry.label);
 			    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 			    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 		    }
 		} else {
-			Integer halfHeight = fullHeight / 2;
-			Integer top = (scene.getHeight() / 2) - (halfHeight / 2);
-			Integer top2 = top;
-    		Integer left2 = left;
+			halfHeight = fullHeight / 2;
+			top = (scene.getHeight() / 2) - (halfHeight / 2);
+			top2 = top;
+    		left2 = left;
     		left = 2*margin;
 
-    		Integer centered = (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
+    		centered = (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
 		    font.drawString(left + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 		    font.drawString(left2 + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 
-		    Integer rightAligned;
-		    Integer nextColumn = (editorEntries.size() / 2) + 1;
+		    nextColumn = (editorEntries.size() / 2) + 1;
 		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
-		    	String currentValue = currentEditor.getValue(entry.key);
+		    	currentValue = currentEditor.getValue(entry.key);
 		    	if (iterator.previousIndex() == nextColumn - 1) {
 		    		top = top2;
 		    		left = left2;
@@ -195,14 +208,14 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	@Override
 	public void render2() {
 		if (!show || currentEditor == null) return;
-		List<HUDEditorEntry> editorEntries = currentEditor.getEditorEntries();
+		editorEntries = currentEditor.getEditorEntries();
 		
-		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
-		Integer height = font.getHeight(currentEditor.getTitle());
-		Integer left = scene.getWidth() - width - 2*margin;
-		Integer fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
+		width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
+		height = font.getHeight(currentEditor.getTitle());
+		left = scene.getWidth() - width - 2*margin;
+		fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
 		if (fullHeight < (scene.getHeight() * 3) / 4) {
-			Integer top = (scene.getHeight() / 2) - (fullHeight / 2);
+			top = (scene.getHeight() / 2) - (fullHeight / 2);
 
 			glColor4f(1.0f, 0.5f, 0.0f, 0.5f);
 		    glBegin(GL_QUADS);
@@ -230,10 +243,10 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			    glEnd();
 		    }
 		} else {
-			Integer halfHeight = fullHeight / 2;
-			Integer top = (scene.getHeight() / 2) - (halfHeight / 2);
-			Integer top2 = top;
-    		Integer left2 = left;
+			halfHeight = fullHeight / 2;
+			top = (scene.getHeight() / 2) - (halfHeight / 2);
+			top2 = top;
+    		left2 = left;
     		left = 2*margin;
 
 			glColor4f(1.0f, 0.5f, 0.0f, 0.5f);
@@ -252,7 +265,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			glVertex2f(left - margin, top + height + margin);
 		    glEnd();
 
-		    Integer nextColumn = (editorEntries.size() / 2) + 1;
+		    nextColumn = (editorEntries.size() / 2) + 1;
 		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
