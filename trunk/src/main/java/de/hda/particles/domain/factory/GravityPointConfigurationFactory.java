@@ -1,11 +1,12 @@
-package de.hda.particles.domain;
+package de.hda.particles.domain.factory;
 
+import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.modifier.gravity.GravityPoint;
 import de.hda.particles.scene.Scene;
 
-public class BlackHoleConfigurationFactory {
+public class GravityPointConfigurationFactory {
 
-	private BlackHoleConfigurationFactory() {}
+	private GravityPointConfigurationFactory() {}
 
 	public static ParticleModifierConfiguration create(Scene scene) {
 		ParticleModifierConfiguration configuration = new ParticleModifierConfiguration();

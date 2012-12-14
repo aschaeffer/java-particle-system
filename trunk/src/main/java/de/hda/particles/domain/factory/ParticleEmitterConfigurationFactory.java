@@ -1,5 +1,6 @@
-package de.hda.particles.domain;
+package de.hda.particles.domain.factory;
 
+import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.scene.Scene;
 
 public class ParticleEmitterConfigurationFactory {
