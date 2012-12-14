@@ -50,9 +50,9 @@ public class ThreadedSystemUpdater implements SystemUpdater {
 	 * @param name Name of the system updater.
 	 * @param subject Updateable to be managed.
 	 */
-	public ThreadedSystemUpdater(String name, Updateable subject) {
-		this.subject = subject;
+	public ThreadedSystemUpdater(final String name, final Updateable subject) {
 		this.name = name;
+		this.subject = subject;
 	}
 
 	/**

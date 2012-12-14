@@ -80,14 +80,6 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 		position.x += distance * (float) Math.sin(Math.toRadians(yaw + 90));
 		position.z -= distance * (float) Math.cos(Math.toRadians(yaw + 90));
 	}
-	
-	public void moveUpwards(float distance) {
-		position.y += distance / 60.0f;
-	}
-
-	public void moveDownwards(float distance) {
-		position.y += distance / 60.0f;
-	}
 
 	@Override
 	public void update() {
@@ -100,9 +92,9 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 		deltaY = new Integer(Mouse.getDY()).floatValue();
 
 		// control camera yaw from x movement from the mouse
-		this.yaw(deltaX * mouseSensitivity);
+		yaw(deltaX * mouseSensitivity);
 		// control camera pitch from y movement from the mouse
-		this.pitch(deltaY * mouseSensitivity);
+		pitch(deltaY * mouseSensitivity);
 
 		// when passing in the distance to move
 		// we times the movementSpeed with dt this is a time scale
@@ -117,32 +109,32 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 			movementModifier = movementModifier * 10.0f;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			this.walkForward(movementModifier * movementSpeed * deltaTime);
+			walkForward(movementModifier * movementSpeed * deltaTime);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			this.walkBackwards(movementModifier * movementSpeed * deltaTime);
+			walkBackwards(movementModifier * movementSpeed * deltaTime);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			this.strafeLeft(movementModifier * movementSpeed * deltaTime);
-			this.roll(-1.0f);
+			strafeLeft(movementModifier * movementSpeed * deltaTime);
+			roll(-1.0f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			this.strafeRight(movementModifier * movementSpeed * deltaTime);
-			this.roll(1.0f);
+			strafeRight(movementModifier * movementSpeed * deltaTime);
+			roll(1.0f);
 		}
 
 		deltaWheel = Mouse.getDWheel();
 		if (deltaWheel < 0) {
-			this.zoom(movementModifier * -deltaWheel / 60.0f);
+			zoom(movementModifier * -deltaWheel / 60.0f);
 		} else if (deltaWheel > 0) {
-			this.zoom(movementModifier * -deltaWheel / 60.0f);
+			zoom(movementModifier * -deltaWheel / 60.0f);
 		}
 
 		// look through the camera before you draw anything
-		this.lookThrough();
+		lookThrough();
 
 		// reduce roll
-		this.reduceRoll();
+		reduceRoll();
 	}
 
 	@Override
