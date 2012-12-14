@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.vector.Vector3f;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
@@ -87,6 +89,8 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	 * Number of past iterations.
 	 */
 	protected Integer pastIterations = 0;
+	
+	private final Logger logger = LoggerFactory.getLogger(AbstractParticleSystem.class);
 
 	/**
 	 * Adds a particle emitter to the particle system.
@@ -113,7 +117,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			emitter.setConfiguration(configuration);
 			emitters.add(emitter);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("could not add particle emitter", e);
 		}
 	}
 
@@ -132,7 +136,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			modifier.setConfiguration(configuration);
 			modifiers.add(modifier);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("could not add particle modifier", e);
 		}
 	}
 	
@@ -152,7 +156,7 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			ParticleFeature feature = clazz.newInstance();
 			particleFeatures.add(feature);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("could not add particle feature", e);
 		}
 	}
 

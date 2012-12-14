@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.opengl.Display;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.emitter.ParticleEmitter;
@@ -28,6 +30,8 @@ public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSys
 	protected Boolean synchronizeWorkers = true;
 	protected Integer modifierWorkerReady = 0;
 	
+	private final Logger logger = LoggerFactory.getLogger(ThreadedAbstractParticleSystem.class);
+
 	@Override
 	public void update() {
 		calcFps();
@@ -133,7 +137,7 @@ public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSys
 //						while (pIterator.hasNext()) modifier.update(pIterator.next());
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("interrupted.", e);
 				}
 				if (synchronizeWorkers) {
 					modifierWorkerReady++;
