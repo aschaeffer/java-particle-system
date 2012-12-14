@@ -27,13 +27,13 @@ public class TubeSegments extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		particle.put(NUMBER_OF_SEGMENTS, emitter.getConfiguration().get(NUMBER_OF_SEGMENTS));
 		particle.put(SEGMENTS_TO_DRAW, emitter.getConfiguration().get(SEGMENTS_TO_DRAW));
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -45,13 +45,13 @@ public class TubeSegments extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, MIN_NUMBER_OF_SEGMENTS);
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -63,13 +63,13 @@ public class TubeSegments extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 100.0);
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_SEGMENTS)) {
 			emitter.getConfiguration().put(fieldName, DEFAULT_NUMBER_OF_SEGMENTS);
 		} else if (fieldName.equals(SEGMENTS_TO_DRAW)) {
@@ -78,12 +78,12 @@ public class TubeSegments extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		return getIntegerValueAsString(emitter, fieldName);
 	}
 
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		return (fieldName.equals(NUMBER_OF_SEGMENTS) || fieldName.equals(SEGMENTS_TO_DRAW));
 	}
 

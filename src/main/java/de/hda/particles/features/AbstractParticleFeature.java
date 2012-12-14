@@ -4,7 +4,7 @@ import de.hda.particles.emitter.ParticleEmitter;
 
 public abstract class AbstractParticleFeature implements ParticleFeature {
 
-	protected Integer increaseValue(ParticleEmitter emitter, String featureKey, Integer defaultValue, Integer maxValue) {
+	protected Integer increaseValue(final ParticleEmitter emitter, final String featureKey, final Integer defaultValue, final Integer maxValue) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Integer newValue = oldValue;
@@ -18,7 +18,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Integer increaseValue(ParticleEmitter emitter, String featureKey, Integer defaultValue) {
+	protected Integer increaseValue(final ParticleEmitter emitter, final String featureKey, final Integer defaultValue) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Integer newValue = oldValue;
@@ -32,7 +32,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Integer increaseIntegerValue(ParticleEmitter emitter, String featureKey) {
+	protected Integer increaseIntegerValue(final ParticleEmitter emitter, final String featureKey) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) {
 			setDefault(emitter, featureKey);
@@ -49,7 +49,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Integer decreaseValue(ParticleEmitter emitter, String featureKey, Integer defaultValue, Integer minValue) {
+	protected Integer decreaseValue(final ParticleEmitter emitter, final String featureKey, final Integer defaultValue, final Integer minValue) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Integer newValue = oldValue;
@@ -63,7 +63,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	protected Integer decreaseValue(ParticleEmitter emitter, String featureKey, Integer defaultValue) {
+	protected Integer decreaseValue(final ParticleEmitter emitter, final String featureKey, final Integer defaultValue) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Integer newValue = oldValue;
@@ -77,7 +77,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	protected Integer decreaseIntegerValue(ParticleEmitter emitter, String featureKey) {
+	protected Integer decreaseIntegerValue(final ParticleEmitter emitter, final String featureKey) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) {
 			setDefault(emitter, featureKey);
@@ -94,7 +94,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	protected Double increaseValue(ParticleEmitter emitter, String featureKey, Double defaultValue, Double maxValue) {
+	protected Double increaseValue(final ParticleEmitter emitter, final String featureKey, final Double defaultValue, final Double maxValue) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Double newValue = oldValue;
@@ -103,7 +103,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Double increaseValue(ParticleEmitter emitter, String featureKey, Double defaultValue) {
+	protected Double increaseValue(final ParticleEmitter emitter, final String featureKey, final Double defaultValue) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Double newValue = oldValue;
@@ -112,7 +112,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Double increaseDoubleValue(ParticleEmitter emitter, String featureKey) {
+	protected Double increaseDoubleValue(final ParticleEmitter emitter, final String featureKey) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) {
 			setDefault(emitter, featureKey);
@@ -124,7 +124,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 	
-	protected Double decreaseValue(ParticleEmitter emitter, String featureKey, Double defaultValue, Double minValue) {
+	protected Double decreaseValue(final ParticleEmitter emitter, final String featureKey, final Double defaultValue, final Double minValue) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Double newValue = oldValue;
@@ -133,7 +133,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	protected Double decreaseValue(ParticleEmitter emitter, String featureKey, Double defaultValue) {
+	protected Double decreaseValue(final ParticleEmitter emitter, final String featureKey, final Double defaultValue) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) oldValue = defaultValue;
 		Double newValue = oldValue;
@@ -142,7 +142,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	protected Double decreaseDoubleValue(ParticleEmitter emitter, String featureKey) {
+	protected Double decreaseDoubleValue(final ParticleEmitter emitter, final String featureKey) {
 		Double oldValue = (Double) emitter.getConfiguration().get(featureKey);
 		if (oldValue == null) {
 			setDefault(emitter, featureKey);
@@ -154,7 +154,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return newValue;
 	}
 
-	private Double getFactoredIncValue(Double oldValue) {
+	private Double getFactoredIncValue(final Double oldValue) {
 		Double incValue = 0.01;
 		if (oldValue > 0.3 || oldValue < -0.3) incValue *= 10.0;
 		if (oldValue > 3.0 || oldValue < -3.0) incValue *= 10.0;
@@ -165,7 +165,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		return incValue;
 	}
 	
-	protected String getIntegerValueAsString(ParticleEmitter emitter, String featureKey) {
+	protected String getIntegerValueAsString(final ParticleEmitter emitter, final String featureKey) {
 		if (!validFieldName(featureKey)) return null;
 		Integer value = (Integer) emitter.getConfiguration().get(featureKey);
 		if (value == null) {
@@ -175,7 +175,7 @@ public abstract class AbstractParticleFeature implements ParticleFeature {
 		}
 	}
 	
-	protected String getDoubleValueAsString(ParticleEmitter emitter, String featureKey) {
+	protected String getDoubleValueAsString(final ParticleEmitter emitter, final String featureKey) {
 		if (!validFieldName(featureKey)) return null;
 		Double value = (Double) emitter.getConfiguration().get(featureKey);
 		if (value == null) {

@@ -25,14 +25,14 @@ public class ParticleSize extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		particle.put(SIZE_BIRTH, emitter.getConfiguration().get(SIZE_BIRTH));
 		particle.put(SIZE_DEATH, emitter.getConfiguration().get(SIZE_DEATH));
 		particle.put(CURRENT_SIZE, emitter.getConfiguration().get(SIZE_BIRTH));
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Double value = (Double) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -44,13 +44,13 @@ public class ParticleSize extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 0.0);
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Double value = (Double) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -62,13 +62,13 @@ public class ParticleSize extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 100.0);
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SIZE_BIRTH)) {
 			emitter.getConfiguration().put(fieldName, DEFAULT_SIZE_BIRTH);
 		} else if (fieldName.equals(SIZE_DEATH)) {
@@ -77,16 +77,8 @@ public class ParticleSize extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		return getDoubleValueAsString(emitter, fieldName);
-//		if (!validFieldName(fieldName)) return null;
-//		Double value = (Double) emitter.getConfiguration().get(fieldName);
-//		if (value == null) {
-//			setDefault(emitter, fieldName);
-//			return null;
-//		} else {
-//			return String.format("%.2f", value);
-//		}
 	}
 
 	@Override

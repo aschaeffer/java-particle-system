@@ -24,7 +24,7 @@ public class PositionPath extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		Integer numberOfPositions = (Integer) emitter.getConfiguration().get(NUMBER_OF_BUFFERED_POSITIONS);
 		if (numberOfPositions == null) numberOfPositions = DEFAULT_NUMBER_OF_BUFFERED_POSITIONS;
 		particle.put(NUMBER_OF_BUFFERED_POSITIONS, numberOfPositions);
@@ -32,47 +32,47 @@ public class PositionPath extends AbstractParticleFeature implements ParticleFea
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS)) {
 			decreaseValue(emitter, fieldName, DEFAULT_NUMBER_OF_BUFFERED_POSITIONS, 0);
 		}
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS)) {
 			increaseValue(emitter, fieldName, 0);
 		}
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS)) {
 			increaseValue(emitter, fieldName, DEFAULT_NUMBER_OF_BUFFERED_POSITIONS);
 		}
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS)) {
 			increaseValue(emitter, fieldName, 50);
 		}
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS)) {
 			emitter.getConfiguration().put(fieldName, DEFAULT_NUMBER_OF_BUFFERED_POSITIONS);
 		}
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		return getIntegerValueAsString(emitter, fieldName);
 	}
 
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		return (fieldName.equals(NUMBER_OF_BUFFERED_POSITIONS));
 	}
 
