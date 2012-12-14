@@ -10,13 +10,16 @@ import de.hda.particles.domain.Particle;
  * down the whole system and increases memory consumption dramatically.
  * 
  * Therefore we have to reduce the creation of new particle objects by
- * creating a pool of particles.
+ * creating a pool of particles. The pool is implemented as a ArrayStack.
  * 
  * @author aschaeffer
  *
  */
 public class ParticlePool extends ArrayStack implements ParticleLifetimeListener {
 
+	/**
+	 * The serial.
+	 */
 	private static final long serialVersionUID = 3602697554779890223L;
 
 	/**
@@ -41,6 +44,9 @@ public class ParticlePool extends ArrayStack implements ParticleLifetimeListener
 		push(particle);
 	}
 
+	/**
+	 * Not used.
+	 */
 	@Override
 	public void onParticleCreation(Particle particle) {
 	}
