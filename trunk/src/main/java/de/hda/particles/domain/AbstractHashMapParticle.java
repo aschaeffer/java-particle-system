@@ -83,6 +83,21 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	}
 
 	@Override
+	public float getVelX() {
+		return velocityX;
+	}
+
+	@Override
+	public float getVelY() {
+		return velocityY;
+	}
+
+	@Override
+	public float getVelZ() {
+		return velocityZ;
+	}
+
+	@Override
 	public void setVelocity(Vector3f velocity) {
 		velocityX = velocity.x;
 		velocityY = velocity.y;
