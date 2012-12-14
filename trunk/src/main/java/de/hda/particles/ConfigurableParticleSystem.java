@@ -21,6 +21,10 @@ public class ConfigurableParticleSystem extends AbstractParticleSystem implement
 	
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableParticleSystem.class);
 
+	public ConfigurableParticleSystem() {
+		this.particleSystemDAO = new ParticleSystemDAO();
+	}
+
 	public ConfigurableParticleSystem(ParticleSystemDAO particleSystemDAO) {
 		this.particleSystemDAO = particleSystemDAO;
 	}
