@@ -16,6 +16,9 @@ public interface Camera extends Renderer {
 	String getName();
 	void setName(String name);
 	Vector3f getPosition();
+	Float getX();
+	Float getY();
+	Float getZ();
 	void setPosition(Vector3f position);
 	Float getYaw();
 	void setYaw(Float yaw);
