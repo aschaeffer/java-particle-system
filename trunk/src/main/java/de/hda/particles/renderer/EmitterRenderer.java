@@ -62,8 +62,6 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 			Float dy = position.getY() - emitter.getPosition().y;
 			Float dz = position.getZ() - emitter.getPosition().z;
 			Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
-			System.out.println("emitter: x:" + emitter.getPosition().x + " y:" + emitter.getPosition().y + " z:" + emitter.getPosition().z);
-			System.out.println("distance: " + distance);
 			if (distance < 20.0f) {
 				selected = emitter;
 				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT, emitter));

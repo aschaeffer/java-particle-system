@@ -20,9 +20,6 @@ public class ExtendedParticleRenderer extends AbstractRenderer implements Render
 	public void update() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
-		// glPointSize(5.0f);
-		// glColor4f(1.0f, 1.0f, 1.0f, 0.3f);
-		// glBegin(GL_POINTS);
 		List<Particle> currentParticles = new ArrayList<Particle>(scene.getParticleSystem().getParticles());
 		ListIterator<Particle> pIterator = currentParticles.listIterator(0);
 		while (pIterator.hasNext()) {
@@ -32,13 +29,11 @@ public class ExtendedParticleRenderer extends AbstractRenderer implements Render
 				glPointSize((Float) particle.get(ParticleSize.CURRENT_SIZE));
 				glBegin(GL_POINTS);
 				Color color = (Color) particle.get(ParticleColor.CURRENT_COLOR);
-				glColor4f((float) color.getRed() / 255.0f, (float) color.getGreen() / 255.0f, (float) color.getBlue() / 255.0f, (float) color.getAlpha() / 255.0f);
+				glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 				glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 				glEnd();
-				// System.out.println("particle x:" + particle.getX() + " y:" + particle.getY() + " z:" + particle.getZ() + " r:" + ((float) color.getRed() / 255.0f) + " g:" + color.getGreen() + " b:" + color.getBlue() + " a:" + color.getAlpha());
 			}
 		}
-		// glEnd();
 		glPopMatrix();
 	}
 
