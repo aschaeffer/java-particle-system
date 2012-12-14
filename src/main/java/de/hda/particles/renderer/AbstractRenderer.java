@@ -9,8 +9,6 @@ import java.nio.FloatBuffer;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.UnicodeFont;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.hda.particles.scene.Scene;
 
