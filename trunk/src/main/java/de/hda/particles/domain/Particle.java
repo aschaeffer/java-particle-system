@@ -20,8 +20,11 @@ public interface Particle extends Map<String, Object> {
 	public void setPosition(Vector3f position);
 	public Vector3f getVelocity();
 	public float getVelX();
+	public void setVelX(float x);
 	public float getVelY();
+	public void setVelY(float y);
 	public float getVelZ();
+	public void setVelZ(float z);
 	public void setVelocity(Vector3f velocity);
 	public float getMass();
 	public void setMass(float mass);
