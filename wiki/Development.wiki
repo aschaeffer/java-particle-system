@@ -4,3 +4,5 @@
   * return early
   * move object definitions to class level
   * recycle objects using pooling
+
+  * memory: http://www.codeinstructions.com/2008/12/java-objects-memory-structure.html
