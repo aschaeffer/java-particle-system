@@ -10,6 +10,14 @@ import de.hda.particles.domain.Particle;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.modifier.ParticleModifier;
 
+/**
+ * A second abstract implementation of a particle system. This one
+ * starts a thread for every modifier. (Sadly, it doesn't boost the
+ * performance.)
+ * 
+ * @author aschaeffer
+ *
+ */
 public abstract class ThreadedAbstractParticleSystem extends AbstractParticleSystem implements ParticleSystem {
 
 	private static final Integer WORKER_THREADS = 3;
