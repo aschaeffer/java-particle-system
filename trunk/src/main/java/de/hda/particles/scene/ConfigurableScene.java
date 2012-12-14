@@ -67,6 +67,12 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableScene.class);
 
+    public ConfigurableScene(ParticleSystem particleSystem) {
+    	super();
+    	this.particleSystem = particleSystem;
+    	this.sceneDAO = new SceneDAO();
+    }
+
     public ConfigurableScene(ParticleSystem particleSystem, SceneDAO sceneDAO) {
     	super();
     	this.particleSystem = particleSystem;
