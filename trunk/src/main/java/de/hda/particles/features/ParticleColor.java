@@ -45,7 +45,7 @@ public class ParticleColor extends AbstractParticleFeature implements ParticleFe
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		Integer startColorR = (Integer) emitter.getConfiguration().get(START_COLOR_R);
 		if (startColorR == null) startColorR = DEFAULT_COLOR_R;
 		Integer startColorG = (Integer) emitter.getConfiguration().get(START_COLOR_G);
@@ -72,7 +72,7 @@ public class ParticleColor extends AbstractParticleFeature implements ParticleFe
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -84,13 +84,13 @@ public class ParticleColor extends AbstractParticleFeature implements ParticleFe
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 0);
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		Integer value = (Integer) emitter.getConfiguration().get(fieldName);
 		if (value == null) {
@@ -102,13 +102,13 @@ public class ParticleColor extends AbstractParticleFeature implements ParticleFe
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 255);
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(START_COLOR_R)) {
 			emitter.getConfiguration().put(fieldName, DEFAULT_COLOR_R);
 		} else if (fieldName.equals(START_COLOR_G)) {
@@ -129,12 +129,12 @@ public class ParticleColor extends AbstractParticleFeature implements ParticleFe
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		return getIntegerValueAsString(emitter, fieldName);
 	}
 
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		return (fieldName.equals(START_COLOR_R)
 			|| fieldName.equals(START_COLOR_G)
 			|| fieldName.equals(START_COLOR_B)

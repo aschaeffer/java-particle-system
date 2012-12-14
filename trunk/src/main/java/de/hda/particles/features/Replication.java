@@ -16,49 +16,49 @@ public class Replication extends AbstractParticleFeature implements ParticleFeat
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

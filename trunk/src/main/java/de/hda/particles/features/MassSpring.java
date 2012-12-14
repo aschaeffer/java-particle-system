@@ -40,7 +40,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		if (!buffers.containsKey(emitter)) {
 			Integer numberSprings = (Integer) emitter.getConfiguration().get(NUMBER_SPRINGS);
 			if (numberSprings == null) {
@@ -77,7 +77,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
 			Integer value = decreaseValue(emitter, SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE, 0);
 			if (value == 3) {
@@ -97,7 +97,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
 			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, 0);
 		} else if (fieldName.equals(NUMBER_SPRINGS)) {
@@ -112,7 +112,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
 			Integer value = increaseValue(emitter, SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE);
 			if (value == 3) {
@@ -132,7 +132,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
 			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, 4);
 		} else if (fieldName.equals(NUMBER_SPRINGS)) {
@@ -147,7 +147,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE)) {
 			emitter.getConfiguration().put(SPRING_CONSTRUCTION_RULE, DEFAULT_SPRING_CONSTRUCTION_RULE);
 		} else if (fieldName.equals(NUMBER_SPRINGS)) {
@@ -162,7 +162,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return null;
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE) || fieldName.equals(NUMBER_SPRINGS)) {
 			return getIntegerValueAsString(emitter, fieldName);
@@ -177,7 +177,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 		}
 	}
 	
-	private void setNumberOfSprings(ParticleEmitter emitter, Integer numberOfSprings) {
+	private void setNumberOfSprings(final ParticleEmitter emitter, final Integer numberOfSprings) {
 		if (numberOfSprings > 0) {
 			emitter.getConfiguration().put(NUMBER_SPRINGS, numberOfSprings);
 			Buffer buffer = buffers.get(emitter);
@@ -188,7 +188,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void constructSpringConnections(ParticleEmitter emitter, Particle particle, Integer springContructionRule) {
+	private void constructSpringConnections(final ParticleEmitter emitter, final Particle particle, final Integer springContructionRule) {
 		ArrayList<Particle> springConnectedParticles = new ArrayList<Particle>();;
 		if (springContructionRule == 0) {
 			// connect the new particle with it's n predessors
@@ -268,7 +268,7 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 	}
 	
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		return (fieldName.equals(SPRING_CONSTRUCTION_RULE)
 			|| fieldName.equals(NUMBER_SPRINGS)
 			|| fieldName.equals(SPRING_LENGTH)

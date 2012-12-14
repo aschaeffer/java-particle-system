@@ -44,7 +44,7 @@ public class ParticleInitialVelocityScatter extends AbstractParticleFeature impl
 	}
 
 	@Override
-	public void init(ParticleEmitter emitter, Particle particle) {
+	public void init(final ParticleEmitter emitter, final Particle particle) {
 		if (!emitter.getConfiguration().containsKey(SCATTER_X) || !emitter.getConfiguration().containsKey(SCATTER_Y) || !emitter.getConfiguration().containsKey(SCATTER_Z)) return;
 		Double scatterX = (Double) emitter.getConfiguration().get(SCATTER_X);
 		Double scatterY = (Double) emitter.getConfiguration().get(SCATTER_Y);
@@ -69,31 +69,31 @@ public class ParticleInitialVelocityScatter extends AbstractParticleFeature impl
 	}
 
 	@Override
-	public void decrease(ParticleEmitter emitter, String fieldName) {
+	public void decrease(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		decreaseDoubleValue(emitter, fieldName);
 	}
 
 	@Override
-	public void decreaseMin(ParticleEmitter emitter, String fieldName) {
+	public void decreaseMin(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 0.0);
 	}
 
 	@Override
-	public void increase(ParticleEmitter emitter, String fieldName) {
+	public void increase(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		increaseDoubleValue(emitter, fieldName);
 	}
 
 	@Override
-	public void increaseMax(ParticleEmitter emitter, String fieldName) {
+	public void increaseMax(final ParticleEmitter emitter, final String fieldName) {
 		if (!validFieldName(fieldName)) return;
 		emitter.getConfiguration().put(fieldName, 100.0);
 	}
 	
 	@Override
-	public void setDefault(ParticleEmitter emitter, String fieldName) {
+	public void setDefault(final ParticleEmitter emitter, final String fieldName) {
 		if (fieldName.equals(SCATTER_X)) {
 			emitter.getConfiguration().put(fieldName, DEFAULT_SCATTER_X);
 		} else if (fieldName.equals(SCATTER_Y)) {
@@ -108,12 +108,12 @@ public class ParticleInitialVelocityScatter extends AbstractParticleFeature impl
 	}
 
 	@Override
-	public String getValue(ParticleEmitter emitter, String fieldName) {
+	public String getValue(final ParticleEmitter emitter, final String fieldName) {
 		return getDoubleValueAsString(emitter, fieldName);
 	}
 	
 	@Override
-	public Boolean validFieldName(String fieldName) {
+	public Boolean validFieldName(final String fieldName) {
 		return (fieldName.equals(SCATTER_X)
 			|| fieldName.equals(SCATTER_Y)
 			|| fieldName.equals(SCATTER_Z)
