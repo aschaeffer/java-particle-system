@@ -14,26 +14,91 @@ import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.timing.FpsLimiter;
 
+/**
+ * The core of a particle system. It manages all particles, features,
+ * emitters and modifiers.
+ * 
+ * @author aschaeffer
+ *
+ */
 public abstract class AbstractParticleSystem extends FpsLimiter implements ParticleSystem {
 
+	/**
+	 * List of particles (array list = fast).
+	 */
 	protected List<Particle> particles = new ArrayList<Particle>();
+	
+	/**
+	 * List of particle features.
+	 */
 	protected List<ParticleFeature> particleFeatures = new ArrayList<ParticleFeature>();
 
+	/**
+	 * List of particle emitters.
+	 */
 	protected List<ParticleEmitter> emitters = new ArrayList<ParticleEmitter>();
+	
+	/**
+	 * List of modifiers.
+	 */
 	protected List<ParticleModifier> modifiers = new ArrayList<ParticleModifier>();
 	
+	/**
+	 * Pool of death particles which are ready for recycling.
+	 */
 	protected ParticlePool pool = new ParticlePool();
 	
+	/**
+	 * The list of particle lifetime listeners.
+	 */
 	protected List<ParticleLifetimeListener> listeners = new ArrayList<ParticleLifetimeListener>();
 
+	/**
+	 * Paused state of the particle system.
+	 */
 	protected Boolean paused = false;
+	
+	/**
+	 * Next step iteration state.
+	 */
 	protected Boolean next = false;
+	
+	/**
+	 * True, if particle system is idle.
+	 */
 	protected Boolean idle = true;
+	
+	/**
+	 * True, if emitters are enabled.
+	 */
 	protected Boolean emittersEnabled = true;
+	
+	/**
+	 * True, if modifiers are enabled.
+	 */
 	protected Boolean modifiersEnabled = true;
+	
+	/**
+	 * True, if particles should be removed at next iteration.
+	 */
 	protected Boolean clearParticlesAtNextIteration = false;
+	
+	/**
+	 * Number of past iterations.
+	 */
 	protected Integer pastIterations = 0;
 
+	/**
+	 * Adds a particle emitter to the particle system.
+	 * 
+	 * @param clazz Emitter type.
+	 * @param position Initial position of the emitter.
+	 * @param velocity Initial velocity of the emitter.
+	 * @param renderTypeIndex Initial renderType index of the emitter.
+	 * @param rate Inital rate of particle emittations.
+	 * @param lifetime Initial particle lifetime.
+	 * @param configuration Emitter implementation specific configuration.
+	 */
 	@Override
 	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		ParticleEmitter emitter;
@@ -51,7 +116,13 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Adds a particle modifier to the particle system.
+	 * 
+	 * @param clazz Type of the modifier.
+	 * @param configuration Modifier implementation specific configuration.
+	 */
 	@Override
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration) {
 		ParticleModifier modifier;
