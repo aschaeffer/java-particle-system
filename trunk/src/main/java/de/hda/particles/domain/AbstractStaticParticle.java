@@ -8,8 +8,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 public abstract class AbstractStaticParticle implements Particle {
 
-	public Vector3f position = new Vector3f();
-	public Vector3f velocity = new Vector3f();
+	private float positionX = 0.0f;
+	private float positionY = 0.0f;
+	private float positionZ = 0.0f;
+	private float velocityX = 0.0f;
+	private float velocityY = 0.0f;
+	private float velocityZ = 0.0f;
 	private int remainingIterations = DEFAULT_LIFETIME;
 	private int pastIterations = 0;
 	private float mass = DEFAULT_MASS;
@@ -21,60 +25,68 @@ public abstract class AbstractStaticParticle implements Particle {
 	}
 
 	public AbstractStaticParticle(Vector3f position, Vector3f velocity, int renderTypeIndex, int lifetime) {
-		this.position = position;
-		this.velocity = velocity;
+		positionX = position.x;
+		positionY = position.y;
+		positionZ = position.z;
+		velocityX = velocity.x;
+		velocityY = velocity.y;
+		velocityZ = velocity.z;
 		this.renderTypeIndex = renderTypeIndex;
 		this.remainingIterations = lifetime;
 	}
 
 	@Override
 	public float getX() {
-		return position.x;
+		return positionX;
 	}
 
 	@Override
 	public void setX(float x) {
-		position.x = x;
+		positionX = x;
 	}
 
 	@Override
 	public float getY() {
-		return position.y;
+		return positionY;
 	}
 
 	@Override
 	public void setY(float y) {
-		position.y = y;
+		positionY = y;
 	}
 
 	@Override
 	public float getZ() {
-		return position.z;
+		return positionZ;
 	}
 
 	@Override
 	public void setZ(float z) {
-		position.z = z;
+		positionZ = z;
 	}
 
 	@Override
 	public Vector3f getPosition() {
-		return new Vector3f(position);
+		return new Vector3f(positionX, positionY, positionZ);
 	}
 
 	@Override
 	public void setPosition(Vector3f position) {
-		this.position = position;
+		positionX = position.x;
+		positionY = position.y;
+		positionZ = position.z;
 	}
 
 	@Override
 	public Vector3f getVelocity() {
-		return new Vector3f(velocity);
+		return new Vector3f(velocityX, velocityY, velocityZ);
 	}
 
 	@Override
 	public void setVelocity(Vector3f velocity) {
-		this.velocity = velocity;
+		velocityX = velocity.x;
+		velocityY = velocity.y;
+		velocityZ = velocity.z;
 	}
 	
 	@Override
@@ -160,7 +172,7 @@ public abstract class AbstractStaticParticle implements Particle {
 	public String toString() {
 		String listOfFeatures = "";
 		for (String key: keySet()) listOfFeatures.concat(key + "=" + get(key).toString() + "; ");
-		return "particle pos: ("+position.x+","+position.y+","+position.z+") vel: ("+velocity.x+","+velocity.y+","+velocity.z+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
+		return "particle pos: ("+positionX+","+positionY+","+positionZ+") vel: ("+velocityX+","+velocityY+","+velocityZ+") remaining: "+remainingIterations+ " features: "+listOfFeatures;
 	}
 
 	@Override
