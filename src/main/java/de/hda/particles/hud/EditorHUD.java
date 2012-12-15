@@ -66,7 +66,6 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	public void update() {
 		if (currentEditor == null) return;
 		editorEntries = currentEditor.getEditorEntries();
-		Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
 				if (show) {

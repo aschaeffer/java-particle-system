@@ -21,7 +21,6 @@ public class CameraHUD extends AbstractHUD implements HUD {
 	@Override
 	public void update() {
 		// camera selection
-		// Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 			if (!blockCameraSelection) {
 				scene.getCameraManager().selectNextCamera();
