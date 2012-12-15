@@ -73,6 +73,7 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 		limitFps();
 		if (currentParticleSystem != null) {
 			currentIteration = currentParticleSystem.getPastIterations();
+			if (currentIteration == lastIteration) return;
 		} else {
 			currentIteration++;
 		}

@@ -2,10 +2,11 @@ package de.hda.particles.camera;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.domain.Identifiable;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.scene.Scene;
 
-public interface Camera extends Renderer {
+public interface Camera extends Renderer, Identifiable {
 
 	void reset();
 	void lookThrough();
