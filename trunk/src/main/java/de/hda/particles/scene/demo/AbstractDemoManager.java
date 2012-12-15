@@ -7,17 +7,20 @@ import java.util.ListIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.hda.particles.ParticleSystem;
 import de.hda.particles.SystemRunner;
 import de.hda.particles.Updateable;
 import de.hda.particles.dao.DemoDAO;
 import de.hda.particles.domain.ChangeSet;
 import de.hda.particles.domain.Demo;
+import de.hda.particles.timing.FpsLimiter;
 
-public abstract class AbstractDemoManager implements Updateable {
+public abstract class AbstractDemoManager extends FpsLimiter implements Updateable {
 
 	private final DemoDAO demoDAO = new DemoDAO();
 	private Demo demo = new Demo();
 	private DemoContext context = new DemoContext();
+	private ParticleSystem currentParticleSystem;
 	private Integer currentIteration = 0;
 	private Integer lastIteration = 0;
 	
@@ -47,6 +50,7 @@ public abstract class AbstractDemoManager implements Updateable {
 	
 	public void run() {
 		update(); // execute all changesets of iteration 0
+		currentParticleSystem = context.getByType(ParticleSystem.class).get(0);
 		List<SystemRunner> systemRunners = context.getByType(SystemRunner.class);
 		logger.info("found " + systemRunners.size() + " system runners");
 		ListIterator<SystemRunner> iterator = systemRunners.listIterator(0);
@@ -65,7 +69,15 @@ public abstract class AbstractDemoManager implements Updateable {
 
 	@Override
 	public void update() {
-		currentIteration++; // or get the iteration from any particle system?
+		calcFps();
+		limitFps();
+		if (currentParticleSystem != null) {
+			currentIteration = currentParticleSystem.getPastIterations();
+		} else {
+			currentIteration++;
+		}
+		if (currentIteration % 1000 == 0)
+			logger.debug("iteration " + currentIteration);
 		List<ChangeSet> changeSets = demo.getChangeSets();
 		ListIterator<ChangeSet> iterator = changeSets.listIterator(0);
 		while (iterator.hasNext()) {

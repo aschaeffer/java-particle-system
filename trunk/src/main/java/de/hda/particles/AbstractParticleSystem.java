@@ -212,6 +212,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	public void next() {
 		next = true;
 	}
+	
+	@Override
+	public Integer getPastIterations() {
+		return pastIterations;
+	}
 
 	@Override
 	public void toggleEmitters() {
