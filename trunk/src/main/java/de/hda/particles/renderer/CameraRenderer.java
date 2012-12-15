@@ -2,7 +2,6 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.glu.Cylinder;
@@ -16,10 +15,7 @@ public class CameraRenderer extends AbstractSelectable<Camera> implements Render
 	@Override
 	public void update() {
 		if (!visible) return;
-
-		List<Camera> cameras = scene.getCameraManager().getCameras();
-		// List<Camera> cameras = new ArrayList<Camera>(scene.getCameraManager().getCameras());
-		ListIterator<Camera> pIterator = cameras.listIterator(0);
+		ListIterator<Camera> pIterator = scene.getCameraManager().getCameras().listIterator(0);
 		while (pIterator.hasNext()) {
 			Camera camera = pIterator.next();
 			if (camera != null && !camera.equals(scene.getCameraManager().getSelectedCamera())) {

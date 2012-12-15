@@ -13,7 +13,7 @@ import de.hda.particles.dao.DemoDAO;
 import de.hda.particles.domain.ChangeSet;
 import de.hda.particles.domain.Demo;
 
-public class AbstractDemoManager implements Updateable {
+public abstract class AbstractDemoManager implements Updateable {
 
 	private final DemoDAO demoDAO = new DemoDAO();
 	private Demo demo = new Demo();

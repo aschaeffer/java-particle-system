@@ -2,18 +2,11 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.awt.Font;
-import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 import org.lwjgl.util.vector.Vector3f;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.hud.HUDCommand;
@@ -21,16 +14,12 @@ import de.hda.particles.hud.HUDCommandTypes;
 
 public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements Renderer {
 
-	private final Logger logger = LoggerFactory.getLogger(EmitterRenderer.class);
-
 	public EmitterRenderer() {}
 
 	@Override
 	public void update() {
 		if (!visible) return;
-
-		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
-		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
+		ListIterator<ParticleEmitter> pIterator = scene.getParticleSystem().getParticleEmitters().listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
 			if (emitter != null) {
@@ -45,7 +34,7 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 				}
 		        s.draw(10.0f, 16, 16);
 		        glPopMatrix();
-		        renderTitle(emitter.getPosition(), "Emitter\nLifetime: " + emitter.getParticleLifetime() + "\nRate: " + emitter.getRate(), 300.0f, false);
+		        // renderTitle(emitter.getPosition(), "Emitter\nLifetime: " + emitter.getParticleLifetime() + "\nRate: " + emitter.getRate(), 300.0f, false);
 			}
 		}
 	}
@@ -54,8 +43,7 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 	public Boolean select(Vector3f position) {
 		ParticleEmitter oldSelected = selected;
 		selected = null;
-		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
-		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
+		ListIterator<ParticleEmitter> pIterator = scene.getParticleSystem().getParticleEmitters().listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
 			Float dx = position.getX() - emitter.getPosition().x;
@@ -78,8 +66,7 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 	@Override
 	public void remove(Vector3f position) {
 		scene.getParticleSystem().beginModification();
-		List<ParticleEmitter> currentEmitters = scene.getParticleSystem().getParticleEmitters();
-		ListIterator<ParticleEmitter> pIterator = currentEmitters.listIterator(0);
+		ListIterator<ParticleEmitter> pIterator = scene.getParticleSystem().getParticleEmitters().listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
 			Float dx = position.getX() - emitter.getPosition().x;
@@ -113,22 +100,6 @@ public class EmitterRenderer extends AbstractMovable<ParticleEmitter> implements
 		Vector3f newPosition = new Vector3f();
 		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
 		selected.setPosition(newPosition);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setup() {
-		super.setup();
-        // AWT Font in eine UnicodeFont von slick-util umwandeln
-        font = new UnicodeFont(new Font("Arial", Font.BOLD, 12));
-        font.getEffects().add(new ColorEffect(new java.awt.Color(0.8f, 0.2f, 0.8f)));
-        font.addAsciiGlyphs();
-        try {
-           font.loadGlyphs();
-        } catch (SlickException e) {
-        	logger.error("could not load font glyphs", e);
-        }
-
 	}
 
 }

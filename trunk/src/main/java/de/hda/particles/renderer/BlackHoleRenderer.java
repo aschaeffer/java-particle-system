@@ -2,7 +2,6 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.glu.Sphere;
@@ -18,12 +17,8 @@ public class BlackHoleRenderer extends AbstractSelectable<BlackHole> implements 
 
 	@Override
 	public void update() {
-
 		if (!visible) return;
-
-		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
-		// List<ParticleModifier> currentModifiers = new ArrayList<ParticleModifier>(scene.getParticleSystem().getParticleModifiers());
-		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
+		ListIterator<ParticleModifier> pIterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();
 			if (modifier != null) {

@@ -22,9 +22,7 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 	@Override
 	public void update() {
 		if (!visible) return;
-
-		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
-		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
+		ListIterator<ParticleModifier> pIterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
 		while (pIterator.hasNext()) {
 			ParticleModifier modifier = pIterator.next();
 			if (modifier != null) {

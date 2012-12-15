@@ -23,6 +23,7 @@ import de.hda.particles.renderer.Renderer;
 import de.hda.particles.renderer.types.RenderType;
 import de.hda.particles.scene.ConfigurableScene;
 import de.hda.particles.scene.Scene;
+import de.hda.particles.overlay.TextOverlay;
 
 public class SceneDAO {
 
@@ -46,6 +47,7 @@ public class SceneDAO {
 		scene.getHudManager().setScene(scene);
 		scene.getRenderTypeManager().setScene(scene);
 		scene.getRendererManager().setScene(scene);
+		scene.getTextOverlayManager().setScene(scene);
 		// load cameras
 		ListIterator<HashMap<String, Object>> camerasIterator = sceneConfiguration.cameras.listIterator(0);
 		while (camerasIterator.hasNext()) {
@@ -82,8 +84,14 @@ public class SceneDAO {
 		while (rendererIterator.hasNext()) {
 			scene.getRendererManager().add((Class<? extends Renderer>) Class.forName(rendererIterator.next()));
 		}
-		// load obligatory renderers II
-		scene.getRendererManager().add(scene.getRenderTypeManager()); 
+		// load text overlay types
+		ListIterator<String> textOverlaysIterator = sceneConfiguration.textOverlays.listIterator(0);
+		while (textOverlaysIterator.hasNext()) {
+			scene.getTextOverlayManager().add((Class<? extends TextOverlay>) Class.forName(textOverlaysIterator.next()));
+		}
+		// load obligatory renderers II, ordering is important!
+		scene.getRendererManager().add(scene.getTextOverlayManager());
+		scene.getRendererManager().add(scene.getRenderTypeManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		return scene;
 	}
@@ -136,8 +144,14 @@ public class SceneDAO {
 		while (rendererIterator.hasNext()) {
 			scene.getRendererManager().add((Class<? extends Renderer>) Class.forName(rendererIterator.next()));
 		}
-		// load obligatory renderers II
-		scene.getRendererManager().add(scene.getRenderTypeManager()); 
+		// load text overlay types
+		ListIterator<String> textOverlaysIterator = sceneConfiguration.textOverlays.listIterator(0);
+		while (textOverlaysIterator.hasNext()) {
+			scene.getTextOverlayManager().add((Class<? extends TextOverlay>) Class.forName(textOverlaysIterator.next()));
+		}
+		// load obligatory renderers II, ordering is important!
+		scene.getRendererManager().add(scene.getTextOverlayManager());
+		scene.getRendererManager().add(scene.getRenderTypeManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		// setup all renderers, the cam and the hud
 		scene.getRendererManager().setup();
@@ -182,6 +196,12 @@ public class SceneDAO {
 		while (rendererIterator.hasNext()) {
 			Renderer renderer = rendererIterator.next();
 			sceneConfiguration.renderer.add(renderer.getClass().getName());
+		}
+		sceneConfiguration.textOverlays = new ArrayList<String>();
+		ListIterator<TextOverlay> textOverlayIterator = scene.getTextOverlayManager().getTextOverlays().listIterator(0);
+		while (textOverlayIterator.hasNext()) {
+			TextOverlay textOverlay = textOverlayIterator.next();
+			sceneConfiguration.textOverlays.add(textOverlay.getClass().getName());
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.writerWithDefaultPrettyPrinter().writeValue(file, sceneConfiguration);

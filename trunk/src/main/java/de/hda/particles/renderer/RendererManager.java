@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 public class RendererManager extends AbstractRenderer implements Renderer {
 
+	private final static Integer NUMBER_FRONT_RENDERERS = 2;
+
 	private final List<Renderer> renderers = new ArrayList<Renderer>();
 
 	private final IntBuffer viewport = BufferUtils.createIntBuffer(64);
@@ -27,7 +29,8 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	private final FloatBuffer mouseZ = BufferUtils.createFloatBuffer(1);
 	private Boolean lastMouseDown = false;
 	private Boolean blockRemoveSelection = false;
-	private Boolean textOverlay = false;
+	
+	private List<Renderer> currentRenderers;
 
 	private final Logger logger = LoggerFactory.getLogger(RendererManager.class);
 
@@ -61,7 +64,7 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	
 	public void add(Renderer renderer) {
 		// we have to insert the renderer one before the HudManager
-		Integer index = renderers.size() - 2;
+		Integer index = renderers.size() - (NUMBER_FRONT_RENDERERS+1);
 		if (index < 0) index = 0;
 		logger.info("insert renderer at index " + index);
 		insertAt(renderer, index);
@@ -104,17 +107,17 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	public void update() {
 
 		// update buffers
-		if (textOverlay) {
+		if (scene.getTextOverlayManager().getEnabled()) {
 	        GL11.glGetInteger(GL11.GL_VIEWPORT, viewport);
 	        GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, modelViewMatrix);
 	        GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, projectionMatrix);
 		}
 
 		// render all managed renderers
-		List<Renderer> currentRenderers = new ArrayList<Renderer>(renderers);
-	    ListIterator<Renderer> iterator = currentRenderers.listIterator(0);
-		while(iterator.hasNext()) {
-			iterator.next().update();
+		currentRenderers = new ArrayList<Renderer>(renderers);
+	    ListIterator<Renderer> rendererIterator = currentRenderers.listIterator(0);
+		while(rendererIterator.hasNext()) {
+			rendererIterator.next().update();
 		}
 		
 		// check for selecting
@@ -182,14 +185,6 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	@Override
 	public Boolean isFinished() {
 		return false;
-	}
-
-	public Boolean getTextOverlay() {
-		return textOverlay;
-	}
-
-	public void setTextOverlay(Boolean textOverlay) {
-		this.textOverlay = textOverlay;
 	}
 
 	public IntBuffer getViewport() {
