@@ -18,7 +18,7 @@ import de.hda.particles.scene.Scene;
 
 public class MenuHUD extends AbstractHUD implements HUD {
 
-	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 15;
+	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 10;
 	private final static Float DEFAULT_WIDTH_PERCENT = 0.3f;
 	private final static Integer margin = 10;
 
@@ -61,7 +61,6 @@ public class MenuHUD extends AbstractHUD implements HUD {
 			blockedFor--;
 			return;
 		}
-		Keyboard.next();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
 				if (show) {

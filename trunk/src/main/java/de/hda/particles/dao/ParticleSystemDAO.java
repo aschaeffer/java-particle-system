@@ -62,11 +62,6 @@ public class ParticleSystemDAO {
 			Map<String, Object> configMap = (Map<String, Object>) emitterConfiguration.get("configuration");
 			ParticleEmitterConfiguration config = new ParticleEmitterConfiguration();
 			config.putAll(configMap);
-			System.out.println(emitterClass);
-			System.out.println(position);
-			System.out.println(velocity);
-			System.out.println(lifetime);
-			System.out.println(config);
 			particleSystem.addParticleEmitter(emitterClass, position, velocity, 1, rate, lifetime, config);
 		}
 				
@@ -135,11 +130,6 @@ public class ParticleSystemDAO {
 			Map<String, Object> configMap = (Map<String, Object>) emitterConfiguration.get("configuration");
 			ParticleEmitterConfiguration config = new ParticleEmitterConfiguration();
 			config.putAll(configMap);
-			System.out.println(emitterClass);
-			System.out.println(position);
-			System.out.println(velocity);
-			System.out.println(lifetime);
-			System.out.println(config);
 			particleSystem.addParticleEmitter(emitterClass, position, velocity, 1, rate, lifetime, config);
 		}
 				
