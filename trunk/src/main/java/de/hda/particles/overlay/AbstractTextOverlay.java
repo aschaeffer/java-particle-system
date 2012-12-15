@@ -1,7 +1,5 @@
 package de.hda.particles.overlay;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import java.awt.Font;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,6 +20,8 @@ public abstract class AbstractTextOverlay implements TextOverlay {
 	protected Scene scene;
 	protected Boolean visible = true;
 	protected UnicodeFont font;
+	
+	private final FloatBuffer projectionResult = ByteBuffer.allocateDirect(3*8).order(ByteOrder.nativeOrder()).asFloatBuffer();
 
 	private final Logger logger = LoggerFactory.getLogger(AbstractTextOverlay.class);
 
@@ -30,19 +30,20 @@ public abstract class AbstractTextOverlay implements TextOverlay {
 	}
 
 	public void render(float objX, float objY, float objZ, String title, Float maxDist, Boolean debug) {
+		if (title == null) return;
 		if (maxDist > 0.0f) {
 			Vector3f cameraPosition = scene.getCameraManager().getPosition();
 			Vector3f cameraToObject = new Vector3f(objX - cameraPosition.x, objY - cameraPosition.y, objZ - cameraPosition.z);
 			if (Math.abs(cameraToObject.length()) > maxDist) return;
 		}
-        FloatBuffer result = ByteBuffer.allocateDirect(3*8).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        GLU.gluProject(objX, objY, objZ, scene.getRendererManager().getModelViewMatrix(), scene.getRendererManager().getProjectionMatrix(), scene.getRendererManager().getViewport(), result);
-        result.rewind();
-        Float x = result.get();
-        Float y = result.get();
+		projectionResult.clear();
+        GLU.gluProject(objX, objY, objZ, scene.getRendererManager().getModelViewMatrix(), scene.getRendererManager().getProjectionMatrix(), scene.getRendererManager().getViewport(), projectionResult);
+        projectionResult.rewind();
+        Float x = projectionResult.get();
+        Float y = projectionResult.get();
         Float y2 = scene.getHeight() - y;
-        Float z = result.get();
-        if (x == null || y == null || z == null || title == null || z > 1.0f) return;
+        Float z = projectionResult.get();
+        if (z == null || z > 1.0f) return;
         if (!debug) {
             font.drawString(x, y2, title);
         } else {
