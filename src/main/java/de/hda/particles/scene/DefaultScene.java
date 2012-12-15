@@ -23,7 +23,7 @@ import de.hda.particles.renderer.GravityPointRenderer;
 import de.hda.particles.renderer.SkyBoxRenderer;
 import de.hda.particles.renderer.types.ColoredPointRenderType;
 import de.hda.particles.renderer.types.ComplexPointRenderType;
-import de.hda.particles.renderer.types.PointSpriteRenderType;
+import de.hda.particles.renderer.types.BallRenderType;
 import de.hda.particles.renderer.types.SimplePointRenderType;
 import de.hda.particles.renderer.types.SimpleRainRenderType;
 import de.hda.particles.renderer.types.SimpleTriangleFanRenderType;
@@ -123,7 +123,7 @@ public class DefaultScene extends AbstractScene implements Scene {
 			renderTypeManager.add(SimpleTriangleFanRenderType.class); // idx 7
 			renderTypeManager.add(SimpleQuadsRenderType.class); // idx 8
 			renderTypeManager.add(SimpleLineStripRenderType.class); // idx 9
-			renderTypeManager.add(PointSpriteRenderType.class); // idx 10
+			renderTypeManager.add(BallRenderType.class); // idx 10
 			// renderTypeManager.setup(); <-- hier oder unten?
 		} catch (Exception e) {
 			
