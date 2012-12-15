@@ -108,6 +108,21 @@ public class CameraManager extends AbstractCamera implements Camera {
 	}
 	
 	@Override
+	public Float getX() {
+		return selectedCamera.getX();
+	}
+	
+	@Override
+	public Float getY() {
+		return selectedCamera.getY();
+	}
+	
+	@Override
+	public Float getZ() {
+		return selectedCamera.getZ();
+	}
+	
+	@Override
 	public void setPosition(Vector3f position) {
 		selectedCamera.setPosition(position);
 	}
