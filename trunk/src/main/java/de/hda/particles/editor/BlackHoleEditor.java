@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
 import de.hda.particles.modifier.gravity.BlackHole;
+import de.hda.particles.modifier.gravity.GravityBase;
 
 public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> implements Editor {
 
@@ -23,9 +24,9 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_X, "Position X"));
 		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_Y, "Position Y"));
 		editorEntries.add(HUDEditorEntry.create(BlackHole.POSITION_Z, "Position Z"));
-		editorEntries.add(HUDEditorEntry.create(BlackHole.GRAVITY, "Gravity"));
-		editorEntries.add(HUDEditorEntry.create(BlackHole.MASS, "Mass"));
-		editorEntries.add(HUDEditorEntry.create(BlackHole.MAX_FORCE, "Max Force"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.GRAVITY, "Gravity"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.MASS, "Mass"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.MAX_FORCE, "Max Force"));
 		editorEntries.addAll(super.getEditorEntries());
 		return editorEntries;
 	}
@@ -45,35 +46,35 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
 			subject.getConfiguration().put(BlackHole.POSITION_Z, positionZ - 10.0);
-		} else if (fieldName.equals(BlackHole.GRAVITY)) {
-			Double gravity = (Double) subject.getConfiguration().get(BlackHole.GRAVITY);
+		} else if (fieldName.equals(GravityBase.GRAVITY)) {
+			Double gravity = (Double) subject.getConfiguration().get(GravityBase.GRAVITY);
 			if (gravity == null) gravity = BlackHole.DEFAULT_GRAVITY;
-			subject.getConfiguration().put(BlackHole.GRAVITY, gravity - 0.1);
-		} else if (fieldName.equals(BlackHole.MASS)) {
-			Double mass = (Double) subject.getConfiguration().get(BlackHole.MASS);
+			subject.getConfiguration().put(GravityBase.GRAVITY, gravity - 0.1);
+		} else if (fieldName.equals(GravityBase.MASS)) {
+			Double mass = (Double) subject.getConfiguration().get(GravityBase.MASS);
 			if (mass == null) mass = BlackHole.DEFAULT_MASS;
-			subject.getConfiguration().put(BlackHole.MASS, mass - 50.0);
-		} else if (fieldName.equals(BlackHole.MAX_FORCE)) {
-			Double maxForce = (Double) subject.getConfiguration().get(BlackHole.MAX_FORCE);
+			subject.getConfiguration().put(GravityBase.MASS, mass - 50.0);
+		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
+			Double maxForce = (Double) subject.getConfiguration().get(GravityBase.MAX_FORCE);
 			if (maxForce == null) maxForce = BlackHole.DEFAULT_MAX_FORCE;
 			if (maxForce >= 1.0) {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce - 1.0);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 1.0);
 			} else if (maxForce >= 0.1) {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce - 0.1);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 0.1);
 			} else if (maxForce >= 0.0) {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce - 0.01);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 0.01);
 			}
 		}
 	}
 
 	@Override
 	public void setMin(String fieldName) {
-		if (fieldName.equals(BlackHole.GRAVITY)) {
-			subject.getConfiguration().put(BlackHole.GRAVITY, 0.1);
-		} else if (fieldName.equals(BlackHole.MASS)) {
-			subject.getConfiguration().put(BlackHole.MASS, 0);
-		} else if (fieldName.equals(BlackHole.MAX_FORCE)) {
-			subject.getConfiguration().put(BlackHole.MAX_FORCE, 0.01);
+		if (fieldName.equals(GravityBase.GRAVITY)) {
+			subject.getConfiguration().put(GravityBase.GRAVITY, 0.1);
+		} else if (fieldName.equals(GravityBase.MASS)) {
+			subject.getConfiguration().put(GravityBase.MASS, 0);
+		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
+			subject.getConfiguration().put(GravityBase.MAX_FORCE, 0.01);
 		}
 	}
 
@@ -92,35 +93,35 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 			Double positionZ = (Double) subject.getConfiguration().get(BlackHole.POSITION_Z);
 			if (positionZ == null) positionZ = 0.0;
 			subject.getConfiguration().put(BlackHole.POSITION_Z, positionZ + 10.0);
-		} else if (fieldName.equals(BlackHole.GRAVITY)) {
-			Double gravity = (Double) subject.getConfiguration().get(BlackHole.GRAVITY);
+		} else if (fieldName.equals(GravityBase.GRAVITY)) {
+			Double gravity = (Double) subject.getConfiguration().get(GravityBase.GRAVITY);
 			if (gravity == null) gravity = BlackHole.DEFAULT_GRAVITY;
-			subject.getConfiguration().put(BlackHole.GRAVITY, gravity + 0.1);
-		} else if (fieldName.equals(BlackHole.MASS)) {
-			Double mass = (Double) subject.getConfiguration().get(BlackHole.MASS);
+			subject.getConfiguration().put(GravityBase.GRAVITY, gravity + 0.1);
+		} else if (fieldName.equals(GravityBase.MASS)) {
+			Double mass = (Double) subject.getConfiguration().get(GravityBase.MASS);
 			if (mass == null) mass = BlackHole.DEFAULT_MASS;
-			subject.getConfiguration().put(BlackHole.MASS, mass + 50.0);
-		} else if (fieldName.equals(BlackHole.MAX_FORCE)) {
-			Double maxForce = (Double) subject.getConfiguration().get(BlackHole.MAX_FORCE);
+			subject.getConfiguration().put(GravityBase.MASS, mass + 50.0);
+		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
+			Double maxForce = (Double) subject.getConfiguration().get(GravityBase.MAX_FORCE);
 			if (maxForce == null) maxForce = BlackHole.DEFAULT_MAX_FORCE;
 			if (maxForce >= 1.0) {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce + 1.0);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce + 1.0);
 			} else if (maxForce >= 0.1) {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce + 0.1);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce + 0.1);
 			} else {
-				subject.getConfiguration().put(BlackHole.MAX_FORCE, maxForce + 0.01);
+				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce + 0.01);
 			}
 		}
 	}
 
 	@Override
 	public void setMax(String fieldName) {
-		if (fieldName.equals(BlackHole.GRAVITY)) {
-			subject.getConfiguration().put(BlackHole.GRAVITY, 100.0);
-		} else if (fieldName.equals(BlackHole.MASS)) {
-			subject.getConfiguration().put(BlackHole.MASS, 10000.0);
-		} else if (fieldName.equals(BlackHole.MAX_FORCE)) {
-			subject.getConfiguration().put(BlackHole.MAX_FORCE, 100.0);
+		if (fieldName.equals(GravityBase.GRAVITY)) {
+			subject.getConfiguration().put(GravityBase.GRAVITY, 100.0);
+		} else if (fieldName.equals(GravityBase.MASS)) {
+			subject.getConfiguration().put(GravityBase.MASS, 10000.0);
+		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
+			subject.getConfiguration().put(GravityBase.MAX_FORCE, 100.0);
 		}
 	}
 
@@ -135,12 +136,12 @@ public class BlackHoleEditor  extends AbstractParticleModifierEditor<BlackHole> 
 			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POSITION_Y));
 		} else if (fieldName.equals(BlackHole.POSITION_Z)) {
 			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.POSITION_Z));
-		} else if (fieldName.equals(BlackHole.GRAVITY)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.GRAVITY));
-		} else if (fieldName.equals(BlackHole.MASS)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.MASS));
-		} else if (fieldName.equals(BlackHole.MAX_FORCE)) {
-			return String.format("%.2f", (Double) subject.getConfiguration().get(BlackHole.MAX_FORCE));
+		} else if (fieldName.equals(GravityBase.GRAVITY)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityBase.GRAVITY));
+		} else if (fieldName.equals(GravityBase.MASS)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityBase.MASS));
+		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
+			return String.format("%.2f", (Double) subject.getConfiguration().get(GravityBase.MAX_FORCE));
 		} else {
 			return "N/A";
 		}

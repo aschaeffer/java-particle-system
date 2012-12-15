@@ -13,6 +13,8 @@ import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.hud.HUDCommand;
 import de.hda.particles.hud.HUDCommandTypes;
 import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.modifier.PositionablePlaneModifier;
+import de.hda.particles.modifier.PositionablePointModifier;
 import de.hda.particles.modifier.gravity.GravityPlane;
 
 public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implements Renderer {
@@ -31,14 +33,14 @@ public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implemen
 			if (modifier != null) {
 				if (modifier.getClass().equals(GravityPlane.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
-					if (!configuration.containsKey(GravityPlane.POSITION_X) || !configuration.containsKey(GravityPlane.POSITION_Y) || !configuration.containsKey(GravityPlane.POSITION_Z) || !configuration.containsKey(GravityPlane.NORMAL_X) || !configuration.containsKey(GravityPlane.NORMAL_Y) || !configuration.containsKey(GravityPlane.NORMAL_Z))
+					if (!configuration.containsKey(PositionablePointModifier.POSITION_X) || !configuration.containsKey(PositionablePointModifier.POSITION_Y) || !configuration.containsKey(PositionablePointModifier.POSITION_Z) || !configuration.containsKey(PositionablePlaneModifier.NORMAL_X) || !configuration.containsKey(PositionablePlaneModifier.NORMAL_Y) || !configuration.containsKey(PositionablePlaneModifier.NORMAL_Z))
 						continue;
-					Double positionX = (Double) configuration.get(GravityPlane.POSITION_X);
-					Double positionY = (Double) configuration.get(GravityPlane.POSITION_Y);
-					Double positionZ = (Double) configuration.get(GravityPlane.POSITION_Z);
-					Double normalX = (Double) configuration.get(GravityPlane.NORMAL_X);
-					Double normalY = (Double) configuration.get(GravityPlane.NORMAL_Y);
-					Double normalZ = (Double) configuration.get(GravityPlane.NORMAL_Z);
+					Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+					Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+					Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
+					Double normalX = (Double) configuration.get(PositionablePlaneModifier.NORMAL_X);
+					Double normalY = (Double) configuration.get(PositionablePlaneModifier.NORMAL_Y);
+					Double normalZ = (Double) configuration.get(PositionablePlaneModifier.NORMAL_Z);
 					glPushMatrix();
 					glTranslated(positionX, positionY, positionZ);
 					Sphere s = new Sphere();
@@ -93,9 +95,9 @@ public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implemen
 				if (modifier.getClass().equals(GravityPlane.class)) {
 					GravityPlane gravityPlane = (GravityPlane) modifier;
 					ParticleModifierConfiguration configuration = gravityPlane.getConfiguration();
-					Double positionX = (Double) configuration.get(GravityPlane.POSITION_X);
-					Double positionY = (Double) configuration.get(GravityPlane.POSITION_Y);
-					Double positionZ = (Double) configuration.get(GravityPlane.POSITION_Z);
+					Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+					Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+					Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
 					Float dx = position.getX() - positionX.floatValue();
 					Float dy = position.getY() - positionY.floatValue();
 					Float dz = position.getZ() - positionZ.floatValue();
@@ -125,9 +127,9 @@ public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implemen
 			if (modifier.getClass().equals(GravityPlane.class)) {
 				GravityPlane gravityPlane = (GravityPlane) modifier;
 				ParticleModifierConfiguration configuration = gravityPlane.getConfiguration();
-				Double positionX = (Double) configuration.get(GravityPlane.POSITION_X);
-				Double positionY = (Double) configuration.get(GravityPlane.POSITION_Y);
-				Double positionZ = (Double) configuration.get(GravityPlane.POSITION_Z);
+				Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+				Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+				Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
 				Float dx = position.getX() - positionX.floatValue();
 				Float dy = position.getY() - positionY.floatValue();
 				Float dz = position.getZ() - positionZ.floatValue();
@@ -150,9 +152,9 @@ public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implemen
 		Vector3f cameraToTarget = new Vector3f();
 		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
 		ParticleModifierConfiguration configuration = selected.getConfiguration();
-		Double positionX = (Double) configuration.get(GravityPlane.POSITION_X);
-		Double positionY = (Double) configuration.get(GravityPlane.POSITION_Y);
-		Double positionZ = (Double) configuration.get(GravityPlane.POSITION_Z);
+		Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+		Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+		Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
 		Float dx = cameraPosition.getX() - positionX.floatValue();
 		Float dy = cameraPosition.getY() - positionY.floatValue();
 		Float dz = cameraPosition.getZ() - positionZ.floatValue();
@@ -162,13 +164,13 @@ public class GravityPlaneRenderer extends AbstractMovable<GravityPlane> implemen
 		cameraToTarget.scale(scaleFactor);
 		Vector3f newPosition = new Vector3f();
 		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
-		configuration.put(GravityPlane.POSITION_X, new Double(newPosition.x));
-		configuration.put(GravityPlane.POSITION_Y, new Double(newPosition.y));
-		configuration.put(GravityPlane.POSITION_Z, new Double(newPosition.z));
+		configuration.put(PositionablePointModifier.POSITION_X, new Double(newPosition.x));
+		configuration.put(PositionablePointModifier.POSITION_Y, new Double(newPosition.y));
+		configuration.put(PositionablePointModifier.POSITION_Z, new Double(newPosition.z));
 		Vector3f normalizedNormal = new Vector3f();
 		cameraToTarget.normalise(normalizedNormal);
-		configuration.put(GravityPlane.NORMAL_X, new Double(normalizedNormal.x));
-		configuration.put(GravityPlane.NORMAL_Y, new Double(normalizedNormal.y));
-		configuration.put(GravityPlane.NORMAL_Z, new Double(normalizedNormal.z));
+		configuration.put(PositionablePlaneModifier.NORMAL_X, new Double(normalizedNormal.x));
+		configuration.put(PositionablePlaneModifier.NORMAL_Y, new Double(normalizedNormal.y));
+		configuration.put(PositionablePlaneModifier.NORMAL_Z, new Double(normalizedNormal.z));
 	}
 }

@@ -3,43 +3,33 @@ package de.hda.particles.modifier.gravity;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.modifier.AbstractPositionablePlaneModifier;
+import de.hda.particles.modifier.PositionablePlaneModifier;
 
-public class GravityPlane extends GravityPoint implements ParticleModifier {
-
-	public final static String NORMAL_X = "normal_x";
-	public final static String NORMAL_Y = "normal_y";
-	public final static String NORMAL_Z = "normal_z";
+public class GravityPlane extends AbstractPositionablePlaneModifier implements PositionablePlaneModifier {
 
 	public final static Double DEFAULT_GRAVITY = 1.8;
 	public final static Double DEFAULT_MASS = 2000.0;
 	public final static Double DEFAULT_MAX_FORCE = 1.0;
-
-	public Vector3f normal = new Vector3f(0.0f, 1.0f, 0.0f);
-	public Vector3f normalizedNormal = new Vector3f(0.0f, 1.0f, 0.0f);
-	// public Vector3f inverseNormalizedNormal = new Vector3f(0.0f, -1.0f, 0.0f);
+	
+	protected Float gravity = 0.0f;
+	protected Float mass = 0.0f;
+	protected Float maxForce = 0.0f;
 
 	public GravityPlane() {}
 
 	@Override
 	public void prepare() {
-		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
-		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
-		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
-		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
-		if (!configuration.containsKey(NORMAL_X) || !configuration.containsKey(NORMAL_Y) || !configuration.containsKey(NORMAL_Z)) return;
-		normal.setX(((Double) this.configuration.get(NORMAL_X)).floatValue());
-		normal.setY(((Double) this.configuration.get(NORMAL_Y)).floatValue());
-		normal.setZ(((Double) this.configuration.get(NORMAL_Z)).floatValue());
+		if (!expectKeys()) return;
+		super.prepare();
 		normal.normalise(normalizedNormal);
-		// normalizedNormal.negate(inverseNormalizedNormal);
-		Double g = (Double) this.configuration.get(GRAVITY);
+		Double g = (Double) this.configuration.get(GravityBase.GRAVITY);
 		if (g == null) g = DEFAULT_GRAVITY;
 		gravity = g.floatValue();
-		Double m = (Double) this.configuration.get(MASS);
+		Double m = (Double) this.configuration.get(GravityBase.MASS);
 		if (m == null) m = DEFAULT_MASS;
 		mass = m.floatValue();
-		Double mf = (Double) this.configuration.get(MAX_FORCE);
+		Double mf = (Double) this.configuration.get(GravityBase.MAX_FORCE);
 		if (mf == null) mf = DEFAULT_MAX_FORCE;
 		maxForce = mf.floatValue();
 	}
@@ -53,7 +43,6 @@ public class GravityPlane extends GravityPoint implements ParticleModifier {
 	 */
 	@Override
 	public void update(Particle particle) {
-		// particle to
 		// q (plane point) to p (particle point)
 		Vector3f planePointToParticle = new Vector3f();
 		Vector3f.sub(particle.getPosition(), position, planePointToParticle);

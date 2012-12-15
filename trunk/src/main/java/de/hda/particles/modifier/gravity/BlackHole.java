@@ -26,7 +26,7 @@ public class BlackHole extends GravityPoint implements ParticleModifier {
 		) {
 			// remove particles which are within the event horizon
 			particle.setRemainingIterations(0);
-			updateConfiguration(MASS, new Double(mass + particle.getMass()));
+			updateConfiguration(GravityBase.MASS, new Double(mass + particle.getMass()));
 		} else {
 			// or act like gravity point
 			updateParticleVelocity(particle, position, mass, gravity, maxForce);
