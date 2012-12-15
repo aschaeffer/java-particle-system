@@ -2,7 +2,6 @@ package de.hda.particles.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.util.List;
 import java.util.ListIterator;
 
 import org.lwjgl.util.glu.GLU;
@@ -23,11 +22,9 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 	@Override
 	public void update() {
 		if (!visible) return;
-
-		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
-		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
-		while (pIterator.hasNext()) {
-			ParticleModifier modifier = pIterator.next();
+		ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
+		while (iterator.hasNext()) {
+			ParticleModifier modifier = iterator.next();
 			if (modifier != null) {
 				if (modifier.getClass().equals(CollisionPlane.class)) {
 					ParticleModifierConfiguration configuration = modifier.getConfiguration();
@@ -85,10 +82,9 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 	public Boolean select(Vector3f position) {
 		CollisionPlane oldSelected = selected;
 		selected = null;
-		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
-		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
-		while (pIterator.hasNext()) {
-			ParticleModifier modifier = pIterator.next();
+		ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
+		while (iterator.hasNext()) {
+			ParticleModifier modifier = iterator.next();
 			if (modifier != null) {
 				if (modifier.getClass().equals(CollisionPlane.class)) {
 					CollisionPlane collisionPlane = (CollisionPlane) modifier;
@@ -118,10 +114,9 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 	@Override
 	public void remove(Vector3f position) {
 		scene.getParticleSystem().beginModification();
-		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
-		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
-		while (pIterator.hasNext()) {
-			ParticleModifier modifier = pIterator.next();
+		ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
+		while (iterator.hasNext()) {
+			ParticleModifier modifier = iterator.next();
 			if (modifier.getClass().equals(CollisionPlane.class)) {
 				CollisionPlane collisionPlane = (CollisionPlane) modifier;
 				ParticleModifierConfiguration configuration = collisionPlane.getConfiguration();

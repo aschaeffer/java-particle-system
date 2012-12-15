@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.camera.CameraManager;
 import de.hda.particles.hud.HUDManager;
+import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.types.RenderTypeManager;
 import de.hda.particles.textures.TextureManager;
@@ -35,6 +36,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	protected RendererManager rendererManager = new RendererManager();
 	protected RenderTypeManager renderTypeManager = new RenderTypeManager();
 	protected TextureManager textureManager = new TextureManager();
+	protected TextOverlayManager textOverlayManager = new TextOverlayManager();
 	
 	protected List<FpsInformation> fpsInformationInstances = new ArrayList<FpsInformation>();
 
@@ -161,7 +163,16 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	public void setTextureManager(TextureManager textureManager) {
 		this.textureManager = textureManager;
 	}
-	
+
+	@Override
+	public TextOverlayManager getTextOverlayManager() {
+		return textOverlayManager;
+	}
+
+	public void setTextOverlayManager(TextOverlayManager textOverlayManager) {
+		this.textOverlayManager = textOverlayManager;
+	}
+
 	@Override
 	public String getName() {
 		return name;

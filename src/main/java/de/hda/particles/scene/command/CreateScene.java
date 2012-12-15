@@ -26,10 +26,12 @@ public class CreateScene implements Command {
 			scene.getCameraManager().setScene(scene);
 			scene.getHudManager().setScene(scene);
 			scene.getRenderTypeManager().setScene(scene);
+			scene.getTextOverlayManager().setScene(scene);
 			scene.getRendererManager().setScene(scene);
 			scene.getRendererManager().insertAt(scene.getCameraManager(), 0);
-			scene.getRendererManager().insertAt(scene.getRenderTypeManager(), 1);
-			scene.getRendererManager().insertAt(scene.getHudManager(), 2);
+			scene.getRendererManager().insertAt(scene.getTextOverlayManager(), 1);
+			scene.getRendererManager().insertAt(scene.getRenderTypeManager(), 2);
+			scene.getRendererManager().insertAt(scene.getHudManager(), 3);
 			scene.getRendererManager().setup();
 			return context.add(scene);
 		}

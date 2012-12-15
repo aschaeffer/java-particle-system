@@ -13,5 +13,6 @@ public class SceneConfiguration {
 	public List<String> huds;
 	public List<String> renderTypes;
 	public List<String> renderer;
+	public List<String> textOverlays;
 
 }

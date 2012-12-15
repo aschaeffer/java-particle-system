@@ -6,6 +6,7 @@ import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
 import de.hda.particles.camera.CameraManager;
 import de.hda.particles.hud.HUDManager;
+import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.types.RenderTypeManager;
 import de.hda.particles.textures.TextureManager;
@@ -34,6 +35,7 @@ public interface Scene extends Updateable, FpsInformation {
 	RendererManager getRendererManager();
 	RenderTypeManager getRenderTypeManager();
 	TextureManager getTextureManager();
+	TextOverlayManager getTextOverlayManager();
 	
 	List<FpsInformation> getFpsInformationInstances();
 	void addFpsInformationInstance(FpsInformation fpsInformation);
