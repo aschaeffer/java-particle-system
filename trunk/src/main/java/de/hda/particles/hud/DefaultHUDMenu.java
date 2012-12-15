@@ -43,7 +43,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Triangle Fan", HUDCommandTypes.ADD_RENDER_TYPE, SimpleTriangleFanRenderType.class);
 		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Quads", HUDCommandTypes.ADD_RENDER_TYPE, SimpleQuadsRenderType.class);
 		HUDMenuEntry.create(addPrimitiveRenderTypes, "Simple Sphere", HUDCommandTypes.ADD_RENDER_TYPE, SimpleSphereRenderType.class);
-		HUDMenuEntry.create(addPointSpriteRenderTypes, "Ball", HUDCommandTypes.ADD_RENDER_TYPE, PointSpriteRenderType.class);
+		HUDMenuEntry.create(addPointSpriteRenderTypes, "Ball", HUDCommandTypes.ADD_RENDER_TYPE, BallRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Smoke", HUDCommandTypes.ADD_RENDER_TYPE, SmokeRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Electric", HUDCommandTypes.ADD_RENDER_TYPE, ElectricRenderType.class);
 		HUDMenuEntry.create(addPointSpriteRenderTypes, "Explosion", HUDCommandTypes.ADD_RENDER_TYPE, ExplosionRenderType.class);
