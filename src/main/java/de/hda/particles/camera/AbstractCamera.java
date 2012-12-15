@@ -10,10 +10,11 @@ import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.domain.Identifiable;
 import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.scene.Scene;
 
-public abstract class AbstractCamera extends AbstractRenderer implements Camera {
+public abstract class AbstractCamera extends AbstractRenderer implements Camera, Identifiable {
 
 	public final static Float DEFAULT_X = 0.0f;
 	public final static Float DEFAULT_Y = 0.0f;
@@ -34,6 +35,11 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	 * Every cam has a name ;-)
 	 */
 	private String name = "unknown cam";
+	
+	/**
+	 * The camera id.
+	 */
+	private Integer id = -1;
 
 	/**
 	 * 3d vector to store the camera's position in
@@ -168,6 +174,16 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera 
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

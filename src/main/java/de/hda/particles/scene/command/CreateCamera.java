@@ -27,6 +27,7 @@ public class CreateCamera implements Command {
 			while (iterator.hasNext()) {
 				Camera camera = (Camera) clazz.newInstance();
 				camera.setName((String) configuration.get("name"));
+				camera.setId((Integer) configuration.get("id"));
 				camera.setPosition(new Vector3f(new Double((Double) configuration.get("x")).floatValue(), new Double((Double) configuration.get("y")).floatValue(), new Double((Double) configuration.get("z")).floatValue()));
 				camera.setYaw(new Double((Double) configuration.get("yaw")).floatValue());
 				camera.setPitch(new Double((Double) configuration.get("pitch")).floatValue());
