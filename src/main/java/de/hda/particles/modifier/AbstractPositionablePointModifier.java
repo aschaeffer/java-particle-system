@@ -2,11 +2,7 @@ package de.hda.particles.modifier;
 
 import org.lwjgl.util.vector.Vector3f;
 
-public abstract class AbstractPositionableModifier extends AbstractParticleModifier {
-
-	public final static String POSITION_X = "position_x";
-	public final static String POSITION_Y = "position_y";
-	public final static String POSITION_Z = "position_z";
+public abstract class AbstractPositionablePointModifier extends AbstractParticleModifier implements PositionablePointModifier {
 
 	protected Vector3f position = new Vector3f();
 
@@ -15,6 +11,41 @@ public abstract class AbstractPositionableModifier extends AbstractParticleModif
 		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
 		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
 		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
+	}
+
+	@Override
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+
+	@Override
+	public float getX() {
+		return position.x;
+	}
+
+	@Override
+	public void setX(float x) {
+		position.x = x;
+	}
+
+	@Override
+	public float getY() {
+		return position.y;
+	}
+
+	@Override
+	public void setY(float y) {
+		position.y = y;
+	}
+
+	@Override
+	public float getZ() {
+		return position.z;
+	}
+
+	@Override
+	public void setZ(float z) {
+		position.z = z;
 	}
 
 	@Override

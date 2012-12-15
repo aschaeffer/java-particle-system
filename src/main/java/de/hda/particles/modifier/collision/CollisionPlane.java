@@ -3,8 +3,8 @@ package de.hda.particles.modifier.collision;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.modifier.AbstractPositionableModifier;
-import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.modifier.AbstractPositionablePlaneModifier;
+import de.hda.particles.modifier.PositionablePlaneModifier;
 
 /**
  * Calculates if a particle position is in front or behind of the plane.
@@ -13,14 +13,7 @@ import de.hda.particles.modifier.ParticleModifier;
  * @author aschaeffer
  *
  */
-public class CollisionPlane extends AbstractPositionableModifier implements ParticleModifier {
-
-	public final static String NORMAL_X = "normal_x";
-	public final static String NORMAL_Y = "normal_y";
-	public final static String NORMAL_Z = "normal_z";
-
-	public Vector3f position = new Vector3f();
-	public Vector3f normal = new Vector3f(0.0f, 1.0f, 0.0f);
+public class CollisionPlane extends AbstractPositionablePlaneModifier implements PositionablePlaneModifier {
 
 	@Override
 	public void prepare() {
@@ -55,14 +48,6 @@ public class CollisionPlane extends AbstractPositionableModifier implements Part
 			Vector3f.sub(velocity, p2, r);
 			particle.setVelocity(r);
 		}
-	}
-
-	@Override
-	public Boolean expectKeys() {
-		return (super.expectKeys()
-			&& configuration.containsKey(NORMAL_X)
-			&& configuration.containsKey(NORMAL_Y)
-			&& configuration.containsKey(NORMAL_Z));
 	}
 
 }
