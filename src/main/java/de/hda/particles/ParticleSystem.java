@@ -92,6 +92,13 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public void next();
 	
 	/**
+	 * Returns the past iterations.
+	 * 
+	 * @return returns the past iterations
+	 */
+	public Integer getPastIterations();
+	
+	/**
 	 * Toggles emitters on / off.
 	 */
 	public void toggleEmitters();
