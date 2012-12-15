@@ -4,10 +4,9 @@ import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
-import de.hda.particles.modifier.AbstractParticleModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class RainbowColorTransformation extends AbstractParticleModifier implements ParticleModifier {
+public class RainbowColorTransformation extends AbstractColorModifier implements ParticleModifier {
 
 	public RainbowColorTransformation() {}
 

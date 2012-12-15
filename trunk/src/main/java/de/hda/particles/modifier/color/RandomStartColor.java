@@ -6,10 +6,9 @@ import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
-import de.hda.particles.modifier.AbstractParticleModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class RandomStartColor extends AbstractParticleModifier implements ParticleModifier {
+public class RandomStartColor extends AbstractColorModifier implements ParticleModifier {
 
 	private final Random random = new Random();
 	

@@ -12,6 +12,7 @@ import de.hda.particles.modifier.gravity.GravityPoint;
 import de.hda.particles.modifier.gravity.ParticleGravityTransformation;
 import de.hda.particles.modifier.size.LinearSizeTransformation;
 import de.hda.particles.modifier.size.PulseSizeTransformation;
+import de.hda.particles.modifier.velocity.MassSpringTransformation;
 import de.hda.particles.modifier.velocity.VelocityDamper;
 import de.hda.particles.modifier.velocity.VelocityTransformation;
 import de.hda.particles.renderer.*;

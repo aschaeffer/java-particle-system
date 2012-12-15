@@ -3,7 +3,7 @@ package de.hda.particles.modifier.collision;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.AbstractPositionableModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
 /**
@@ -13,11 +13,7 @@ import de.hda.particles.modifier.ParticleModifier;
  * @author aschaeffer
  *
  */
-public class CollisionPlane extends AbstractParticleModifier implements ParticleModifier {
-
-	public final static String POSITION_X = "position_x";
-	public final static String POSITION_Y = "position_y";
-	public final static String POSITION_Z = "position_z";
+public class CollisionPlane extends AbstractPositionableModifier implements ParticleModifier {
 
 	public final static String NORMAL_X = "normal_x";
 	public final static String NORMAL_Y = "normal_y";
@@ -28,11 +24,10 @@ public class CollisionPlane extends AbstractParticleModifier implements Particle
 
 	@Override
 	public void prepare() {
-		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
+		if (!expectKeys()) return;
 		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
 		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
 		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
-		if (!configuration.containsKey(NORMAL_X) || !configuration.containsKey(NORMAL_Y) || !configuration.containsKey(NORMAL_Z)) return;
 		normal.setX(((Double) this.configuration.get(NORMAL_X)).floatValue());
 		normal.setY(((Double) this.configuration.get(NORMAL_Y)).floatValue());
 		normal.setZ(((Double) this.configuration.get(NORMAL_Z)).floatValue());
@@ -60,6 +55,14 @@ public class CollisionPlane extends AbstractParticleModifier implements Particle
 			Vector3f.sub(velocity, p2, r);
 			particle.setVelocity(r);
 		}
+	}
+
+	@Override
+	public Boolean expectKeys() {
+		return (super.expectKeys()
+			&& configuration.containsKey(NORMAL_X)
+			&& configuration.containsKey(NORMAL_Y)
+			&& configuration.containsKey(NORMAL_Z));
 	}
 
 }
