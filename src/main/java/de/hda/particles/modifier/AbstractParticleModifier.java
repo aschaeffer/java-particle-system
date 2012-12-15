@@ -26,5 +26,9 @@ public abstract class AbstractParticleModifier {
 	public void updateConfiguration(String key, Object value) {
 		this.configuration.put(key, value);
 	}
+	
+	public Boolean expectKeys() {
+		return true;
+	}
 
 }

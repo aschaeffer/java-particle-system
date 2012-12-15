@@ -3,14 +3,10 @@ package de.hda.particles.modifier.gravity;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.modifier.AbstractParticleModifier;
+import de.hda.particles.modifier.AbstractPositionableModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
-public class GravityPoint extends AbstractParticleModifier implements ParticleModifier {
-
-	public final static String POSITION_X = "position_x";
-	public final static String POSITION_Y = "position_y";
-	public final static String POSITION_Z = "position_z";
+public class GravityPoint extends AbstractPositionableModifier implements ParticleModifier {
 
 	public final static String MASS = "mass";
 	public final static String GRAVITY = "gravity";
@@ -20,7 +16,6 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 	public final static Double DEFAULT_MASS = 1000.0;
 	public final static Double DEFAULT_MAX_FORCE = 3.0;
 	
-	protected Vector3f position = new Vector3f();
 	protected Float gravity = 0.0f;
 	protected Float mass = 0.0f;
 	protected Float maxForce = 0.0f;
@@ -29,10 +24,8 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	@Override
 	public void prepare() {
-		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
-		position.setX(((Double) this.configuration.get(POSITION_X)).floatValue());
-		position.setY(((Double) this.configuration.get(POSITION_Y)).floatValue());
-		position.setZ(((Double) this.configuration.get(POSITION_Z)).floatValue());
+		if (!expectKeys()) return;
+		super.prepare();
 		Double g = (Double) this.configuration.get(GRAVITY);
 		if (g == null) g = DEFAULT_GRAVITY;
 		gravity = g.floatValue();
@@ -46,7 +39,7 @@ public class GravityPoint extends AbstractParticleModifier implements ParticleMo
 
 	@Override
 	public void update(Particle particle) {
-		if (!configuration.containsKey(POSITION_X) || !configuration.containsKey(POSITION_Y) || !configuration.containsKey(POSITION_Z)) return;
+		if (!expectKeys()) return;
 		updateParticleVelocity(particle, position, mass, gravity, maxForce);
 	}
 	

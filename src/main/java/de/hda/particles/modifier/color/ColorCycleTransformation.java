@@ -4,7 +4,6 @@ import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
-import de.hda.particles.modifier.AbstractParticleModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
 /**
@@ -13,7 +12,7 @@ import de.hda.particles.modifier.ParticleModifier;
  * @author aschaeffer
  *
  */
-public class ColorCycleTransformation extends AbstractParticleModifier implements ParticleModifier {
+public class ColorCycleTransformation extends AbstractColorModifier implements ParticleModifier {
 
 	public ColorCycleTransformation() {}
 
@@ -27,10 +26,9 @@ public class ColorCycleTransformation extends AbstractParticleModifier implement
 
 	@Override
 	public void update(Particle particle) {
+		if (!expectKeys()) return;
 		s = (Color) particle.get(ParticleColor.START_COLOR);
-		if (s == null) return;
 		e = (Color) particle.get(ParticleColor.END_COLOR);
-		if (e == null) return;
 		p = particle.getLifetimePercent();
 		if (p <= 0.5f) {
 			r = (int) (p * e.getRed()   + (1.0f - p) * s.getRed());
