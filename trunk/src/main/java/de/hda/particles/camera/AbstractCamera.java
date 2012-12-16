@@ -281,7 +281,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	public Vector3f getDirectionVector() {
 		Vector3f directionVector = new Vector3f(
 			new Double(Math.cos(yaw)*Math.cos(pitch)).floatValue(),
-			new Double(Math.sin(yaw)*Math.cos(pitch)).floatValue(),
+			new Double(Math.sin(yaw)*Math.cos(pitch)).floatValue(), // maybe it should be -Math.sin(yaw)
 			new Double(Math.sin(pitch)).floatValue()
 		);
 		Vector3f normalisedDirectionVector = new Vector3f();
