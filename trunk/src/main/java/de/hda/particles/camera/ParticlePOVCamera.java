@@ -95,14 +95,14 @@ public class ParticlePOVCamera extends AbstractCamera implements Camera {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 		GLU.gluPerspective(fov, (float) scene.getWidth() / (float) scene.getHeight(), scene.getNearPlane(), scene.getFarPlane());
+		// set the modelview matrix back to the identity
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		GLU.gluLookAt(
 			position.x, position.y, position.z,
 			position.x + direction.x, position.y + direction.y, position.z + direction.z,
 			0.0f, -1.0f, 0.0f
 		);
-		// set the modelview matrix back to the identity
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 	}
 
 
