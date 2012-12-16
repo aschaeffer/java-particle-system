@@ -149,6 +149,7 @@ public class DefaultHUDMenu {
 		HUDMenuEntry.create(addFeatures, "Color", HUDCommandTypes.ADD_FEATURE, ParticleColor.class);
 		HUDMenuEntry.create(addFeatures, "Size", HUDCommandTypes.ADD_FEATURE, ParticleSize.class);
 		HUDMenuEntry.create(addFeatures, "Initial Velocity Scatter", HUDCommandTypes.ADD_FEATURE, ParticleInitialVelocityScatter.class);
+		HUDMenuEntry.create(addFeatures, "Initial Mass Scatter", HUDCommandTypes.ADD_FEATURE, InitialMassScatter.class);
 		HUDMenuEntry.create(addFeatures, "Mass-Spring", HUDCommandTypes.ADD_FEATURE, MassSpring.class);
 		HUDMenuEntry.create(addFeatures, "Position Path Buffer", HUDCommandTypes.ADD_FEATURE, PositionPath.class);
 		HUDMenuEntry.create(addFeatures, "Tube Segments", HUDCommandTypes.ADD_FEATURE, TubeSegments.class);
