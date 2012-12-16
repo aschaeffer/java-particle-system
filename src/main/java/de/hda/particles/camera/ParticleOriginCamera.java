@@ -8,7 +8,6 @@ import java.util.Random;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.glu.GLU;
-import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
 
@@ -90,14 +89,14 @@ public class ParticleOriginCamera extends AbstractCamera implements Camera {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 		GLU.gluPerspective(fov, (float) scene.getWidth() / (float) scene.getHeight(), scene.getNearPlane(), scene.getFarPlane());
+		// set the modelview matrix back to the identity
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		GLU.gluLookAt(
 			position.x, position.y, position.z,
 			-position.x, -position.y, -position.z,
 			0.0f, -1.0f, 0.0f
 		);
-		// set the modelview matrix back to the identity
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 	}
 
 }
