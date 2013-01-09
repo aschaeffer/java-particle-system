@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.math3.util.Pair;
+import org.newdawn.slick.util.ResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,7 @@ public class PooledSoftBodyEmitter extends AbstractParticleEmitter implements Pa
 	// TODO: add toggle enable/disable fixed points
 	// TODO: 
 	
-	private final static String filename = "/home/aschaeffer/workspace4/particles/src/test/resources/objects/head/luisobj.obj";
+	private final static String filename = "objects/head/luisobj.obj";
 	private final static Float SCALE = 6.0f;
 
 	// obj keywords
@@ -51,7 +52,6 @@ public class PooledSoftBodyEmitter extends AbstractParticleEmitter implements Pa
 	private int particleIndex2;
 	private Particle particle1;
 
-	private FileReader fileReader = null;
     private BufferedReader bufferedReader = null;
     
 	public PooledSoftBodyEmitter() {}
@@ -90,9 +90,13 @@ public class PooledSoftBodyEmitter extends AbstractParticleEmitter implements Pa
 			List<Particle> newParticles = new ArrayList<Particle>();
 			List<FixedPoint> newFixedPoints = new ArrayList<FixedPoint>();
 
-	        File objFile = new File(filename);
-			fileReader = new FileReader(objFile);
-	        bufferedReader = new BufferedReader(fileReader);
+			
+			InputStream inputStream = ResourceLoader.getResourceAsStream(filename); // this.getClass().getResourceAsStream(filename);
+			if (inputStream == null) {
+				logger.error("Could not find " + filename);
+				return;
+			}
+	        bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 	
 	        String line = null;
 	        while (true) {
