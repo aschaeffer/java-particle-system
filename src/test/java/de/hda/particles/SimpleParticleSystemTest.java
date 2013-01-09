@@ -43,7 +43,7 @@ public class SimpleParticleSystemTest {
 
 	private final Logger logger = LoggerFactory.getLogger(SimpleParticleSystemTest.class);
 
-	// @Test
+//	@Test
 	public void minimalEmitterTest() {
 		
 		// demo manager
@@ -57,8 +57,8 @@ public class SimpleParticleSystemTest {
 		// scene
 		CommandConfiguration sceneConfiguration = new CommandConfiguration();
 		sceneConfiguration.put(Scene.NAME, "Minimal Rendering");
-		sceneConfiguration.put(Scene.WIDTH, 1250);
-		sceneConfiguration.put(Scene.HEIGHT, 700);
+		sceneConfiguration.put(Scene.WIDTH, 1200);
+		sceneConfiguration.put(Scene.HEIGHT, 620);
 		sceneConfiguration.put(Scene.FULLSCREEN, false);
 		sceneConfiguration.put(Scene.VSYNC, false);
 		sceneConfiguration.put(FpsInformation.MAX_FPS, 1000);
@@ -134,8 +134,8 @@ public class SimpleParticleSystemTest {
 		// scene
 		CommandConfiguration c2 = new CommandConfiguration();
 		c2.put("name", "Demo Particle Rendering");
-		c2.put("width", 1250);
-		c2.put("height", 700);
+		c2.put("width", 1200);
+		c2.put("height", 620);
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
@@ -269,8 +269,8 @@ public class SimpleParticleSystemTest {
 		// scene
 		CommandConfiguration c2 = new CommandConfiguration();
 		c2.put("name", "Demo Particle Rendering");
-		c2.put("width", 1250);
-		c2.put("height", 700);
+		c2.put("width", 1200);
+		c2.put("height", 620);
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
@@ -404,8 +404,8 @@ public class SimpleParticleSystemTest {
 
 		CommandConfiguration c2 = new CommandConfiguration();
 		c2.put("name", "Demo Particle Rendering");
-		c2.put("width", 1250);
-		c2.put("height", 700);
+		c2.put("width", 1200);
+		c2.put("height", 620);
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
@@ -609,8 +609,8 @@ public class SimpleParticleSystemTest {
 
 		CommandConfiguration c2 = new CommandConfiguration();
 		c2.put("name", "Demo Particle Rendering");
-		c2.put("width", 1250);
-		c2.put("height", 700);
+		c2.put("width", 1200);
+		c2.put("height", 620);
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
