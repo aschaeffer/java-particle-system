@@ -108,26 +108,30 @@ public class FaceRendererManager extends AbstractRenderer implements Renderer, F
 
 	@Override
 	public void update() {
-		ListIterator<FaceRenderer> faceRendererIterator = faceRenderers.listIterator(0);
-		while(faceRendererIterator.hasNext()) {
-			FaceRenderer faceRenderer = faceRendererIterator.next();
-			Integer faceRendererIndex = faceRendererIterator.nextIndex(); // index+1
-			faceRenderer.before();
-			// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists and prevents synchronization issues
-			List<Face> particlesByIndex = faceRendererFaceCache.get(faceRendererIndex);
-			particlesByIndex.addAll(newFaces.get(faceRendererIndex));
-			newFaces.get(faceRendererIndex).clear();
-			ListIterator<Face> faceIterator = particlesByIndex.listIterator(0);
-			while (faceIterator.hasNext()) {
-				Face face = faceIterator.next();
-				if (face == null) continue;
-				if (!face.isAlive()) { // be sure faces will be removed
-					faceIterator.remove();
-				} else {
-					faceRenderer.render(face);
+		try {
+			ListIterator<FaceRenderer> faceRendererIterator = faceRenderers.listIterator(0);
+			while(faceRendererIterator.hasNext()) {
+				FaceRenderer faceRenderer = faceRendererIterator.next();
+				Integer faceRendererIndex = faceRendererIterator.nextIndex(); // index+1
+				faceRenderer.before();
+				// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists and prevents synchronization issues
+				List<Face> particlesByIndex = faceRendererFaceCache.get(faceRendererIndex);
+				particlesByIndex.addAll(newFaces.get(faceRendererIndex));
+				newFaces.get(faceRendererIndex).clear();
+				ListIterator<Face> faceIterator = particlesByIndex.listIterator(0);
+				while (faceIterator.hasNext()) {
+					Face face = faceIterator.next();
+					if (face == null) continue;
+					if (!face.isAlive()) { // be sure faces will be removed
+						faceIterator.remove();
+					} else {
+						faceRenderer.render(face);
+					}
 				}
+				faceRenderer.after();
 			}
-			faceRenderer.after();
+		} catch (NullPointerException e) {
+			logger.error("could not render faces: " + e.getMessage(), e);
 		}
 	}
 

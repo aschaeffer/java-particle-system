@@ -127,7 +127,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<forkMode>once</forkMode>
-					<argLine>-Djava.library.path=${project.build.directory}/natives -Xmx2304m</argLine>
+					<argLine>-Djava.library.path=${project.build.directory}/natives -Xmx1204m</argLine>
 				</configuration>
 			</plugin>
 
