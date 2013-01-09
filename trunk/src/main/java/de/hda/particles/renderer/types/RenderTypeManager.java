@@ -129,26 +129,30 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 
 	@Override
 	public void update() {
-		ListIterator<RenderType> rIterator = renderTypes.listIterator(0);
-		while(rIterator.hasNext()) {
-			RenderType renderType = rIterator.next();
-			Integer renderTypeIndex = rIterator.nextIndex(); // index+1
-			renderType.before();
-			// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists and prevents synchronization issues
-			List<Particle> particlesByIndex = renderTypeParticleCache.get(renderTypeIndex);
-			particlesByIndex.addAll(newParticles.get(renderTypeIndex));
-			newParticles.get(renderTypeIndex).clear();
-			ListIterator<Particle> pIterator = particlesByIndex.listIterator(0);
-			while (pIterator.hasNext()) {
-				Particle particle = pIterator.next();
-				if (particle == null) continue;
-				if (particle.getRemainingIterations() <= 0) { // be sure they will be removed
-					pIterator.remove();
-				} else {
-					renderType.render(particle);
+		try {
+			ListIterator<RenderType> rIterator = renderTypes.listIterator(0);
+			while(rIterator.hasNext()) {
+				RenderType renderType = rIterator.next();
+				Integer renderTypeIndex = rIterator.nextIndex(); // index+1
+				renderType.before();
+				// we have to copy the whole arraylist to prevent slowdowns -- not anymore: LinkedList is faster than cloning ArrayLists and prevents synchronization issues
+				List<Particle> particlesByIndex = renderTypeParticleCache.get(renderTypeIndex);
+				particlesByIndex.addAll(newParticles.get(renderTypeIndex));
+				newParticles.get(renderTypeIndex).clear();
+				ListIterator<Particle> pIterator = particlesByIndex.listIterator(0);
+				while (pIterator.hasNext()) {
+					Particle particle = pIterator.next();
+					if (particle == null) continue;
+					if (particle.getRemainingIterations() <= 0) { // be sure they will be removed
+						pIterator.remove();
+					} else {
+						renderType.render(particle);
+					}
 				}
+				renderType.after();
 			}
-			renderType.after();
+		} catch (NullPointerException e) {
+			logger.error("could not render particles: " + e.getMessage(), e);
 		}
 	}
 	
