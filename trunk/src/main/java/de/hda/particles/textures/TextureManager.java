@@ -58,6 +58,7 @@ public class TextureManager {
 				Thread.sleep(200);
 				// for a short time we have to claim the opengl context (which blocks actually)
 				Drawable drawable = Display.getDrawable();
+				drawable.releaseContext();
 				SharedDrawable sharedDrawable = new SharedDrawable(drawable);
 				sharedDrawable.makeCurrent();
 				Texture texture = TextureLoader.getTexture(format, resource, GL_LINEAR);
