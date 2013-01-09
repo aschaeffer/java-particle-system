@@ -10,18 +10,27 @@ import de.hda.particles.features.MassSpring;
 import de.hda.particles.modifier.AbstractParticleModifier;
 import de.hda.particles.modifier.ParticleModifier;
 
+/**
+ * This modifier updates particles velocity using mass spring.
+ * 
+ * TODO: performance & memory usage optimizations
+ * 
+ * @author aschaeffer
+ *
+ */
 public class MassSpringTransformation extends AbstractParticleModifier implements ParticleModifier {
 
+	// memory saving
 	private Float springLength;
 	private Float springFriction;
 	private Float springConstant;
-	private Float r;
+	private Float currentSpringLength;
 	
 	public MassSpringTransformation() {}
 
 	@Override
 	public void update(Particle particle) {
-		if (!expectKeys()) return;
+		if (!particle.containsKey(MassSpring.SPRING_LENGTH) || !particle.containsKey(MassSpring.SPRING_FRICTION) || !particle.containsKey(MassSpring.SPRING_CONSTANT) || !particle.containsKey(MassSpring.SPRING_CONNECTED_PARTICLES)) return;
 		springLength = ((Double) particle.get(MassSpring.SPRING_LENGTH)).floatValue();
 		springFriction = ((Double) particle.get(MassSpring.SPRING_FRICTION)).floatValue();
 		springConstant = ((Double) particle.get(MassSpring.SPRING_CONSTANT)).floatValue();
@@ -31,12 +40,12 @@ public class MassSpringTransformation extends AbstractParticleModifier implement
 			Particle c = iterator.next();
 			Vector3f springVector = new Vector3f();
 			Vector3f.sub(particle.getPosition(), c.getPosition(), springVector);
-			r = springVector.length();
+			currentSpringLength = springVector.length();
 			Vector3f force = new Vector3f(); // force initially has a zero value
 			Vector3f temp = new Vector3f();
-			if (r != 0) { //to avoid a division by zero check if r is zero
-				temp = new Vector3f(springVector.x / r, springVector.y / r, springVector.z / r);
-				Float temp1 = (r - springLength) * (-springConstant);
+			if (currentSpringLength != 0) { //to avoid a division by zero check if r is zero
+				temp = new Vector3f(springVector.x / currentSpringLength, springVector.y / currentSpringLength, springVector.z / currentSpringLength);
+				Float temp1 = (currentSpringLength - springLength) * (-springConstant);
 				temp = new Vector3f(temp.x * temp1, temp.y * temp1, temp.z * temp1);
 				Vector3f newForce = new Vector3f();
 				Vector3f.add(force, temp, newForce);
@@ -60,11 +69,8 @@ public class MassSpringTransformation extends AbstractParticleModifier implement
 	}
 
 	@Override
-	public Boolean expectKeys() {
-		return (configuration.containsKey(MassSpring.SPRING_LENGTH)
-			&& configuration.containsKey(MassSpring.SPRING_FRICTION)
-			&& configuration.containsKey(MassSpring.SPRING_CONSTANT)
-			&& configuration.containsKey(MassSpring.SPRING_CONNECTED_PARTICLES));
+	public void addDependencies() {
+		particleSystem.addParticleFeature(MassSpring.class);
 	}
 
 }

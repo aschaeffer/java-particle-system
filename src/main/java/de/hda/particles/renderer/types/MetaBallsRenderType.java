@@ -10,6 +10,8 @@ import de.hda.particles.features.ParticleSize;
 
 public class MetaBallsRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "MetaBalls";
+
 	public MetaBallsRenderType() {}
 
 	@Override
@@ -47,6 +49,11 @@ public class MetaBallsRenderType extends AbstractRenderType implements RenderTyp
 //        tLUT.setRGB(4,0,0x00519183);
 //        mLUTTextureID = TextureUtils.generateTexture1DFromBufferedImage(inGL,tLUT,GL_CLAMP);
 
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

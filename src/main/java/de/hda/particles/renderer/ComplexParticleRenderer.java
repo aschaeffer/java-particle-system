@@ -12,9 +12,19 @@ import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
 import de.hda.particles.features.ParticleSize;
 
-public class ExtendedParticleRenderer extends AbstractRenderer implements Renderer {
+/**
+ * Renderer for particles.
+ * Does not use render types.
+ * Only one type of particles: points
+ * Does render points colored and uses size information.
+ * Purpose: simple and fast (but slower than FastParticleRenderer)
+ * 
+ * @author aschaeffer
+ *
+ */
+public class ComplexParticleRenderer extends AbstractRenderer implements Renderer {
 
-	public ExtendedParticleRenderer() {}
+	public ComplexParticleRenderer() {}
 
 	@Override
 	public void update() {

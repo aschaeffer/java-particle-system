@@ -17,6 +17,8 @@ import de.hda.particles.domain.Particle;
 
 public class FlamesRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Flames";
+
 	private static Integer SPRITES_PER_ROW = 2;
 	private static Integer SPRITES_PER_COLUM = 2;
 	private static Integer ITERATIONS_PER_SPRITE = 1;
@@ -92,6 +94,11 @@ public class FlamesRenderType extends AbstractRenderType implements RenderType {
         
 //		glTexCoord2f(0.5f, 0.5f);
 //		glVertex3f(particle.getX(), particle.getY(), );
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

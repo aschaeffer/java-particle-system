@@ -7,13 +7,20 @@ import de.hda.particles.features.PositionPath;
 
 public class PositionPathBuffering extends AbstractParticleModifier implements ParticleModifier {
 
+	private CircularFifoBuffer positionPathBuffer;
+
 	public PositionPathBuffering() {}
 
 	@Override
 	public void update(Particle particle) {
-		CircularFifoBuffer tracedParticlesBuffer = (CircularFifoBuffer) particle.get(PositionPath.BUFFERED_POSITIONS);
-		if (tracedParticlesBuffer == null) return;
-		tracedParticlesBuffer.add(particle.getPosition());
+		positionPathBuffer = (CircularFifoBuffer) particle.get(PositionPath.BUFFERED_POSITIONS);
+		if (positionPathBuffer == null) return;
+		positionPathBuffer.add(particle.getPosition());
+	}
+
+	@Override
+	public void addDependencies() {
+		particleSystem.addParticleFeature(PositionPath.class);
 	}
 
 }

@@ -20,6 +20,7 @@ import de.hda.particles.camera.Camera;
 import de.hda.particles.domain.SceneConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.renderer.Renderer;
+import de.hda.particles.renderer.faces.FaceRenderer;
 import de.hda.particles.renderer.types.RenderType;
 import de.hda.particles.scene.ConfigurableScene;
 import de.hda.particles.scene.Scene;
@@ -46,6 +47,7 @@ public class SceneDAO {
 		scene.getCameraManager().setScene(scene);
 		scene.getHudManager().setScene(scene);
 		scene.getRenderTypeManager().setScene(scene);
+		scene.getFaceRendererManager().setScene(scene);
 		scene.getRendererManager().setScene(scene);
 		scene.getTextOverlayManager().setScene(scene);
 		// load cameras
@@ -77,6 +79,11 @@ public class SceneDAO {
 		while (renderTypesIterator.hasNext()) {
 			scene.getRenderTypeManager().add((Class<? extends RenderType>) Class.forName(renderTypesIterator.next()));
 		}
+		// load face renderer
+		ListIterator<String> faceRendererIterator = sceneConfiguration.faceRenderers.listIterator(0);
+		while (faceRendererIterator.hasNext()) {
+			scene.getFaceRendererManager().add((Class<? extends FaceRenderer>) Class.forName(faceRendererIterator.next()));
+		}
 		// load obligatory renderers I
 		scene.getRendererManager().add(scene.getCameraManager());
 		// load dynamic renderers
@@ -92,6 +99,7 @@ public class SceneDAO {
 		// load obligatory renderers II, ordering is important!
 		scene.getRendererManager().add(scene.getTextOverlayManager());
 		scene.getRendererManager().add(scene.getRenderTypeManager());
+		scene.getRendererManager().add(scene.getFaceRendererManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		return scene;
 	}
@@ -137,6 +145,11 @@ public class SceneDAO {
 		while (renderTypesIterator.hasNext()) {
 			scene.getRenderTypeManager().add((Class<? extends RenderType>) Class.forName(renderTypesIterator.next()));
 		}
+		// load face renderer
+		ListIterator<String> faceRendererIterator = sceneConfiguration.faceRenderers.listIterator(0);
+		while (faceRendererIterator.hasNext()) {
+			scene.getFaceRendererManager().add((Class<? extends FaceRenderer>) Class.forName(faceRendererIterator.next()));
+		}
 		// load obligatory renderers I
 		scene.getRendererManager().add(scene.getCameraManager());
 		// load dynamic renderers
@@ -152,6 +165,7 @@ public class SceneDAO {
 		// load obligatory renderers II, ordering is important!
 		scene.getRendererManager().add(scene.getTextOverlayManager());
 		scene.getRendererManager().add(scene.getRenderTypeManager());
+		scene.getRendererManager().add(scene.getFaceRendererManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		// setup all renderers, the cam and the hud
 		scene.getRendererManager().setup();
@@ -190,6 +204,12 @@ public class SceneDAO {
 		while (renderTypesIterator.hasNext()) {
 			RenderType renderType = renderTypesIterator.next();
 			sceneConfiguration.renderTypes.add(renderType.getClass().getName());
+		}
+		sceneConfiguration.faceRenderers = new ArrayList<String>();
+		ListIterator<FaceRenderer> faceRendererIterator = scene.getFaceRendererManager().getFaceRenderers().listIterator(0);
+		while (faceRendererIterator.hasNext()) {
+			FaceRenderer faceRenderer = faceRendererIterator.next();
+			sceneConfiguration.faceRenderers.add(faceRenderer.getClass().getName());
 		}
 		sceneConfiguration.renderer = new ArrayList<String>();
 		ListIterator<Renderer> rendererIterator = scene.getRendererManager().getRenderer().listIterator(0);

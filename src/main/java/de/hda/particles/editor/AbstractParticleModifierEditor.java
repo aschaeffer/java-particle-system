@@ -4,12 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.scene.Scene;
 import de.hda.particles.hud.HUDEditorEntry;
 
 public abstract class AbstractParticleModifierEditor<T extends ParticleModifier> implements Editor {
 
 	protected final static String title = "Particle Modifier";
+	protected Scene scene;
 	protected ParticleModifier subject;
+	protected List<HUDEditorEntry> editorEntries = new ArrayList<HUDEditorEntry>();;
+
+	@Override
+	public void setup() {
+	}
+	
+	@Override
+	public void setScene(Scene scene) {
+		this.scene = scene;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -19,8 +31,7 @@ public abstract class AbstractParticleModifierEditor<T extends ParticleModifier>
 	
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		return entries;
+		return editorEntries;
 	}
 
 	@Override

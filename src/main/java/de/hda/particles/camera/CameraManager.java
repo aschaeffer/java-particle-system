@@ -22,9 +22,23 @@ public class CameraManager extends AbstractCamera implements Camera {
 		if(selectedCamera == null) selectedCamera = camera;
 	}
 	
-	public void add(Class<? extends Camera> cameraClass, String name, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
+	public void add(Class<? extends Camera> type) {
 		try {
-			Camera camera = cameraClass.newInstance();
+			Camera camera = type.newInstance();
+			camera.setScene(scene);
+			camera.setPosition(new Vector3f());
+			cameras.add(camera);
+			if(selectedCamera == null) selectedCamera = camera;
+		} catch (InstantiationException e) {
+			logger.error("could not create camera: InstantiationException: " + e.getMessage(), e);
+		} catch (IllegalAccessException e) {
+			logger.error("could not create camera: IllegalAccessException: " + e.getMessage(), e);
+		}
+	}
+	
+	public void add(Class<? extends Camera> type, String name, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
+		try {
+			Camera camera = type.newInstance();
 			camera.setScene(scene);
 			camera.setName(name);
 			camera.setPosition(position);

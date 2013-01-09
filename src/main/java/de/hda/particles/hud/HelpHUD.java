@@ -30,11 +30,15 @@ public class HelpHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-			blockHelpSelection = false;
-		}
 		if (blockHelpSelection) {
 			help();
+		}
+	}
+	
+	@Override
+	public void input() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			blockHelpSelection = false;
 		}
 	}
 

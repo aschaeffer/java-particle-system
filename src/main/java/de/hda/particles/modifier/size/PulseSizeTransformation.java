@@ -6,20 +6,26 @@ import de.hda.particles.modifier.ParticleModifier;
 
 public class PulseSizeTransformation extends AbstractSizeModifier implements ParticleModifier {
 
-	private final static Double DEFAULT_PULSE_INTERVAL_FACTOR = 25.0;
+	public final static Double DEFAULT_PULSE_INTERVAL_FACTOR = 25.0;
+
+	public final static String PULSE_INTERVAL_FACTOR = "pulseSizeIntervalFactor";
+
+	private Double pulseSizeIntervalFactor = DEFAULT_PULSE_INTERVAL_FACTOR;
 
 	public PulseSizeTransformation() {}
 
-// TODO: make the pulse interval configurable
-//	public void prepare() {
-//	}
+	@Override
+	public void prepare() {
+		pulseSizeIntervalFactor = (Double) configuration.get(PULSE_INTERVAL_FACTOR);
+		if (pulseSizeIntervalFactor == null) pulseSizeIntervalFactor = DEFAULT_PULSE_INTERVAL_FACTOR;
+	}
 
 	@Override
 	public void update(Particle particle) {
-		if (!expectKeys()) return;
 		sizeBirth = (Double) particle.get(ParticleSize.SIZE_BIRTH);
 		sizeDeath = (Double) particle.get(ParticleSize.SIZE_DEATH);
-		particle.put(ParticleSize.CURRENT_SIZE, sizeBirth + Math.sin(particle.getPastIterations() / DEFAULT_PULSE_INTERVAL_FACTOR) * (sizeDeath - sizeBirth));
+		if (sizeBirth == null || sizeDeath == null) return;
+		particle.put(ParticleSize.CURRENT_SIZE, sizeBirth + Math.sin(particle.getPastIterations() / pulseSizeIntervalFactor) * (sizeDeath - sizeBirth));
 	}
 
 }

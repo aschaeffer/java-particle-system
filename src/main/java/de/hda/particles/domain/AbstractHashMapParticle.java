@@ -18,7 +18,7 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	private int pastIterations = 0;
 	private float mass = DEFAULT_MASS;
 	private boolean visibility = true;
-	private int index = 0;
+	private int index = 0; // TODO: remove?
 	private int renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
 
 	public AbstractHashMapParticle() {

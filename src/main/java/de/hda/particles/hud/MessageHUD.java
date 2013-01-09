@@ -21,8 +21,8 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 
 	private final static Integer MESSAGE_MARGIN = 20;
 	private final static Integer NOTICE_MARGIN = 8;
-	private final static Integer lifetime = 2000;
-	private final static Integer fadeLength = 1000;
+	private final static Integer LIFETIME = 2000;
+	private final static Integer FADE_LENGTH = 1000;
 
 	private String message = "";
 	private long endFrame = 0;
@@ -30,6 +30,14 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 	private String notice = "";
 	private long noticeEndFrame = 0;
 	private UnicodeFont noticeFont;
+	
+	private Float fade;
+	private Integer left;
+	private Integer top;
+	private Integer width;
+	private Integer height;
+	private Long frameTimeStamp;
+	
 
     private final Logger logger = LoggerFactory.getLogger(MessageHUD.class);
 
@@ -41,44 +49,44 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 
 	@Override
 	public void update() {
-		long frameTimeStamp = Sys.getTime();
+		frameTimeStamp = Sys.getTime();
 		if (frameTimeStamp <= endFrame) {
-			Float fade = 1.0f;
-			if (frameTimeStamp > (endFrame - fadeLength)) {
-				fade = 1.0f - ((frameTimeStamp - (endFrame - fadeLength)) / (1.0f * fadeLength));
+			fade = 1.0f;
+			if (frameTimeStamp > (endFrame - FADE_LENGTH)) {
+				fade = 1.0f - ((frameTimeStamp - (endFrame - FADE_LENGTH)) / (1.0f * FADE_LENGTH));
 			}
 			
-			Integer left = (scene.getWidth() / 2) - (font.getWidth(message) / 2);
-			Integer top = (scene.getHeight() / 2) - (font.getHeight(message) / 2);
+			left = (scene.getWidth() / 2) - (font.getWidth(message) / 2);
+			top = (scene.getHeight() / 2) - (font.getHeight(message) / 2);
 
 		    font.drawString(left, top, message, new org.newdawn.slick.Color(0.8f, 0.8f, 0.8f, fade));
 		}
 		if (frameTimeStamp <= noticeEndFrame) {
-			Float fade = 1.0f;
-			if (frameTimeStamp > (noticeEndFrame - fadeLength)) {
-				fade = 1.0f - ((frameTimeStamp - (noticeEndFrame - fadeLength)) / (1.0f * fadeLength));
+			fade = 1.0f;
+			if (frameTimeStamp > (noticeEndFrame - FADE_LENGTH)) {
+				fade = 1.0f - ((frameTimeStamp - (noticeEndFrame - FADE_LENGTH)) / (1.0f * FADE_LENGTH));
 			}
 			
-			Integer left = (scene.getWidth() / 2) - (noticeFont.getWidth(notice) / 2);
-			Integer top = scene.getHeight() - 3*(noticeFont.getHeight(notice) + NOTICE_MARGIN);
+			left = (scene.getWidth() / 2) - (noticeFont.getWidth(notice) / 2);
+			top = scene.getHeight() - 3*(noticeFont.getHeight(notice) + NOTICE_MARGIN);
 
-			noticeFont.drawString(left, top, notice, new org.newdawn.slick.Color(0.8f, 0.8f, 0.8f, fade));
+			noticeFont.drawString(left, top, notice, new org.newdawn.slick.Color(0.2f, 0.2f, 0.2f, fade));
 		}
 	}
 	
 	@Override
 	public void render2() {
-		long frameTimeStamp = Sys.getTime();
+		frameTimeStamp = Sys.getTime();
 		if (frameTimeStamp <= endFrame) {
-			Float fade = 1.0f;
-			if (frameTimeStamp > (endFrame - fadeLength)) {
-				fade = 1.0f - ((frameTimeStamp - (endFrame - fadeLength)) / (1.0f * fadeLength));
+			fade = 1.0f;
+			if (frameTimeStamp > (endFrame - FADE_LENGTH)) {
+				fade = 1.0f - ((frameTimeStamp - (endFrame - FADE_LENGTH)) / (1.0f * FADE_LENGTH));
 			}
 			
-			Integer width = font.getWidth(message);
-			Integer height = font.getHeight(message);
-			Integer left = (scene.getWidth() / 2) - (width / 2);
-			Integer top = (scene.getHeight() / 2) - (height / 2);
+			width = font.getWidth(message);
+			height = font.getHeight(message);
+			left = (scene.getWidth() / 2) - (width / 2);
+			top = (scene.getHeight() / 2) - (height / 2);
 
 			glColor4f(0.0f, 0.5f, 1.0f, fade / 4.0f);
 		    glBegin(GL_QUADS);
@@ -89,17 +97,17 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 		    glEnd();
 		}
 		if (frameTimeStamp <= noticeEndFrame) {
-			Float fade = 1.0f;
-			if (frameTimeStamp > (noticeEndFrame - fadeLength)) {
-				fade = 1.0f - ((frameTimeStamp - (noticeEndFrame - fadeLength)) / (1.0f * fadeLength));
+			fade = 1.0f;
+			if (frameTimeStamp > (noticeEndFrame - FADE_LENGTH)) {
+				fade = 1.0f - ((frameTimeStamp - (noticeEndFrame - FADE_LENGTH)) / (1.0f * FADE_LENGTH));
 			}
 			
-			Integer width = noticeFont.getWidth(notice);
-			Integer height = noticeFont.getHeight(notice);
-			Integer left = (scene.getWidth() / 2) - (width / 2);
-			Integer top = scene.getHeight() - 3*(height + NOTICE_MARGIN);
+			width = noticeFont.getWidth(notice);
+			height = noticeFont.getHeight(notice);
+			left = (scene.getWidth() / 2) - (width / 2);
+			top = scene.getHeight() - 3*(height + NOTICE_MARGIN);
 
-			glColor4f(1.0f, 1.0f, 0.2f, fade / 4.0f);
+			glColor4f(0.2f, 1.0f, 1.0f, fade / 4.0f);
 		    glBegin(GL_QUADS);
 		    glVertex2f(left - NOTICE_MARGIN, top - NOTICE_MARGIN);
 			glVertex2f(left + width + NOTICE_MARGIN, top - NOTICE_MARGIN);
@@ -131,12 +139,12 @@ public class MessageHUD extends AbstractHUD implements HUD, HUDCommandListener {
 	public void executeCommand(HUDCommand command) {
 		if (command.getType() == HUDCommandTypes.MESSAGE) {
 			message = (String) command.getPayLoad();
-			endFrame = Sys.getTime() + lifetime + fadeLength;
+			endFrame = Sys.getTime() + LIFETIME + FADE_LENGTH;
 			logger.debug("show message (" + message + ") till " + endFrame);
 		} else if (command.getType() == HUDCommandTypes.NOTICE) {
 			notice = (String) command.getPayLoad();
-			noticeEndFrame = Sys.getTime() + lifetime + fadeLength;
-			logger.debug("show notice (" + notice + ") till " + endFrame);
+			noticeEndFrame = Sys.getTime() + LIFETIME + FADE_LENGTH;
+			logger.debug("show notice (" + notice + ") till " + noticeEndFrame);
 		}
 	}
 

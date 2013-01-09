@@ -61,6 +61,76 @@ public class MenuHUD extends AbstractHUD implements HUD {
 			blockedFor--;
 			return;
 		}
+		
+		if (!show) return;
+		
+		Integer left = (scene.getWidth() / 2) - (font.getWidth(currentMenu.title) / 2);
+		Integer height = font.getHeight(currentMenu.title);
+		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
+
+	    font.drawString(left, top, currentMenu.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+
+	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
+	    while (iterator.hasNext()) {
+	    	HUDMenuEntry entry = iterator.next();
+	    	top = top + height + 3*margin;
+	    	left = (scene.getWidth() / 2) - (font.getWidth(entry.title) / 2);
+			height = font.getHeight(entry.title);
+		    font.drawString(left, top, entry.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+	    	
+	    }
+
+	}
+	
+	@Override
+	public void render2() {
+		if (!show || blocked) return;
+		if (blockedFor > 0) {
+			blockedFor--;
+			return;
+		}
+		
+		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
+		Integer height = font.getHeight(currentMenu.title);
+		Integer left = (scene.getWidth() / 2) - (width / 2);
+		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
+
+		glColor4f(1.0f, 0.5f, 0.0f, 0.5f);
+	    glBegin(GL_QUADS);
+	    glVertex2f(left - margin, top - margin);
+		glVertex2f(left + width + margin, top - margin);
+		glVertex2f(left + width + margin, top + height + margin);
+		glVertex2f(left - margin, top + height + margin);
+	    glEnd();
+	    
+	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
+	    while (iterator.hasNext()) {
+	    	HUDMenuEntry entry = iterator.next();
+	    	top = top + height + 3*margin;
+			height = font.getHeight(entry.title);
+			if (iterator.previousIndex() == selectedIndex) {
+				glColor4f(1.0f, 0.0f, 0.0f, 0.8f);
+			} else {
+				glColor4f(1.0f, 0.0f, 0.0f, 0.35f);
+			}
+		    glBegin(GL_QUADS);
+		    glVertex2f(left - margin, top - margin);
+			glVertex2f(left + width + margin, top - margin);
+			glVertex2f(left + width + margin, top + height + margin);
+			glVertex2f(left - margin, top + height + margin);
+		    glEnd();
+	    	
+	    }
+
+	}
+	
+	@Override
+	public void input() {
+		if (blocked) return;
+		if (blockedFor > 0) {
+			blockedFor--;
+			return;
+		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
 				if (show) {
@@ -129,6 +199,7 @@ public class MenuHUD extends AbstractHUD implements HUD {
 							}
 						} else {
 							scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
+							logger.debug("added command: " + currentMenu.childs.get(selectedIndex).command.getType().name());
 							show = false;
 						}
 					}
@@ -151,67 +222,6 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		} else {
 			blockSelectSelection = false;
 		}
-		
-		if (!show) return;
-		
-		Integer left = (scene.getWidth() / 2) - (font.getWidth(currentMenu.title) / 2);
-		Integer height = font.getHeight(currentMenu.title);
-		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
-
-	    font.drawString(left, top, currentMenu.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-
-	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
-	    while (iterator.hasNext()) {
-	    	HUDMenuEntry entry = iterator.next();
-	    	top = top + height + 3*margin;
-	    	left = (scene.getWidth() / 2) - (font.getWidth(entry.title) / 2);
-			height = font.getHeight(entry.title);
-		    font.drawString(left, top, entry.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-	    	
-	    }
-
-	}
-	
-	@Override
-	public void render2() {
-		if (!show || blocked) return;
-		if (blockedFor > 0) {
-			blockedFor--;
-			return;
-		}
-		
-		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
-		Integer height = font.getHeight(currentMenu.title);
-		Integer left = (scene.getWidth() / 2) - (width / 2);
-		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
-
-		glColor4f(1.0f, 0.5f, 0.0f, 0.5f);
-	    glBegin(GL_QUADS);
-	    glVertex2f(left - margin, top - margin);
-		glVertex2f(left + width + margin, top - margin);
-		glVertex2f(left + width + margin, top + height + margin);
-		glVertex2f(left - margin, top + height + margin);
-	    glEnd();
-	    
-	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
-	    while (iterator.hasNext()) {
-	    	HUDMenuEntry entry = iterator.next();
-	    	top = top + height + 3*margin;
-			height = font.getHeight(entry.title);
-			if (iterator.previousIndex() == selectedIndex) {
-				glColor4f(1.0f, 0.0f, 0.0f, 0.8f);
-			} else {
-				glColor4f(1.0f, 0.0f, 0.0f, 0.35f);
-			}
-		    glBegin(GL_QUADS);
-		    glVertex2f(left - margin, top - margin);
-			glVertex2f(left + width + margin, top - margin);
-			glVertex2f(left + width + margin, top + height + margin);
-			glVertex2f(left - margin, top + height + margin);
-		    glEnd();
-	    	
-	    }
-
 	}
 
 	@SuppressWarnings("unchecked")

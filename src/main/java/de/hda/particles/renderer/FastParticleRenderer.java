@@ -8,6 +8,15 @@ import java.util.ListIterator;
 
 import de.hda.particles.domain.Particle;
 
+/**
+ * Renderer for particles.
+ * Does not use render types.
+ * Only one type of particles: points
+ * Purpose: simple and fast
+ * 
+ * @author aschaeffer
+ *
+ */
 public class FastParticleRenderer extends AbstractRenderer implements Renderer {
 
 	public FastParticleRenderer() {}

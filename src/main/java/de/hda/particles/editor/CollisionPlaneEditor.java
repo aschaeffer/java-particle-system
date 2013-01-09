@@ -1,6 +1,5 @@
 package de.hda.particles.editor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
@@ -8,10 +7,19 @@ import de.hda.particles.modifier.PositionablePlaneModifier;
 import de.hda.particles.modifier.PositionablePointModifier;
 import de.hda.particles.modifier.collision.CollisionPlane;
 
-public class CollisionPlaneEditor  extends AbstractParticleModifierEditor<CollisionPlane> implements Editor {
+public class CollisionPlaneEditor extends AbstractParticleModifierEditor<CollisionPlane> implements Editor {
 
 	private final static String title = "Collision Plane";
 
+	@Override
+	public void setup() {
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_X, "Position X"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Y, "Position Y"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Z, "Position Z"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_X, "Normal X"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_Y, "Normal Y"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_Z, "Normal Z"));
+	}
 	@Override
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(CollisionPlane.class);
@@ -19,15 +27,7 @@ public class CollisionPlaneEditor  extends AbstractParticleModifierEditor<Collis
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_X, "Position X"));
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Z, "Position Z"));
-		entries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_X, "Normal X"));
-		entries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_Y, "Normal Y"));
-		entries.add(HUDEditorEntry.create(PositionablePlaneModifier.NORMAL_Z, "Normal Z"));
-		entries.addAll(super.getEditorEntries());
-		return entries;
+		return editorEntries;
 	}
 	
 	@Override

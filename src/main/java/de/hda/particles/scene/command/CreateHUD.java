@@ -17,7 +17,7 @@ public class CreateHUD implements Command {
 	private final Logger logger = LoggerFactory.getLogger(CreateHUD.class);
 
 	@Override
-	public DemoHandle execute(DemoContext context, CommandConfiguration configuration) {
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		String type = (String) configuration.get("class");
 		try {
 			Class<?> clazz = Class.forName(type);
@@ -32,7 +32,7 @@ public class CreateHUD implements Command {
 			}
 			// return context.add(hud);
 		} catch (Exception e) {
-			logger.error("could not create new HUD of type " + type);
+			logger.error("could not create new HUD of type " + type, e);
 		}
 		return null;
 	}

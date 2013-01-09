@@ -2,7 +2,7 @@ package de.hda.particles.editor;
 
 import de.hda.particles.emitter.StaticPointParticleEmitter;
 
-public class FastPointParticleEmitterEditor extends AbstractParticleEmitterEditor<StaticPointParticleEmitter> implements Editor {
+public class StaticPointParticleEmitterEditor extends AbstractParticleEmitterEditor<StaticPointParticleEmitter> implements Editor {
 
 	private final static String title = "Point Particle Emitter (Fast)";
 

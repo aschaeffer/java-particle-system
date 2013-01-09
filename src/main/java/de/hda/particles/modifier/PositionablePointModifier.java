@@ -8,6 +8,7 @@ public interface PositionablePointModifier extends ParticleModifier {
 	public final static String POSITION_Y = "position_y";
 	public final static String POSITION_Z = "position_z";
 
+	Vector3f getPosition();
 	void setPosition(Vector3f position);
 	float getX();
 	void setX(float x);

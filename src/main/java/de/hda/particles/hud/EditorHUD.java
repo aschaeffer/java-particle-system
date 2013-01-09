@@ -18,7 +18,7 @@ import de.hda.particles.scene.Scene;
 
 public class EditorHUD extends AbstractHUD implements HUD {
 
-	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 15;
+	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 10;
 	private final static Float DEFAULT_WIDTH_PERCENT = 0.2f;
 	private final static Integer margin = 10;
 
@@ -37,7 +37,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	private Boolean blockIncreaseMaxSelection = false;
 	private Boolean blockRemoveSelection = false;
 	
-	private List<HUDEditorEntry> editorEntries;
+	private List<HUDEditorEntry> editorEntriesInputPass;
 	private Integer width = 0;
 	private Integer height = 0;
 	private Integer left = 0;
@@ -64,7 +64,8 @@ public class EditorHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
-		if (currentEditor == null) return;
+		if (currentEditor == null || editorEntriesInputPass == null) return;
+/*
 		editorEntries = currentEditor.getEditorEntries();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
@@ -145,21 +146,22 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		} else {
 			blockRemoveSelection = false;
 		}
+*/
 		
 		if (!show) return;
 		
 		width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
 		height = font.getHeight(currentEditor.getTitle());
 		left = scene.getWidth() - width - 2*margin;
-		fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
+		fullHeight = ((editorEntriesInputPass.size() + 1) * (height + 3*margin));
 		
 		if (fullHeight < (scene.getHeight() * 3) / 4) {
-			top = (scene.getHeight() / 2) - (((editorEntries.size() + 1) * (height + 3*margin)) / 2);
+			top = (scene.getHeight() / 2) - (((editorEntriesInputPass.size() + 1) * (height + 3*margin)) / 2);
 			centered = left + (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
 
 		    font.drawString(centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+		    ListIterator<HUDEditorEntry> iterator = editorEntriesInputPass.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
 		    	top = top + height + 3*margin;
@@ -180,10 +182,29 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		    font.drawString(left + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 		    font.drawString(left2 + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
 
-		    nextColumn = (editorEntries.size() / 2) + 1;
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+		    nextColumn = (editorEntriesInputPass.size() / 2) + 1;
+//		    for (Integer editorEntryIndex = 0; editorEntryIndex < editorEntriesUpdatePass.size(); editorEntryIndex++) {
+//		    	HUDEditorEntry entry = editorEntriesUpdatePass.get(editorEntryIndex);
+//		    	currentValue = currentEditor.getValue(entry.key);
+//		    	if (editorEntryIndex == nextColumn) {
+//		    		top = top2;
+//		    		left = left2;
+//		    	}
+//		    	if (editorEntryIndex >= nextColumn) {
+//			    	rightAligned = scene.getWidth() - 2*margin - font.getWidth(currentValue);
+//		    	} else {
+//			    	rightAligned = 2*margin + width - font.getWidth(currentValue);
+//		    	}
+//		    	top = top + height + 3*margin;
+//				height = font.getHeight(entry.label);
+//			    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+//			    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+//		    }
+		    ListIterator<HUDEditorEntry> iterator = editorEntriesInputPass.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
+		    	if (entry == null) continue;
+		    	if (currentEditor == null) break;
 		    	currentValue = currentEditor.getValue(entry.key);
 		    	if (iterator.previousIndex() == nextColumn - 1) {
 		    		top = top2;
@@ -205,14 +226,98 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	}
 	
 	@Override
+	public void input() {
+		if (currentEditor == null) return;
+		editorEntriesInputPass = currentEditor.getEditorEntries();
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			if (!blockEscSelection) {
+				if (show) {
+					hideEditor();
+					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
+				}
+				blockEscSelection = true;
+			}
+		} else {
+			blockEscSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+			if (show && (blockUpSelection == 0 || blockUpSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex > 0) {
+					selectedIndex--;
+				} else {
+					selectedIndex = editorEntriesInputPass.size() - 1;
+				}
+			}
+			blockUpSelection++;
+		} else {
+			blockUpSelection = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+			if (show && (blockDownSelection == 0 || blockDownSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				if (selectedIndex + 1 < editorEntriesInputPass.size()) {
+					selectedIndex++;
+				} else {
+					selectedIndex = 0;
+				}
+			}
+			blockDownSelection++;
+		} else {
+			blockDownSelection = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+			if (show && (blockDecreaseSelection == 0 || blockDecreaseSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				currentEditor.decrease(editorEntriesInputPass.get(selectedIndex).key);
+				if (blockDecreaseSelection > KEYPRESS_REPEAT_THRESHOLD * 5)
+					currentEditor.decrease(editorEntriesInputPass.get(selectedIndex).key);
+			}
+			blockDecreaseSelection++;
+		} else {
+			blockDecreaseSelection = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+			if (show && (blockIncreaseSelection == 0 || blockIncreaseSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				currentEditor.increase(editorEntriesInputPass.get(selectedIndex).key);
+				if (blockIncreaseSelection > KEYPRESS_REPEAT_THRESHOLD * 5)
+					currentEditor.increase(editorEntriesInputPass.get(selectedIndex).key);
+			}
+			blockIncreaseSelection++;
+		} else {
+			blockIncreaseSelection = 0;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_HOME)) {
+			if (show && !blockDecreaseMinSelection) {
+				currentEditor.setMin(editorEntriesInputPass.get(selectedIndex).key);
+			}
+			blockDecreaseMinSelection = true;
+		} else {
+			blockDecreaseMinSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_END)) {
+			if (show && !blockIncreaseMaxSelection) {
+				currentEditor.setMax(editorEntriesInputPass.get(selectedIndex).key);
+			}
+			blockIncreaseMaxSelection = true;
+		} else {
+			blockIncreaseMaxSelection = false;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_DELETE)) {
+			if (!blockRemoveSelection) {
+				hideEditor();
+				blockRemoveSelection = true;
+			}
+		} else {
+			blockRemoveSelection = false;
+		}
+	}
+	
+	@Override
 	public void render2() {
-		if (!show || currentEditor == null) return;
-		editorEntries = currentEditor.getEditorEntries();
+		if (!show || currentEditor == null || editorEntriesInputPass == null) return;
 		
 		width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
 		height = font.getHeight(currentEditor.getTitle());
 		left = scene.getWidth() - width - 2*margin;
-		fullHeight = ((editorEntries.size() + 1) * (height + 3*margin));
+		fullHeight = ((editorEntriesInputPass.size() + 1) * (height + 3*margin));
 		if (fullHeight < (scene.getHeight() * 3) / 4) {
 			top = (scene.getHeight() / 2) - (fullHeight / 2);
 
@@ -224,7 +329,7 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			glVertex2f(left - margin, top + height + margin);
 		    glEnd();
 
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+		    ListIterator<HUDEditorEntry> iterator = editorEntriesInputPass.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
 		    	top = top + height + 3*margin;
@@ -264,8 +369,8 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			glVertex2f(left - margin, top + height + margin);
 		    glEnd();
 
-		    nextColumn = (editorEntries.size() / 2) + 1;
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+		    nextColumn = (editorEntriesInputPass.size() / 2) + 1;
+		    ListIterator<HUDEditorEntry> iterator = editorEntriesInputPass.listIterator(0);
 		    while (iterator.hasNext()) {
 		    	HUDEditorEntry entry = iterator.next();
 		    	if (iterator.previousIndex() == nextColumn - 1) {
@@ -292,6 +397,13 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setup() {
+        // setup the editors
+        ListIterator<Editor> iterator = editors.listIterator(0);
+        while (iterator.hasNext()) {
+        	Editor editor = iterator.next();
+        	editor.setScene(scene);
+        	editor.setup();
+        }
         // AWT Font in eine UnicodeFont von slick-util umwandeln
         font = new UnicodeFont(new Font("Arial", Font.BOLD, 12));
         font.getEffects().add(new ColorEffect(new java.awt.Color(0.8f, 0.8f, 0.8f)));

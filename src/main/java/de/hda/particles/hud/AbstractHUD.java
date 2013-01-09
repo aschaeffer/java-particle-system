@@ -50,4 +50,8 @@ public abstract class AbstractHUD extends AbstractRenderer implements HUD {
 	public void render2() {
 	}
 
+	@Override
+	public void input() {
+	}
+
 }

@@ -11,4 +11,9 @@ public abstract class AbstractColorModifier extends AbstractParticleModifier {
 			&& configuration.containsKey(ParticleColor.END_COLOR));
 	}
 
+	@Override
+	public void addDependencies() {
+		particleSystem.addParticleFeature(ParticleColor.class);
+	}
+
 }

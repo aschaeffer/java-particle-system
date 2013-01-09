@@ -50,8 +50,6 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

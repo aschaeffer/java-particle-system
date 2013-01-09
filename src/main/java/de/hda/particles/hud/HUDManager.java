@@ -1,26 +1,6 @@
 package de.hda.particles.hud;
 
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_ENABLE_BIT;
-import static org.lwjgl.opengl.GL11.GL_LIGHTING;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glPopAttrib;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushAttrib;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +14,16 @@ import de.hda.particles.scene.Scene;
 
 public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManager is a HUD by himself
 
+	public final static Integer DEFAULT_INPUT_POLL_SLEEP = 50;
+	public final static Integer DEFAULT_PANEL_SIZE = 30;
+
 	private final List<HUD> huds = new ArrayList<HUD>();
-	
+	private final List<HUDCommand> commandQueue = new ArrayList<HUDCommand>();
+
+	// HUDManager settings
+	private Integer inputPollSleep = DEFAULT_INPUT_POLL_SLEEP;
+
+	// HUDManager states
 	private Boolean activated = true;
 	private Boolean blockActivatedSelection = false;
 	
@@ -57,34 +45,58 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		try {
 			HUD hud = hudClass.newInstance();
 			hud.setScene(scene);
+			hud.setup();
 			huds.add(hud);
 		} catch (Exception e) {
 			logger.error("could not create HUD: " + e.getMessage(), e);
 		}
 	}
 	
+	public void remove(HUD hud) {
+		if (huds.contains(hud)) {
+			huds.remove(hud);
+		}
+	}
+
+	public void remove(Class<? extends HUD> hudClass) {
+		ListIterator<HUD> iterator = huds.listIterator(0);
+		while (iterator.hasNext()) {
+			HUD hud = iterator.next();
+			if (hud.getClass().equals(hudClass)) {
+				iterator.remove();
+			}
+		}
+	}
+
 	public List<HUD> getHUDs() {
 		return huds;
 	}
 	
 	public void addCommand(HUDCommand command) {
-		ListIterator<HUD> iterator = huds.listIterator(0);
-		while(iterator.hasNext()) {
-			iterator.next().executeCommand(command);
-		}
+		commandQueue.add(command);
 	}
 
 	@Override
 	public void update() {
-		Keyboard.next();
-		if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
-			if (!blockActivatedSelection) {
-				activated = !activated;
-				blockActivatedSelection = true;
+		// execute all queued commands
+		// TODO: before or after activated check???
+		for (Integer queueIndex = 0; queueIndex < commandQueue.size(); queueIndex++) {
+			for (Integer hudIndex = 0; hudIndex < huds.size(); hudIndex++) {
+//				logger.debug("call execute command: " + commandQueue.get(queueIndex).getType().name() + " on " + huds.get(hudIndex).getClass().getSimpleName());
+				huds.get(hudIndex).executeCommand(commandQueue.get(queueIndex));
 			}
-		} else {
-			blockActivatedSelection = false;
+			executeCommand(commandQueue.get(queueIndex));
 		}
+//		for (HUDCommand command : commandQueue) {
+//			executeCommand(command);
+//		}
+		commandQueue.clear();
+//		ListIterator<HUDCommand> commandIterator = commandQueue.listIterator(0);
+//		while (commandIterator.hasNext()) {
+//			HUDCommand command = commandIterator.next();
+//			executeCommand(command);
+//			commandIterator.remove();
+//		}
 
 		if (!activated) return;
 
@@ -96,31 +108,32 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 	    glTranslatef(0.375f, 0.375f, 0.0f);
 
 	    glPushMatrix();
-		// render all managed huds
+		// render all managed huds (first pass)
 	    ListIterator<HUD> iterator = huds.listIterator(0);
 		while(iterator.hasNext()) {
 			iterator.next().render1();
 		}
+		// render top hud panel
 	    glColor4f(1.0f, 1.0f, 0.8f, 0.95f);
 	    glBegin(GL_QUADS);
 	    glVertex2f(0, 0);
 		glVertex2f(scene.getWidth(), 0);
-		glVertex2f(scene.getWidth(), 30);
-		glVertex2f(0, 30);
+		glVertex2f(scene.getWidth(), DEFAULT_PANEL_SIZE);
+		glVertex2f(0, DEFAULT_PANEL_SIZE);
 	    glEnd();
+		// render bottom hud panel
 	    glBegin(GL_QUADS);
-	    glVertex2f(0, scene.getHeight()-30);
-		glVertex2f(scene.getWidth(), scene.getHeight()-30);
+	    glVertex2f(0, scene.getHeight() - DEFAULT_PANEL_SIZE);
+		glVertex2f(scene.getWidth(), scene.getHeight() - DEFAULT_PANEL_SIZE);
 		glVertex2f(scene.getWidth(), scene.getHeight());
 		glVertex2f(0, scene.getHeight());
 	    glEnd();
-		// render all managed huds
+		// render all managed huds (second pass)
 	    iterator = huds.listIterator(0);
 		while(iterator.hasNext()) {
 			iterator.next().render2();
 		}
 	    glPopMatrix();
-
 		// render all managed huds
 	    iterator = huds.listIterator(0);
 		while(iterator.hasNext()) {
@@ -135,6 +148,31 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		while(iterator.hasNext()) {
 			iterator.next().setup();
 		}
+		// start input polling thread
+		new Thread() {
+			@Override
+			public void run() {
+				while (!isFinished()) {
+					if (Keyboard.isCreated()) {
+						Keyboard.next();
+						if (Keyboard.isKeyDown(Keyboard.KEY_H)) {
+							if (!blockActivatedSelection) {
+								activated = !activated;
+								blockActivatedSelection = true;
+							}
+						} else {
+							blockActivatedSelection = false;
+						}
+						for (HUD hud : huds)
+							hud.input();
+						try {
+							Thread.sleep(inputPollSleep);
+						} catch (InterruptedException e) {}
+						// Display.sync(20);
+					}
+				}
+			}
+		}.start();
 	}
 
 	@Override
@@ -148,7 +186,23 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 
 	@Override
 	public Boolean isFinished() {
-		return false;
+		return scene.isFinished();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void executeCommand(HUDCommand command) {
+		if (command.getType() == HUDCommandTypes.ADD_HUD) {
+			if (command.getPayLoad() != null) {
+				add((Class<? extends HUD>) command.getPayLoad());
+			}
+		}
+		if (command.getType() == HUDCommandTypes.REMOVE_HUD) {
+			if (command.getPayLoad() != null) {
+				remove((Class<? extends HUD>) command.getPayLoad());
+			}
+		}
+
 	}
 
 	private void enterOrtho() {
@@ -174,4 +228,12 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
         glPopMatrix();
         glPopAttrib();
     }
+
+	public Integer getInputPollSleep() {
+		return inputPollSleep;
+	}
+
+	public void setInputPollSleep(Integer inputPollSleep) {
+		this.inputPollSleep = inputPollSleep;
+	}
 }

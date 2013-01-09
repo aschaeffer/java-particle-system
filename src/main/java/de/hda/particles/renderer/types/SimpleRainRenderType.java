@@ -6,8 +6,11 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleRainRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Rain";
+
 	public SimpleRainRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -16,6 +19,7 @@ public class SimpleRainRenderType extends AbstractRenderType implements RenderTy
 		glBegin(GL_LINES);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -27,6 +31,11 @@ public class SimpleRainRenderType extends AbstractRenderType implements RenderTy
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glColor4f(0.7f, 0.7f, 0.9f, 0.3f);
 		glVertex3f(particle.getX(), particle.getY() - 80.0f, particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

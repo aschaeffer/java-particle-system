@@ -14,6 +14,11 @@ public abstract class AbstractPositionablePointModifier extends AbstractParticle
 	}
 
 	@Override
+	public Vector3f getPosition() {
+		return new Vector3f(position);
+	}
+
+	@Override
 	public void setPosition(Vector3f position) {
 		this.position = position;
 	}

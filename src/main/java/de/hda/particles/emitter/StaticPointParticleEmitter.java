@@ -4,11 +4,6 @@ import de.hda.particles.domain.StaticParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleFeature;
 
-/**
- * This particle emitter is  
- * @author aschaeffer
- *
- */
 public class StaticPointParticleEmitter extends AbstractParticleEmitter implements ParticleEmitter {
 
 	private final Boolean initParticleFeatures = false;

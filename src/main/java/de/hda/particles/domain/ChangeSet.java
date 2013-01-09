@@ -9,6 +9,8 @@ public class ChangeSet {
 
 	private Integer iteration;
 	
+	private Integer transitionIterations;
+	
 	private String type;
 	
 	@JsonIgnore
@@ -19,8 +21,17 @@ public class ChangeSet {
 	public ChangeSet() {
 	}
 
+	public ChangeSet(final Integer iteration, final Class<?> type, final CommandConfiguration configuration) {
+		this(iteration, 0, type.getName(), configuration);
+	}
+
 	public ChangeSet(final Integer iteration, final String type, final CommandConfiguration configuration) {
+		this(iteration, 0, type, configuration);
+	}
+
+	public ChangeSet(final Integer iteration, final Integer transitionIterations, final String type, final CommandConfiguration configuration) {
 		this.setIteration(iteration);
+		this.setTransitionIterations(transitionIterations);
 		this.setType(type);
 		this.setConfiguration(configuration);
 		try {
@@ -45,6 +56,14 @@ public class ChangeSet {
 
 	public void setIteration(Integer iteration) {
 		this.iteration = iteration;
+	}
+
+	public Integer getTransitionIterations() {
+		return transitionIterations;
+	}
+
+	public void setTransitionIterations(Integer transitionIterations) {
+		this.transitionIterations = transitionIterations;
 	}
 
 	public String getType() {

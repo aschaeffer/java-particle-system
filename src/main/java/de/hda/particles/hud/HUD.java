@@ -8,7 +8,19 @@ public interface HUD extends Renderer, HUDCommandListener {
 	@Override
 	public void setScene(Scene scene);
 	
+	/**
+	 * first render pass.
+	 */
 	public void render1();
+	
+	/**
+	 * second render pass.
+	 */
 	public void render2();
+	
+	/**
+	 * input handling pass.
+	 */
+	public void input();
 
 }

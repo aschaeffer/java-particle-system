@@ -14,7 +14,9 @@ import static org.lwjgl.opengl.ARBPointParameters.*;
 import de.hda.particles.domain.Particle;
 
 public class PoisonRenderType extends AbstractRenderType implements RenderType {
-	
+
+	public final static String NAME = "Poison";
+
 	public PoisonRenderType() {}
 
 	@Override
@@ -58,6 +60,11 @@ public class PoisonRenderType extends AbstractRenderType implements RenderType {
 	public void render(Particle particle) {
 		 glTexCoord2f(0.5f, 0.5f);
 		 glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

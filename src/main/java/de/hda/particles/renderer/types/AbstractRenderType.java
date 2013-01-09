@@ -6,8 +6,13 @@ public abstract class AbstractRenderType implements RenderType {
 
 	protected Scene scene;
 	
+	@Override
 	public void setScene(Scene scene) {
 		this.scene = scene;
+	}
+
+	@Override
+	public void addDependencies() {
 	}
 
 }

@@ -15,8 +15,6 @@ public class ConfigurableParticleSystem extends AbstractParticleSystem implement
 
 	private final ParticleSystemDAO particleSystemDAO;
 
-	private Boolean loadDialogOnNextIteration = false;
-
 	private String name = "Configurable Particle System";
 	
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableParticleSystem.class);
@@ -43,14 +41,13 @@ public class ConfigurableParticleSystem extends AbstractParticleSystem implement
 		Mouse.setGrabbed(false);
 		try {
 			JFileChooser fileChooser = new JFileChooser("~/workspace4/particles/src/test/resources/config");
-			fileChooser.setFileFilter(new FileNameExtensionFilter("System Configuration Files", "json"));
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Particle System Configuration Files", "json"));
 			if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				String filename = file.getAbsolutePath();
 				particleSystemDAO.load(this, file);
 			}
 		} catch (Exception e) {
-			logger.error("Failed loading scene", e);
+			logger.error("Failed loading scene: " + e.getMessage(), e);
 		}
 		Mouse.setGrabbed(true);
 		pause();
@@ -60,21 +57,18 @@ public class ConfigurableParticleSystem extends AbstractParticleSystem implement
 		Mouse.setGrabbed(false);
 		try {
 			JFileChooser fileChooser = new JFileChooser("~/workspace4/particles/src/test/resources/config");
-			fileChooser.setFileFilter(new FileNameExtensionFilter("Scene Configuration Files", "json"));
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Particle System Configuration Files", "json"));
 			if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
-				String filename = file.getAbsolutePath();
 				particleSystemDAO.save(this, file);
-				// hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Successfully saved scene to " + filename));
 			}
 		} catch (Exception e) {
-			// hudManager.addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Failed saving scene"));
+			logger.debug("failed to save particle system: " + e.getMessage(), e);
 		}
 		Mouse.setGrabbed(true);
 	}
 	
 	public void openLoadDialog() {
-		loadDialogOnNextIteration = true;
 		loadDialog();
 	}
 

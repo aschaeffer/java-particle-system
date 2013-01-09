@@ -6,10 +6,13 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
 
-public class SimpleVelocityRenderType extends AbstractRenderType implements RenderType {
+public class VelocityIndicatorRenderType extends AbstractRenderType implements RenderType {
 
-	public SimpleVelocityRenderType() {}
+	public final static String NAME = "VelocityIndicator";
 
+	public VelocityIndicatorRenderType() {}
+
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -17,6 +20,7 @@ public class SimpleVelocityRenderType extends AbstractRenderType implements Rend
 		glBegin(GL_LINES);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -30,6 +34,11 @@ public class SimpleVelocityRenderType extends AbstractRenderType implements Rend
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glColor4f(1.0f, 1.0f, 0.0f, 0.8f);
 		glVertex3f(direction.x, direction.y, direction.z);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

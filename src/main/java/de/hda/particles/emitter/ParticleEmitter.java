@@ -2,11 +2,12 @@ package de.hda.particles.emitter;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 
-public interface ParticleEmitter extends Updateable {
+public interface ParticleEmitter extends Updateable, AutoDependency {
 
 	public Integer getRate();
 	public void setRate(Integer rate);
@@ -24,6 +25,8 @@ public interface ParticleEmitter extends Updateable {
 	public void setParticleDefaultVelocity(Vector3f defaultVelocity);
 	public Integer getParticleRenderTypeIndex();
 	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex);
+	public Integer getFaceRendererIndex();
+	public void setFaceRendererIndex(Integer faceRendererIndex);
 	public long getParticleLifetime();
 	public void setParticleLifetime(Integer defaultLifetime);
 	public Integer getPastIterations();

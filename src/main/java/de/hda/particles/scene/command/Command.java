@@ -12,6 +12,6 @@ public interface Command {
 	 * @param configuration Command Configuration
 	 * @return id
 	 */
-	DemoHandle execute(DemoContext context, CommandConfiguration configuration);
+	DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations);
 
 }

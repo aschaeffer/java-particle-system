@@ -26,6 +26,8 @@ import de.hda.particles.features.PositionPath;
 
 public class HairRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Hair";
+
 	public HairRenderType() {}
 
 	@Override
@@ -51,7 +53,7 @@ public class HairRenderType extends AbstractRenderType implements RenderType {
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
 		glLineWidth(30.0f);
-		glBegin(GL_LINES);
+		glBegin(GL_LINE_STRIP);
 		glColor4f(1.0f, 1.0f, 1.0f, 0.2f);
 	}
 	
@@ -73,22 +75,33 @@ public class HairRenderType extends AbstractRenderType implements RenderType {
 
 		Color color = (Color) particle.get(ParticleColor.CURRENT_COLOR);
 		if (color != null)
-			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
+			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, 1.0f);
 		
 		ListIterator<Vector3f> iterator = positionPath.listIterator();
 		Vector3f lastPosition = null;
 		Vector3f nextPosition = null;
 		if (iterator.hasNext()) nextPosition = iterator.next();
 		while (iterator.hasNext()) {
-			lastPosition = nextPosition;
+			// lastPosition = nextPosition;
 			nextPosition = iterator.next();
-			Vector3f direction = new Vector3f();
-			if (nextPosition == null || lastPosition == null) continue;
-			Vector3f.sub(nextPosition, lastPosition, direction);
-			glTexCoord2f(0.5f, 0.5f);
-			glVertex3f(lastPosition.x, lastPosition.y, lastPosition.z);
-			glVertex3f(lastPosition.x + direction.x, lastPosition.y + direction.y, lastPosition.z + direction.z);
+			// Vector3f direction = new Vector3f();
+			// if (nextPosition == null || lastPosition == null) continue;
+			// Vector3f.sub(nextPosition, lastPosition, direction);
+			// glTexCoord2f(0.5f, 0.5f);
+			glVertex3f(nextPosition.x, nextPosition.y, nextPosition.z);
+			// glVertex3f(lastPosition.x + direction.x, lastPosition.y + direction.y, lastPosition.z + direction.z);
 		}
+	}
+
+	@Override
+	public void addDependencies() {
+		scene.getParticleSystem().addParticleFeature(ParticleColor.class);
+		scene.getParticleSystem().addParticleFeature(PositionPath.class);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

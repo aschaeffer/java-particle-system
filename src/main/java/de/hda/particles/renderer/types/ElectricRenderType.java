@@ -16,6 +16,8 @@ import de.hda.particles.domain.Particle;
 
 public class ElectricRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Electric";
+
 	private static Integer SPRITES_PER_ROW = 2;
 	private static Integer SPRITES_PER_COLUM = 2;
 	private static Integer ITERATIONS_PER_SPRITE = 1;
@@ -81,6 +83,11 @@ public class ElectricRenderType extends AbstractRenderType implements RenderType
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glTexCoord2f(u1, v1);
 		glVertex3f(particle.getX() + QUAD_WIDTH, particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

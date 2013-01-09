@@ -15,7 +15,7 @@ public class TextOverlayHUD extends AbstractHUD implements HUD {
 	}
 
 	@Override
-	public void update() {
+	public void input() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_O)) {
 			if (!blockTextOverlaySelection) {
 				Boolean newState = !scene.getTextOverlayManager().getEnabled();
@@ -30,12 +30,6 @@ public class TextOverlayHUD extends AbstractHUD implements HUD {
 		} else {
 			blockTextOverlaySelection = false;
 		}
-
-	}
-
-	@Override
-	public void setup() {
-		super.setup();
 	}
 
 	@Override
@@ -47,4 +41,7 @@ public class TextOverlayHUD extends AbstractHUD implements HUD {
 		}
 	}
 
+	@Override
+	public void update() {}
+	
 }

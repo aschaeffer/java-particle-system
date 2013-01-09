@@ -8,6 +8,8 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleSphereRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "GLU-Sphere";
+
 	public SimpleSphereRenderType() {}
 
 	@Override
@@ -27,6 +29,11 @@ public class SimpleSphereRenderType extends AbstractRenderType implements Render
         Sphere s = new Sphere();
         s.draw(15.0f, 16, 16);
 		glPopMatrix();
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }
