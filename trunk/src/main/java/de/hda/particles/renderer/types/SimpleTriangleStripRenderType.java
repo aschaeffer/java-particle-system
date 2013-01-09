@@ -6,8 +6,11 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleTriangleStripRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "TriangleStrip";
+
 	public SimpleTriangleStripRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -16,6 +19,7 @@ public class SimpleTriangleStripRenderType extends AbstractRenderType implements
 		glBegin(GL_TRIANGLE_STRIP);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -24,6 +28,11 @@ public class SimpleTriangleStripRenderType extends AbstractRenderType implements
 	@Override
 	public void render(Particle particle) {
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

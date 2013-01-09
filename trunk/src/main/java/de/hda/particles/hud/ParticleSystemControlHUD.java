@@ -11,7 +11,6 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 	private Boolean blockEmitterSelection = false;
 	private Boolean blockModifierSelection = false;
 	private Boolean blockClearSelection = false;
-	private Boolean blockDebugSelection = false;
 	
 	public ParticleSystemControlHUD() {}
 
@@ -21,6 +20,12 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 
 	@Override
 	public void update() {
+		String text = String.format("faces: %d   particles: %d", scene.getParticleSystem().getFaces().size(), scene.getParticleSystem().getParticles().size());
+        font.drawString(scene.getWidth() - font.getWidth(text) - 20, scene.getHeight() - 20, text);
+	}
+	
+	@Override
+	public void input() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
 			if (!blockPauseSelection) {
 				scene.getParticleSystem().pause();
@@ -74,23 +79,13 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockClearSelection) {
 				scene.getParticleSystem().removeAllParticles();
 				scene.getRenderTypeManager().clear();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles removed"));
+				scene.getFaceRendererManager().clear();
+				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles and faces removed"));
 				blockClearSelection = true;
 			}
 		} else {
 			blockClearSelection = false;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
-			if (!blockDebugSelection) {
-				scene.getRenderTypeManager().debug();
-				blockDebugSelection = true;
-			}
-		} else {
-			blockDebugSelection = false;
-		}
-
-		String text = String.format("particles: %d", scene.getParticleSystem().getParticles().size());
-        font.drawString(scene.getWidth() - font.getWidth(text) - 20, scene.getHeight() - 20, text);
 	}
 
 	@Override
@@ -104,8 +99,9 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			scene.getParticleSystem().beginModification();
 			scene.getParticleSystem().removeAllParticles();
 			scene.getRenderTypeManager().clear();
+			scene.getFaceRendererManager().clear();
 			scene.getParticleSystem().endModification();
-			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles removed"));
+			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles and faces removed"));
 		}
 	}
 

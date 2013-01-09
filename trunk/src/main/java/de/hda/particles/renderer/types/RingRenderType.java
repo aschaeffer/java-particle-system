@@ -21,11 +21,15 @@ import de.hda.particles.features.TubeSegments;
 
 public class RingRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Ring";
+
 	private final Vector3f upUnitVector = new Vector3f(0.0f, 1.0f, 0.0f);
 	private Vector3f unitTangent = new Vector3f();
 	private Vector3f unitNormal = new Vector3f();
 	private Vector3f unitBinormal = new Vector3f();
 	private Vector3f point = new Vector3f();
+	private double affineX = 0.0;
+	private double affineY = 0.0;
 
 	public RingRenderType() {}
 
@@ -96,17 +100,30 @@ public class RingRenderType extends AbstractRenderType implements RenderType {
 		}
 		glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 		for(int j=0; j < segmentsToDraw; j++) {
-			double x = radius * Math.cos(2 * Math.PI / numberOfSegments * j);
-			double y = radius * Math.sin(2 * Math.PI / numberOfSegments * j);
+			// circle in 3d space
+			affineX = radius * Math.cos(2 * Math.PI / numberOfSegments * j);
+			affineY = radius * Math.sin(2 * Math.PI / numberOfSegments * j);
 			// Affine Transformation
 			point = particle.getPosition();
-			point.x += x * unitNormal.x + y * unitBinormal.x;
-			point.y += x * unitNormal.y + y * unitBinormal.y;
-			point.z += x * unitNormal.z + y * unitBinormal.z;
+			point.x += affineX * unitNormal.x + affineY * unitBinormal.x;
+			point.y += affineX * unitNormal.y + affineY * unitBinormal.y;
+			point.z += affineX * unitNormal.z + affineY * unitBinormal.z;
 			glVertex3f(point.x, point.y, point.z);
 		}
 		glEnd();
 
+	}
+
+	@Override
+	public void addDependencies() {
+		scene.getParticleSystem().addParticleFeature(ParticleColor.class);
+		scene.getParticleSystem().addParticleFeature(ParticleSize.class);
+		scene.getParticleSystem().addParticleFeature(TubeSegments.class);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

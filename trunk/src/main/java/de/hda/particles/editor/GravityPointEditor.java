@@ -1,6 +1,5 @@
 package de.hda.particles.editor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.hud.HUDEditorEntry;
@@ -13,21 +12,23 @@ public class GravityPointEditor extends AbstractParticleModifierEditor<GravityPo
 	private final static String title = "Gravity Point";
 
 	@Override
+	public void setup() {
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_X, "Position X"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Y, "Position Y"));
+		editorEntries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Z, "Position Z"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.GRAVITY, "Gravity"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.MASS, "Mass"));
+		editorEntries.add(HUDEditorEntry.create(GravityBase.MAX_FORCE, "Max Force"));
+	}
+
+	@Override
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(GravityPoint.class);
 	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
-		List<HUDEditorEntry> entries = new ArrayList<HUDEditorEntry>();
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_X, "Position X"));
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Y, "Position Y"));
-		entries.add(HUDEditorEntry.create(PositionablePointModifier.POSITION_Z, "Position Z"));
-		entries.add(HUDEditorEntry.create(GravityBase.GRAVITY, "Gravity"));
-		entries.add(HUDEditorEntry.create(GravityBase.MASS, "Mass"));
-		entries.add(HUDEditorEntry.create(GravityBase.MAX_FORCE, "Max Force"));
-		entries.addAll(super.getEditorEntries());
-		return entries;
+		return editorEntries;
 	}
 	
 	@Override
@@ -71,7 +72,7 @@ public class GravityPointEditor extends AbstractParticleModifierEditor<GravityPo
 		if (fieldName.equals(GravityBase.GRAVITY)) {
 			subject.getConfiguration().put(GravityBase.GRAVITY, 0.1);
 		} else if (fieldName.equals(GravityBase.MASS)) {
-			subject.getConfiguration().put(GravityBase.MASS, 0);
+			subject.getConfiguration().put(GravityBase.MASS, 0.0);
 		} else if (fieldName.equals(GravityBase.MAX_FORCE)) {
 			subject.getConfiguration().put(GravityBase.MAX_FORCE, 0.01);
 		}

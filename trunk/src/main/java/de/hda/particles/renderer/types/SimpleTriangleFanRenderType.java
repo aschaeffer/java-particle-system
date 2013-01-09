@@ -6,8 +6,11 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleTriangleFanRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "TriangleFan";
+
 	public SimpleTriangleFanRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -16,6 +19,7 @@ public class SimpleTriangleFanRenderType extends AbstractRenderType implements R
 		glBegin(GL_TRIANGLE_FAN);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -24,6 +28,11 @@ public class SimpleTriangleFanRenderType extends AbstractRenderType implements R
 	@Override
 	public void render(Particle particle) {
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

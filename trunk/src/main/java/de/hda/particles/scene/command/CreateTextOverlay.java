@@ -17,7 +17,7 @@ public class CreateTextOverlay implements Command {
 	private final Logger logger = LoggerFactory.getLogger(CreateTextOverlay.class);
 
 	@Override
-	public DemoHandle execute(DemoContext context, CommandConfiguration configuration) {
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		String type = (String) configuration.get("class");
 		try {
 			Class<?> clazz = Class.forName(type);

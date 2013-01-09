@@ -12,6 +12,8 @@ import de.hda.particles.features.MassSpring;
 
 public class SpringLinesRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "SpringLines";
+
 	public SpringLinesRenderType() {}
 
 	@Override
@@ -20,7 +22,7 @@ public class SpringLinesRenderType extends AbstractRenderType implements RenderT
 		glEnable(GL_BLEND);
 		glLineWidth(3.0f);
 		glBegin(GL_LINES);
-		glColor4f(1.0f, 0.5f, 0.5f, 0.5f);
+		glColor4f(0.8f, 0.8f, 0.8f, 0.5f);
 	}
 	
 	@Override
@@ -42,6 +44,11 @@ public class SpringLinesRenderType extends AbstractRenderType implements RenderT
 			glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 			glVertex3f(particle.getX() + direction.x, particle.getY() + direction.y, particle.getZ() + direction.z);
 		}
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

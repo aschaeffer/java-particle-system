@@ -6,8 +6,11 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleLineStripRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "LineStrip";
+
 	public SimpleLineStripRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -16,6 +19,7 @@ public class SimpleLineStripRenderType extends AbstractRenderType implements Ren
 		glBegin(GL_LINE_STRIP);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -24,6 +28,11 @@ public class SimpleLineStripRenderType extends AbstractRenderType implements Ren
 	@Override
 	public void render(Particle particle) {
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

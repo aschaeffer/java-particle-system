@@ -17,43 +17,49 @@ import de.hda.particles.camera.CameraManager;
 import de.hda.particles.hud.HUDManager;
 import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
+import de.hda.particles.renderer.faces.FaceRendererManager;
 import de.hda.particles.renderer.types.RenderTypeManager;
 import de.hda.particles.textures.TextureManager;
 import de.hda.particles.timing.FpsInformation;
 import de.hda.particles.timing.FpsLimiter;
 
 public abstract class AbstractScene extends FpsLimiter implements Scene {
-	
-	public final static Integer DEFAULT_WIDTH = 800;
-	public final static Integer DEFAULT_HEIGHT = 600;
-	public final static Float DEFAULT_NEAR_PLANE = 0.1f;
-	public final static Float DEFAULT_FAR_PLANE = 5000.0f;
 
+	// The particle system
 	protected ParticleSystem particleSystem;
-	
+
+	// Scene manages multiple managers
 	protected HUDManager hudManager = new HUDManager();
 	protected CameraManager cameraManager = new CameraManager();
 	protected RendererManager rendererManager = new RendererManager();
 	protected RenderTypeManager renderTypeManager = new RenderTypeManager();
+	protected FaceRendererManager faceRendererManager = new FaceRendererManager();
 	protected TextureManager textureManager = new TextureManager();
 	protected TextOverlayManager textOverlayManager = new TextOverlayManager();
-	
+
+	// Scene keeps fps informations of underlying systems
 	protected List<FpsInformation> fpsInformationInstances = new ArrayList<FpsInformation>();
 
-	protected String name = "Particle System";
+	// Scene settings
+	protected String name = DEFAULT_NAME;
 	protected Integer width = DEFAULT_WIDTH;
 	protected Integer height = DEFAULT_HEIGHT;
 	protected Float nearPlane = DEFAULT_NEAR_PLANE;
 	protected Float farPlane = DEFAULT_FAR_PLANE;
-	protected Boolean fullscreen = false;
+	protected Boolean fullscreen = DEFAULT_FULLSCREEN;
+	protected Boolean vSync = DEFAULT_VSYNC;
+
+	// Scene states
 	protected Boolean running = true;
+	protected Boolean idle = true;
+	protected Boolean blocked = false;
 
     private final Logger logger = LoggerFactory.getLogger(AbstractScene.class);
 
 	public AbstractScene() {
 	}
 
-	public AbstractScene(Integer width, Integer height) {
+	public AbstractScene(final Integer width, final Integer height) {
 		this.width = width;
 		this.height = height;
 	}
@@ -62,6 +68,33 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	public void update() {
 		calcFps();
 		limitFps();
+	}
+	
+	@Override
+	public void applyChanges() {
+		Boolean changeMode = false;
+		Boolean changeFullscreen = false;
+		if (width != Display.getWidth()) changeMode = true;
+		if (height != Display.getHeight()) changeMode = true;
+		if (fullscreen != Display.isFullscreen()) changeFullscreen = true;
+		if (changeFullscreen) {
+			fullscreen();
+		} else if (changeMode) {
+			changeMode();
+		}
+	}
+	
+	public void changeMode() {
+		try {
+			if (Mouse.isGrabbed()) Mouse.setGrabbed(false);
+			DisplayMode mode = new DisplayMode(width, height);
+			Display.setDisplayMode(mode);
+			glViewport(0, 0, width, height);
+			Display.setFullscreen(fullscreen);
+			Mouse.setGrabbed(true);
+		} catch (LWJGLException e) {
+			logger.error("Could not set window display mode: " + e.getMessage(), e);
+		}
 	}
 
 	public void fullscreen() {
@@ -74,12 +107,13 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 				if (Mouse.isGrabbed()) Mouse.setGrabbed(false);
 				DisplayMode mode = Display.getDesktopDisplayMode();
 				if (mode.isFullscreenCapable()) {
-					setWidth(mode.getWidth());
-					setHeight(mode.getHeight());
-					logger.debug("set width: " + width + " height: " + height);
+					// setWidth(mode.getWidth());
+					// setHeight(mode.getHeight());
+					logger.debug("set width: " + mode.getWidth() + " height: " + mode.getHeight());
+					Display.setVSyncEnabled(vSync);
 					Display.setDisplayMode(mode);
 				} else {
-					logger.warn("mode is not able for fullscreen");
+					logger.warn("mode is not capable for fullscreen");
 					fullscreen = !fullscreen;
 					return;
 				}
@@ -89,8 +123,6 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 					return;
 				}
 				if (Mouse.isGrabbed()) Mouse.setGrabbed(false);
-				setWidth(DEFAULT_WIDTH);
-				setHeight(DEFAULT_HEIGHT);
 				logger.debug("set width: " + width + " height: " + height);
 				Display.setDisplayMode(new DisplayMode(width, height));
 			}
@@ -104,11 +136,6 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 			Display.setFullscreen(fullscreen);
 			logger.debug("set fullscreen state... width: " + width + " height: " + height);
 			Mouse.setGrabbed(true);
-			
-			// glLoadIdentity();
-			// glViewport(0, 0, width, height);
-			// Display.setVSyncEnabled(fullscreen);
-			// glViewport(0, 0, width, height);
 		} catch (LWJGLException e) {
 			logger.error("couldn't change fullscreen mode", e);
 		}
@@ -153,6 +180,15 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 
 	public void setRenderTypeManager(RenderTypeManager renderTypeManager) {
 		this.renderTypeManager = renderTypeManager;
+	}
+
+	@Override
+	public FaceRendererManager getFaceRendererManager() {
+		return faceRendererManager;
+	}
+
+	public void setFaceRendererManager(FaceRendererManager faceRendererManager) {
+		this.faceRendererManager = faceRendererManager;
 	}
 
 	@Override
@@ -234,6 +270,26 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	}
 	
 	@Override
+	public Boolean getVSync() {
+		return vSync;
+	}
+	
+	@Override
+	public void setVSync(Boolean vSync) {
+		this.vSync = vSync;
+	}
+
+	@Override
+	public Boolean getRunning() {
+		return running;
+	}
+	
+	@Override
+	public void setRunning(Boolean running) {
+		this.running = running;
+	}
+
+	@Override
 	public List<FpsInformation> getFpsInformationInstances() {
 		return fpsInformationInstances;
 	}
@@ -246,6 +302,23 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	@Override
 	public void exit() {
 		running = false;
+	}
+
+	@Override
+	public void beginModification() {
+		if (!blocked) {
+			blocked = true;
+			while (!idle) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {}
+			}
+		}
+	}
+	
+	@Override
+	public void endModification() {
+		blocked = false;
 	}
 
 }

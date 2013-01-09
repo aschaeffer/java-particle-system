@@ -147,7 +147,7 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 		// Restore enable bits and matrix
 		glEnable(GL_DEPTH_TEST);
 		glPopAttrib();
-		glClear(GL_DEPTH_BUFFER_BIT);
+		// glClear(GL_DEPTH_BUFFER_BIT);
 
 		glPopMatrix();
 

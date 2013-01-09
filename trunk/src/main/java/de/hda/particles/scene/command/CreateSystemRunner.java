@@ -18,7 +18,7 @@ public class CreateSystemRunner implements Command {
 	private final Logger logger = LoggerFactory.getLogger(CreateSystemRunner.class);
 
 	@Override
-	public DemoHandle execute(DemoContext context, CommandConfiguration configuration) {
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		SystemRunner systemRunner = new SystemRunner();
 
 		List<ParticleSystem> particleSystems = context.getByType(ParticleSystem.class);

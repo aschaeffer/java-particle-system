@@ -12,6 +12,7 @@ import org.lwjgl.opengl.ARBPointParameters;
 import org.lwjgl.opengl.ARBPointSprite;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
+import org.newdawn.slick.opengl.Texture;
 
 import de.hda.particles.domain.Particle;
 import de.hda.particles.features.ParticleColor;
@@ -29,13 +30,16 @@ public abstract class AbstractBillboardRenderType extends AbstractRenderType {
 	protected Float pointSize = 150.0f;
 	protected Float fadeThresholdSize = 75.0f;
 	protected Integer blendFunction = GL11.GL_ONE;
+	protected Integer renderFunction = GL11.GL_POINTS;
+	
+	protected Texture texture;
 
 	public AbstractBillboardRenderType() {
 		super();
 		flippedBbBuffer = (FloatBuffer) bbBuffer.put(quadratic).flip();
 	}
 
-	public AbstractBillboardRenderType(String textureFormat, String textureFilename, Float minSize, Float maxSize, Float pointSize, Float fadeThresholdSize, Integer blendFunction) {
+	public AbstractBillboardRenderType(String textureFormat, String textureFilename, Float minSize, Float maxSize, Float pointSize, Float fadeThresholdSize, Integer blendFunction, Integer renderFunction) {
 		super();
 		flippedBbBuffer = (FloatBuffer) bbBuffer.put(quadratic).flip();
 		this.textureFormat = textureFormat;
@@ -45,28 +49,31 @@ public abstract class AbstractBillboardRenderType extends AbstractRenderType {
 		this.pointSize = pointSize;
 		this.fadeThresholdSize = fadeThresholdSize;
 		this.blendFunction = blendFunction;
+		this.renderFunction = renderFunction;
 	}
 
 	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_TEXTURE_2D);
-		scene.getTextureManager().load(textureFormat, textureFilename).bind();
+		if (texture == null) texture = scene.getTextureManager().load(textureFormat, textureFilename);
+		// texture = scene.getTextureManager().load(textureFormat, textureFilename);
+		texture.bind();
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, blendFunction);
 		glEnable(GL_POINT_SPRITE_ARB);
 		ARBPointParameters.glPointParameterARB(ARBPointParameters.GL_POINT_DISTANCE_ATTENUATION_ARB, flippedBbBuffer);
-		glPointParameterfARB( GL_POINT_FADE_THRESHOLD_SIZE_ARB, fadeThresholdSize);
+		glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, fadeThresholdSize);
 		//Tell it the max and min sizes we can use using our pre-filled array.
-		glPointParameterfARB( GL_POINT_SIZE_MIN_ARB, minSize);
-		glPointParameterfARB( GL_POINT_SIZE_MAX_ARB, maxSize);
+		glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, minSize);
+		glPointParameterfARB(GL_POINT_SIZE_MAX_ARB, maxSize);
 		GL11.glPointSize(pointSize);
         GL11.glEnable(ARBPointSprite.GL_POINT_SPRITE_ARB);
 		//Tell OGL to replace the coordinates upon drawing.
 		glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
-		glBegin(GL_POINTS);
+		if (renderFunction > -1) glBegin(renderFunction);
 		glColor4f(1.0f, 1.0f, 1.0f, 0.2f);
 	}
 
@@ -81,7 +88,7 @@ public abstract class AbstractBillboardRenderType extends AbstractRenderType {
 
 	@Override
 	public void after() {
-		glEnd();
+		if (renderFunction > -1) glEnd();
 		glDepthMask(true);
 		GL11.glDisable(ARBPointSprite.GL_POINT_SPRITE_ARB);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

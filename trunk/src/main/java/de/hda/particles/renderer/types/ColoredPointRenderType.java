@@ -9,6 +9,8 @@ import de.hda.particles.features.ParticleColor;
 
 public class ColoredPointRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Colored Point";
+
 	public ColoredPointRenderType() {}
 
 	@Override
@@ -31,6 +33,16 @@ public class ColoredPointRenderType extends AbstractRenderType implements Render
 		if (color != null)
 			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+
+	@Override
+	public void addDependencies() {
+		scene.getParticleSystem().addParticleFeature(ParticleColor.class);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

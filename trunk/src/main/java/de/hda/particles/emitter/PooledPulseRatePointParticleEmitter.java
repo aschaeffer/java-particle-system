@@ -7,7 +7,7 @@ import org.lwjgl.Sys;
  * @author aschaeffer
  *
  */
-public class PulseRatePointParticleEmitter extends PointParticleEmitter implements ParticleEmitter {
+public class PooledPulseRatePointParticleEmitter extends PooledPointParticleEmitter implements ParticleEmitter {
 
 	private final static Double RATE_STRETCH_FACTOR = 1000.0;
 	private final static Double RATE_SCALE_FACTOR = 5.0;
@@ -15,7 +15,7 @@ public class PulseRatePointParticleEmitter extends PointParticleEmitter implemen
 	
 	private long lastFrameTimeStamp = 0; // when the last frame was
 
-	public PulseRatePointParticleEmitter() {}
+	public PooledPulseRatePointParticleEmitter() {}
 
 	/**
 	 * Creates new particles and adds them to the particle system
@@ -27,14 +27,6 @@ public class PulseRatePointParticleEmitter extends PointParticleEmitter implemen
 		lastFrameTimeStamp = frameTimeStamp;
 		rate = new Double((Math.sin(new Double(timeDelta * RATE_STRETCH_FACTOR)) * RATE_SCALE_FACTOR) + MIN_RATE).intValue();
 		super.update();
-	}
-
-	@Override
-	public void setup() {
-	}
-
-	@Override
-	public void destroy() {
 	}
 
 }

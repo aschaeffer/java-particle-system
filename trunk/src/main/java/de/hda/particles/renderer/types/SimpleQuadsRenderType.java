@@ -6,8 +6,11 @@ import de.hda.particles.domain.Particle;
 
 public class SimpleQuadsRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Quads";
+
 	public SimpleQuadsRenderType() {}
 
+	@Override
 	public void before() {
 		glPushMatrix();
 		glEnable(GL_BLEND);
@@ -16,6 +19,7 @@ public class SimpleQuadsRenderType extends AbstractRenderType implements RenderT
 		glBegin(GL_QUADS);
 	}
 	
+	@Override
 	public void after() {
 		glEnd();
 		glPopMatrix();
@@ -24,6 +28,11 @@ public class SimpleQuadsRenderType extends AbstractRenderType implements RenderT
 	@Override
 	public void render(Particle particle) {
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

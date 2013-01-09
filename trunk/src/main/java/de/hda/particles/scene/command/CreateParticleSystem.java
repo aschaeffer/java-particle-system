@@ -13,7 +13,7 @@ public class CreateParticleSystem implements Command {
 	private final Logger logger = LoggerFactory.getLogger(CreateParticleSystem.class);
 	
 	@Override
-	public DemoHandle execute(DemoContext context, CommandConfiguration configuration) {
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		ConfigurableParticleSystem particleSystem = new ConfigurableParticleSystem();
 		particleSystem.setName((String) configuration.get("name"));
 		logger.debug("created particle system");

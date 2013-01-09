@@ -14,7 +14,9 @@ import static org.lwjgl.opengl.ARBPointParameters.*;
 import de.hda.particles.domain.Particle;
 
 public class ExplosionRenderType extends AbstractRenderType implements RenderType {
-	
+
+	public final static String NAME = "Explosion";
+
 	public ExplosionRenderType() {}
 
 	@Override
@@ -56,6 +58,11 @@ public class ExplosionRenderType extends AbstractRenderType implements RenderTyp
 	public void render(Particle particle) {
 		 glTexCoord2f(0.5f, 0.5f);
 		 glVertex3f(particle.getX(), particle.getY(), particle.getZ());
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

@@ -1,12 +1,20 @@
 package de.hda.particles.renderer.types;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.*;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.ARBFragmentShader;
+import org.lwjgl.opengl.ARBShaderObjects;
+import org.lwjgl.opengl.ARBVertexShader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hda.particles.ParticleLifetimeListener;
 import de.hda.particles.domain.Particle;
+import de.hda.particles.listener.ParticleLifetimeListener;
 import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.scene.Scene;
@@ -33,6 +41,7 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 	}
 	
 	public Integer add(RenderType renderType) {
+		renderType.addDependencies();
 		renderTypes.add(renderType);
 		renderTypeParticleCache.put(renderTypes.size(), new LinkedList<Particle>());
 		newParticles.put(renderTypes.size(), new ArrayList<Particle>());
@@ -43,6 +52,7 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 		try {
 			RenderType renderType = renderTypeClass.newInstance();
 			renderType.setScene(scene);
+			renderType.addDependencies();
 			renderTypes.add(renderType);
 			renderTypeParticleCache.put(renderTypes.size(), new LinkedList<Particle>());
 			newParticles.put(renderTypes.size(), new ArrayList<Particle>());
@@ -53,8 +63,27 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 		}
 	}
 	
+	public void replace(Class<? extends RenderType> renderTypeClass, Integer index) {
+		if (index < 1 || index > renderTypes.size()) return;
+		index--;
+		try {
+			RenderType renderType = renderTypeClass.newInstance();
+			renderType.setScene(scene);
+			renderType.addDependencies();
+			renderTypes.set(index, renderType);
+		} catch (Exception e) {
+			logger.error("could not create render type: " + e.getMessage(), e);
+		}
+	}
+	
 	public List<RenderType> getRenderTypes() {
 		return renderTypes;
+	}
+	
+	public String getRenderTypeName(final Integer index) {
+		if (index <= 0) return "DISABLED";
+		if (index > renderTypes.size()) return "FREE SLOT (" + index + ")";
+		return renderTypes.get(index-1).getName();
 	}
 	
 	public void clear() {
@@ -121,6 +150,31 @@ public class RenderTypeManager extends AbstractRenderer implements Renderer, Par
 			}
 			renderType.after();
 		}
+	}
+	
+	public void loadShader(String filename) {
+		/*
+		ClassLoader loader = RenderTypeManager.class.getClassLoader();
+		InputStream in = loader.getResourceAsStream("shader" + filename);
+		byte[] shadercode = null;
+		try {
+		    DataInputStream dis = new DataInputStream(in);
+		    dis.readFully(shadercode = new byte[in.available()]);
+		    dis.close();
+		    in.close();
+		    ByteBuffer shader = BufferUtils.createByteBuffer(shadercode.length);
+		    shader.put(shadercode);
+		    shader.flip();
+		    int vertexShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBVertexShader.GL_VERTEX_SHADER_ARB);
+		    int pixelShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
+		    ARBShaderObjects.glShaderSourceARB(vertexShaderID, vertexShader);
+		    ARBShaderObjects.glCompileShaderARB(vertexShaderID);
+		    ARBShaderObjects.glShaderSourceARB(pixelShaderID, pixelShader);
+		    ARBShaderObjects.glCompileShaderARB(pixelShaderID);
+		} catch (IOException e) {
+			logger.error("can't loading shader " + filename, e);
+		}
+		*/
 	}
 
 	/**

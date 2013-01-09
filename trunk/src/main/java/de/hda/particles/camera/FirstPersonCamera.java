@@ -9,19 +9,19 @@ import de.hda.particles.scene.Scene;
 
 public class FirstPersonCamera extends AbstractCamera implements Camera {
 	
-	private final static Integer MAX_MODES = 2;
-	private final static Integer DEFAULT_MODE = 1;
+	public final static Integer MAX_MODES = 2;
+	public final static Integer DEFAULT_MODE = 1;
 
-	private Float deltaX = 0.0f;
-	private Float deltaY = 0.0f;
-	private Integer deltaWheel = 0;
-	private Float deltaTime = 0.0f; // length of frame
-	private long lastTime = 0; // when the last frame was
-	private long time = 0;
-	private Float movementModifier = 1.0f;
+	public final Float movementSpeed = 20.0f; // move 20 units per second
+	public final Float mouseSensitivity = 0.05f;
 
-	private final Float mouseSensitivity = 0.05f;
-	private final Float movementSpeed = 20.0f; // move 10 units per second
+	protected Float deltaX = 0.0f;
+	protected Float deltaY = 0.0f;
+	protected Integer deltaWheel = 0;
+	protected Float deltaTime = 0.0f; // length of frame
+	protected long lastTime = 0; // when the last frame was
+	protected long time = 0;
+	protected Float movementModifier = 1.0f;
 
 	public FirstPersonCamera() {}
 

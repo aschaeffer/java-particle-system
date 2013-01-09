@@ -20,17 +20,19 @@ public abstract class AbstractTextOverlay implements TextOverlay {
 	protected Scene scene;
 	protected Boolean visible = true;
 	protected UnicodeFont font;
+	protected String prepend = "";
+	protected String append = "";
 	
 	private final FloatBuffer projectionResult = ByteBuffer.allocateDirect(3*8).order(ByteOrder.nativeOrder()).asFloatBuffer();
 
 	private final Logger logger = LoggerFactory.getLogger(AbstractTextOverlay.class);
 
-	public void render(Vector3f position, String title, Float maxDist, Boolean debug) {
-		render(position.x, position.y, position.z, title, maxDist, debug);
+	public void render(Vector3f position, String text, Float maxDist, Boolean debug) {
+		render(position.x, position.y, position.z, text, maxDist, debug);
 	}
 
-	public void render(float objX, float objY, float objZ, String title, Float maxDist, Boolean debug) {
-		if (title == null) return;
+	public void render(float objX, float objY, float objZ, String text, Float maxDist, Boolean debug) {
+		if (text == null) return;
 		if (maxDist > 0.0f) {
 			Vector3f cameraPosition = scene.getCameraManager().getPosition();
 			Vector3f cameraToObject = new Vector3f(objX - cameraPosition.x, objY - cameraPosition.y, objZ - cameraPosition.z);
@@ -45,9 +47,9 @@ public abstract class AbstractTextOverlay implements TextOverlay {
         Float z = projectionResult.get();
         if (z == null || z > 1.0f) return;
         if (!debug) {
-            font.drawString(x, y2, title);
+            font.drawString(x, y2, prepend + text + append);
         } else {
-            font.drawString(x, y2, title + "\nx:"+x+"\ny:"+y+"\ny2:"+y2+"\nz:"+z);
+            font.drawString(x, y2, text + "\nx:"+x+"\ny:"+y+"\ny2:"+y2+"\nz:"+z);
         }
 	}
 
@@ -65,7 +67,7 @@ public abstract class AbstractTextOverlay implements TextOverlay {
 	public Boolean isVisible() {
 		return visible;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setup() {

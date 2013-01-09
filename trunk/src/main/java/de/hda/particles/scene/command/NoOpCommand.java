@@ -7,7 +7,7 @@ import de.hda.particles.scene.demo.DemoHandle;
 public class NoOpCommand implements Command {
 
 	@Override
-	public DemoHandle execute(DemoContext context, CommandConfiguration configuration) {
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		return new DemoHandle();
 	}
 	

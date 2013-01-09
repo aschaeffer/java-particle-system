@@ -10,6 +10,8 @@ import de.hda.particles.features.ParticleSize;
 
 public class ComplexPointRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "Complex Point";
+
 	public ComplexPointRenderType() {}
 
 	@Override
@@ -34,6 +36,17 @@ public class ComplexPointRenderType extends AbstractRenderType implements Render
 			glColor4f(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f);
 		glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glEnd();
+	}
+
+	@Override
+	public void addDependencies() {
+		scene.getParticleSystem().addParticleFeature(ParticleColor.class);
+		scene.getParticleSystem().addParticleFeature(ParticleSize.class);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

@@ -10,10 +10,10 @@ public class LinearSizeTransformation extends AbstractSizeModifier implements Pa
 
 	@Override
 	public void update(Particle particle) {
-		if (!expectKeys()) return;
 		sizeBirth = (Double) particle.get(ParticleSize.SIZE_BIRTH);
 		sizeDeath = (Double) particle.get(ParticleSize.SIZE_DEATH);
-		particle.put(ParticleSize.CURRENT_SIZE, sizeBirth * particle.getLifetimePercent() + sizeDeath * (1.0 - particle.getLifetimePercent()));
+		if (sizeBirth == null || sizeDeath == null) return;
+		particle.put(ParticleSize.CURRENT_SIZE, sizeBirth * (1.0 - particle.getLifetimePercent()) + sizeDeath * particle.getLifetimePercent());
 	}
 
 }

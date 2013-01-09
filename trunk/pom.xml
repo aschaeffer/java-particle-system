@@ -27,11 +27,14 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-
 		<repository>
 			<id>slick</id>
 			<name>slick</name>
 			<url>http://slick.cokeandcode.com/mavenrepo</url>
+		</repository>
+		<repository>
+			<id>xuggle repo</id>
+			<url>http://xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
 		</repository>
 	</repositories>
 
@@ -101,6 +104,11 @@
 			<artifactId>guava</artifactId>
 			<version>13.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>xuggle</groupId>
+			<artifactId>xuggle-xuggler</artifactId>
+			<version>5.4</version>
+		</dependency>
  	</dependencies>
 
 	<build>
@@ -119,7 +127,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<forkMode>once</forkMode>
-					<argLine>-Djava.library.path=${project.build.directory}/natives</argLine>
+					<argLine>-Djava.library.path=${project.build.directory}/natives -Xmx2304m</argLine>
 				</configuration>
 			</plugin>
 

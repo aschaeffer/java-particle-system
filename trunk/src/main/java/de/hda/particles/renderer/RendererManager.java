@@ -37,11 +37,13 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 	public RendererManager() {}
 
 	public void insert(Renderer renderer) {
+		renderer.addDependencies();
 		renderers.add(renderer);
 		renderer.setScene(scene);
 	}
 
 	public void insertAt(Renderer renderer, Integer index) {
+		renderer.addDependencies();
 		renderers.add(index, renderer);
 		renderer.setScene(scene);
 	}

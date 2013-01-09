@@ -10,6 +10,8 @@ import de.hda.particles.features.ParticleSize;
 
 public class VeloCubeRenderType extends AbstractRenderType implements RenderType {
 
+	public final static String NAME = "VeloCube";
+
 	public VeloCubeRenderType() {}
 
 	@Override
@@ -78,6 +80,17 @@ public class VeloCubeRenderType extends AbstractRenderType implements RenderType
 	    glVertex3d(bbMaxX, bbMinY, bbMaxZ);
 	    glVertex3d(bbMaxX, bbMinY, bbMinZ);
 
+	}
+
+	@Override
+	public void addDependencies() {
+		scene.getParticleSystem().addParticleFeature(ParticleColor.class);
+		scene.getParticleSystem().addParticleFeature(ParticleSize.class);
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

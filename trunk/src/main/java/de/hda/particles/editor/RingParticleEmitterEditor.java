@@ -1,14 +1,14 @@
 package de.hda.particles.editor;
 
-import de.hda.particles.emitter.RingParticleEmitter;
+import de.hda.particles.emitter.PooledSphereParticleEmitter;
 
-public class RingParticleEmitterEditor extends AbstractParticleEmitterEditor<RingParticleEmitter> implements Editor {
+public class RingParticleEmitterEditor extends AbstractParticleEmitterEditor<PooledSphereParticleEmitter> implements Editor {
 
 	private final static String title = "Ring Particle Emitter";
 
 	@Override
 	public Boolean accept(Class<? extends Object> clazz) {
-		return clazz.equals(RingParticleEmitter.class);
+		return clazz.equals(PooledSphereParticleEmitter.class);
 	}
 
 	@Override

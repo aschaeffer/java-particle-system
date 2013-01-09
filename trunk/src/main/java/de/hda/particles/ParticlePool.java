@@ -4,6 +4,7 @@ import org.apache.commons.collections.ArrayStack;
 
 import de.hda.particles.domain.DefaultHashMapParticle;
 import de.hda.particles.domain.Particle;
+import de.hda.particles.listener.ParticleLifetimeListener;
 
 /**
  * The creation of thousands of particle objects per seconds slows

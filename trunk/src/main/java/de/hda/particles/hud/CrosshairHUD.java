@@ -29,6 +29,14 @@ public class CrosshairHUD extends AbstractHUD implements HUD {
 	    glTranslatef(0.375f, 0.375f, 0.0f);
 	    glPushMatrix();
 		glEnable(GL_BLEND);
+		glLineWidth(WIDTH*2);
+        glBegin(GL_LINES);
+        glColor4f(0.0f, 0.0f, 0.0f, 0.75f);
+	    glVertex2f(scene.getWidth() / 2.0f - SIZE - 1, scene.getHeight() / 2.0f);
+	    glVertex2f(scene.getWidth() / 2.0f + SIZE + 1, scene.getHeight() / 2.0f);
+	    glVertex2f(scene.getWidth() / 2.0f, scene.getHeight() / 2.0f - SIZE - 1);
+	    glVertex2f(scene.getWidth() / 2.0f, scene.getHeight() / 2.0f + SIZE + 1);
+	    glEnd();
 		glLineWidth(WIDTH);
         glBegin(GL_LINES);
         glColor4f(1.0f, 1.0f, 1.0f, 0.75f);

@@ -14,15 +14,6 @@ public class EmitterHUD extends AbstractHUD implements HUD {
 		super(scene);
 	}
 
-	@Override
-	public void update() {
-	}
-
-	@Override
-	public void setup() {
-		super.setup();
-	}
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void executeCommand(HUDCommand command) {
@@ -45,5 +36,11 @@ public class EmitterHUD extends AbstractHUD implements HUD {
 //			scene.getParticleSystem().re
 //		}
 	}
+
+	@Override
+	public void update() {}
+
+	@Override
+	public void setup() {}
 
 }

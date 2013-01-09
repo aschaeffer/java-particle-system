@@ -11,7 +11,17 @@ import de.hda.particles.domain.Particle;
 import de.hda.particles.features.MassSpring;
 import de.hda.particles.features.ParticleColor;
 
+/**
+ * Renders polygons of particles connected to the particle.
+ * 
+ * The resulting polygon isn't very useful though.
+ * 
+ * @author aschaeffer
+ *
+ */
 public class SpringPolygonsRenderType extends AbstractRenderType implements RenderType {
+
+	public final static String NAME = "SpringPolygons";
 
 	public SpringPolygonsRenderType() {}
 
@@ -43,7 +53,13 @@ public class SpringPolygonsRenderType extends AbstractRenderType implements Rend
 			Particle springConnectedParticle = iterator.next();
 			glVertex3f(springConnectedParticle.getX(), springConnectedParticle.getY(), springConnectedParticle.getZ());
 		}
+		// glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 		glEnd();
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

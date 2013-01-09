@@ -11,6 +11,10 @@ public class DemoContext extends HashMap<DemoHandle, Object> {
 
 	private final Logger logger = LoggerFactory.getLogger(DemoContext.class);
 
+	public DemoContext(final DemoManager demoManager) {
+		add(demoManager);
+	}
+
 	public DemoHandle add(Object o) {
 		DemoHandle handle = new DemoHandle();
 		put(handle, o);

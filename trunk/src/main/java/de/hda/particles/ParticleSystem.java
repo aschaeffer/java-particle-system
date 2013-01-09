@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.domain.Particle;
-import de.hda.particles.domain.ParticleEmitterConfiguration;
-import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.domain.*;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
+import de.hda.particles.listener.FaceLifetimeListener;
+import de.hda.particles.listener.FeatureListener;
+import de.hda.particles.listener.ParticleLifetimeListener;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.timing.FpsInformation;
 
@@ -18,13 +19,25 @@ import de.hda.particles.timing.FpsInformation;
  * @author aschaeffer
  *
  */
-public interface ParticleSystem extends Updateable, FpsInformation {
+public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 
 	/**
 	 * Returns the current alive particles.
 	 * @return List of alive particles.
 	 */
 	public List<Particle> getParticles();
+	
+	/**
+	 * Returns the current fixed points.
+	 * @return List of fixed points.
+	 */
+	public List<FixedPoint> getFixedPoints();
+	
+	/**
+	 * Returns the current faces.
+	 * @return List of current faces.
+	 */
+	public List<Face> getFaces();
 	
 	/**
 	 * Returns the activated particle features of the particle system.
@@ -51,6 +64,15 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	public ParticlePool getParticlePool();
 
 	/**
+	 * Returns the pool of death faces.
+	 * @return The pool of death faces.
+	 */
+	public FacePool getFacePool();
+
+	public void addParticleEmitter(ParticleEmitter emitter);
+	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
+
+	/**
 	 * Adds a particle emitter to the particle system.
 	 * 
 	 * @param clazz Emitter type.
@@ -69,17 +91,36 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	 * @param clazz Type of the modifier.
 	 * @param configuration Modifier implementation specific configuration.
 	 */
+	public void addParticleModifier(ParticleModifier modifier, ParticleModifierConfiguration configuration);
+	public void addParticleModifier(ParticleModifier modifier);
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration);
+	public void addParticleModifier(Class<? extends ParticleModifier> clazz);
 	public void addParticleListener(ParticleLifetimeListener particleListener);
+	public void addFeatureListener(FeatureListener featureListener);
+	public void addFaceListener(FaceLifetimeListener faceListener);
 	public void addParticleFeature(ParticleFeature particleFeature);
+	public void addParticleFeature(ParticleFeature particleFeature, Boolean allowDuplicates);
 	public void addParticleFeature(Class<? extends ParticleFeature> clazz);
+	public void addParticleFeature(Class<? extends ParticleFeature> clazz, Boolean allowDuplicates);
 	public void addParticle(Particle particle);
+	public void addFixedPoint(FixedPoint fixedPoint);
+	public void addFace(Face face);
 	public void removeParticle(Particle particle);
+	public void removeFixedPoint(FixedPoint fixedPoint);
+	public void removeFace(Face face);
 	public void removeAllParticles();
+	public void removeAllFixedPoints();
+	public void removeAllFaces();
 	public void removeParticleEmitter(ParticleEmitter particleEmitter);
 	public void removeParticleModifier(ParticleModifier particleModifier);
 	public void removeParticleFeature(ParticleFeature particleFeature);
+	public void removeParticleFeature(Class<? extends ParticleFeature> clazz);
 	public void removeParticleListener(ParticleLifetimeListener particleListener);
+	public void removeFeatureListener(FeatureListener featureListener);
+	public void removeFaceListener(FaceLifetimeListener faceListener);
+	public Boolean hasEmitter(Class<? extends ParticleEmitter> clazz);
+	public Boolean hasModifier(Class<? extends ParticleModifier> clazz);
+	public Boolean hasFeature(Class<? extends ParticleFeature> clazz);
 
 	/**
 	 * Toggles pause state.
@@ -125,15 +166,5 @@ public interface ParticleSystem extends Updateable, FpsInformation {
 	 * @return True, if particle modifiers are stopped.
 	 */
 	public Boolean areModifiersStopped();
-	
-	/**
-	 * Blocks the whole particle system for modification (thread synchronisation).
-	 */
-	public void beginModification();
-	
-	/**
-	 * Unblocks the particle system for modifications.
-	 */
-	public void endModification();
 
 }

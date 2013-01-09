@@ -11,15 +11,6 @@ public class RenderTypeHUD extends AbstractHUD implements HUD {
 		super(scene);
 	}
 
-	@Override
-	public void update() {
-	}
-
-	@Override
-	public void setup() {
-		super.setup();
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void executeCommand(HUDCommand command) {
@@ -31,5 +22,8 @@ public class RenderTypeHUD extends AbstractHUD implements HUD {
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Added Render Type: " + clazz.getSimpleName()));
 		}
 	}
+
+	@Override
+	public void update() {}
 
 }

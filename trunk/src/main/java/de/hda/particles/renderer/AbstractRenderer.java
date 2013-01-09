@@ -30,7 +30,11 @@ public abstract class AbstractRenderer implements Renderer {
 	public Boolean isFinished() {
 		return false;
 	}
-	
+
+	@Override
+	public void addDependencies() {
+	}
+
 	@Override
 	public void setScene(Scene scene) {
 		this.scene = scene;

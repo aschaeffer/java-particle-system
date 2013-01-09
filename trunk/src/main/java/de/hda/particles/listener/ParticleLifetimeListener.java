@@ -1,4 +1,4 @@
-package de.hda.particles;
+package de.hda.particles.listener;
 
 import de.hda.particles.domain.Particle;
 

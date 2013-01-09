@@ -60,9 +60,6 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 	
 	private final SceneDAO sceneDAO;
 
-	private Boolean blockFullscreenSelection = false;
-//	private final Boolean blockLoadSceneSelection = false;
-//	private final Boolean blockSaveSceneSelection = false;
 	private Boolean loadDialogOnNextIteration = false;
 
 	private final Logger logger = LoggerFactory.getLogger(ConfigurableScene.class);
@@ -97,6 +94,7 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 			Display.setDisplayMode(new DisplayMode(this.width, this.height));
 			Display.setFullscreen(fullscreen);
 			Display.setTitle("Particle System Editor and Simulation");
+			Display.setVSyncEnabled(vSync);
 			Display.create();
 		} catch (LWJGLException e) {
 			logger.error("could not open particle renderer!", e);
@@ -130,7 +128,7 @@ public class ConfigurableScene extends AbstractScene implements Scene {
         glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
  
         // starting with defaults...
-        GLU.gluPerspective(90.0f, (float) width / (float) height, 0.1f, 5000.0f);
+        GLU.gluPerspective(90.0f, (float) width / (float) height, nearPlane, farPlane);
 
         glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -147,41 +145,16 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 
 	@Override
 	public void update() {
-		Keyboard.next();
-		if (Display.isCloseRequested()) { //  || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)
-			logger.debug("close requested");
-			running = false;
-			return;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
-			if (!blockFullscreenSelection) {
-				fullscreen = !fullscreen;
-				fullscreen();
-				blockFullscreenSelection = true;
-			}
-		} else {
-			blockFullscreenSelection = false;
-		}
-//		if (Keyboard.isKeyDown(Keyboard.KEY_F1)) {
-//			if (!blockSaveSceneSelection) {
-//				saveDialog();
-//				blockSaveSceneSelection = true;
-//			}
-//		} else {
-//			blockSaveSceneSelection = false;
-//		}
-//		if (Keyboard.isKeyDown(Keyboard.KEY_F2)) {
-//			if (!blockLoadSceneSelection) {
-//				loadDialog();
-//				blockLoadSceneSelection = true;
-//			}
-//		} else {
-//			blockLoadSceneSelection = false;
-//		}
 		if (loadDialogOnNextIteration) {
 			loadDialogOnNextIteration = !loadDialogOnNextIteration;
 			loadDialog();
 		}
+
+		if (blocked) {
+			idle = true;
+			return;
+		}
+		idle = false;
 
         // Clear the screen and depth buffer
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
