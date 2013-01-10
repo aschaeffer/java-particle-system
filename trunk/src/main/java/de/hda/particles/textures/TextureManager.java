@@ -71,7 +71,7 @@ public class TextureManager {
 				logger.debug("texture " + filename + " loaded");
 			} catch (Exception e) {
 				logger.error("texture loading error: " + filename, e);
-				callback.reportTextureLoadingError(key, name);
+				callback.reportTextureLoadingError(name);
 				throw new RuntimeException("texture loading error: " + filename);
 			}
 		}

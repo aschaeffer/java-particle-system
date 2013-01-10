@@ -6,6 +6,6 @@ public interface DeferredTextureLoaderCallback {
 
 	public void setTexture(String key, Texture object);
 	
-	public void reportTextureLoadingError(String key, String name);
+	public void reportTextureLoadingError(String name);
 
 }
