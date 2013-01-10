@@ -31,8 +31,8 @@ public class TextureManager {
 		}
 	}
 
-	public void loadDeferred(String key, DeferredTextureLoaderCallback callback, String format, String filename) {
-		DeferredTextureLoader deferredTextureLoader = new DeferredTextureLoader(key, callback, format, filename);
+	public void loadDeferred(String key, String name, DeferredTextureLoaderCallback callback, String format, String filename) {
+		DeferredTextureLoader deferredTextureLoader = new DeferredTextureLoader(key, name, callback, format, filename);
 		Thread deferredTextureLoaderThread = new Thread(deferredTextureLoader);
 		deferredTextureLoaderThread.start();
 	}
@@ -40,12 +40,14 @@ public class TextureManager {
 	public class DeferredTextureLoader implements Runnable {
 		
 		String key;
+		String name;
 		DeferredTextureLoaderCallback callback;
 		String format;
 		String filename;
 		
-		public DeferredTextureLoader(String key, DeferredTextureLoaderCallback callback, String format, String filename) {
+		public DeferredTextureLoader(String key, String name, DeferredTextureLoaderCallback callback, String format, String filename) {
 			this.key = key;
+			this.name = name;
 			this.callback = callback;
 			this.format = format;
 			this.filename = filename;
@@ -59,6 +61,7 @@ public class TextureManager {
 				// for a short time we have to claim the opengl context (which blocks actually)
 				Drawable drawable = Display.getDrawable();
 				if (drawable.isCurrent()) drawable.releaseContext();
+				// TODO: error in windows: org.lwjgl.lwjglexception could not share contexts
 				SharedDrawable sharedDrawable = new SharedDrawable(drawable);
 				sharedDrawable.makeCurrent();
 				Texture texture = TextureLoader.getTexture(format, resource, GL_LINEAR);
@@ -68,6 +71,7 @@ public class TextureManager {
 				logger.debug("texture " + filename + " loaded");
 			} catch (Exception e) {
 				logger.error("texture loading error: " + filename, e);
+				callback.reportTextureLoadingError(key, name);
 				throw new RuntimeException("texture loading error: " + filename);
 			}
 		}

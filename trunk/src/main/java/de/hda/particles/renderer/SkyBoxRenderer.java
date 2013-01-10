@@ -161,12 +161,12 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 	
 	public void loadSkybox(String name) {
 		scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Loading SkyBox"));
-		scene.getTextureManager().loadDeferred("ft", this, "JPG", "images/skybox/" + name + "_ft.jpg");
-		scene.getTextureManager().loadDeferred("lf", this, "JPG", "images/skybox/" + name + "_lf.jpg");
-		scene.getTextureManager().loadDeferred("bk", this, "JPG", "images/skybox/" + name + "_bk.jpg");
-		scene.getTextureManager().loadDeferred("rt", this, "JPG", "images/skybox/" + name + "_rt.jpg");
-		scene.getTextureManager().loadDeferred("up", this, "JPG", "images/skybox/" + name + "_up.jpg");
-		scene.getTextureManager().loadDeferred("dn", this, "JPG", "images/skybox/" + name + "_dn.jpg");
+		scene.getTextureManager().loadDeferred("ft", name, this, "JPG", "images/skybox/" + name + "_ft.jpg");
+		scene.getTextureManager().loadDeferred("lf", name, this, "JPG", "images/skybox/" + name + "_lf.jpg");
+		scene.getTextureManager().loadDeferred("bk", name, this, "JPG", "images/skybox/" + name + "_bk.jpg");
+		scene.getTextureManager().loadDeferred("rt", name, this, "JPG", "images/skybox/" + name + "_rt.jpg");
+		scene.getTextureManager().loadDeferred("up", name, this, "JPG", "images/skybox/" + name + "_up.jpg");
+		scene.getTextureManager().loadDeferred("dn", name, this, "JPG", "images/skybox/" + name + "_dn.jpg");
 //		ready = false;
 //		textures.clear();
 //		textures.add(scene.getTextureManager().load("JPG", "images/skybox/" + name + "_ft.jpg"));
@@ -206,6 +206,23 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 			textures[4] = object;
 		} else if ("dn".equals(key)) {
 			textures[5] = object;
+		}
+	}
+	
+	@Override
+	public void reportTextureLoadingError(String key, String name) {
+		if ("ft".equals(key)) {
+			textures[0] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_ft.jpg");
+		} else if ("lf".equals(key)) {
+			textures[1] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_lf.jpg");
+		} else if ("bk".equals(key)) {
+			textures[2] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_bk.jpg");
+		} else if ("rt".equals(key)) {
+			textures[3] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_rt.jpg");
+		} else if ("up".equals(key)) {
+			textures[4] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_up.jpg");
+		} else if ("dn".equals(key)) {
+			textures[5] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_dn.jpg");
 		}
 	}
 
