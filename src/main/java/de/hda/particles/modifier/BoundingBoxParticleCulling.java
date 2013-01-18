@@ -23,12 +23,12 @@ public class BoundingBoxParticleCulling extends AbstractParticleModifier impleme
 	private Vector3f position = new Vector3f();
 	private final Vector3f bbMin = new Vector3f();
 	private final Vector3f bbMax = new Vector3f();
-	private Double bbMinX;
-	private Double bbMinY;
-	private Double bbMinZ;
-	private Double bbMaxX;
-	private Double bbMaxY;
-	private Double bbMaxZ;
+	private Double bbMinX = DEFAULT_BOUNDING_BOX_MIN_X;
+	private Double bbMinY = DEFAULT_BOUNDING_BOX_MIN_Y;
+	private Double bbMinZ = DEFAULT_BOUNDING_BOX_MIN_Z;
+	private Double bbMaxX = DEFAULT_BOUNDING_BOX_MAX_X;
+	private Double bbMaxY = DEFAULT_BOUNDING_BOX_MAX_Y;
+	private Double bbMaxZ = DEFAULT_BOUNDING_BOX_MAX_Z;
 	
 	public BoundingBoxParticleCulling() {}
 

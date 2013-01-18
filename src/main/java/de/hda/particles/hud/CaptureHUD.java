@@ -190,14 +190,14 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 	private void captureMovieFrame() {
 		if (pixelBufferFifo.size() >= FIFO_SIZE) {
 			framesDropped++;
-			logger.debug("dropped capturing frame " + framesDropped);
+			// logger.debug("dropped capturing frame " + framesDropped);
 			return;
 		}
 		ByteBuffer pixelBuffer;
 		if (pixelBufferStack.isEmpty()) {
 			pixelBuffer = BufferUtils.createByteBuffer(width * height * MOVIE_BPP);
 		} else {
-			logger.debug("pixelBufferStack: " + pixelBufferStack.size() + " buffers ready");
+			// logger.debug("pixelBufferStack: " + pixelBufferStack.size() + " buffers ready");
 			pixelBuffer = (ByteBuffer) pixelBufferStack.pop();
 		}
 		glReadBuffer(GL_FRONT);
@@ -207,7 +207,7 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 		Pair<Integer, ByteBuffer> pixelBufferPair = new Pair<Integer, ByteBuffer>(frameNo, pixelBuffer);
 		pixelBufferFifo.add(pixelBufferPair);
 
-		logger.debug("frame " + frameNo + " captured by " + Thread.currentThread().getName());
+		// logger.debug("frame " + frameNo + " captured by " + Thread.currentThread().getName());
 		frameNo++;
 	}
 	
@@ -232,7 +232,7 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 		public void convertMovieFrame() {
 			if (bufferedImageFifo.size() >= FIFO_SIZE) {
 				framesDropped++;
-				logger.debug("dropped converting frame " + framesDropped);
+				// logger.debug("dropped converting frame " + framesDropped);
 				return;
 			}
 			if (pixelBufferFifo.size() > 0) { // dont synchronize threads, just make them not interfering
@@ -244,7 +244,7 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 					if (bufferedImageStack.isEmpty()) {
 						bufferedImage = new BufferedImage(width, height, MOVIE_BUFFERED_IMAGE_FORMAT);
 					} else {
-						logger.debug("bufferedImageStack: " + bufferedImageStack.size() + " buffers ready");
+						// logger.debug("bufferedImageStack: " + bufferedImageStack.size() + " buffers ready");
 						bufferedImage = (BufferedImage) bufferedImageStack.pop();
 					}
 
@@ -263,7 +263,7 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 					pixelBuffer.clear(); // ready for recycle
 					pixelBufferStack.push(pixelBuffer);
 					framesConverted++;
-					logger.debug("frame " + frameId + " converted by " + Thread.currentThread().getName());
+					// logger.debug("frame " + frameId + " converted by " + Thread.currentThread().getName());
 				} catch (BufferUnderflowException e) {
 					try {
 						Thread.sleep(1);
@@ -317,7 +317,7 @@ public class CaptureHUD extends AbstractHUD implements HUD {
 							framesWritten++;
 							nextFrameTime += movieFrameRate;
 							lastFrameId = frameId;
-							logger.debug("frame " + frameId + " written by " + Thread.currentThread().getName());
+							// logger.debug("frame " + frameId + " written by " + Thread.currentThread().getName());
 							return;
 						}
 					}

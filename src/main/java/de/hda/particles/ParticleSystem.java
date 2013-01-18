@@ -7,9 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import de.hda.particles.domain.*;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
-import de.hda.particles.listener.FaceLifetimeListener;
-import de.hda.particles.listener.FeatureListener;
-import de.hda.particles.listener.ParticleLifetimeListener;
+import de.hda.particles.listener.*;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.timing.FpsInformation;
 
@@ -70,7 +68,7 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public FacePool getFacePool();
 
 	public void addParticleEmitter(ParticleEmitter emitter);
-	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
+	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
 
 	/**
 	 * Adds a particle emitter to the particle system.
@@ -78,12 +76,12 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	 * @param clazz Emitter type.
 	 * @param position Initial position of the emitter.
 	 * @param velocity Initial velocity of the emitter.
-	 * @param renderTypeIndex Initial renderType index of the emitter.
+	 * @param particleRendererIndex Initial particle renderer index of the emitter.
 	 * @param rate Inital rate of particle emittations.
 	 * @param lifetime Initial particle lifetime.
 	 * @param configuration Emitter implementation specific configuration.
 	 */
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
+	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
 
 	/**
 	 * Adds a particle modifier to the particle system.
@@ -98,6 +96,8 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public void addParticleListener(ParticleLifetimeListener particleListener);
 	public void addFeatureListener(FeatureListener featureListener);
 	public void addFaceListener(FaceLifetimeListener faceListener);
+	public void addEmitterListener(EmitterLifetimeListener emitterListener);
+	public void addModifierListener(ModifierLifetimeListener modifierListener);
 	public void addParticleFeature(ParticleFeature particleFeature);
 	public void addParticleFeature(ParticleFeature particleFeature, Boolean allowDuplicates);
 	public void addParticleFeature(Class<? extends ParticleFeature> clazz);
@@ -118,6 +118,8 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public void removeParticleListener(ParticleLifetimeListener particleListener);
 	public void removeFeatureListener(FeatureListener featureListener);
 	public void removeFaceListener(FaceLifetimeListener faceListener);
+	public void removeEmitterListener(EmitterLifetimeListener emitterListener);
+	public void removeModifierListener(ModifierLifetimeListener modifierListener);
 	public Boolean hasEmitter(Class<? extends ParticleEmitter> clazz);
 	public Boolean hasModifier(Class<? extends ParticleModifier> clazz);
 	public Boolean hasFeature(Class<? extends ParticleFeature> clazz);

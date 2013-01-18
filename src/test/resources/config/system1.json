@@ -6,7 +6,7 @@
 	"emitters": [
 		{
 			"className": "de.hda.particles.emitter.SphereParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.StarRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.StarParticleRenderer",
 			"rate": 2,
 			"lifetime": 200,
 			"position_x": 0.0,

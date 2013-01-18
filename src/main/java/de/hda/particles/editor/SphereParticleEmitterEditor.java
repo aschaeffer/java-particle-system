@@ -10,6 +10,11 @@ public class SphereParticleEmitterEditor extends AbstractParticleEmitterEditor<S
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(SphereParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return SphereParticleEmitter.class;
+	}
 
 	@Override
 	public String getTitle() {

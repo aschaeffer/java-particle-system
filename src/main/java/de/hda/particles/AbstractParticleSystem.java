@@ -11,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import de.hda.particles.domain.*;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
-import de.hda.particles.listener.FaceLifetimeListener;
-import de.hda.particles.listener.FeatureListener;
-import de.hda.particles.listener.ParticleLifetimeListener;
+import de.hda.particles.listener.*;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.timing.FpsLimiter;
 
@@ -82,6 +80,16 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected List<FaceLifetimeListener> faceListeners = new ArrayList<FaceLifetimeListener>();
 
 	/**
+	 * The list of emitter lifetime listeners.
+	 */
+	protected List<EmitterLifetimeListener> emitterListeners = new ArrayList<EmitterLifetimeListener>();
+
+	/**
+	 * The list of modifier lifetime listeners.
+	 */
+	protected List<ModifierLifetimeListener> modifierListeners = new ArrayList<ModifierLifetimeListener>();
+	
+	/**
 	 * Paused state of the particle system.
 	 */
 	protected Boolean paused = false;
@@ -134,20 +142,28 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 		emitters.add(emitter);
 		emitter.addDependencies();
 		logger.debug("added emitter: " + emitter.getClass().getName());
+		ListIterator<EmitterLifetimeListener> iterator = emitterListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onEmitterCreation(emitter);
+		}
 	}
 
 	@Override
-	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
+	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		emitter.setParticleSystem(this);
 		emitter.setPosition(position);
 		emitter.setParticleDefaultVelocity(velocity);
-		emitter.setParticleRenderTypeIndex(renderTypeIndex);
+		emitter.setParticleRendererIndex(particleRendererIndex);
 		emitter.setRate(rate);
 		emitter.setParticleLifetime(lifetime);
 		emitter.setConfiguration(configuration);
 		emitters.add(emitter);
 		emitter.addDependencies();
 		logger.debug("added emitter: " + emitter.getClass().getName());
+		ListIterator<EmitterLifetimeListener> iterator = emitterListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onEmitterCreation(emitter);
+		}
 	}
 
 	/**
@@ -156,26 +172,30 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	 * @param clazz Emitter type.
 	 * @param position Initial position of the emitter.
 	 * @param velocity Initial velocity of the emitter.
-	 * @param renderTypeIndex Initial renderType index of the emitter.
+	 * @param particleRendererIndex Initial particleRenderer index of the emitter.
 	 * @param rate Inital rate of particle emittations.
 	 * @param lifetime Initial particle lifetime.
 	 * @param configuration Emitter implementation specific configuration.
 	 */
 	@Override
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
+	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration) {
 		ParticleEmitter emitter;
 		try {
 			emitter = clazz.newInstance();
 			emitter.setParticleSystem(this);
 			emitter.setPosition(position);
 			emitter.setParticleDefaultVelocity(velocity);
-			emitter.setParticleRenderTypeIndex(renderTypeIndex);
+			emitter.setParticleRendererIndex(particleRendererIndex);
 			emitter.setRate(rate);
 			emitter.setParticleLifetime(lifetime);
 			emitter.setConfiguration(configuration);
 			emitters.add(emitter);
 			emitter.addDependencies();
 			logger.debug("added emitter: " + emitter.getClass().getName());
+			ListIterator<EmitterLifetimeListener> iterator = emitterListeners.listIterator(0);
+			while (iterator.hasNext()) {
+				iterator.next().onEmitterCreation(emitter);
+			}
 		} catch (Exception e) {
 			logger.error("could not add particle emitter", e);
 		}
@@ -194,6 +214,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 		modifiers.add(modifier);
 		modifier.addDependencies();
 		logger.debug("added modifier: " + modifier.getClass().getName());
+		ListIterator<ModifierLifetimeListener> iterator = modifierListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onModifierCreation(modifier);
+		}
 	}
 
 	/**
@@ -222,6 +246,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 			modifiers.add(modifier);
 			modifier.addDependencies();
 			logger.debug("added modifier: " + modifier.getClass().getName());
+			ListIterator<ModifierLifetimeListener> iterator = modifierListeners.listIterator(0);
+			while (iterator.hasNext()) {
+				iterator.next().onModifierCreation(modifier);
+			}
 		} catch (Exception e) {
 			logger.error("could not add particle modifier", e);
 		}
@@ -252,6 +280,16 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void addFaceListener(FaceLifetimeListener faceListener) {
 		faceListeners.add(faceListener);
+	}
+	
+	@Override
+	public void addEmitterListener(EmitterLifetimeListener emitterListener) {
+		emitterListeners.add(emitterListener);
+	}
+	
+	@Override
+	public void addModifierListener(ModifierLifetimeListener modifierListener) {
+		modifierListeners.add(modifierListener);
 	}
 
 	@Override
@@ -357,10 +395,10 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void removeFace(Face face) {
 		faces.remove(face);
-//		ListIterator<ParticleLifetimeListener> iterator = listeners.listIterator(0);
-//		while (iterator.hasNext()) {
-//			iterator.next().onParticleDeath(particle);
-//		}
+		ListIterator<FaceLifetimeListener> iterator = faceListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onFaceDeath(face);
+		}
 	}
 	
 	@Override
@@ -381,11 +419,19 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void removeParticleEmitter(ParticleEmitter particleEmitter) {
 		emitters.remove(particleEmitter);
+		ListIterator<EmitterLifetimeListener> iterator = emitterListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onEmitterDeath(particleEmitter);
+		}
 	}
 
 	@Override
 	public void removeParticleModifier(ParticleModifier particleModifier) {
 		modifiers.remove(particleModifier);
+		ListIterator<ModifierLifetimeListener> iterator = modifierListeners.listIterator(0);
+		while (iterator.hasNext()) {
+			iterator.next().onModifierDeath(particleModifier);
+		}
 	}
 
 	@Override
@@ -422,6 +468,16 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void removeFaceListener(FaceLifetimeListener faceListener) {
 		faceListeners.remove(faceListener);
+	}
+
+	@Override
+	public void removeEmitterListener(EmitterLifetimeListener emitterListener) {
+		emitterListeners.remove(emitterListener);
+	}
+
+	@Override
+	public void removeModifierListener(ModifierLifetimeListener modifierListener) {
+		modifierListeners.remove(modifierListener);
 	}
 
 	@Override

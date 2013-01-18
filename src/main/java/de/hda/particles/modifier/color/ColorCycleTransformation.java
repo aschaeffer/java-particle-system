@@ -26,9 +26,10 @@ public class ColorCycleTransformation extends AbstractColorModifier implements P
 
 	@Override
 	public void update(Particle particle) {
-		if (!expectKeys()) return;
 		s = (Color) particle.get(ParticleColor.START_COLOR);
+		if (s == null) return;
 		e = (Color) particle.get(ParticleColor.END_COLOR);
+		if (e == null) return;
 		p = particle.getLifetimePercent();
 		if (p <= 0.5f) {
 			r = (int) (p * e.getRed()   + (1.0f - p) * s.getRed());

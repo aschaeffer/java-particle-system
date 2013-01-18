@@ -29,6 +29,11 @@ public class GravityPlaneEditor extends AbstractParticleModifierEditor<GravityPl
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(GravityPlane.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return GravityPlane.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {

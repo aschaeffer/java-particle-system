@@ -13,10 +13,10 @@ import de.hda.particles.Updateable;
 import de.hda.particles.dao.DemoDAO;
 import de.hda.particles.domain.ChangeSet;
 import de.hda.particles.domain.Demo;
-import de.hda.particles.timing.FpsInformation;
+import de.hda.particles.hud.DemoHUD;
 import de.hda.particles.timing.FpsLimiter;
 
-public abstract class AbstractDemoManager extends FpsLimiter implements Updateable, FpsInformation {
+public abstract class AbstractDemoManager extends FpsLimiter implements DemoManager, Updateable {
 
 	private final DemoDAO demoDAO = new DemoDAO();
 	private Demo demo = new Demo();
@@ -27,6 +27,7 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 	
 	private final Logger logger = LoggerFactory.getLogger(AbstractDemoManager.class);
 
+	@Override
 	public void reset() {
 		if (context == null) {
 			logger.error("demo context is null!");
@@ -39,6 +40,7 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 		lastIteration = 0;
 	}
 
+	@Override
 	public void load(String filename) {
 		try {
 			demoDAO.load(demo, new File(filename));
@@ -47,6 +49,40 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 		}
 	}
 	
+	@Override
+	public void loadFromResource(String filename) {
+		try {
+			demoDAO.load(demo, filename);
+		} catch (Exception e) {
+			logger.error("could not load " + filename, e);
+		}
+	}
+	
+	@Override
+	public void loadDiff(String filename) {
+		if (currentParticleSystem == null) return;
+		try {
+			currentParticleSystem.beginModification();
+			demoDAO.loadDiff(demo, new File(filename), currentParticleSystem.getPastIterations());
+			currentParticleSystem.endModification();
+		} catch (Exception e) {
+			logger.error("could not load " + filename, e);
+		}
+	}
+	
+	@Override
+	public void loadDiffFromResource(String filename) {
+		if (currentParticleSystem == null) return;
+		try {
+			currentParticleSystem.beginModification();
+			demoDAO.loadDiff(demo, filename, currentParticleSystem.getPastIterations());
+			currentParticleSystem.endModification();
+		} catch (Exception e) {
+			logger.error("could not load " + filename, e);
+		}
+	}
+	
+	@Override
 	public void save(String filename) {
 		try {
 			demoDAO.save(demo, new File(filename));
@@ -55,9 +91,14 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 		}
 	}
 	
+	@Override
 	public void run() {
 		update(); // execute all changesets of iteration 0
 		currentParticleSystem = context.getByType(ParticleSystem.class).get(0);
+//		ListIterator<DemoHUD> demoHudsIterator = context.getByType(DemoHUD.class).listIterator(0);
+//		while (demoHudsIterator.hasNext()) {
+//			demoHudsIterator.next().setDemoManager(this);
+//		}
 		List<SystemRunner> systemRunners = context.getByType(SystemRunner.class);
 		logger.info("found " + systemRunners.size() + " system runners");
 		ListIterator<SystemRunner> iterator = systemRunners.listIterator(0);
@@ -99,22 +140,27 @@ public abstract class AbstractDemoManager extends FpsLimiter implements Updateab
 		lastIteration = currentIteration;
 	}
 
+	@Override
 	public Demo getDemo() {
 		return demo;
 	}
 
+	@Override
 	public void setDemo(Demo demo) {
 		this.demo = demo;
 	}
 	
+	@Override
 	public DemoContext getContext() {
 		return context;
 	}
 
+	@Override
 	public void setContext(DemoContext context) {
 		this.context = context;
 	}
 	
+	@Override
 	public void addChangeSet(ChangeSet changeSet) {
 		demo.addChangeSet(changeSet);
 	}

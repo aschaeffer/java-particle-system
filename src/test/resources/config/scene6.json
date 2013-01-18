@@ -49,11 +49,11 @@
 		"de.hda.particles.hud.ModifierHUD",
 		"de.hda.particles.hud.FeatureHUD",
 		"de.hda.particles.hud.RendererHUD",
-		"de.hda.particles.hud.RenderTypeHUD",
+		"de.hda.particles.hud.ParticleRendererHUD",
 		"de.hda.particles.hud.EditorHUD"
 	],
-	"renderTypes": [
-		"de.hda.particles.renderer.types.PointSpriteRenderType"
+	"particleRenderer": [
+		"de.hda.particles.renderer.types.PointSpriteParticleRenderer"
 	],
 	"renderer" : [
 		"de.hda.particles.renderer.SkyBoxRenderer",

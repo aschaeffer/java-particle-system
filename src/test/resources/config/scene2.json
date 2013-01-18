@@ -49,21 +49,21 @@
 		"de.hda.particles.hud.ModifierHUD",
 		"de.hda.particles.hud.FeatureHUD",
 		"de.hda.particles.hud.RendererHUD",
-		"de.hda.particles.hud.RenderTypeHUD",
+		"de.hda.particles.hud.ParticleRendererHUD",
 		"de.hda.particles.hud.EditorHUD"
 	],
-	"renderTypes": [
-		"de.hda.particles.renderer.types.ColoredPointRenderType",
-		"de.hda.particles.renderer.types.ComplexPointRenderType",
-		"de.hda.particles.renderer.types.SimpleVelocityRenderType",
-		"de.hda.particles.renderer.types.SimplePointRenderType",
-		"de.hda.particles.renderer.types.SimpleRainRenderType",
-		"de.hda.particles.renderer.types.SimpleTriangleRenderType",
-		"de.hda.particles.renderer.types.SimpleTriangleStripRenderType",
-		"de.hda.particles.renderer.types.SimpleTriangleFanRenderType",
-		"de.hda.particles.renderer.types.SimpleQuadsRenderType",
-		"de.hda.particles.renderer.types.SimpleLineStripRenderType",
-		"de.hda.particles.renderer.types.PointSpriteRenderType"
+	"particleRenderer": [
+		"de.hda.particles.renderer.types.ColoredPointParticleRenderer",
+		"de.hda.particles.renderer.types.ComplexPointParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleVelocityParticleRenderer",
+		"de.hda.particles.renderer.types.SimplePointParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleRainParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleTriangleParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleTriangleStripParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleTriangleFanParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleQuadsParticleRenderer",
+		"de.hda.particles.renderer.types.SimpleLineStripParticleRenderer",
+		"de.hda.particles.renderer.types.PointSpriteParticleRenderer"
 	],
 	"renderer" : [
 		"de.hda.particles.renderer.SkyBoxRenderer",

@@ -25,6 +25,11 @@ public class GravityPointEditor extends AbstractParticleModifierEditor<GravityPo
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(GravityPoint.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return GravityPoint.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {
@@ -61,7 +66,7 @@ public class GravityPointEditor extends AbstractParticleModifierEditor<GravityPo
 				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 1.0);
 			} else if (maxForce >= 0.1) {
 				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 0.1);
-			} else if (maxForce >= 0.0) {
+			} else if (maxForce > 0.0) {
 				subject.getConfiguration().put(GravityBase.MAX_FORCE, maxForce - 0.01);
 			}
 		}

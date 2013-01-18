@@ -10,6 +10,7 @@ public interface Editor {
 	public void setup();
 	public void setScene(Scene scene);
 	public Boolean accept(Class<? extends Object> clazz);
+	public Class<? extends Object> getAcceptable();
 	List<HUDEditorEntry> getEditorEntries();
 	void select(Object subject);
 	String getTitle();

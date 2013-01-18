@@ -21,7 +21,7 @@ import de.hda.particles.domain.SceneConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.renderer.faces.FaceRenderer;
-import de.hda.particles.renderer.types.RenderType;
+import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.ConfigurableScene;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.overlay.TextOverlay;
@@ -46,7 +46,7 @@ public class SceneDAO {
 		// inject scene into managers
 		scene.getCameraManager().setScene(scene);
 		scene.getHudManager().setScene(scene);
-		scene.getRenderTypeManager().setScene(scene);
+		scene.getParticleRendererManager().setScene(scene);
 		scene.getFaceRendererManager().setScene(scene);
 		scene.getRendererManager().setScene(scene);
 		scene.getTextOverlayManager().setScene(scene);
@@ -75,9 +75,9 @@ public class SceneDAO {
 			scene.getHudManager().add((Class<? extends HUD>) Class.forName(hudsIterator.next()));
 		}
 		// load render types
-		ListIterator<String> renderTypesIterator = sceneConfiguration.renderTypes.listIterator(0);
-		while (renderTypesIterator.hasNext()) {
-			scene.getRenderTypeManager().add((Class<? extends RenderType>) Class.forName(renderTypesIterator.next()));
+		ListIterator<String> particleRendererIterator = sceneConfiguration.particleRenderer.listIterator(0);
+		while (particleRendererIterator.hasNext()) {
+			scene.getParticleRendererManager().add((Class<? extends ParticleRenderer>) Class.forName(particleRendererIterator.next()));
 		}
 		// load face renderer
 		ListIterator<String> faceRendererIterator = sceneConfiguration.faceRenderers.listIterator(0);
@@ -98,7 +98,7 @@ public class SceneDAO {
 		}
 		// load obligatory renderers II, ordering is important!
 		scene.getRendererManager().add(scene.getTextOverlayManager());
-		scene.getRendererManager().add(scene.getRenderTypeManager());
+		scene.getRendererManager().add(scene.getParticleRendererManager());
 		scene.getRendererManager().add(scene.getFaceRendererManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		return scene;
@@ -141,9 +141,9 @@ public class SceneDAO {
 			scene.getHudManager().add((Class<? extends HUD>) Class.forName(hudsIterator.next()));
 		}
 		// load render types
-		ListIterator<String> renderTypesIterator = sceneConfiguration.renderTypes.listIterator(0);
-		while (renderTypesIterator.hasNext()) {
-			scene.getRenderTypeManager().add((Class<? extends RenderType>) Class.forName(renderTypesIterator.next()));
+		ListIterator<String> particleRendererIterator = sceneConfiguration.particleRenderer.listIterator(0);
+		while (particleRendererIterator.hasNext()) {
+			scene.getParticleRendererManager().add((Class<? extends ParticleRenderer>) Class.forName(particleRendererIterator.next()));
 		}
 		// load face renderer
 		ListIterator<String> faceRendererIterator = sceneConfiguration.faceRenderers.listIterator(0);
@@ -164,7 +164,7 @@ public class SceneDAO {
 		}
 		// load obligatory renderers II, ordering is important!
 		scene.getRendererManager().add(scene.getTextOverlayManager());
-		scene.getRendererManager().add(scene.getRenderTypeManager());
+		scene.getRendererManager().add(scene.getParticleRendererManager());
 		scene.getRendererManager().add(scene.getFaceRendererManager());
 		scene.getRendererManager().add(scene.getHudManager());
 		// setup all renderers, the cam and the hud
@@ -199,11 +199,11 @@ public class SceneDAO {
 			HUD hud = hudsIterator.next();
 			sceneConfiguration.huds.add(hud.getClass().getName());
 		}
-		sceneConfiguration.renderTypes = new ArrayList<String>();
-		ListIterator<RenderType> renderTypesIterator = scene.getRenderTypeManager().getRenderTypes().listIterator(0);
-		while (renderTypesIterator.hasNext()) {
-			RenderType renderType = renderTypesIterator.next();
-			sceneConfiguration.renderTypes.add(renderType.getClass().getName());
+		sceneConfiguration.particleRenderer = new ArrayList<String>();
+		ListIterator<ParticleRenderer> particleRendererIterator = scene.getParticleRendererManager().getParticleRenderer().listIterator(0);
+		while (particleRendererIterator.hasNext()) {
+			ParticleRenderer particleRenderer = particleRendererIterator.next();
+			sceneConfiguration.particleRenderer.add(particleRenderer.getClass().getName());
 		}
 		sceneConfiguration.faceRenderers = new ArrayList<String>();
 		ListIterator<FaceRenderer> faceRendererIterator = scene.getFaceRendererManager().getFaceRenderers().listIterator(0);

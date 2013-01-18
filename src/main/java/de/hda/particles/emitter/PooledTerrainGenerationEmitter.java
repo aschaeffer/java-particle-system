@@ -154,7 +154,7 @@ public class PooledTerrainGenerationEmitter extends AbstractParticleEmitter impl
 		particle.setY(y);
 		particle.setZ(z);
 		particle.setVelocity(particleDefaultVelocity);
-		particle.setRenderTypeIndex(particleRenderTypeIndex);
+		particle.setParticleRendererIndex(particleRendererIndex);
 		particle.setRemainingIterations(particleLifetime);
 		for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 			particleFeature.init(this, particle);

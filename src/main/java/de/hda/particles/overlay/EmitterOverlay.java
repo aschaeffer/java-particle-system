@@ -13,7 +13,7 @@ public class EmitterOverlay extends AbstractTextOverlay implements TextOverlay {
 		while (pIterator.hasNext()) {
 			ParticleEmitter emitter = pIterator.next();
 			if (emitter != null) {
-		        render(emitter.getPosition(), "Emitter\nLifetime: " + emitter.getParticleLifetime() + "\nRate: " + emitter.getRate() + "\nParticleRenderer: " + emitter.getParticleRenderTypeIndex(), 300.0f, false);
+		        render(emitter.getPosition(), "Emitter\nLifetime: " + emitter.getParticleLifetime() + "\nRate: " + emitter.getRate() + "\nParticleRenderer: " + emitter.getParticleRendererIndex(), 300.0f, false);
 			}
 		}
 	}

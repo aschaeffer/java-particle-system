@@ -28,4 +28,8 @@ public class Demo {
 		changeSets.add(changeSet);
 	}
 	
+	public void addChangeSets(List<ChangeSet> changeSets) {
+		changeSets.addAll(changeSets);
+	}
+
 }

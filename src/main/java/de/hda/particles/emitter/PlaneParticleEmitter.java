@@ -36,7 +36,7 @@ public class PlaneParticleEmitter extends AbstractParticleEmitter implements Par
 			// Vector3f.cross(position, position2, particleStartVelocity);
 			// particleStartVelocity.scale((Float) this.configuration.get(VELOCITY));
 			
-			Particle particle = new DefaultHashMapParticle(particleStartPosition, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(particleStartPosition, particleDefaultVelocity, particleRendererIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}

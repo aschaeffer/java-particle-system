@@ -18,7 +18,7 @@ public class StaticPointParticleEmitter extends AbstractParticleEmitter implemen
 		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
-			Particle particle = new StaticParticle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new StaticParticle(position, particleDefaultVelocity, particleRendererIndex, particleLifetime);
 			if (initParticleFeatures) {
 				for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 					particleFeature.init(this, particle);

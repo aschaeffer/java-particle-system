@@ -10,6 +10,11 @@ public class PooledTetrahedronParticleEmitterEditor extends AbstractParticleEmit
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PooledTetrahedronParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PooledTetrahedronParticleEmitter.class;
+	}
 
 	@Override
 	public String getTitle() {

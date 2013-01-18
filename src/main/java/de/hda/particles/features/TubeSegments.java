@@ -55,11 +55,11 @@ public class TubeSegments extends AbstractParticleFeature implements ParticleFea
 			setDefault(emitter, fieldName);
 		} else {
 			if (fieldName.equals(SEGMENT_TWIST)) {
-				if (value > MIN_SEGMENT_TWIST)
-					value--;
+				if (value > MIN_SEGMENT_TWIST) {
+					emitter.getConfiguration().put(fieldName, value-1);
+				}
 			} else if (value > MIN_NUMBER_OF_SEGMENTS) {
-				value--;
-				emitter.getConfiguration().put(fieldName, value);
+				emitter.getConfiguration().put(fieldName, value-1);
 			}
 		}
 	}

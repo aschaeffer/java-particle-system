@@ -17,7 +17,7 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 	private static final String DEFAULT_SKYBOX_FORMAT = "JPG";
 
 	private final Texture[] textures = new Texture[6]; // = new ArrayList<Texture>();
-	private Boolean deferedLoading = true;
+	private Boolean deferedLoading = false;
 	private String name = DEFAULT_SKYBOX_NAME;
 	private final String format = DEFAULT_SKYBOX_FORMAT;
 	
@@ -138,13 +138,13 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 		clampToEdge();
 		textures[5].bind();
 		glBegin(GL_QUADS);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(-0.5f, -0.5f, -0.5f);
 		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(-0.5f, -0.5f, 0.5f);
+		glVertex3f(-0.5f, -0.5f, -0.5f);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(0.5f, -0.5f, 0.5f);
+		glVertex3f(-0.5f, -0.5f, 0.5f);
 		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(0.5f, -0.5f, 0.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(0.5f, -0.5f, -0.5f);
 		glEnd();
 

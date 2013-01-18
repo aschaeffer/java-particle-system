@@ -11,7 +11,7 @@ public class SceneConfiguration {
 	public Boolean fullscreen;
 	public List<HashMap<String, Object>> cameras;
 	public List<String> huds;
-	public List<String> renderTypes;
+	public List<String> particleRenderer;
 	public List<String> faceRenderers;
 	public List<String> renderer;
 	public List<String> textOverlays;

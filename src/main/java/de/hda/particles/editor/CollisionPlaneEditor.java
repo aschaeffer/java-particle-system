@@ -24,6 +24,11 @@ public class CollisionPlaneEditor extends AbstractParticleModifierEditor<Collisi
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(CollisionPlane.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return CollisionPlane.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {

@@ -13,6 +13,11 @@ public class PooledTerrainGenerationEmitterEditor extends AbstractParticleEmitte
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PooledTerrainGenerationEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PooledTerrainGenerationEmitter.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {

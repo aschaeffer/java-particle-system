@@ -10,6 +10,11 @@ public class PlaneParticleEmitterEditor extends AbstractParticleEmitterEditor<Pl
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PlaneParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PlaneParticleEmitter.class;
+	}
 
 	@Override
 	public String getTitle() {

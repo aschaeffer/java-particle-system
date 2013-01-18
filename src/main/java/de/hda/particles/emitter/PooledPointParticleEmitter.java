@@ -32,7 +32,7 @@ public class PooledPointParticleEmitter extends AbstractParticleEmitter implemen
 			particle.clear();
 			particle.setPosition(position);
 			particle.setVelocity(particleDefaultVelocity);
-			particle.setRenderTypeIndex(particleRenderTypeIndex);
+			particle.setParticleRendererIndex(particleRendererIndex);
 			particle.setRemainingIterations(particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);

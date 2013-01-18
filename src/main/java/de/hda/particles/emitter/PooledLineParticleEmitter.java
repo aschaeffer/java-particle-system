@@ -55,7 +55,7 @@ public class PooledLineParticleEmitter extends AbstractParticleEmitter implement
 			particle.clear();
 			particle.setPosition(new Vector3f(px, py, pz));
 			particle.setVelocity(particleDefaultVelocity);
-			particle.setRenderTypeIndex(particleRenderTypeIndex);
+			particle.setParticleRendererIndex(particleRendererIndex);
 			particle.setRemainingIterations(particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);

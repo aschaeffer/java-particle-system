@@ -65,13 +65,13 @@ public class CreateScene implements Command {
 			// inject scene into managers
 			scene.getCameraManager().setScene(scene);
 			scene.getHudManager().setScene(scene);
-			scene.getRenderTypeManager().setScene(scene);
+			scene.getParticleRendererManager().setScene(scene);
 			scene.getTextOverlayManager().setScene(scene);
 			scene.getRendererManager().setScene(scene);
 			// important: the first renderers have to be ordered
 			scene.getRendererManager().insertAt(scene.getCameraManager(), 0);
 			scene.getRendererManager().insertAt(scene.getTextOverlayManager(), 1);
-			scene.getRendererManager().insertAt(scene.getRenderTypeManager(), 2);
+			scene.getRendererManager().insertAt(scene.getParticleRendererManager(), 2);
 			scene.getRendererManager().insertAt(scene.getFaceRendererManager(), 3);
 			scene.getRendererManager().insertAt(scene.getHudManager(), 4);
 			// scene.getRendererManager().setup(); // finally setup managers recursively

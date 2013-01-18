@@ -54,4 +54,34 @@ public abstract class AbstractHUD extends AbstractRenderer implements HUD {
 	public void input() {
 	}
 
+	/**
+	 * Helper for creating messages.
+	 * 
+	 * @param message
+	 */
+	protected void addMessage(String message) {
+		scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, message));
+	}
+
+	/**
+	 * Helper for creating notices.
+	 * 
+	 * @param message
+	 */
+	protected void addNotice(String notice) {
+		scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, notice));
+	}
+	
+	protected void proxyInputCommand(HUDCommandTypes type) {
+		scene.getHudManager().addCommand(new HUDCommand(type));
+	}
+
+	protected void proxyInputCommand(HUDCommandTypes type, Object payLoad) {
+		scene.getHudManager().addCommand(new HUDCommand(type, payLoad));
+	}
+
+	protected void proxyInputCommand(HUDCommandTypes type, Object payLoad, Object payLoad2) {
+		scene.getHudManager().addCommand(new HUDCommand(type, payLoad, payLoad2));
+	}
+
 }

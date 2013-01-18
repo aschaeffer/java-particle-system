@@ -21,6 +21,11 @@ public class PooledClothParticleEmitterEditor extends AbstractParticleEmitterEdi
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PooledClothParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PooledClothParticleEmitter.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {

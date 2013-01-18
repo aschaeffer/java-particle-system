@@ -10,8 +10,8 @@ public class DefaultHashMapParticle extends AbstractHashMapParticle implements P
 		super();
 	}
 
-	public DefaultHashMapParticle(Vector3f position, Vector3f velocity, Integer renderTypeIndex, Integer lifetime) {
-		super(position, velocity, renderTypeIndex, lifetime);
+	public DefaultHashMapParticle(Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer lifetime) {
+		super(position, velocity, particleRendererIndex, lifetime);
 	}
 
 }

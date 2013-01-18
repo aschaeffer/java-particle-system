@@ -28,7 +28,7 @@ public class SphereParticleEmitter extends AbstractParticleEmitter implements Pa
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
 			Vector3f velocity = new Vector3f(random.nextFloat() * 2.0f - 1.0f, random.nextFloat() * 2.0f - 1.0f, random.nextFloat() * 2.0f - 1.0f);
-			Particle particle = new DefaultHashMapParticle(position, velocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(position, velocity, particleRendererIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}
