@@ -47,8 +47,8 @@ public class ParticleSystemDAO {
 			HashMap<String, Object> emitterConfiguration = emittersIterator.next();
 			String emitterClassName = (String) emitterConfiguration.get("className");
 			Class<? extends ParticleEmitter> emitterClass = (Class<? extends ParticleEmitter>) Class.forName(emitterClassName);
-			// String renderTypeClassName = (String) emitterConfiguration.get("renderType");
-			// Class<? extends RenderType> renderTypeClass = (Class<? extends RenderType>) Class.forName(renderTypeClassName);
+			// String particleRendererClassName = (String) emitterConfiguration.get("particleRenderer");
+			// Class<? extends ParticleRenderer> particleRendererClass = (Class<? extends ParticleRenderer>) Class.forName(particleRendererClassName);
 			Integer rate = (Integer) emitterConfiguration.get("rate");
 			Integer lifetime = (Integer) emitterConfiguration.get("lifetime");
 			Vector3f position = new Vector3f();
@@ -115,8 +115,8 @@ public class ParticleSystemDAO {
 			HashMap<String, Object> emitterConfiguration = emittersIterator.next();
 			String emitterClassName = (String) emitterConfiguration.get("className");
 			Class<? extends ParticleEmitter> emitterClass = (Class<? extends ParticleEmitter>) Class.forName(emitterClassName);
-			// String renderTypeClassName = (String) emitterConfiguration.get("renderType");
-			// Class<? extends RenderType> renderTypeClass = (Class<? extends RenderType>) Class.forName(renderTypeClassName);
+			// String particleRendererClassName = (String) emitterConfiguration.get("particleRenderer");
+			// Class<? extends ParticleRenderer> particleRendererClass = (Class<? extends ParticleRenderer>) Class.forName(particleRendererClassName);
 			Integer rate = (Integer) emitterConfiguration.get("rate");
 			Integer lifetime = (Integer) emitterConfiguration.get("lifetime");
 			Vector3f position = new Vector3f();

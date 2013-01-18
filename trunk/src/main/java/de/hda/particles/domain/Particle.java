@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 public interface Particle extends Map<String, Object> {
 
 	public final static int DEFAULT_LIFETIME = 100;
-	public final static int DEFAULT_RENDER_TYPE_INDEX = 1;
+	public final static int DEFAULT_PARTICLE_RENDERER_INDEX = 1;
 	public final static float DEFAULT_MASS = 0.1f;
 	
 	public float getX();
@@ -28,8 +28,8 @@ public interface Particle extends Map<String, Object> {
 	public void setVelocity(Vector3f velocity);
 	public float getMass();
 	public void setMass(float mass);
-	public int getRenderTypeIndex();
-	public void setRenderTypeIndex(int renderTypeIndex);
+	public int getParticleRendererIndex();
+	public void setParticleRendererIndex(int particleRendererIndex);
 	public boolean isAlive();
 	public void decLifetime();
 	public int getRemainingIterations();

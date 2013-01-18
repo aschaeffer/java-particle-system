@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import de.hda.particles.domain.CommandConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.modifier.ParticleModifier;
-import de.hda.particles.renderer.types.RenderType;
+import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.demo.DemoContext;
 import de.hda.particles.scene.demo.DemoHandle;
@@ -23,7 +23,7 @@ public class AddModifier implements Command {
 	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		String type = (String) configuration.get("class");
 		try {
-			Class<? extends RenderType> clazz = (Class<? extends RenderType>) Class.forName(type);
+			Class<? extends ParticleRenderer> clazz = (Class<? extends ParticleRenderer>) Class.forName(type);
 			List<Scene> scenes = context.getByType(Scene.class);
 			ListIterator<Scene> iterator = scenes.listIterator(0);
 			while (iterator.hasNext()) {

@@ -19,19 +19,19 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	private float mass = DEFAULT_MASS;
 	private boolean visibility = true;
 	private int index = 0; // TODO: remove?
-	private int renderTypeIndex = DEFAULT_RENDER_TYPE_INDEX;
+	private int particleRendererIndex = DEFAULT_PARTICLE_RENDERER_INDEX;
 
 	public AbstractHashMapParticle() {
 	}
 
-	public AbstractHashMapParticle(Vector3f position, Vector3f velocity, int renderTypeIndex, int lifetime) {
+	public AbstractHashMapParticle(Vector3f position, Vector3f velocity, int particleRendererIndex, int lifetime) {
 		positionX = position.x;
 		positionY = position.y;
 		positionZ = position.z;
 		velocityX = velocity.x;
 		velocityY = velocity.y;
 		velocityZ = velocity.z;
-		this.renderTypeIndex = renderTypeIndex;
+		this.particleRendererIndex = particleRendererIndex;
 		this.remainingIterations = lifetime;
 	}
 
@@ -130,13 +130,13 @@ public abstract class AbstractHashMapParticle extends HashMap<String, Object> im
 	}
 
 	@Override
-	public int getRenderTypeIndex() {
-		return renderTypeIndex;
+	public int getParticleRendererIndex() {
+		return particleRendererIndex;
 	}
 
 	@Override
-	public void setRenderTypeIndex(int renderTypeIndex) {
-		this.renderTypeIndex = renderTypeIndex;
+	public void setParticleRendererIndex(int particleRendererIndex) {
+		this.particleRendererIndex = particleRendererIndex;
 	}
 
 	@Override

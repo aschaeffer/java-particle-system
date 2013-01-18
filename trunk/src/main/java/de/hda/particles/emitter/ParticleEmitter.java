@@ -23,8 +23,8 @@ public interface ParticleEmitter extends Updateable, AutoDependency {
 	public void setPosition(Vector3f position);
 	public Vector3f getParticleDefaultVelocity();
 	public void setParticleDefaultVelocity(Vector3f defaultVelocity);
-	public Integer getParticleRenderTypeIndex();
-	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex);
+	public Integer getParticleRendererIndex();
+	public void setParticleRendererIndex(Integer particleRendererIndex);
 	public Integer getFaceRendererIndex();
 	public void setFaceRendererIndex(Integer faceRendererIndex);
 	public long getParticleLifetime();

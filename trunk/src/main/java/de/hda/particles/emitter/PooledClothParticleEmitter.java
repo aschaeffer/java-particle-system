@@ -145,7 +145,7 @@ public class PooledClothParticleEmitter extends AbstractParticleEmitter implemen
 				e_g = (Integer) configuration.get(ParticleColor.END_COLOR_G);
 				e_b = (Integer) configuration.get(ParticleColor.END_COLOR_B);
 				e_a = (Integer) configuration.get(ParticleColor.END_COLOR_A);
-				// if (s_r == null || s_g == null || s_b == null || s_a == null || e_r == null || e_g == null || e_b == null || e_a == null) break;
+				if (s_r == null || s_g == null || s_b == null || s_a == null || e_r == null || e_g == null || e_b == null || e_a == null) break;
 				se_modifier = (pastIterations + i) % rate;
 				p = se_modifier.floatValue() / rate.floatValue();
 				if (p <= 0.5f) {
@@ -176,7 +176,7 @@ public class PooledClothParticleEmitter extends AbstractParticleEmitter implemen
 		particle.clear();
 		particle.setPosition(position);
 		particle.setVelocity(particleDefaultVelocity);
-		particle.setRenderTypeIndex(particleRenderTypeIndex);
+		particle.setParticleRendererIndex(particleRendererIndex);
 		particle.setRemainingIterations(particleLifetime);
 		particle.put(MassSpring.SPRING_LENGTH, springLength);
 		particle.put(MassSpring.SPRING_FRICTION, springFriction);

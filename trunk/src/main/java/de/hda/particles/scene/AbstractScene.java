@@ -14,11 +14,13 @@ import org.slf4j.LoggerFactory;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.camera.CameraManager;
+import de.hda.particles.editor.EditorManager;
 import de.hda.particles.hud.HUDManager;
+import de.hda.particles.menu.MenuManager;
 import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.faces.FaceRendererManager;
-import de.hda.particles.renderer.types.RenderTypeManager;
+import de.hda.particles.renderer.particles.ParticleRendererManager;
 import de.hda.particles.textures.TextureManager;
 import de.hda.particles.timing.FpsInformation;
 import de.hda.particles.timing.FpsLimiter;
@@ -30,9 +32,11 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 
 	// Scene manages multiple managers
 	protected HUDManager hudManager = new HUDManager();
+	protected EditorManager editorManager = new EditorManager();
+	protected MenuManager menuManager = new MenuManager();
 	protected CameraManager cameraManager = new CameraManager();
 	protected RendererManager rendererManager = new RendererManager();
-	protected RenderTypeManager renderTypeManager = new RenderTypeManager();
+	protected ParticleRendererManager particleRendererManager = new ParticleRendererManager();
 	protected FaceRendererManager faceRendererManager = new FaceRendererManager();
 	protected TextureManager textureManager = new TextureManager();
 	protected TextOverlayManager textOverlayManager = new TextOverlayManager();
@@ -156,6 +160,24 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	}
 
 	@Override
+	public EditorManager getEditorManager() {
+		return editorManager;
+	}
+
+	public void setEditorManager(EditorManager editorManager) {
+		this.editorManager = editorManager;
+	}
+
+	@Override
+	public MenuManager getMenuManager() {
+		return menuManager;
+	}
+
+	public void setMenuManager(MenuManager menuManager) {
+		this.menuManager = menuManager;
+	}
+
+	@Override
 	public CameraManager getCameraManager() {
 		return cameraManager;
 	}
@@ -174,12 +196,12 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	}
 
 	@Override
-	public RenderTypeManager getRenderTypeManager() {
-		return renderTypeManager;
+	public ParticleRendererManager getParticleRendererManager() {
+		return particleRendererManager;
 	}
 
-	public void setRenderTypeManager(RenderTypeManager renderTypeManager) {
-		this.renderTypeManager = renderTypeManager;
+	public void setparticleRendererManager(ParticleRendererManager particleRendererManager) {
+		this.particleRendererManager = particleRendererManager;
 	}
 
 	@Override

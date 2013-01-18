@@ -6,11 +6,13 @@ import de.hda.particles.Blockable;
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
 import de.hda.particles.camera.CameraManager;
+import de.hda.particles.editor.EditorManager;
 import de.hda.particles.hud.HUDManager;
+import de.hda.particles.menu.MenuManager;
 import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.faces.FaceRendererManager;
-import de.hda.particles.renderer.types.RenderTypeManager;
+import de.hda.particles.renderer.particles.ParticleRendererManager;
 import de.hda.particles.textures.TextureManager;
 import de.hda.particles.timing.FpsInformation;
 
@@ -54,9 +56,11 @@ public interface Scene extends Updateable, Blockable, FpsInformation {
 	
 	ParticleSystem getParticleSystem();
 	HUDManager getHudManager();
+	EditorManager getEditorManager();
+	MenuManager getMenuManager();
 	CameraManager getCameraManager();
 	RendererManager getRendererManager();
-	RenderTypeManager getRenderTypeManager();
+	ParticleRendererManager getParticleRendererManager();
 	FaceRendererManager getFaceRendererManager();
 	TextureManager getTextureManager();
 	TextOverlayManager getTextOverlayManager();

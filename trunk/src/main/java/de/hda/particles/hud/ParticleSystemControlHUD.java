@@ -30,9 +30,9 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockPauseSelection) {
 				scene.getParticleSystem().pause();
 				if (scene.getParticleSystem().isPaused()) {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Paused"));
+					addMessage("Paused");
 				} else {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Resumed"));
+					addMessage("Resumed");
 				}
 				blockPauseSelection = true;
 			}
@@ -43,6 +43,7 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockNextSelection) {
 				if (scene.getParticleSystem().isPaused()) {
 					scene.getParticleSystem().next();
+					addNotice("Next iteration: " + scene.getParticleSystem().getPastIterations());
 				}
 				blockNextSelection = true;
 			}
@@ -53,9 +54,9 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockEmitterSelection) {
 				scene.getParticleSystem().toggleEmitters();
 				if (scene.getParticleSystem().areEmittersStopped()) {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Emitters stopped"));
+					addMessage("Emitters stopped");
 				} else {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Emitters started"));
+					addMessage("Emitters started");
 				}
 				blockEmitterSelection = true;
 			}
@@ -66,9 +67,9 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 			if (!blockModifierSelection) {
 				scene.getParticleSystem().toggleModifiers();
 				if (scene.getParticleSystem().areModifiersStopped()) {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Modifiers stopped"));
+					addMessage("Modifiers stopped");
 				} else {
-					scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Modifiers started"));
+					addMessage("Modifiers started");
 				}
 				blockModifierSelection = true;
 			}
@@ -77,10 +78,11 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			if (!blockClearSelection) {
-				scene.getParticleSystem().removeAllParticles();
-				scene.getRenderTypeManager().clear();
-				scene.getFaceRendererManager().clear();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles and faces removed"));
+				proxyInputCommand(HUDCommandTypes.REMOVE_ALL_PARTICLES);
+//				scene.getParticleSystem().removeAllParticles();
+//				scene.getParticleRendererManager().clear();
+//				scene.getFaceRendererManager().clear();
+				addNotice("All particles and faces removed");
 				blockClearSelection = true;
 			}
 		} else {
@@ -98,9 +100,10 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		if (command.getType() == HUDCommandTypes.REMOVE_ALL_PARTICLES) {
 			scene.getParticleSystem().beginModification();
 			scene.getParticleSystem().removeAllParticles();
-			scene.getRenderTypeManager().clear();
+			scene.getParticleRendererManager().clear();
 			scene.getFaceRendererManager().clear();
 			scene.getParticleSystem().endModification();
+			addNotice("All particles and faces removed");
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles and faces removed"));
 		}
 	}

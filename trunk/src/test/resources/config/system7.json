@@ -7,7 +7,7 @@
 	"emitters": [
 		{
 			"className": "de.hda.particles.emitter.PointParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.PointSpriteRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.PointSpriteParticleRenderer",
 			"rate": 10,
 			"lifetime": 400,
 			"position_x": 0.0,
@@ -33,7 +33,7 @@
 			}
 		}, {
 			"className": "de.hda.particles.emitter.PointParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.PointSpriteRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.PointSpriteParticleRenderer",
 			"rate": 10,
 			"lifetime": 400,
 			"position_x": 0.0,
@@ -59,7 +59,7 @@
 			}
 		}, {
 			"className": "de.hda.particles.emitter.PointParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.PointSpriteRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.PointSpriteParticleRenderer",
 			"rate": 10,
 			"lifetime": 400,
 			"position_x": 200.0,
@@ -85,7 +85,7 @@
 			}
 		}, {
 			"className": "de.hda.particles.emitter.PointParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.PointSpriteRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.PointSpriteParticleRenderer",
 			"rate": 10,
 			"lifetime": 800,
 			"position_x": -200.0,

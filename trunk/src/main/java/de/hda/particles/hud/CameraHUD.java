@@ -8,6 +8,7 @@ import de.hda.particles.scene.Scene;
 
 public class CameraHUD extends AbstractHUD implements HUD {
 
+	private final static Integer MARGIN = 10;
 	private Boolean blockCameraSelection = false;
 	private Boolean blockCameraFlySelection = false;
 	private Boolean blockCameraResetSelection = false;
@@ -23,7 +24,8 @@ public class CameraHUD extends AbstractHUD implements HUD {
 	@Override
 	public void update() {
 		camera = scene.getCameraManager();
-        font.drawString(10, 10, String.format("%s x:%.2f y:%.2f z:%.2f yaw:%.2f pitch:%.2f roll:%.2f fov:%.2f", camera.getName(), camera.getX(), camera.getY(), camera.getZ(), camera.getYaw(), camera.getPitch(), camera.getRoll(), camera.getFov()));
+		String text = String.format("%s x:%.1f y:%.1f z:%.1f yaw:%.1f pitch:%.1f roll:%.1f fov:%.1f", camera.getName(), camera.getX(), camera.getY(), camera.getZ(), camera.getYaw(), camera.getPitch(), camera.getRoll(), camera.getFov());
+        font.drawString(scene.getWidth() - font.getWidth(text) - MARGIN, MARGIN, text);
 	}
 	
 	@Override
@@ -32,7 +34,7 @@ public class CameraHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 			if (!blockCameraSelection) {
 				scene.getCameraManager().selectNextCamera();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Selected Camera \"" + scene.getCameraManager().getName() + "\""));
+				addNotice("Selected Camera \"" + scene.getCameraManager().getName() + "\"");
 				blockCameraSelection = true;
 			}
 		} else {
@@ -42,7 +44,7 @@ public class CameraHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_V)) {
 			if (!blockCameraFlySelection) {
 				scene.getCameraManager().nextMode();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "Selected Camera Mode \"" + scene.getCameraManager().getModeName() + "\""));
+				addNotice("Selected Camera Mode \"" + scene.getCameraManager().getModeName() + "\"");
 				blockCameraFlySelection = true;
 			}
 		} else {
@@ -52,7 +54,7 @@ public class CameraHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
 			if (!blockCameraResetSelection) {
 				scene.getCameraManager().reset();
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.MESSAGE, "Reset Camera Position"));
+				addNotice("Reset Camera Position");
 				blockCameraResetSelection = true;
 			}
 		} else {

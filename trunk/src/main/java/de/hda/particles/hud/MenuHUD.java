@@ -1,34 +1,14 @@
 package de.hda.particles.hud;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.Font;
-import java.util.ListIterator;
-
 import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hda.particles.ConfigurableParticleSystem;
-import de.hda.particles.scene.ConfigurableScene;
-import de.hda.particles.scene.Scene;
+import de.hda.particles.menu.HUDMenuEntry;
 
 public class MenuHUD extends AbstractHUD implements HUD {
 
 	private final static Integer KEYPRESS_REPEAT_THRESHOLD = 10;
-	private final static Float DEFAULT_WIDTH_PERCENT = 0.3f;
-	private final static Integer margin = 10;
-
-	private Boolean show = false;
-	private Boolean blocked = false;
-	private Integer blockedFor = 0;
-	
-	protected HUDMenuEntry menu;
-	protected HUDMenuEntry currentMenu;
-	protected Integer selectedIndex = 0;
 
 	private Boolean blockEscSelection = false;
 	private Integer blockUpSelection = 0;
@@ -36,147 +16,52 @@ public class MenuHUD extends AbstractHUD implements HUD {
 	private Boolean blockInSelection = false;
 	private Boolean blockOutSelection = false;
 	private Boolean blockSelectSelection = false;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(MenuHUD.class);
 
-	public MenuHUD() {
-	}
-
-	public MenuHUD(Scene scene) {
-		super(scene);
-		menu = new DefaultHUDMenu().createMenu(scene);
-		currentMenu = menu;
-	}
-	
-	@Override
-	public void setScene(Scene scene) {
-		this.scene = scene;
-		menu = new DefaultHUDMenu().createMenu(scene);
-	}
-
-	@Override
-	public void update() {
-		if (blocked) return;
-		if (blockedFor > 0) {
-			blockedFor--;
-			return;
-		}
-		
-		if (!show) return;
-		
-		Integer left = (scene.getWidth() / 2) - (font.getWidth(currentMenu.title) / 2);
-		Integer height = font.getHeight(currentMenu.title);
-		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
-
-	    font.drawString(left, top, currentMenu.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-
-	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
-	    while (iterator.hasNext()) {
-	    	HUDMenuEntry entry = iterator.next();
-	    	top = top + height + 3*margin;
-	    	left = (scene.getWidth() / 2) - (font.getWidth(entry.title) / 2);
-			height = font.getHeight(entry.title);
-		    font.drawString(left, top, entry.title, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-	    	
-	    }
-
-	}
-	
-	@Override
-	public void render2() {
-		if (!show || blocked) return;
-		if (blockedFor > 0) {
-			blockedFor--;
-			return;
-		}
-		
-		Integer width = new Float(scene.getWidth() * DEFAULT_WIDTH_PERCENT).intValue();
-		Integer height = font.getHeight(currentMenu.title);
-		Integer left = (scene.getWidth() / 2) - (width / 2);
-		Integer top = (scene.getHeight() / 2) - (((currentMenu.childs.size() + 1) * (height + 3*margin)) / 2);
-
-		glColor4f(1.0f, 0.5f, 0.0f, 0.5f);
-	    glBegin(GL_QUADS);
-	    glVertex2f(left - margin, top - margin);
-		glVertex2f(left + width + margin, top - margin);
-		glVertex2f(left + width + margin, top + height + margin);
-		glVertex2f(left - margin, top + height + margin);
-	    glEnd();
-	    
-	    ListIterator<HUDMenuEntry> iterator = currentMenu.childs.listIterator(0);
-	    while (iterator.hasNext()) {
-	    	HUDMenuEntry entry = iterator.next();
-	    	top = top + height + 3*margin;
-			height = font.getHeight(entry.title);
-			if (iterator.previousIndex() == selectedIndex) {
-				glColor4f(1.0f, 0.0f, 0.0f, 0.8f);
-			} else {
-				glColor4f(1.0f, 0.0f, 0.0f, 0.35f);
-			}
-		    glBegin(GL_QUADS);
-		    glVertex2f(left - margin, top - margin);
-			glVertex2f(left + width + margin, top - margin);
-			glVertex2f(left + width + margin, top + height + margin);
-			glVertex2f(left - margin, top + height + margin);
-		    glEnd();
-	    	
-	    }
-
-	}
-	
 	@Override
 	public void input() {
-		if (blocked) return;
-		if (blockedFor > 0) {
-			blockedFor--;
-			return;
-		}
+		if (scene.getMenuManager().isBlocked2()) return;
+		Boolean isMenuOpen = scene.getMenuManager().isMenuOpen();
+		HUDMenuEntry currentMenu = scene.getMenuManager().getCurrentMenu();
+		HUDMenuEntry currentMenuRootNode = scene.getMenuManager().getCurrentMenuRootNode();
+	    Integer selectedIndex = scene.getMenuManager().getSelectedIndex();
+	    
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			if (!blockEscSelection) {
-				if (show) {
-					show = false;
-				} else {
-					show = true;
-					currentMenu = menu;
-					selectedIndex = 0;
+				if (isMenuOpen) {
+					scene.getMenuManager().closeMenu();
+					scene.getMenuManager().blockFor(KEYPRESS_REPEAT_THRESHOLD);
 				}
 				blockEscSelection = true;
 			}
 		} else {
 			blockEscSelection = false;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			if (show && (blockUpSelection == 0 || blockUpSelection > KEYPRESS_REPEAT_THRESHOLD)) {
-				if (selectedIndex > 0) {
-					selectedIndex--;
-				} else {
-					selectedIndex = currentMenu.childs.size() - 1;
-				}
+		if (currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_UP) || !currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+			if (isMenuOpen && (blockUpSelection == 0 || blockUpSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				scene.getMenuManager().selectPreviousEntry();
 			}
 			blockUpSelection++;
 		} else {
 			blockUpSelection = 0;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			if (show && (blockDownSelection == 0 || blockDownSelection > KEYPRESS_REPEAT_THRESHOLD)) {
-				if (selectedIndex+1 < currentMenu.childs.size()) {
-					selectedIndex++;
-				} else {
-					selectedIndex = 0;
-				}
+		if (currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_DOWN) || !currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+			if (isMenuOpen && (blockDownSelection == 0 || blockDownSelection > KEYPRESS_REPEAT_THRESHOLD)) {
+				scene.getMenuManager().selectNextEntry();
 			}
 			blockDownSelection++;
 		} else {
 			blockDownSelection = 0;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+		if (currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_LEFT) || !currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_UP)) {
 			if (!blockInSelection) {
-				if (show) {
-					if (currentMenu.equals(currentMenu.parent)) {
-						show = false;
-					} else {
-						selectedIndex = currentMenu.parent.childs.indexOf(currentMenu);
-						currentMenu = currentMenu.parent;
+				if (isMenuOpen) {
+					if (currentMenu.equals(currentMenu.parent)) { // detect root node
+						scene.getMenuManager().closeMenu(false);
+					} else { // jump into parent node and select current menu
+						scene.getMenuManager().setSelectedIndex(currentMenu.parent.childs.indexOf(currentMenu));
+						scene.getMenuManager().setCurrentMenu(currentMenu.parent);
 					}
 				}
 				blockInSelection = true;
@@ -184,23 +69,19 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		} else {
 			blockInSelection = false;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+		if (currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || !currentMenuRootNode.vertical && Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
 			if (!blockOutSelection) {
-				if (!show) {
-					show = true;
-					currentMenu = menu;
-					selectedIndex = 0;
-				} else {
+				if (isMenuOpen) {
 					if (currentMenu != null && currentMenu.childs.size() > selectedIndex) {
 						if (currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
 							if (currentMenu.childs.get(selectedIndex) != null) {
 								currentMenu = currentMenu.childs.get(selectedIndex);
-								selectedIndex = 0;
+								scene.getMenuManager().setCurrentMenu(currentMenu);
+								scene.getMenuManager().setSelectedIndex(0);
 							}
 						} else {
 							scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
-							logger.debug("added command: " + currentMenu.childs.get(selectedIndex).command.getType().name());
-							show = false;
+							scene.getMenuManager().closeMenu(false);
 						}
 					}
 				}
@@ -211,10 +92,12 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
 			if (!blockSelectSelection) {
-				if (show && currentMenu.childs.size() > selectedIndex) {
-					if (!currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
-						scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
-						show = false;
+				if (isMenuOpen) {
+					if (currentMenu.childs.size() > selectedIndex) {
+						if (!currentMenu.childs.get(selectedIndex).command.getType().equals(HUDCommandTypes.MENU)) {
+							scene.getHudManager().addCommand(currentMenu.childs.get(selectedIndex).command);
+							scene.getMenuManager().closeMenu();
+						}
 					}
 				}
 				blockSelectSelection = true;
@@ -224,52 +107,19 @@ public class MenuHUD extends AbstractHUD implements HUD {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setup() {
-        // AWT Font in eine UnicodeFont von slick-util umwandeln
-        font = new UnicodeFont(new Font("Arial", Font.BOLD, 20));
-        font.getEffects().add(new ColorEffect(new java.awt.Color(0.8f, 0.8f, 0.8f)));
-        font.addAsciiGlyphs();
-        try {
-           font.loadGlyphs();
-        } catch (SlickException e) {
-        	logger.error("could not load font glyphs", e);
-        }
-	}
-	
 	@Override
 	public void executeCommand(HUDCommand command) {
-		if (command.getType() == HUDCommandTypes.EDIT) {
-			blocked = true;
-		}
-		if (command.getType() == HUDCommandTypes.EDIT_DONE) {
-			blocked = false;
-			blockedFor = KEYPRESS_REPEAT_THRESHOLD;
-		}
-		if (command.getType() == HUDCommandTypes.EXIT) {
-			scene.exit();
-		}
-		if (command.getType() == HUDCommandTypes.LOAD_SCENE) {
-			ConfigurableScene cScene = (ConfigurableScene) scene;
-			cScene.openLoadDialog();
-		}
-		if (command.getType() == HUDCommandTypes.SAVE_SCENE) {
-			ConfigurableScene cScene = (ConfigurableScene) scene;
-			cScene.openSaveDialog();
-		}
-		if (command.getType() == HUDCommandTypes.LOAD_SYSTEM) {
-			ConfigurableParticleSystem cParticleSystem = (ConfigurableParticleSystem) scene.getParticleSystem();
-			scene.getParticleSystem().beginModification();
-			cParticleSystem.openLoadDialog();
-			scene.getParticleSystem().endModification();
-		}
-		if (command.getType() == HUDCommandTypes.SAVE_SYSTEM) {
-			ConfigurableParticleSystem cParticleSystem = (ConfigurableParticleSystem) scene.getParticleSystem();
-			scene.getParticleSystem().beginModification();
-			cParticleSystem.openSaveDialog();
-			scene.getParticleSystem().endModification();
+		switch (command.getType()) {
+			case EDIT:
+			case EDIT_DONE:
+				scene.getMenuManager().blockFor(KEYPRESS_REPEAT_THRESHOLD);
+				break;
+			default:
+				break;
 		}
 	}
+
+	@Override
+	public void update() {}
 
 }

@@ -6,7 +6,7 @@
 	"emitters": [
 		{
 			"className": "de.hda.particles.emitter.SphereParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.FireBallRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.FireBallParticleRenderer",
 			"rate": 8,
 			"lifetime": 600,
 			"position_x": 0.0,

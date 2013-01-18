@@ -21,7 +21,7 @@ public class WaveParticleEmitter extends AbstractParticleEmitter implements Part
 		pastIterations++;
 		// create new particles (emit)
 		for (Integer i = 0; i < rate; i++) {
-			Particle particle = new DefaultHashMapParticle(position, particleDefaultVelocity, particleRenderTypeIndex, particleLifetime);
+			Particle particle = new DefaultHashMapParticle(position, particleDefaultVelocity, particleRendererIndex, particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);
 			}

@@ -21,16 +21,7 @@ import de.hda.particles.renderer.AxisRenderer;
 import de.hda.particles.renderer.EmitterRenderer;
 import de.hda.particles.renderer.GravityPointRenderer;
 import de.hda.particles.renderer.SkyBoxRenderer;
-import de.hda.particles.renderer.types.ColoredPointRenderType;
-import de.hda.particles.renderer.types.ComplexPointRenderType;
-import de.hda.particles.renderer.types.BallRenderType;
-import de.hda.particles.renderer.types.SimplePointRenderType;
-import de.hda.particles.renderer.types.SimpleRainRenderType;
-import de.hda.particles.renderer.types.SimpleTriangleFanRenderType;
-import de.hda.particles.renderer.types.SimpleTriangleRenderType;
-import de.hda.particles.renderer.types.SimpleTriangleStripRenderType;
-import de.hda.particles.renderer.types.SimpleQuadsRenderType;
-import de.hda.particles.renderer.types.SimpleLineStripRenderType;
+import de.hda.particles.renderer.particles.*;
 
 public class DefaultScene extends AbstractScene implements Scene {
 
@@ -50,6 +41,7 @@ public class DefaultScene extends AbstractScene implements Scene {
 		this.particleSystem = particleSystem;
 	}
 
+	@Override
 	public void setup() {
 		running = true;
 		try {
@@ -111,20 +103,24 @@ public class DefaultScene extends AbstractScene implements Scene {
 		hudManager.add(new FpsHUD(this));
 		hudManager.add(new ParticleSystemControlHUD(this));
 		
+		// init editor manager
+		editorManager.setScene(this);
+		menuManager.setScene(this);
+		
 		// init render type manager and some render types
-		renderTypeManager.setScene(this);
+		particleRendererManager.setScene(this);
 		try {
-			renderTypeManager.add(SimplePointRenderType.class); // idx 1
-			renderTypeManager.add(ComplexPointRenderType.class); // idx 2
-			renderTypeManager.add(SimpleRainRenderType.class); // idx 3
-			renderTypeManager.add(ColoredPointRenderType.class); // idx 4
-			renderTypeManager.add(SimpleTriangleRenderType.class); // idx 5
-			renderTypeManager.add(SimpleTriangleStripRenderType.class); // idx 6
-			renderTypeManager.add(SimpleTriangleFanRenderType.class); // idx 7
-			renderTypeManager.add(SimpleQuadsRenderType.class); // idx 8
-			renderTypeManager.add(SimpleLineStripRenderType.class); // idx 9
-			renderTypeManager.add(BallRenderType.class); // idx 10
-			// renderTypeManager.setup(); <-- hier oder unten?
+			particleRendererManager.add(SimplePointParticleRenderer.class); // idx 1
+			particleRendererManager.add(ComplexPointParticleRenderer.class); // idx 2
+			particleRendererManager.add(SimpleRainParticleRenderer.class); // idx 3
+			particleRendererManager.add(ColoredPointParticleRenderer.class); // idx 4
+			particleRendererManager.add(SimpleTriangleParticleRenderer.class); // idx 5
+			particleRendererManager.add(SimpleTriangleStripParticleRenderer.class); // idx 6
+			particleRendererManager.add(SimpleTriangleFanParticleRenderer.class); // idx 7
+			particleRendererManager.add(SimpleQuadsParticleRenderer.class); // idx 8
+			particleRendererManager.add(SimpleLineStripParticleRenderer.class); // idx 9
+			particleRendererManager.add(BallParticleRenderer.class); // idx 10
+			// particleRendererManager.setup(); <-- hier oder unten?
 		} catch (Exception e) {
 			
 		}
@@ -141,17 +137,19 @@ public class DefaultScene extends AbstractScene implements Scene {
 		//   rendererManager.add(new ExtendedParticleRenderer(particleSystem));
 		// the render type manager can handle multiple particle renderers (render types)
 		// it delegates particle rendering to the specific render type of the single particle
-		rendererManager.add(renderTypeManager); 
+		rendererManager.add(particleRendererManager); 
 		rendererManager.add(hudManager);
 
 		rendererManager.setup();
 	}
 	
+	@Override
 	public void destroy() {
 		rendererManager.destroy(); // also destroys all renderers, the cam and the hud
 		Display.destroy();
 	}
 
+	@Override
 	public void update() {
 		Keyboard.next();
 		if (Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {

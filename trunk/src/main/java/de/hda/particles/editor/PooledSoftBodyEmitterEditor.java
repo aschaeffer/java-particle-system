@@ -13,6 +13,11 @@ public class PooledSoftBodyEmitterEditor extends AbstractParticleEmitterEditor<P
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PooledSoftBodyEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PooledSoftBodyEmitter.class;
+	}
 
 	@Override
 	public List<HUDEditorEntry> getEditorEntries() {

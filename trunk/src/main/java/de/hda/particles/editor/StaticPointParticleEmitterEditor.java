@@ -10,6 +10,11 @@ public class StaticPointParticleEmitterEditor extends AbstractParticleEmitterEdi
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(StaticPointParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return StaticPointParticleEmitter.class;
+	}
 
 	@Override
 	public String getTitle() {

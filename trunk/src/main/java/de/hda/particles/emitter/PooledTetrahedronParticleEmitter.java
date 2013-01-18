@@ -105,7 +105,7 @@ public class PooledTetrahedronParticleEmitter extends AbstractParticleEmitter im
 		particle.setY(y);
 		particle.setZ(z);
 		particle.setVelocity(particleDefaultVelocity);
-		particle.setRenderTypeIndex(particleRenderTypeIndex);
+		particle.setParticleRendererIndex(particleRendererIndex);
 		particle.setRemainingIterations(particleLifetime);
 		for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 			particleFeature.init(this, particle);

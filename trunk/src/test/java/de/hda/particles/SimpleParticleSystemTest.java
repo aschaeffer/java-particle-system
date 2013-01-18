@@ -16,9 +16,11 @@ import de.hda.particles.domain.ChangeSet;
 import de.hda.particles.domain.CommandConfiguration;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.editor.*;
 import de.hda.particles.emitter.PooledClothParticleEmitter;
 import de.hda.particles.features.*;
 import de.hda.particles.hud.*;
+import de.hda.particles.modifier.BoundingBoxParticleCulling;
 import de.hda.particles.modifier.ParticleLimiter;
 import de.hda.particles.modifier.PositionPathBuffering;
 import de.hda.particles.modifier.PositionablePointModifier;
@@ -34,7 +36,7 @@ import de.hda.particles.overlay.EmitterOverlay;
 import de.hda.particles.overlay.PositionablePointModifierOverlay;
 import de.hda.particles.renderer.*;
 import de.hda.particles.renderer.faces.*;
-import de.hda.particles.renderer.types.*;
+import de.hda.particles.renderer.particles.*;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.command.*;
 import de.hda.particles.scene.demo.DefaultDemoManager;
@@ -44,7 +46,7 @@ public class SimpleParticleSystemTest {
 
 	private final Logger logger = LoggerFactory.getLogger(SimpleParticleSystemTest.class);
 
-	// @Test
+	@Test
 	public void minimalEmitterTest() {
 		
 		// demo manager
@@ -66,34 +68,60 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), sceneConfiguration));
 
 		// huds
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RenderTypeHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
+//		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DemoHUD.class.getName())));
+
+		// editors
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PointParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PlaneParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledPulseRatePointParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", StaticPointParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledPointParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledClothParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledSoftBodyEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledTerrainGenerationEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledTetrahedronParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledSphereParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", SphereParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", GravityPointEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", GravityPulsarEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", GravityPlaneEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", BlackHoleEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", CollisionPlaneEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", ParticleLimiterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", BoundingBoxParticleCullingEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", ParticleGravityTransformationEditor.class.getName())));
 
 		// renderers
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
 
 		// system runner
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
 
 		// modifiers
 		demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", VelocityTransformation.class.getName())));
+		// demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", BoundingBoxParticleCulling.class.getName())));
 
 		// particle renderers
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", SimplePointRenderType.class.getName())));
-		// demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", BallRenderType.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", SimplePointParticleRenderer.class.getName())));
+		// demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 
 		// face renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddFaceRenderer.class, new CommandConfiguration("class", PolygonFaceRenderer.class.getName())));
@@ -109,7 +137,7 @@ public class SimpleParticleSystemTest {
 		cam1.put("pitch", -10.0);
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam1));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
 
 		demoManager.save("minimal.demo");
 
@@ -141,40 +169,42 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
 		// huds
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RenderTypeHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
 
 		// renderers
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
 //		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", FixedPointRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SpringRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", FixedPointSpringRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SpringRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", FixedPointSpringRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
 
 		// text overlays
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
 
 		// system runner
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
@@ -190,8 +220,8 @@ public class SimpleParticleSystemTest {
 //		demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", RandomStartColor.class.getName())));
 
 		// render types
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", SpringPolygonsRenderType.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", BallRenderType.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", SpringPolygonsParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 
 		CommandConfiguration cam1 = new CommandConfiguration();
 		cam1.put("class", FirstPersonCamera.class.getName());
@@ -204,7 +234,7 @@ public class SimpleParticleSystemTest {
 		cam1.put("pitch", -10.0);
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam1));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
 
 		CommandConfiguration cam2 = new CommandConfiguration();
 		cam2.put("class", ParticlePOVCamera.class.getName());
@@ -217,7 +247,7 @@ public class SimpleParticleSystemTest {
 		cam2.put("pitch", 0.0);
 		cam2.put("roll", 0.0);
 		cam2.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam2));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam2));
 
 		CommandConfiguration cam3 = new CommandConfiguration();
 		cam3.put("class", ParticleOriginCamera.class.getName());
@@ -230,7 +260,7 @@ public class SimpleParticleSystemTest {
 		cam3.put("pitch", 0.0);
 		cam3.put("roll", 0.0);
 		cam3.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam3));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam3));
 
 		CommandConfiguration c10 = new CommandConfiguration();
 		c10.put("id", 6);
@@ -242,11 +272,11 @@ public class SimpleParticleSystemTest {
 		c10.put("velocity_z", 0.0);
 		c10.put("rate", 1);
 		c10.put("lifetime", 200000);
-		c10.put("renderType", 1);
+		c10.put("particleRenderer", 1);
 		ParticleEmitterConfiguration pec1 = new ParticleEmitterConfiguration();
 		// pec1.put(ParticleInitialVelocityScatter.SCATTER_X, 0.2);
 		c10.put("configuration", pec1);
-		demoManager.addChangeSet(new ChangeSet(30, 0, CreateTerrainGenerationEmitter.class.getName(), c10));
+		demoManager.addChangeSet(new ChangeSet(30, 0, AddTerrainGenerationEmitter.class.getName(), c10));
 
 		demoManager.save("terrainGenerationEmitter.demo");
 
@@ -258,7 +288,7 @@ public class SimpleParticleSystemTest {
 		assertTrue(true);
 	}
 
-	@Test
+//	@Test
 	public void clothTest() {
 		DefaultDemoManager demoManager = new DefaultDemoManager();
 
@@ -273,30 +303,32 @@ public class SimpleParticleSystemTest {
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RenderTypeHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
 		// demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SpringRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
 
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
 
@@ -309,9 +341,9 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", MassSpringTransformation.class.getName())));
 
 		// render types
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", ClothRenderType.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", TexturedClothRenderType.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", BallRenderType.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", ClothParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", TexturedClothParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 
 		// face renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddFaceRenderer.class, new CommandConfiguration("class", PolygonFaceRenderer.class.getName())));
@@ -327,7 +359,7 @@ public class SimpleParticleSystemTest {
 		cam1.put("pitch", -10.0);
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam1));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
 
 		CommandConfiguration cam2 = new CommandConfiguration();
 		cam2.put("class", ParticlePOVCamera.class.getName());
@@ -340,7 +372,7 @@ public class SimpleParticleSystemTest {
 		cam2.put("pitch", 0.0);
 		cam2.put("roll", 0.0);
 		cam2.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam2));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam2));
 
 		CommandConfiguration c9 = new CommandConfiguration();
 		c9.put("id", 5);
@@ -349,7 +381,7 @@ public class SimpleParticleSystemTest {
 		c9.put(PositionablePointModifier.POSITION_Z, -200.0);
 		c9.put(GravityBase.GRAVITY, 0.20);
 		c9.put(GravityBase.MAX_FORCE, 0.10);
-		demoManager.addChangeSet(new ChangeSet(10, 0, CreateGravityPoint.class.getName(), c9));
+		demoManager.addChangeSet(new ChangeSet(10, 0, AddGravityPoint.class.getName(), c9));
 
 		CommandConfiguration c11 = new CommandConfiguration();
 		c11.put("id", 6);
@@ -361,7 +393,7 @@ public class SimpleParticleSystemTest {
 		c11.put("velocity_z", -7.5);
 		c11.put("rate", 90);
 		c11.put("lifetime", 2000);
-		c11.put("renderType", 0);
+		c11.put("particleRenderer", 0);
 		c11.put("faceRenderer", 1);
 		ParticleEmitterConfiguration clothEmitterConfig = new ParticleEmitterConfiguration();
 		clothEmitterConfig.put(MassSpring.SPRING_LENGTH, 50.0);
@@ -377,7 +409,7 @@ public class SimpleParticleSystemTest {
 		clothEmitterConfig.put(ParticleColor.END_COLOR_A, 64);
 		clothEmitterConfig.put(PooledClothParticleEmitter.COLORED_CLOTH, true);
 		c11.put("configuration", clothEmitterConfig);
-		demoManager.addChangeSet(new ChangeSet(30, 0, CreateClothEmitter.class.getName(), c11));
+		demoManager.addChangeSet(new ChangeSet(30, 0, AddClothEmitter.class.getName(), c11));
 
 		demoManager.save("cloth.demo");
 
@@ -389,7 +421,7 @@ public class SimpleParticleSystemTest {
 		assertTrue(true);
 	}
 
-	@Test
+//	@Test
 	public void softBodyObjectEmitterTest() {
 		
 		// demo manager
@@ -409,40 +441,42 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
 		// huds
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RenderTypeHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
 
 		// renderers
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
 //		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", FixedPointRenderer.class.getName())));
 //		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SpringRenderer.class.getName())));
 //		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", FixedPointSpringRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
 
 		// text overlays
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
 
 		// system runner
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
@@ -458,8 +492,8 @@ public class SimpleParticleSystemTest {
 //		demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", RandomStartColor.class.getName())));
 
 		// particle renderers
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", SpringPolygonsRenderType.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", BallRenderType.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", SpringPolygonsParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 
 		// face renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddFaceRenderer.class, new CommandConfiguration("class", PolygonFaceRenderer.class.getName())));
@@ -475,7 +509,7 @@ public class SimpleParticleSystemTest {
 		cam1.put("pitch", -10.0);
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam1));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
 
 		CommandConfiguration cam2 = new CommandConfiguration();
 		cam2.put("class", ParticlePOVCamera.class.getName());
@@ -488,7 +522,7 @@ public class SimpleParticleSystemTest {
 		cam2.put("pitch", 0.0);
 		cam2.put("roll", 0.0);
 		cam2.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam2));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam2));
 
 		CommandConfiguration cam3 = new CommandConfiguration();
 		cam3.put("class", ParticleOriginCamera.class.getName());
@@ -501,7 +535,7 @@ public class SimpleParticleSystemTest {
 		cam3.put("pitch", 0.0);
 		cam3.put("roll", 0.0);
 		cam3.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam3));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam3));
 
 		CommandConfiguration c10 = new CommandConfiguration();
 		c10.put("id", 6);
@@ -513,10 +547,10 @@ public class SimpleParticleSystemTest {
 		c10.put("velocity_z", 0.0);
 		c10.put("rate", 1);
 		c10.put("lifetime", 200000);
-		c10.put("renderType", 2);
+		c10.put("particleRenderer", 2);
 		c10.put("faceRenderer", 0);
 		c10.put("configuration", new ParticleEmitterConfiguration());
-		demoManager.addChangeSet(new ChangeSet(250, 0, CreateSoftBodyEmitter.class.getName(), c10));
+		demoManager.addChangeSet(new ChangeSet(250, 0, AddSoftBodyEmitter.class.getName(), c10));
 
 		demoManager.addChangeSet(new ChangeSet(550, AddModifier.class.getName(), new CommandConfiguration("class", RandomStartColor.class.getName())));
 
@@ -530,10 +564,10 @@ public class SimpleParticleSystemTest {
 		c11.put("velocity_z", 0.0);
 		c11.put("rate", 1);
 		c11.put("lifetime", 200000);
-		c11.put("renderType", 0);
+		c11.put("particleRenderer", 0);
 		c11.put("faceRenderer", 1);
 		c11.put("configuration", new ParticleEmitterConfiguration());
-		demoManager.addChangeSet(new ChangeSet(600, 0, CreateSoftBodyEmitter.class.getName(), c11));
+		demoManager.addChangeSet(new ChangeSet(600, 0, AddSoftBodyEmitter.class.getName(), c11));
 
 		CommandConfiguration c12 = new CommandConfiguration();
 		c12.put("id", 6);
@@ -545,20 +579,20 @@ public class SimpleParticleSystemTest {
 		c12.put("velocity_z", 0.0);
 		c12.put("rate", 1);
 		c12.put("lifetime", 200000);
-		c12.put("renderType", 2);
+		c12.put("particleRenderer", 2);
 		c12.put("faceRenderer", 1);
 		c12.put("configuration", new ParticleEmitterConfiguration());
-		demoManager.addChangeSet(new ChangeSet(950, 0, CreateSoftBodyEmitter.class.getName(), c12));
+		demoManager.addChangeSet(new ChangeSet(950, 0, AddSoftBodyEmitter.class.getName(), c12));
 
 		CommandConfiguration rrt1 = new CommandConfiguration();
-		rrt1.put("class", FireBallRenderType.class.getName());
+		rrt1.put("class", FireBallParticleRenderer.class.getName());
 		rrt1.put("index", 1);
-		demoManager.addChangeSet(new ChangeSet(1100, 0, ReplaceRenderType.class.getName(), rrt1));
+		demoManager.addChangeSet(new ChangeSet(1100, 0, ReplaceParticleRenderer.class.getName(), rrt1));
 
 		CommandConfiguration rrt2 = new CommandConfiguration();
-		rrt2.put("class", PoisonRenderType.class.getName());
+		rrt2.put("class", PoisonParticleRenderer.class.getName());
 		rrt2.put("index", 1);
-		demoManager.addChangeSet(new ChangeSet(1250, 0, ReplaceRenderType.class.getName(), rrt2));
+		demoManager.addChangeSet(new ChangeSet(1250, 0, ReplaceParticleRenderer.class.getName(), rrt2));
 
 		demoManager.save("softBodyObjectEmitter.demo");
 
@@ -585,35 +619,37 @@ public class SimpleParticleSystemTest {
 		c2.put("fullscreen", false);
 		demoManager.addChangeSet(new ChangeSet(0, CreateScene.class.getName(), c2));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", RenderTypeHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", HelpHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CrosshairHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CameraHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", RendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FaceRendererHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", CaptureHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EditorHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TextOverlayHUD.class.getName())));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", AxisRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPulsarRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPlaneRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", BlackHoleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", CollisionPlaneRenderer.class.getName())));
 
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, CreateTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", AxisOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", EmitterOverlay.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddTextOverlay.class.getName(), new CommandConfiguration("class", PositionablePointModifierOverlay.class.getName())));
 
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
 
@@ -640,7 +676,7 @@ public class SimpleParticleSystemTest {
 //		demoManager.addChangeSet(new ChangeSet(0, AddModifier.class, m5));
 
 		// render types
-		demoManager.addChangeSet(new ChangeSet(0, AddRenderType.class, new CommandConfiguration("class", BallRenderType.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 
 		CommandConfiguration cam1 = new CommandConfiguration();
 		cam1.put("class", FirstPersonCamera.class.getName());
@@ -653,7 +689,7 @@ public class SimpleParticleSystemTest {
 		cam1.put("pitch", -10.0);
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam1));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
 
 		CommandConfiguration cam2 = new CommandConfiguration();
 		cam2.put("class", ParticlePOVCamera.class.getName());
@@ -666,7 +702,7 @@ public class SimpleParticleSystemTest {
 		cam2.put("pitch", 0.0);
 		cam2.put("roll", 0.0);
 		cam2.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam2));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam2));
 
 		CommandConfiguration cam3 = new CommandConfiguration();
 		cam3.put("class", ParticleOriginCamera.class.getName());
@@ -679,7 +715,7 @@ public class SimpleParticleSystemTest {
 		cam3.put("pitch", 0.0);
 		cam3.put("roll", 0.0);
 		cam3.put("fov", 90.0);
-		demoManager.addChangeSet(new ChangeSet(0, CreateCamera.class.getName(), cam3));
+		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam3));
 
 		CommandConfiguration c6 = new CommandConfiguration();
 		c6.put("id", 2);
@@ -688,7 +724,7 @@ public class SimpleParticleSystemTest {
 		c6.put(PositionablePointModifier.POSITION_Z, 0.0);
 		c6.put(GravityBase.GRAVITY, 0.20);
 		c6.put(GravityBase.MAX_FORCE, 0.20);
-		demoManager.addChangeSet(new ChangeSet(10, 0, CreateGravityPoint.class.getName(), c6));
+		demoManager.addChangeSet(new ChangeSet(10, 0, AddGravityPoint.class.getName(), c6));
 		
 		CommandConfiguration c7 = new CommandConfiguration();
 		c7.put("id", 3);
@@ -697,7 +733,7 @@ public class SimpleParticleSystemTest {
 		c7.put(PositionablePointModifier.POSITION_Z, 0.0);
 		c7.put(GravityBase.GRAVITY, 0.20);
 		c7.put(GravityBase.MAX_FORCE, 0.20);
-		demoManager.addChangeSet(new ChangeSet(10, 0, CreateGravityPoint.class.getName(), c7));
+		demoManager.addChangeSet(new ChangeSet(10, 0, AddGravityPoint.class.getName(), c7));
 		
 		CommandConfiguration c8 = new CommandConfiguration();
 		c8.put("id", 4);
@@ -706,7 +742,7 @@ public class SimpleParticleSystemTest {
 		c8.put(PositionablePointModifier.POSITION_Z, 200.0);
 		c8.put(GravityBase.GRAVITY, 0.20);
 		c8.put(GravityBase.MAX_FORCE, 0.20);
-		demoManager.addChangeSet(new ChangeSet(10, 0, CreateGravityPoint.class.getName(), c8));
+		demoManager.addChangeSet(new ChangeSet(10, 0, AddGravityPoint.class.getName(), c8));
 
 		CommandConfiguration c9 = new CommandConfiguration();
 		c9.put("id", 5);
@@ -715,7 +751,7 @@ public class SimpleParticleSystemTest {
 		c9.put(PositionablePointModifier.POSITION_Z, -200.0);
 		c9.put(GravityBase.GRAVITY, 0.20);
 		c9.put(GravityBase.MAX_FORCE, 0.20);
-		demoManager.addChangeSet(new ChangeSet(10, 0, CreateGravityPoint.class.getName(), c9));
+		demoManager.addChangeSet(new ChangeSet(10, 0, AddGravityPoint.class.getName(), c9));
 
 		CommandConfiguration c10 = new CommandConfiguration();
 		c10.put("id", 6);
@@ -727,7 +763,7 @@ public class SimpleParticleSystemTest {
 		c10.put("velocity_z", -0.9);
 		c10.put("rate", 1);
 		c10.put("lifetime", 2000);
-		c10.put("renderType", 1);
+		c10.put("particleRenderer", 1);
 		ParticleEmitterConfiguration pec1 = new ParticleEmitterConfiguration();
 		pec1.put(ParticleInitialVelocityScatter.SCATTER_X, 0.2);
 		pec1.put(ParticleInitialVelocityScatter.SCATTER_Y, 0.2);
@@ -739,7 +775,7 @@ public class SimpleParticleSystemTest {
 		pec1.put(TubeSegments.SEGMENTS_TO_DRAW, 12);
 		pec1.put(TubeSegments.SEGMENT_TWIST, 3);
 		c10.put("configuration", pec1);
-		demoManager.addChangeSet(new ChangeSet(30, 0, CreatePointEmitter.class.getName(), c10));
+		demoManager.addChangeSet(new ChangeSet(30, 0, AddPointEmitter.class.getName(), c10));
 
 		CommandConfiguration c4 = new CommandConfiguration();
 		c4.put("id", 1000);
@@ -753,19 +789,19 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(1000, 250, RotateCamera360.class.getName(), c5));
 		
 		CommandConfiguration rrt1 = new CommandConfiguration();
-		rrt1.put("class", FireBallRenderType.class.getName());
+		rrt1.put("class", FireBallParticleRenderer.class.getName());
 		rrt1.put("index", 1);
-		demoManager.addChangeSet(new ChangeSet(780, 0, ReplaceRenderType.class.getName(), rrt1));
+		demoManager.addChangeSet(new ChangeSet(780, 0, ReplaceParticleRenderer.class.getName(), rrt1));
 
 		CommandConfiguration rrt2 = new CommandConfiguration();
-		rrt2.put("class", PoisonRenderType.class.getName());
+		rrt2.put("class", PoisonParticleRenderer.class.getName());
 		rrt2.put("index", 1);
-		demoManager.addChangeSet(new ChangeSet(910, 0, ReplaceRenderType.class.getName(), rrt2));
+		demoManager.addChangeSet(new ChangeSet(910, 0, ReplaceParticleRenderer.class.getName(), rrt2));
 
 		CommandConfiguration rrt3 = new CommandConfiguration();
-		rrt3.put("class", BallRenderType.class.getName());
+		rrt3.put("class", BallParticleRenderer.class.getName());
 		rrt3.put("index", 1);
-		demoManager.addChangeSet(new ChangeSet(1040, 0, ReplaceRenderType.class.getName(), rrt3));
+		demoManager.addChangeSet(new ChangeSet(1040, 0, ReplaceParticleRenderer.class.getName(), rrt3));
 
 		demoManager.save("test");
 
@@ -809,17 +845,17 @@ public class SimpleParticleSystemTest {
 //	// @Test
 //	public void fullParticleSystemTest() throws InterruptedException {
 //		
-//		Integer defaultRenderType = 1;
-//		Integer complexPointRenderType = 2;
-//		Integer rainRenderType = 3;
-//		Integer coloredPointRenderType = 4;
-//		Integer triangleRenderType = 5;
-//		Integer triangleStripRenderType = 6;
-//		Integer triangleFanRenderType = 7;
-//		Integer quadsRenderType = 8;
-//		Integer lineStripRenderType = 9;
-//		Integer pointSpriteRenderType = 10;
-//		Integer velocityRenderType = 11;
+//		Integer defaultParticleRenderer = 1;
+//		Integer complexPointParticleRenderer = 2;
+//		Integer rainParticleRenderer = 3;
+//		Integer coloredPointParticleRenderer = 4;
+//		Integer triangleParticleRenderer = 5;
+//		Integer triangleStripParticleRenderer = 6;
+//		Integer triangleFanParticleRenderer = 7;
+//		Integer quadsParticleRenderer = 8;
+//		Integer lineStripParticleRenderer = 9;
+//		Integer pointSpriteParticleRenderer = 10;
+//		Integer velocityParticleRenderer = 11;
 //		
 //		ParticleSystem particleSystem = new DefaultParticleSystem();
 //		particleSystem.addParticleFeature(new ParticleInitialVelocityScatter());
@@ -836,7 +872,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 200.0f, 0.0f),
 ////				new Vector3f(0.0f, 1.0f, 0.0f),
-////				complexPointRenderType,
+////				complexPointParticleRenderer,
 ////				1336,
 ////				pec1);
 ////
@@ -850,7 +886,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, -200.0f, 0.0f),
 ////				new Vector3f(0.0f, -5.0f, 0.0f),
-////				triangleFanRenderType,
+////				triangleFanParticleRenderer,
 ////				100,
 ////				pec2);
 ////
@@ -864,7 +900,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(200.0f, 0.0f, 0.0f),
 ////				new Vector3f(1.2f, 0.0f, 0.0f),
-////				triangleStripRenderType,
+////				triangleStripParticleRenderer,
 ////				200,
 ////				pec3);
 ////
@@ -878,7 +914,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(-200.0f, 0.0f, 0.0f),
 ////				new Vector3f(-1.0f, 0.0f, 0.0f),
-////				coloredPointRenderType,
+////				coloredPointParticleRenderer,
 ////				1336,
 ////				pec4);
 ////
@@ -892,7 +928,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 0.0f, 200.0f),
 ////				new Vector3f(0.0f, 0.0f, 1.0f),
-////				triangleRenderType,
+////				triangleParticleRenderer,
 ////				1336,
 ////				pec5);
 ////
@@ -908,7 +944,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 0.0f, -200.0f),
 ////				new Vector3f(0.0f, 0.0f, -0.1f),
-////				pointSpriteRenderType, // lineStripRenderType,
+////				pointSpriteParticleRenderer, // lineStripParticleRenderer,
 ////				1000,
 ////				pec6);
 //
@@ -926,7 +962,7 @@ public class SimpleParticleSystemTest {
 ////				PlaneParticleEmitter.class,
 ////				new Vector3f(-600.0f, 0.0f, -600.0f),
 ////				new Vector3f(0.0f, -4.0f, 0.0f),
-////				rainRenderType,
+////				rainParticleRenderer,
 ////				1300,
 ////				pec7);
 //
@@ -989,17 +1025,17 @@ public class SimpleParticleSystemTest {
 //
 //	public void sceneManagerSystemTest() throws InterruptedException, JsonParseException, JsonMappingException, ClassNotFoundException, IOException {
 //		
-//		Integer defaultRenderType = 1;
-//		Integer complexPointRenderType = 2;
-//		Integer rainRenderType = 3;
-//		Integer coloredPointRenderType = 4;
-//		Integer triangleRenderType = 5;
-//		Integer triangleStripRenderType = 6;
-//		Integer triangleFanRenderType = 7;
-//		Integer quadsRenderType = 8;
-//		Integer lineStripRenderType = 9;
-//		Integer pointSpriteRenderType = 10;
-//		Integer velocityRenderType = 11;
+//		Integer defaultParticleRenderer = 1;
+//		Integer complexPointParticleRenderer = 2;
+//		Integer rainParticleRenderer = 3;
+//		Integer coloredPointParticleRenderer = 4;
+//		Integer triangleParticleRenderer = 5;
+//		Integer triangleStripParticleRenderer = 6;
+//		Integer triangleFanParticleRenderer = 7;
+//		Integer quadsParticleRenderer = 8;
+//		Integer lineStripParticleRenderer = 9;
+//		Integer pointSpriteParticleRenderer = 10;
+//		Integer velocityParticleRenderer = 11;
 //		
 //		ParticleSystem particleSystem = new DefaultParticleSystem();
 //		particleSystem.addParticleFeature(new ParticleInitialVelocityScatter());
@@ -1016,7 +1052,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 200.0f, 0.0f),
 ////				new Vector3f(0.0f, 1.0f, 0.0f),
-////				velocityRenderType,
+////				velocityParticleRenderer,
 ////				10000,
 ////				pec1);
 //
@@ -1030,7 +1066,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, -200.0f, 0.0f),
 ////				new Vector3f(0.0f, -3.0f, 0.0f),
-////				velocityRenderType, // triangleFanRenderType,
+////				velocityParticleRenderer, // triangleFanParticleRenderer,
 ////				1000,
 ////				pec2);
 //
@@ -1044,7 +1080,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(200.0f, 0.0f, 0.0f),
 ////				new Vector3f(1.2f, 0.0f, 0.0f),
-////				triangleStripRenderType,
+////				triangleStripParticleRenderer,
 ////				200,
 ////				pec3);
 //
@@ -1058,7 +1094,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(-200.0f, 0.0f, 0.0f),
 ////				new Vector3f(-1.0f, 0.0f, 0.0f),
-////				velocityRenderType,
+////				velocityParticleRenderer,
 ////				1336,
 ////				pec4);
 //
@@ -1072,7 +1108,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 0.0f, 200.0f),
 ////				new Vector3f(0.0f, 0.0f, 1.0f),
-////				triangleRenderType,
+////				triangleParticleRenderer,
 ////				1336,
 ////				pec5);
 //
@@ -1091,7 +1127,7 @@ public class SimpleParticleSystemTest {
 ////				PointParticleEmitter.class,
 ////				new Vector3f(0.0f, 0.0f, -200.0f),
 ////				new Vector3f(0.0f, 0.0f, -2.8f),
-////				lineStripRenderType, // pointSpriteRenderType, 
+////				lineStripParticleRenderer, // pointSpriteParticleRenderer, 
 ////				20000,
 ////				pec6);
 //
@@ -1109,7 +1145,7 @@ public class SimpleParticleSystemTest {
 ////				PlaneParticleEmitter.class,
 ////				new Vector3f(-600.0f, 0.0f, -600.0f),
 ////				new Vector3f(0.0f, -4.0f, 0.0f),
-////				rainRenderType,
+////				rainParticleRenderer,
 ////				1300,
 ////				pec7);
 //

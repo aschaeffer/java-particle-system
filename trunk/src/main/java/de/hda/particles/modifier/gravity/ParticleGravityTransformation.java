@@ -20,11 +20,18 @@ public class ParticleGravityTransformation extends GravityPoint implements Parti
 
 	@Override
 	public void prepare() {
+		Double g = (Double) this.configuration.get(GravityBase.GRAVITY);
+		if (g == null) g = DEFAULT_GRAVITY;
+		gravity = g.floatValue();
+		Double mf = (Double) this.configuration.get(GravityBase.MAX_FORCE);
+		if (mf == null) mf = DEFAULT_MAX_FORCE;
+		maxForce = mf.floatValue();
+
 		List<Particle> particles = particleSystem.getParticles();
 		for (Integer target = 0; target < particles.size(); target++) {
 			for (Integer source = target + 1; source < particles.size(); source++) {
 				Particle sourceParticle = particles.get(source);
-				updateParticleVelocity(particles.get(target), sourceParticle.getPosition(), sourceParticle.getMass(), DEFAULT_GRAVITY.floatValue(), DEFAULT_MAX_FORCE.floatValue());
+				updateParticleVelocity(particles.get(target), sourceParticle.getPosition(), sourceParticle.getMass(), gravity, maxForce);
 			}
 		}
 	}

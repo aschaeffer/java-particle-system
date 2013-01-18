@@ -1,0 +1,112 @@
+{
+  "name" : "Gravity Point Net",
+  "changeSets" : [ {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : 0.0,
+      "position_y" : 0.0,
+      "position_z" : -200.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 6,
+      "position_x" : 0.0,
+      "position_y" : 0.0,
+      "position_z" : 0.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 7,
+      "position_x" : 0.0,
+      "position_y" : 0.0,
+      "position_z" : 200.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : -200.0,
+      "position_y" : 0.0,
+      "position_z" : -200.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : -200.0,
+      "position_y" : 0.0,
+      "position_z" : 0.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : -200.0,
+      "position_y" : 0.0,
+      "position_z" : 200.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : 200.0,
+      "position_y" : 0.0,
+      "position_z" : -200.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : 200.0,
+      "position_y" : 0.0,
+      "position_z" : 0.0,
+      "gravity" : 0.2
+    }
+  }, {
+    "iteration" : 10,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.CreateGravityPoint",
+    "configuration" : {
+      "maxForce" : 0.1,
+      "id" : 5,
+      "position_x" : 200.0,
+      "position_y" : 0.0,
+      "position_z" : 200.0,
+      "gravity" : 0.2
+    }
+  } ]
+}

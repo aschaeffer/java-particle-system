@@ -37,7 +37,7 @@ public class PooledSphereParticleEmitter extends AbstractParticleEmitter impleme
 			particle.setVelX((random.nextFloat() * 2.0f - 1.0f) * particleDefaultVelocity.x);
 			particle.setVelY((random.nextFloat() * 2.0f - 1.0f) * particleDefaultVelocity.y);
 			particle.setVelZ((random.nextFloat() * 2.0f - 1.0f) * particleDefaultVelocity.z);
-			particle.setRenderTypeIndex(particleRenderTypeIndex);
+			particle.setParticleRendererIndex(particleRendererIndex);
 			particle.setRemainingIterations(particleLifetime);
 			for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 				particleFeature.init(this, particle);

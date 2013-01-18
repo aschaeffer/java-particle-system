@@ -7,7 +7,7 @@
 	"emitters": [
 		{
 			"className": "de.hda.particles.emitter.PointParticleEmitter",
-			"renderType": "de.hda.particles.renderer.types.SimpleVelocityRenderType",
+			"particleRenderer": "de.hda.particles.renderer.types.SimpleVelocityParticleRenderer",
 			"rate": 1,
 			"lifetime": 5000,
 			"position_x": 0.0,

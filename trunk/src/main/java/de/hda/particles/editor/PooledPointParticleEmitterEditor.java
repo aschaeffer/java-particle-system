@@ -10,6 +10,11 @@ public class PooledPointParticleEmitterEditor extends AbstractParticleEmitterEdi
 	public Boolean accept(Class<? extends Object> clazz) {
 		return clazz.equals(PooledPointParticleEmitter.class);
 	}
+	
+	@Override
+	public Class<? extends Object> getAcceptable() {
+		return PooledPointParticleEmitter.class;
+	}
 
 	@Override
 	public String getTitle() {

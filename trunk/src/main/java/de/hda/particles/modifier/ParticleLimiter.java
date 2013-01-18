@@ -5,6 +5,9 @@ import de.hda.particles.domain.Particle;
 public class ParticleLimiter extends AbstractParticleModifier implements ParticleModifier {
 
 	public final static Integer DEFAULT_MAX_PARTICLES = 200000;
+	
+	public final static Integer MIN_MAX_PARTICLES = 0;
+	public final static Integer MAX_MAX_PARTICLES = 1000000;
 
 	public final static String MAX_PARTICLES = "maxParticles";
 

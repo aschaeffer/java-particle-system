@@ -9,6 +9,7 @@ import de.hda.particles.domain.Face;
 import de.hda.particles.listener.FaceLifetimeListener;
 import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.renderer.Renderer;
+import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.Scene;
 
 public class FaceRendererManager extends AbstractRenderer implements Renderer, FaceLifetimeListener {
@@ -32,39 +33,47 @@ public class FaceRendererManager extends AbstractRenderer implements Renderer, F
 		this.scene = scene;
 	}
 	
-	public Integer add(FaceRenderer renderType) {
-		renderType.addDependencies();
-		faceRenderers.add(renderType);
+	public Integer add(FaceRenderer faceRenderer) {
+		faceRenderer.addDependencies();
+		faceRenderers.add(faceRenderer);
 		faceRendererFaceCache.put(faceRenderers.size(), new LinkedList<Face>());
 		newFaces.put(faceRenderers.size(), new ArrayList<Face>());
 		return faceRenderers.size(); // index+1
 	}
 
-	public Integer add(Class<? extends FaceRenderer> renderTypeClass) {
+	public Integer add(Class<? extends FaceRenderer> faceRendererClass) {
 		try {
-			FaceRenderer renderType = renderTypeClass.newInstance();
-			renderType.setScene(scene);
-			renderType.addDependencies();
-			faceRenderers.add(renderType);
+			FaceRenderer faceRenderer = faceRendererClass.newInstance();
+			faceRenderer.setScene(scene);
+			faceRenderer.addDependencies();
+			faceRenderers.add(faceRenderer);
 			faceRendererFaceCache.put(faceRenderers.size(), new LinkedList<Face>());
 			newFaces.put(faceRenderers.size(), new ArrayList<Face>());
 			return faceRenderers.size(); // index+1
 		} catch (Exception e) {
-			logger.error("could not create render type: " + e.getMessage(), e);
+			logger.error("could not create face renderer: " + e.getMessage(), e);
 			return 0; // defaults to zero, if render type couldn't be created
 		}
 	}
 	
-	public void replace(Class<? extends FaceRenderer> renderTypeClass, Integer index) {
+	public void remove(Integer index) {
+		faceRenderers.remove(index);
+	}
+	
+	public void remove(FaceRenderer faceRenderer) {
+		faceRenderers.remove(faceRenderer);
+	}
+	
+	public void replace(Class<? extends FaceRenderer> faceRendererClass, Integer index) {
 		if (index < 1 || index > faceRenderers.size()) return;
 		index--;
 		try {
-			FaceRenderer renderType = renderTypeClass.newInstance();
-			renderType.setScene(scene);
-			renderType.addDependencies();
-			faceRenderers.set(index, renderType);
+			FaceRenderer faceRenderer = faceRendererClass.newInstance();
+			faceRenderer.setScene(scene);
+			faceRenderer.addDependencies();
+			faceRenderers.set(index, faceRenderer);
 		} catch (Exception e) {
-			logger.error("could not create render type: " + e.getMessage(), e);
+			logger.error("could not create face renderer: " + e.getMessage(), e);
 		}
 	}
 	

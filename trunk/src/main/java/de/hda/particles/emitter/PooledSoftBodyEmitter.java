@@ -173,7 +173,7 @@ public class PooledSoftBodyEmitter extends AbstractParticleEmitter implements Pa
 		particle.setY(position.y + y * SCALE);
 		particle.setZ(position.z + z * SCALE);
 		particle.setVelocity(particleDefaultVelocity);
-		particle.setRenderTypeIndex(particleRenderTypeIndex);
+		particle.setParticleRendererIndex(particleRendererIndex);
 		particle.setRemainingIterations(particleLifetime);
 		for (ParticleFeature particleFeature: particleSystem.getParticleFeatures()) {
 			particleFeature.init(this, particle);

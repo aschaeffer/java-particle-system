@@ -19,7 +19,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	
 	protected final static String LIFETIME = "lifetime";
 	protected final static String RATE = "rate";
-	protected final static String RENDER_TYPE_INDEX = "render_type_index";
+	protected final static String PARTICLE_RENDERER_INDEX = "particle_renderer_index";
 	protected final static String FACE_RENDERER_INDEX = "face_renderer_index";
 	protected final static String POSITION_X = "pos_x";
 	protected final static String POSITION_Y = "pos_y";
@@ -37,7 +37,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	public void setup() {
 		editorEntries.add(HUDEditorEntry.create(LIFETIME, "Particle Lifetime"));
 		editorEntries.add(HUDEditorEntry.create(RATE, "Rate"));
-		editorEntries.add(HUDEditorEntry.create(RENDER_TYPE_INDEX, "Particle Renderer"));
+		editorEntries.add(HUDEditorEntry.create(PARTICLE_RENDERER_INDEX, "Particle Renderer"));
 		editorEntries.add(HUDEditorEntry.create(FACE_RENDERER_INDEX, "Face Renderer"));
 		editorEntries.add(HUDEditorEntry.create(POSITION_X, "Position X"));
 		editorEntries.add(HUDEditorEntry.create(POSITION_Y, "Position Y"));
@@ -92,10 +92,10 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 				value--;
 			}
 			subject.setRate(value);
-		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
-			Integer value = subject.getParticleRenderTypeIndex();
+		} else if (fieldName.equals(PARTICLE_RENDERER_INDEX)) {
+			Integer value = subject.getParticleRendererIndex();
 			if (value > 0) value--;
-			subject.setParticleRenderTypeIndex(value);
+			subject.setParticleRendererIndex(value);
 		} else if (fieldName.equals(FACE_RENDERER_INDEX)) {
 			Integer value = subject.getFaceRendererIndex();
 			if (value > 0) value--;
@@ -129,8 +129,8 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			subject.setParticleLifetime(0);
 		} else if (fieldName.equals(RATE)) {
 			subject.setRate(0);
-		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
-			subject.setParticleRenderTypeIndex(1);
+		} else if (fieldName.equals(PARTICLE_RENDERER_INDEX)) {
+			subject.setParticleRendererIndex(1);
 		} else if (fieldName.equals(FACE_RENDERER_INDEX)) {
 			subject.setFaceRendererIndex(1);
 		} else {
@@ -160,8 +160,8 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 				value++;
 			}
 			subject.setRate(value);
-		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
-			subject.setParticleRenderTypeIndex(subject.getParticleRenderTypeIndex() + 1);
+		} else if (fieldName.equals(PARTICLE_RENDERER_INDEX)) {
+			subject.setParticleRendererIndex(subject.getParticleRendererIndex() + 1);
 		} else if (fieldName.equals(FACE_RENDERER_INDEX)) {
 			subject.setFaceRendererIndex(subject.getFaceRendererIndex() + 1);
 		} else if (fieldName.equals(POSITION_X)) {
@@ -186,7 +186,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 
 	@Override
 	public void setMax(String fieldName) {
-		if (fieldName.equals(POSITION_X) || fieldName.equals(POSITION_Y) || fieldName.equals(POSITION_Z) || fieldName.equals(VELOCITY_X) || fieldName.equals(VELOCITY_Y) || fieldName.equals(VELOCITY_Z) || fieldName.equals(RENDER_TYPE_INDEX) || fieldName.equals(FACE_RENDERER_INDEX))
+		if (fieldName.equals(POSITION_X) || fieldName.equals(POSITION_Y) || fieldName.equals(POSITION_Z) || fieldName.equals(VELOCITY_X) || fieldName.equals(VELOCITY_Y) || fieldName.equals(VELOCITY_Z) || fieldName.equals(PARTICLE_RENDERER_INDEX) || fieldName.equals(FACE_RENDERER_INDEX))
 			return;
 		if (fieldName.equals(LIFETIME)) {
 			subject.setParticleLifetime(2000); // just a big number, not maximum
@@ -206,9 +206,9 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 			return new Long(subject.getParticleLifetime()).toString();
 		} else if (fieldName.equals(RATE)) {
 			return subject.getRate().toString();
-		} else if (fieldName.equals(RENDER_TYPE_INDEX)) {
-			// return subject.getRenderTypeIndex().toString();
-			return scene.getRenderTypeManager().getRenderTypeName(subject.getParticleRenderTypeIndex());
+		} else if (fieldName.equals(PARTICLE_RENDERER_INDEX)) {
+			// return subject.getParticleRendererIndex().toString();
+			return scene.getParticleRendererManager().getParticleRendererName(subject.getParticleRendererIndex());
 		} else if (fieldName.equals(FACE_RENDERER_INDEX)) {
 			// return subject.getFaceRendererIndex().toString();
 			return scene.getFaceRendererManager().getFaceRendererName(subject.getFaceRendererIndex());

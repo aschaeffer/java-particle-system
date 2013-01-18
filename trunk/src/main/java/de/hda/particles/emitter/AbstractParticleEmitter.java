@@ -12,7 +12,7 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	protected Integer rate = 3;
 	protected Vector3f position = new Vector3f();
 	protected Vector3f particleDefaultVelocity = new Vector3f();
-	protected Integer particleRenderTypeIndex = 0;
+	protected Integer particleRendererIndex = 0;
 	protected Integer faceRendererIndex = 0;
 	protected Integer particleLifetime = 5;
 	protected Integer pastIterations = 0;
@@ -88,13 +88,13 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	}
 
 	@Override
-	public Integer getParticleRenderTypeIndex() {
-		return particleRenderTypeIndex;
+	public Integer getParticleRendererIndex() {
+		return particleRendererIndex;
 	}
 
 	@Override
-	public void setParticleRenderTypeIndex(Integer particleRenderTypeIndex) {
-		this.particleRenderTypeIndex = particleRenderTypeIndex;
+	public void setParticleRendererIndex(Integer particleRendererIndex) {
+		this.particleRendererIndex = particleRendererIndex;
 	}
 
 	@Override

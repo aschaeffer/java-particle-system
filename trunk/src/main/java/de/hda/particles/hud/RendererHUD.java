@@ -31,7 +31,7 @@ public class RendererHUD extends AbstractHUD implements HUD {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
 			if (!blockFullscreenSelection) {
-				scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.TOGGLE_FULLSCREEN));
+				proxyInputCommand(HUDCommandTypes.TOGGLE_FULLSCREEN);
 				blockFullscreenSelection = true;
 			}
 		} else {
@@ -72,7 +72,7 @@ public class RendererHUD extends AbstractHUD implements HUD {
 				skyBoxRenderer.clearSkybox();
 				skyBoxRenderer.loadSkybox((String) command.getPayLoad());
 			}
-		} else if (command.getType() == HUDCommandTypes.DISPLAY_SIZE) {
+		} else if (command.getType() == HUDCommandTypes.CHANGE_DISPLAY_SIZE) {
 			scene.setWidth((Integer) command.getPayLoad());
 			scene.setHeight((Integer) command.getPayLoad2());
 			scene.applyChanges();

@@ -72,6 +72,18 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		return huds;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T extends HUD> T getByType(Class<T> hudClass) {
+		ListIterator<HUD> iterator = huds.listIterator(0);
+		while (iterator.hasNext()) {
+			HUD hud = iterator.next();
+			if (hud.getClass().equals(hudClass)) {
+				return (T) hud;
+			}
+		}
+		return null;
+	}
+	
 	public void addCommand(HUDCommand command) {
 		commandQueue.add(command);
 	}
@@ -79,37 +91,25 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 	@Override
 	public void update() {
 		// execute all queued commands
-		// TODO: before or after activated check???
 		for (Integer queueIndex = 0; queueIndex < commandQueue.size(); queueIndex++) {
 			for (Integer hudIndex = 0; hudIndex < huds.size(); hudIndex++) {
-//				logger.debug("call execute command: " + commandQueue.get(queueIndex).getType().name() + " on " + huds.get(hudIndex).getClass().getSimpleName());
 				huds.get(hudIndex).executeCommand(commandQueue.get(queueIndex));
 			}
 			executeCommand(commandQueue.get(queueIndex));
 		}
-//		for (HUDCommand command : commandQueue) {
-//			executeCommand(command);
-//		}
 		commandQueue.clear();
-//		ListIterator<HUDCommand> commandIterator = commandQueue.listIterator(0);
-//		while (commandIterator.hasNext()) {
-//			HUDCommand command = commandIterator.next();
-//			executeCommand(command);
-//			commandIterator.remove();
-//		}
 
 		if (!activated) return;
 
 		enterOrtho();
 
-	    // draw quads
-//	    glMatrixMode(GL_MODELVIEW); <----- NEVER!
-//	    glLoadIdentity();           <----- NEVER!
-	    glTranslatef(0.375f, 0.375f, 0.0f);
-
-	    glPushMatrix();
+		// draw quads
+		// glMatrixMode(GL_MODELVIEW); <----- NEVER!
+		// glLoadIdentity();           <----- NEVER!
+		glTranslatef(0.375f, 0.375f, 0.0f);
+		glPushMatrix();
 		// render all managed huds (first pass)
-	    ListIterator<HUD> iterator = huds.listIterator(0);
+		ListIterator<HUD> iterator = huds.listIterator(0);
 		while(iterator.hasNext()) {
 			iterator.next().render1();
 		}

@@ -47,15 +47,10 @@ public class GravityPoint extends AbstractPositionablePointModifier implements P
 		if (distance == 0.0f) distance = 0.00000000001f;
 		Float force = -(particle.getMass()) * mass * gravity / (distance * distance);
 		if (Math.abs(force) > maxForce) force = maxForce;
-		Vector3f totalForce = new Vector3f(
-			force * (particle.getX() - gravityPoint.x) / distance,
-			force * (particle.getY() - gravityPoint.y) / distance,
-			force * (particle.getZ() - gravityPoint.z) / distance
-		);
 		Vector3f accelleration = new Vector3f(
-			totalForce.x / particle.getMass(),
-			totalForce.y / particle.getMass(),
-			totalForce.z / particle.getMass()
+			(force * dx) / (distance * particle.getMass()),
+			(force * dy) / (distance * particle.getMass()),
+			(force * dz) / (distance * particle.getMass())
 		);
 		Vector3f newVelocity = new Vector3f();
 		Vector3f.add(particle.getVelocity(), accelleration, newVelocity);
