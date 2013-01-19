@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 public class PositionPath extends AbstractParticleFeature implements ParticleFeature {
 

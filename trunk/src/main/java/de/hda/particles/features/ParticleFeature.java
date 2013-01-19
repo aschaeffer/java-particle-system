@@ -3,8 +3,8 @@ package de.hda.particles.features;
 import java.util.List;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 public interface ParticleFeature {
 
@@ -16,6 +16,7 @@ public interface ParticleFeature {
 	public void increaseMax(final ParticleEmitter emitter, final String fieldName);
 	public void setDefault(final ParticleEmitter emitter, final String fieldName);
 	public String getValue(final ParticleEmitter emitter, final String fieldName);
+	public Object getObject(final ParticleEmitter emitter, final String fieldName);
 	public Boolean validFieldName(final String fieldName);
 
 }

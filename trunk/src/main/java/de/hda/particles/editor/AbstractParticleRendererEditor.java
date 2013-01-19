@@ -2,17 +2,14 @@ package de.hda.particles.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
-import de.hda.particles.features.ParticleFeature;
-import de.hda.particles.modifier.ParticleModifier;
+import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.Scene;
 
-public abstract class AbstractParticleModifierEditor<T extends ParticleModifier> implements Editor {
+public abstract class AbstractParticleRendererEditor<T extends ParticleRenderer> implements Editor {
 
-	protected final static String title = "Particle Modifier";
 	protected Scene scene;
-	protected ParticleModifier subject;
+	protected T subject;
 	protected List<HUDEditorEntry> editorEntries = new ArrayList<HUDEditorEntry>();;
 
 	@Override
@@ -36,11 +33,6 @@ public abstract class AbstractParticleModifierEditor<T extends ParticleModifier>
 	}
 
 	@Override
-	public String getTitle() {
-		return title;
-	}
-	
-	@Override
 	public void decrease(String fieldName) {
 	}
 
@@ -60,10 +52,11 @@ public abstract class AbstractParticleModifierEditor<T extends ParticleModifier>
 	public String getValue(String fieldName) {
 		return "N/A";
 	}
-	
+
 	@Override
-	public Object getObject(String fieldName) {
-		return subject.getConfiguration().get(fieldName);
+	public String getTitle() {
+		if (subject == null) return "Unknown Particle Renderer";
+		return subject.getName() + " Particle Renderer";
 	}
 
 }

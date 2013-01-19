@@ -3,6 +3,12 @@ package de.hda.particles.features;
 import de.hda.particles.emitter.ParticleEmitter;
 
 public abstract class AbstractParticleFeature implements ParticleFeature {
+	
+	@Override
+	public Object getObject(final ParticleEmitter emitter, final String fieldName) {
+		if (!validFieldName(fieldName)) return null;
+		return emitter.getConfiguration().get(fieldName);
+	}
 
 	protected Integer increaseValue(final ParticleEmitter emitter, final String featureKey, final Integer defaultValue, final Integer maxValue) {
 		Integer oldValue = (Integer) emitter.getConfiguration().get(featureKey);

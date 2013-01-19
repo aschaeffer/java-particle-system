@@ -74,9 +74,10 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUDControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DynamicSelectionMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
@@ -107,6 +108,8 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", ParticleLimiterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", BoundingBoxParticleCullingEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", ParticleGravityTransformationEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", BillboardParticleRendererEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", DisplayEditor.class.getName())));
 
 		// renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
@@ -175,9 +178,10 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUDControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DynamicSelectionMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
@@ -309,9 +313,10 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUDControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DynamicSelectionMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
@@ -447,9 +452,10 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUDControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DynamicSelectionMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));
@@ -625,9 +631,10 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FpsHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ParticleSystemControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MessageHUD.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MenuHUDControlHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", MainMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", TopMenuHUD.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", DynamicSelectionMenuHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", EmitterHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", ModifierHUD.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddHUD.class.getName(), new CommandConfiguration("class", FeatureHUD.class.getName())));

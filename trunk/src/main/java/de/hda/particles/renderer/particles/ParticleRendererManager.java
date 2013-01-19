@@ -84,8 +84,12 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 		}
 	}
 	
-	public List<ParticleRenderer> getParticleRenderer() {
+	public List<ParticleRenderer> getParticleRenderers() {
 		return particleRenderers;
+	}
+	
+	public ParticleRenderer getParticleRenderer(final Integer index) {
+		return particleRenderers.get(index-1);
 	}
 	
 	public String getParticleRendererName(final Integer index) {

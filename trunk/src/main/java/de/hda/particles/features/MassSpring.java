@@ -6,8 +6,8 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 public class MassSpring extends AbstractParticleFeature implements ParticleFeature {
 
@@ -166,14 +166,8 @@ public class MassSpring extends AbstractParticleFeature implements ParticleFeatu
 		if (!validFieldName(fieldName)) return null;
 		if (fieldName.equals(SPRING_CONSTRUCTION_RULE) || fieldName.equals(NUMBER_SPRINGS)) {
 			return getIntegerValueAsString(emitter, fieldName);
-//			Integer value = (Integer) emitter.getConfiguration().get(fieldName);
-//			if (value == null) return "N/A";
-//			return value.toString();
 		} else {
 			return getDoubleValueAsString(emitter, fieldName);
-//			Double value = (Double) emitter.getConfiguration().get(fieldName);
-//			if (value == null) return "N/A";
-//			return String.format("%.2f", value);
 		}
 	}
 	

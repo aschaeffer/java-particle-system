@@ -14,12 +14,12 @@ import de.hda.particles.textures.DeferredTextureLoaderCallback;
 public class SkyBoxRenderer extends AbstractRenderer implements Renderer, DeferredTextureLoaderCallback {
 
 	private static final String DEFAULT_SKYBOX_NAME = "sleepyhollow";
-	private static final String DEFAULT_SKYBOX_FORMAT = "JPG";
+//	private static final String DEFAULT_SKYBOX_FORMAT = "JPG";
 
 	private final Texture[] textures = new Texture[6]; // = new ArrayList<Texture>();
-	private Boolean deferedLoading = false;
+	private Boolean deferedLoading = true;
 	private String name = DEFAULT_SKYBOX_NAME;
-	private final String format = DEFAULT_SKYBOX_FORMAT;
+//	private final String format = DEFAULT_SKYBOX_FORMAT;
 	
 	private Boolean ready = false;
 
@@ -55,12 +55,6 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 		glRotatef(scene.getCameraManager().getYaw(), 0.0f, 1.0f, 0.0f);
 		// rotate the yaw around the Y axis
 		glRotatef(scene.getCameraManager().getRoll(), 0.0f, 0.0f, 1.0f);
-		// translate to the position vector's location
-		// glTranslatef(this.camera.getPosition().x, this.camera.getPosition().y, this.camera.getPosition().z);
-
-        // glRotatef(angle, this.camera.getPosition().x, this.camera.getPosition().y, this.camera.getPosition().z);
-        // glTranslatef(this.camera.getPosition().x, this.camera.getPosition().y, this.camera.getPosition().z);
-        // this.camera.lookThrough();
 
 		glActiveTexture(GL_TEXTURE0);
 
@@ -151,10 +145,8 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 		// Restore enable bits and matrix
 		glEnable(GL_DEPTH_TEST);
 		glPopAttrib();
-		// glClear(GL_DEPTH_BUFFER_BIT);
 
 		glPopMatrix();
-
 	}
 
 	// clamp textures, that edges get dont create a line in between
@@ -224,19 +216,6 @@ public class SkyBoxRenderer extends AbstractRenderer implements Renderer, Deferr
 	public void reportTextureLoadingError(String name) {
 		deferedLoading = false;
 		this.name = name;
-//		if ("ft".equals(key)) {
-//			textures[0] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_ft.jpg");
-//		} else if ("lf".equals(key)) {
-//			textures[1] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_lf.jpg");
-//		} else if ("bk".equals(key)) {
-//			textures[2] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_bk.jpg");
-//		} else if ("rt".equals(key)) {
-//			textures[3] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_rt.jpg");
-//		} else if ("up".equals(key)) {
-//			textures[4] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_up.jpg");
-//		} else if ("dn".equals(key)) {
-//			textures[5] = scene.getTextureManager().load("JPG", "images/skybox/" + name + "_dn.jpg");
-//		}
 	}
 
 }

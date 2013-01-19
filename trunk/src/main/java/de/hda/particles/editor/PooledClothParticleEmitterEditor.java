@@ -3,7 +3,6 @@ package de.hda.particles.editor;
 import java.util.List;
 
 import de.hda.particles.emitter.PooledClothParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 public class PooledClothParticleEmitterEditor extends AbstractParticleEmitterEditor<PooledClothParticleEmitter> implements Editor {
 

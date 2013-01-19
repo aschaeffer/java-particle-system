@@ -3,6 +3,7 @@ package de.hda.particles.hud;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.editor.Editor;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.scene.Scene;
 
@@ -46,7 +48,8 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	private Boolean blockDecreaseMinSelection = false;
 	private Boolean blockIncreaseMaxSelection = false;
 	private Boolean blockRemoveSelection = false;
-	
+	private Integer lastKeyCode = -1;
+
 	private List<HUDEditorEntry> editorEntries;
 	private Integer width = 0;
 	private Integer height = 0;
@@ -228,6 +231,20 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		} else {
 			blockRemoveSelection = false;
 		}
+		if (lastKeyCode >= 0 && Keyboard.isKeyDown(lastKeyCode)) return;
+		HUDEditorEntry currentEntry = editorEntries.get(selectedIndex);
+		Integer nextKeyCode = -1;
+		Iterator<Integer> iterator = currentEntry.keyCommands.keySet().iterator();
+		while (iterator.hasNext()) {
+			Integer keyCode = iterator.next();
+			if (Keyboard.isKeyDown(keyCode) && lastKeyCode != keyCode) {
+				HUDCommand command = currentEntry.keyCommands.get(keyCode);
+				logger.debug("key " + keyCode.toString() + " is down: " + command.getType().name());
+				scene.getHudManager().addCommand(command);
+				nextKeyCode = keyCode;
+			}
+		}
+		lastKeyCode = nextKeyCode;
 	}
 	
 	@Override
@@ -317,13 +334,6 @@ public class EditorHUD extends AbstractHUD implements HUD {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setup() {
-//        // setup the editors
-//        ListIterator<Editor> iterator = scene.getEditorManager().getEditors().listIterator(0);
-//        while (iterator.hasNext()) {
-//        	Editor editor = iterator.next();
-//        	editor.setScene(scene);
-//        	editor.setup();
-//        }
         // loading fonts in two sizes
         bigFont = new UnicodeFont(new Font("Arial", Font.BOLD, DEFAULT_FONT_SIZE_BIG));
         bigFont.getEffects().add(new ColorEffect(new java.awt.Color(0.8f, 0.8f, 0.8f)));
@@ -346,20 +356,42 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			if (command.getPayLoad() instanceof Editor) { // Editor given, search for modifier/...
 				Editor editor = (Editor) command.getPayLoad();
 				logger.debug("activate editor: " + editor.getTitle());
-				logger.error("search for: " + editor.getAcceptable().getSimpleName());
-				ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
-				while(iterator.hasNext()) {
-					ParticleModifier modifier = iterator.next();
-					logger.debug(modifier.getClass().getSimpleName());
-					if (modifier.getClass().equals(editor.getAcceptable())) {
-						editor.select(modifier);
+				if (command.getPayLoad2() == null) {
+					logger.debug("search for: " + editor.getAcceptable().getSimpleName());
+					ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
+					while(iterator.hasNext()) {
+						ParticleModifier modifier = iterator.next();
+						logger.debug(modifier.getClass().getSimpleName());
+						if (modifier.getClass().equals(editor.getAcceptable())) {
+							editor.select(modifier);
+							currentEditor = editor;
+							show = true;
+							selectedIndex = 0;
+							return;
+						}
+					}
+				} else {
+					editor.select(command.getPayLoad2());
+					currentEditor = editor;
+					show = true;
+					selectedIndex = 0;
+					return;
+				}
+				logger.error("A: No modifier for editor found: " + editor.getAcceptable().getSimpleName());
+			} else if (command.getPayLoad() instanceof Class) {
+				Class<? extends Object> editorClass = (Class<? extends Object>) command.getPayLoad();
+				ListIterator<Editor> iterator = scene.getEditorManager().getEditors().listIterator(0);
+				while (iterator.hasNext()) {
+					Editor editor = iterator.next();
+					if (editor.getClass().equals(editorClass)) {
+						editor.select(command.getPayLoad2());
 						currentEditor = editor;
 						show = true;
 						selectedIndex = 0;
 						return;
 					}
 				}
-				logger.error("B No editor found: " + editor.getAcceptable().getSimpleName());
+				logger.error("B: No editor found: " + editorClass.getSimpleName());
 			} else { // Subject given, search for editor
 				Class<? extends Object> objectClass = command.getPayLoad().getClass();
 				ListIterator<Editor> iterator = scene.getEditorManager().getEditors().listIterator(0);
@@ -373,8 +405,24 @@ public class EditorHUD extends AbstractHUD implements HUD {
 						return;
 					}
 				}
-				logger.error("A No editor found: " + objectClass.getSimpleName());
+				logger.error("C: No editor found: " + objectClass.getSimpleName());
 			}
+		} else if (command.getType().equals(HUDCommandTypes.EDIT_VALUE)) {
+			Object value = currentEditor.getObject(currentEditor.getEditorEntries().get(selectedIndex).key);
+			Class<? extends Object> objectClass = value.getClass();
+			ListIterator<Editor> iterator = scene.getEditorManager().getEditors().listIterator(0);
+			while (iterator.hasNext()) {
+				Editor editor = iterator.next();
+				if (editor.accept(objectClass)) {
+					editor.select(value);
+					currentEditor = editor;
+					show = true;
+					selectedIndex = 0;
+					return;
+				}
+			}
+			logger.error("D: No editor found: " + objectClass.getSimpleName());
+			selectedIndex = 0;
 		} else if (command.getType().equals(HUDCommandTypes.EDIT_DONE)) {
 			hideEditor();
 		}

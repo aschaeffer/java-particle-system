@@ -6,8 +6,8 @@ import java.util.List;
 import org.lwjgl.util.Color;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 public class ParticleColor extends AbstractParticleFeature implements ParticleFeature {
 

@@ -19,6 +19,17 @@ import de.hda.particles.features.ParticleColor;
 
 public abstract class AbstractBillboardParticleRenderer extends AbstractParticleRenderer {
 
+	public final static String TEXTURE_FORMAT = "textureFormat";
+	public final static String TEXTURE_FILENAME = "textureFilename";
+	public final static String MIN_SIZE = "minSize";
+	public final static String MAX_SIZE = "maxSize";
+	public final static String POINT_SIZE = "pointSize";
+	public final static String FADE_THRESHOLD_SIZE = "fadeThresholdSize";
+	public final static String BLEND_FUNCTION = "blendFunction";
+	public final static String RENDER_FUNCTION = "renderFunction";
+	
+	public final static Float MIN_MIN_SIZE = 0.0f;
+	
 	private static float quadratic[] = {1.0f, 0.0f, 0.01f, 1};
 	private final FloatBuffer bbBuffer = ByteBuffer.allocateDirect(16).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	protected final FloatBuffer flippedBbBuffer;
@@ -94,6 +105,70 @@ public abstract class AbstractBillboardParticleRenderer extends AbstractParticle
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
+	}
+
+	public String getTextureFormat() {
+		return textureFormat;
+	}
+
+	public void setTextureFormat(String textureFormat) {
+		this.textureFormat = textureFormat;
+	}
+
+	public String getTextureFilename() {
+		return textureFilename;
+	}
+
+	public void setTextureFilename(String textureFilename) {
+		this.textureFilename = textureFilename;
+	}
+
+	public Float getMinSize() {
+		return minSize;
+	}
+
+	public void setMinSize(Float minSize) {
+		this.minSize = minSize;
+	}
+
+	public Float getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(Float maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	public Float getPointSize() {
+		return pointSize;
+	}
+
+	public void setPointSize(Float pointSize) {
+		this.pointSize = pointSize;
+	}
+
+	public Float getFadeThresholdSize() {
+		return fadeThresholdSize;
+	}
+
+	public void setFadeThresholdSize(Float fadeThresholdSize) {
+		this.fadeThresholdSize = fadeThresholdSize;
+	}
+
+	public Integer getBlendFunction() {
+		return blendFunction;
+	}
+
+	public void setBlendFunction(Integer blendFunction) {
+		this.blendFunction = blendFunction;
+	}
+
+	public Integer getRenderFunction() {
+		return renderFunction;
+	}
+
+	public void setRenderFunction(Integer renderFunction) {
+		this.renderFunction = renderFunction;
 	}
 
 }

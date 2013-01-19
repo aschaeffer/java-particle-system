@@ -116,6 +116,18 @@ public class MenuManager {
 		}
 	}
 	
+	public HUDMenuEntry openDynamicMenu(Class<DynamicMenu> clazz) {
+		try {
+			DynamicMenu dynamicMenu = clazz.newInstance();
+			HUDMenuEntry menu = dynamicMenu.getMenu();
+			openMenu(menu);
+			return menu;
+		} catch (Exception e) {
+			logger.error("Could not load dynamic menu of type: " + clazz.getName());
+			return dummyMenu;
+		}
+	}
+	
 	public void closeMenu() {
 		closeMenu(true);
 	}
