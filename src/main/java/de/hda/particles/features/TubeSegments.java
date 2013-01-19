@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 /**
  * Tube segments is a particle feature which describes a volumeous

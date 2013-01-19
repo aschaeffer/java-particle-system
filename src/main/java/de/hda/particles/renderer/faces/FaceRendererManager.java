@@ -80,6 +80,10 @@ public class FaceRendererManager extends AbstractRenderer implements Renderer, F
 	public List<FaceRenderer> getFaceRenderers() {
 		return faceRenderers;
 	}
+	
+	public FaceRenderer getFaceRenderer(final Integer index) {
+		return faceRenderers.get(index-1);
+	}
 
 	public String getFaceRendererName(final Integer index) {
 		if (index <= 0) return "DISABLED";

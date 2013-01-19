@@ -2,7 +2,6 @@ package de.hda.particles.editor;
 
 import java.util.List;
 
-import de.hda.particles.hud.HUDEditorEntry;
 import de.hda.particles.modifier.PositionablePlaneModifier;
 import de.hda.particles.modifier.PositionablePointModifier;
 import de.hda.particles.modifier.collision.CollisionPlane;

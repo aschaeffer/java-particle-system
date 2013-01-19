@@ -1,15 +1,18 @@
 package de.hda.particles.editor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.lwjgl.input.Keyboard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
-import de.hda.particles.hud.HUDEditorEntry;
+import de.hda.particles.hud.HUDCommand;
+import de.hda.particles.hud.HUDCommandTypes;
 import de.hda.particles.listener.FeatureListener;
 import de.hda.particles.scene.Scene;
 
@@ -37,7 +40,10 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	public void setup() {
 		editorEntries.add(HUDEditorEntry.create(LIFETIME, "Particle Lifetime"));
 		editorEntries.add(HUDEditorEntry.create(RATE, "Rate"));
-		editorEntries.add(HUDEditorEntry.create(PARTICLE_RENDERER_INDEX, "Particle Renderer"));
+		HashMap<Integer, HUDCommand> keyCommands = new HashMap<Integer, HUDCommand>();
+		keyCommands.put(Keyboard.KEY_RETURN, new HUDCommand(HUDCommandTypes.EDIT_VALUE));
+		HUDEditorEntry particleRendererIndexEditorEntry = HUDEditorEntry.create(PARTICLE_RENDERER_INDEX, "Particle Renderer", keyCommands);
+		editorEntries.add(particleRendererIndexEditorEntry);
 		editorEntries.add(HUDEditorEntry.create(FACE_RENDERER_INDEX, "Face Renderer"));
 		editorEntries.add(HUDEditorEntry.create(POSITION_X, "Position X"));
 		editorEntries.add(HUDEditorEntry.create(POSITION_Y, "Position Y"));
@@ -238,6 +244,44 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		}
 	}
 	
+	@Override
+	public Object getObject(String fieldName) {
+		if (fieldName.equals(LIFETIME)) {
+			return new Long(subject.getParticleLifetime());
+		} else if (fieldName.equals(RATE)) {
+			return subject.getRate();
+		} else if (fieldName.equals(PARTICLE_RENDERER_INDEX)) {
+			return scene.getParticleRendererManager().getParticleRenderer(subject.getParticleRendererIndex());
+			// return subject.getParticleRendererIndex();
+		} else if (fieldName.equals(FACE_RENDERER_INDEX)) {
+			return scene.getFaceRendererManager().getFaceRenderer(subject.getFaceRendererIndex());
+			// return subject.getFaceRendererIndex();
+		} else if (fieldName.equals(POSITION_X)) {
+			return subject.getPosition().x;
+		} else if (fieldName.equals(POSITION_Y)) {
+			return subject.getPosition().y;
+		} else if (fieldName.equals(POSITION_Z)) {
+			return subject.getPosition().z;
+		} else if (fieldName.equals(VELOCITY_X)) {
+			return subject.getParticleDefaultVelocity().x;
+		} else if (fieldName.equals(VELOCITY_Y)) {
+			return subject.getParticleDefaultVelocity().y;
+		} else if (fieldName.equals(VELOCITY_Z)) {
+			return subject.getParticleDefaultVelocity().z;
+		} else {
+			Object value = null;
+			ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
+			while (iterator.hasNext()) {
+				Object value2 = iterator.next().getObject(subject, fieldName);
+				if (value2 != null) {
+					value = value2;
+					break;
+				}
+			}
+			return value;
+		}
+	}
+	
 	protected String getBooleanStringValue(Object b) {
 		if ((Boolean) b) return "on";
 		else return "off";
@@ -245,14 +289,8 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 	
 	@Override
 	public void onFeatureCreation(ParticleFeature feature) {
-		
 		logger.debug("add editor entries for new feature: " + feature.getClass().getSimpleName());
-		
 		editorEntries.addAll(feature.getEditorEntries());
-//		ListIterator<ParticleFeature> iterator = subject.getParticleSystem().getParticleFeatures().listIterator(0);
-//		while (iterator.hasNext()) {
-//			ParticleFeature feature = iterator.next();
-//		}
 	}
 
 	@Override

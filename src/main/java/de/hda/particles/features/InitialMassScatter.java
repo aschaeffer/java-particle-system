@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.editor.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
-import de.hda.particles.hud.HUDEditorEntry;
 
 /**
  * This particle feature scatters the initial velocity.

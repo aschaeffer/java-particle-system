@@ -84,6 +84,17 @@ public class HUDManager extends AbstractHUD implements HUD { // genius: HUDManag
 		return null;
 	}
 	
+	public HUD getByType2(Class<HUD> hudClass) {
+		ListIterator<HUD> iterator = huds.listIterator(0);
+		while (iterator.hasNext()) {
+			HUD hud = iterator.next();
+			if (hud.getClass().equals(hudClass)) {
+				return hud;
+			}
+		}
+		return null;
+	}
+
 	public void addCommand(HUDCommand command) {
 		commandQueue.add(command);
 	}

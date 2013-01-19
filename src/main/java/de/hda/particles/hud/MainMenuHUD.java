@@ -13,12 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.ConfigurableParticleSystem;
-import de.hda.particles.menu.MainMenuFactory;
 import de.hda.particles.menu.HUDMenuEntry;
+import de.hda.particles.menu.factory.MainMenuFactory;
 import de.hda.particles.scene.ConfigurableScene;
 import de.hda.particles.scene.Scene;
 
-public class MainMenuHUD extends AbstractHUD implements HUD {
+public class MainMenuHUD extends AbstractMenuHUD implements MenuHUD {
 
 	public final static String MAIN_MENU = "Main Menu";
 
@@ -28,8 +28,6 @@ public class MainMenuHUD extends AbstractHUD implements HUD {
 	private final static Integer DEFAULT_FONT_SIZE_BIG = 20;
 	private final static Integer DEFAULT_FONT_SIZE_SMALL = 15;
 
-	protected HUDMenuEntry menu;
-
 	private Boolean blockEscSelection = false;
 	
 	private Integer currentMargin = DEFAULT_MARGIN_BIG;
@@ -37,7 +35,7 @@ public class MainMenuHUD extends AbstractHUD implements HUD {
 	private UnicodeFont bigFont;
 	private UnicodeFont smallFont;
 
-	private final Logger logger = LoggerFactory.getLogger(MenuHUD.class);
+	private final Logger logger = LoggerFactory.getLogger(MenuHUDControlHUD.class);
 
 	public MainMenuHUD() {
 	}

@@ -17,17 +17,15 @@ import de.hda.particles.menu.HUDMenuEntry;
 import de.hda.particles.menu.MenuControlListener;
 import de.hda.particles.scene.Scene;
 
-public class TopMenuHUD extends AbstractHUD implements HUD, MenuControlListener {
+public class TopMenuHUD extends AbstractMenuHUD implements MenuHUD, MenuControlListener {
 
 	private final static Integer DEFAULT_MARGIN = 10;
 	public final static String TOP_MENU = "Top Menu";
 
-	private final org.newdawn.slick.Color black = new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f);
-	private final org.newdawn.slick.Color white = new org.newdawn.slick.Color(1.0f, 1.0f, 1.0f, 1.0f);
+//	private final org.newdawn.slick.Color black = new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f);
+//	private final org.newdawn.slick.Color white = new org.newdawn.slick.Color(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	private Boolean blockCtrlSelection = false;
-
-	protected HUDMenuEntry menu = HUDMenuEntry.createRoot("Top Menu");
 
 	private final Logger logger = LoggerFactory.getLogger(TopMenuHUD.class);
 
@@ -35,14 +33,14 @@ public class TopMenuHUD extends AbstractHUD implements HUD, MenuControlListener 
 
 	public TopMenuHUD(Scene scene) {
 		super(scene);
-		menu.vertical = false;
+		menu = HUDMenuEntry.createRoot("Top Menu", false);
 		scene.getMenuManager().addMenu(TOP_MENU, menu);
 	}
 	
 	@Override
 	public void setScene(Scene scene) {
 		this.scene = scene;
-		menu.vertical = false;
+		menu = HUDMenuEntry.createRoot("Top Menu", false);
 		scene.getMenuManager().addMenu(TOP_MENU, menu);
 	}
 

@@ -200,7 +200,7 @@ public class SceneDAO {
 			sceneConfiguration.huds.add(hud.getClass().getName());
 		}
 		sceneConfiguration.particleRenderer = new ArrayList<String>();
-		ListIterator<ParticleRenderer> particleRendererIterator = scene.getParticleRendererManager().getParticleRenderer().listIterator(0);
+		ListIterator<ParticleRenderer> particleRendererIterator = scene.getParticleRendererManager().getParticleRenderers().listIterator(0);
 		while (particleRendererIterator.hasNext()) {
 			ParticleRenderer particleRenderer = particleRendererIterator.next();
 			sceneConfiguration.particleRenderer.add(particleRenderer.getClass().getName());

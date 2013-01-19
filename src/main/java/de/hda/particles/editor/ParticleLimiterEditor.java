@@ -3,7 +3,6 @@ package de.hda.particles.editor;
 import java.util.List;
 
 import de.hda.particles.hud.HUDCommandTypes;
-import de.hda.particles.hud.HUDEditorEntry;
 import de.hda.particles.hud.TopMenuHUD;
 import de.hda.particles.listener.ModifierLifetimeListener;
 import de.hda.particles.modifier.ParticleLimiter;
