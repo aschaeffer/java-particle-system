@@ -426,11 +426,43 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	}
 
 	@Override
+	public void removeParticleEmitter(Class<? extends ParticleEmitter> clazz) {
+		ListIterator<ParticleEmitter> emitterIterator = emitters.listIterator(0);
+		while (emitterIterator.hasNext()) {
+			ParticleEmitter emitter = emitterIterator.next();
+			if (emitter.getClass().getName().equals(clazz.getName())) {
+				logger.debug("removing emitter: " + clazz.getName());
+				emitterIterator.remove();
+				ListIterator<EmitterLifetimeListener> listenerIterator = emitterListeners.listIterator(0);
+				while (listenerIterator.hasNext()) {
+					listenerIterator.next().onEmitterDeath(emitter);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void removeParticleModifier(ParticleModifier particleModifier) {
 		modifiers.remove(particleModifier);
 		ListIterator<ModifierLifetimeListener> iterator = modifierListeners.listIterator(0);
 		while (iterator.hasNext()) {
 			iterator.next().onModifierDeath(particleModifier);
+		}
+	}
+
+	@Override
+	public void removeParticleModifier(Class<? extends ParticleModifier> clazz) {
+		ListIterator<ParticleModifier> modifierIterator = modifiers.listIterator(0);
+		while (modifierIterator.hasNext()) {
+			ParticleModifier modifier = modifierIterator.next();
+			if (modifier.getClass().getName().equals(clazz.getName())) {
+				logger.debug("removing modifier: " + clazz.getName());
+				modifierIterator.remove();
+				ListIterator<ModifierLifetimeListener> listenerIterator = modifierListeners.listIterator(0);
+				while (listenerIterator.hasNext()) {
+					listenerIterator.next().onModifierDeath(modifier);
+				}
+			}
 		}
 	}
 
