@@ -281,6 +281,27 @@ public class EditorHUD extends AbstractHUD implements HUD {
 				glVertex2f(left + width + currentMargin, top - currentMargin);
 				glVertex2f(left + width + currentMargin, top + height + currentMargin);
 				glVertex2f(left - currentMargin, top + height + currentMargin);
+				Integer kleft = left + width + currentMargin/2;
+				Iterator<Integer> keyCommandsIterator = entry.keyCommands.keySet().iterator();
+				while (keyCommandsIterator.hasNext()) {
+					Integer keyCode = keyCommandsIterator.next();
+					kleft += currentMargin;
+					switch (keyCode) {
+						case Keyboard.KEY_RETURN:
+							glColor4f(1.0f, 1.0f, 0.0f, 0.35f);
+							break;
+						case Keyboard.KEY_DELETE:
+							glColor4f(1.0f, 0.0f, 0.0f, 0.35f);
+							break;
+						default:
+							glColor4f(0.0f, 0.0f, 1.0f, 0.35f);
+							break;
+					}
+				    glVertex2f(kleft, top - currentMargin);
+					glVertex2f(kleft + currentMargin, top - currentMargin);
+					glVertex2f(kleft + currentMargin, top + height + currentMargin);
+					glVertex2f(kleft, top + height + currentMargin);
+				}
 			    glEnd();
 		    }
 		} else {
@@ -326,7 +347,28 @@ public class EditorHUD extends AbstractHUD implements HUD {
 				glVertex2f(left + width + currentMargin, top - currentMargin);
 				glVertex2f(left + width + currentMargin, top + height + currentMargin);
 				glVertex2f(left - currentMargin, top + height + currentMargin);
-			    glEnd();
+				Integer kleft = left + width + currentMargin/2;
+				Iterator<Integer> keyCommandsIterator = entry.keyCommands.keySet().iterator();
+				while (keyCommandsIterator.hasNext()) {
+					Integer keyCode = keyCommandsIterator.next();
+					kleft += currentMargin;
+					switch (keyCode) {
+						case Keyboard.KEY_RETURN:
+							glColor4f(1.0f, 1.0f, 0.0f, 0.35f);
+							break;
+						case Keyboard.KEY_DELETE:
+							glColor4f(1.0f, 0.0f, 0.0f, 0.35f);
+							break;
+						default:
+							glColor4f(0.0f, 0.0f, 1.0f, 0.35f);
+							break;
+					}
+				    glVertex2f(kleft, top - currentMargin);
+					glVertex2f(kleft + currentMargin, top - currentMargin);
+					glVertex2f(kleft + currentMargin, top + height + currentMargin);
+					glVertex2f(kleft, top + height + currentMargin);
+				}
+				glEnd();
 		    }
 		}
 	}
@@ -423,6 +465,10 @@ public class EditorHUD extends AbstractHUD implements HUD {
 			}
 			logger.error("D: No editor found: " + objectClass.getSimpleName());
 			selectedIndex = 0;
+		} else if (command.getType().equals(HUDCommandTypes.EDIT_REMOVE)) {
+			Object value = currentEditor.getObject(currentEditor.getEditorEntries().get(selectedIndex).key);
+			Class<? extends Object> objectClass = value.getClass();
+			// TODO: remove
 		} else if (command.getType().equals(HUDCommandTypes.EDIT_DONE)) {
 			hideEditor();
 		}
