@@ -14,6 +14,7 @@ import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.hud.HUDCommand;
 import de.hda.particles.hud.HUDCommandTypes;
 import de.hda.particles.listener.FeatureListener;
+import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.Scene;
 
 public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> implements Editor, FeatureListener {
@@ -42,6 +43,7 @@ public abstract class AbstractParticleEmitterEditor<T extends ParticleEmitter> i
 		editorEntries.add(HUDEditorEntry.create(RATE, "Rate"));
 		HashMap<Integer, HUDCommand> keyCommands = new HashMap<Integer, HUDCommand>();
 		keyCommands.put(Keyboard.KEY_RETURN, new HUDCommand(HUDCommandTypes.EDIT_VALUE));
+		keyCommands.put(Keyboard.KEY_DELETE, new HUDCommand(HUDCommandTypes.EDIT_REMOVE));
 		HUDEditorEntry particleRendererIndexEditorEntry = HUDEditorEntry.create(PARTICLE_RENDERER_INDEX, "Particle Renderer", keyCommands);
 		editorEntries.add(particleRendererIndexEditorEntry);
 		editorEntries.add(HUDEditorEntry.create(FACE_RENDERER_INDEX, "Face Renderer"));

@@ -9,6 +9,7 @@ public enum HUDCommandTypes {
 	OPEN_MENU_HUD,
 	EDIT,
 	EDIT_VALUE,
+	EDIT_REMOVE,
 	EDIT_DONE,
 	EXIT,
 	HELP,
