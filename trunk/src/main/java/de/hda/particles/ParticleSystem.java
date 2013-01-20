@@ -112,7 +112,9 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public void removeAllFixedPoints();
 	public void removeAllFaces();
 	public void removeParticleEmitter(ParticleEmitter particleEmitter);
+	public void removeParticleEmitter(Class<? extends ParticleEmitter> clazz);
 	public void removeParticleModifier(ParticleModifier particleModifier);
+	public void removeParticleModifier(Class<? extends ParticleModifier> clazz);
 	public void removeParticleFeature(ParticleFeature particleFeature);
 	public void removeParticleFeature(Class<? extends ParticleFeature> clazz);
 	public void removeParticleListener(ParticleLifetimeListener particleListener);
