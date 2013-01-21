@@ -89,6 +89,7 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 	}
 	
 	public ParticleRenderer getParticleRenderer(final Integer index) {
+		if (index >= particleRenderers.size()) return null;
 		return particleRenderers.get(index-1);
 	}
 	
