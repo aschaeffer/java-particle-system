@@ -62,6 +62,7 @@ public class SimpleParticleSystemTest {
 		sceneConfiguration.put(Scene.NAME, "Minimal Rendering");
 		sceneConfiguration.put(Scene.WIDTH, 1200);
 		sceneConfiguration.put(Scene.HEIGHT, 620);
+		sceneConfiguration.put(Scene.FAR_PLANE, 100000.0f);
 		sceneConfiguration.put(Scene.FULLSCREEN, false);
 		sceneConfiguration.put(Scene.VSYNC, false);
 		sceneConfiguration.put(FpsInformation.MAX_FPS, 1000);

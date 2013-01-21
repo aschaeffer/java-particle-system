@@ -2,13 +2,26 @@ package de.hda.particles.scene;
 
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.opengl.ImageIOImageData;
+import org.newdawn.slick.opengl.LoadableImageData;
+import org.newdawn.slick.opengl.TGAImageData;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -239,6 +252,12 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+		try {
+//			if (Display.isCreated()) {
+				Display.setTitle(name);
+//			}
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
@@ -341,6 +360,26 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	@Override
 	public void endModification() {
 		blocked = false;
+	}
+	
+	public void setIcon(String filename) {
+		ByteBuffer[] bufs = new ByteBuffer[1];
+		LoadableImageData data;
+		boolean flip = true;
+		if (filename.endsWith(".tga")) {
+			data = new TGAImageData();
+		} else {
+			flip = false;
+			data = new ImageIOImageData();
+		}
+		try {
+			bufs[0] = data.loadImage(
+					ResourceLoader.getResourceAsStream(filename), flip, false,
+					null);
+			Display.setIcon(bufs);
+		} catch (Exception e) {
+			logger.error("Could not load icon.", e);
+		}
 	}
 
 }

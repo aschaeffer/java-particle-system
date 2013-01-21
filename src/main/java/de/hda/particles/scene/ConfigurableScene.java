@@ -35,17 +35,24 @@ import static org.lwjgl.opengl.GL11.glShadeModel;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,14 +100,16 @@ public class ConfigurableScene extends AbstractScene implements Scene {
 		try {
 			Display.setDisplayMode(new DisplayMode(this.width, this.height));
 			Display.setFullscreen(fullscreen);
-			Display.setTitle("Particle System Editor and Simulation");
+			Display.setTitle(name);
 			Display.setVSyncEnabled(vSync);
 			Display.create();
 		} catch (LWJGLException e) {
-			logger.error("could not open particle renderer!", e);
+			logger.error("could not open window!", e);
 			return;
 		}
-
+		
+		setIcon("images/icons/faenza/dark/edit-undo.png");
+		
 		// init OpenGL here
 		glDisable(GL_CULL_FACE);
         glEnable(GL_TEXTURE_2D);

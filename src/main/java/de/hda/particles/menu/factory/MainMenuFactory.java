@@ -71,6 +71,7 @@ public class MainMenuFactory {
 		HUDMenuEntry.create(addMassSpringParticleRenderer, "Springs Lines", HUDCommandTypes.ADD_PARTICLE_RENDERER, SpringLinesParticleRenderer.class);
 		HUDMenuEntry.create(addTechnicalParticleRenderer, "NULL", HUDCommandTypes.ADD_PARTICLE_RENDERER, NullParticleRenderer.class);
 		HUDMenuEntry.create(addTechnicalParticleRenderer, "Velocity Indicator", HUDCommandTypes.ADD_PARTICLE_RENDERER, VelocityIndicatorParticleRenderer.class);
+		HUDMenuEntry.create(addTechnicalParticleRenderer, "Vertex Array Point", HUDCommandTypes.ADD_PARTICLE_RENDERER, VAPointParticleRenderer.class);
 		HUDMenuEntry faceRenderers = HUDMenuEntry.create(scene, "Face Renderers");
 		HUDMenuEntry.create(faceRenderers, "Polygon", HUDCommandTypes.ADD_FACE_RENDERER, PolygonFaceRenderer.class);
 		HUDMenuEntry.create(faceRenderers, "NULL", HUDCommandTypes.ADD_FACE_RENDERER, NullFaceRenderer.class);
