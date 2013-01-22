@@ -7,6 +7,10 @@ public abstract class AbstractParticleRenderer implements ParticleRenderer {
 	protected Scene scene;
 	
 	@Override
+	public void setDirty() {
+	}
+
+	@Override
 	public void setScene(Scene scene) {
 		this.scene = scene;
 	}

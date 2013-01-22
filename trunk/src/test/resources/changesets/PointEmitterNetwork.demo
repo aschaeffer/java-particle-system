@@ -1,0 +1,180 @@
+{
+  "name" : "Point Emitter Net",
+  "changeSets" : [ {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 401,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : -100.0,
+      "position_y" : 100.0,
+      "position_z" : 0.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : 3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.4,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.4
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 402,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : 100.0,
+      "position_y" : 100.0,
+      "position_z" : -100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : 3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.4,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.4
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 403,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : 100.0,
+      "position_y" : 100.0,
+      "position_z" : 100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : 3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.4,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.4
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 404,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : -100.0,
+      "position_y" : 100.0,
+      "position_z" : 100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : 3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.4,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.4
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 405,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : -100.0,
+      "position_y" : -100.0,
+      "position_z" : -100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : -3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.6,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.6
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 406,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : 100.0,
+      "position_y" : -100.0,
+      "position_z" : -100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : -3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.6,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.6
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 407,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : 100.0,
+      "position_y" : -100.0,
+      "position_z" : 100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : -3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.6,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.6
+      }
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddPointEmitter",
+    "configuration" : {
+      "id" : 408,
+      "particleRenderer" : 2,
+      "faceRenderer" : 1,
+      "lifetime" : 1000,
+      "rate" : 1,
+      "position_x" : -100.0,
+      "position_y" : -100.0,
+      "position_z" : 100.0,
+      "velocity_x" : 0.0,
+      "velocity_y" : -3.0,
+      "velocity_z" : 0.0,
+      "configuration" : {
+        "scatter_x" : 0.6,
+        "scatter_y" : 0.0,
+        "scatter_z" : 0.6
+      }
+    }
+  } ]
+}

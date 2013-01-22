@@ -31,6 +31,8 @@ public class VAPointParticleRenderer extends AbstractParticleRenderer implements
 	public final static Integer MAX_PARTICLES = 200000;
 	public final static Integer BUFFER_SIZE = MAX_PARTICLES * SIZE_PER_VERTICE;
 
+	private Boolean dirty = true;
+	
     private int vertexBufferID;
     private int vertexArrayID;
     private FloatBuffer vertices = BufferUtils.createFloatBuffer(BUFFER_SIZE);
@@ -272,7 +274,28 @@ public class VAPointParticleRenderer extends AbstractParticleRenderer implements
 	    
 		// vertices.rewind();
 		
-		
+//		if (dirty && size > 1) {
+//			vertices.rewind();
+//			// logger.debug("draw array " + vertexArrayID + " buffer " + vertexBufferID + " size: " + size);
+//		    glBindVertexArray(vertexArrayID);
+//			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+//			glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+//			glBindBuffer(GL_ARRAY_BUFFER, 0);
+//		    glEnableVertexAttribArray(0);
+//		    glDrawArrays(GL_POINTS, 0, size);
+//		    glDisableVertexAttribArray(0);
+//		    glBindVertexArray(0);
+//		    dirty = false;
+//			// logger.debug("no more dirty");
+//			return;
+//		} else {
+//		    glBindVertexArray(vertexArrayID);
+//		    glEnableVertexAttribArray(0);
+//		    glDrawArrays(GL_POINTS, 0, size);
+//		    glDisableVertexAttribArray(0);
+//		    glBindVertexArray(0);
+//			
+//		}
 		if (size < 2) return;
 		vertices.rewind();
 		// logger.debug("draw array " + vertexArrayID + " buffer " + vertexBufferID + " size: " + size);
@@ -284,18 +307,27 @@ public class VAPointParticleRenderer extends AbstractParticleRenderer implements
 	    glDrawArrays(GL_POINTS, 0, size);
 	    glDisableVertexAttribArray(0);
 	    glBindVertexArray(0);
+	    dirty = false;
 	}
 
 	@Override
 	public void render(Particle particle) {
 //		vertices.put(particle.getX()).put(particle.getY()).put(particle.getZ());
-		if (vertices.remaining() < 3) return;
+//		if (vertices.remaining() < 3) return;
 //		logger.debug("remaining: " + vertices.remaining() + " capacity: " + vertices.capacity() + " position: " + vertices.position());
 //		logger.debug("vert pos: " + vertices.position());
+		if (!dirty || vertices.remaining() < 3) return;
 		vertices.put(particle.getX());
 		vertices.put(particle.getY());
 		vertices.put(particle.getZ());
 		size++;
+	}
+	
+	@Override
+	public void setDirty() {
+		// logger.debug("setDirty");
+		dirty = true;
+		size = 0;
 	}
 	
 	@Override

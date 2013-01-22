@@ -115,6 +115,7 @@ public class SimpleParticleSystemTest {
 		// renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", EmitterRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", GravityPointRenderer.class.getName())));
 
 		// system runner
 		demoManager.addChangeSet(new ChangeSet(0, CreateSystemRunner.class.getName(), new CommandConfiguration()));
@@ -125,7 +126,11 @@ public class SimpleParticleSystemTest {
 
 		// particle renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", SimplePointParticleRenderer.class.getName())));
-		// demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", FireBallParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", PoisonParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", CubeParticleRenderer.class.getName())));
+		// demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", The.class.getName())));
 
 		// face renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddFaceRenderer.class, new CommandConfiguration("class", PolygonFaceRenderer.class.getName())));
@@ -142,8 +147,10 @@ public class SimpleParticleSystemTest {
 		cam1.put("roll", 0.0);
 		cam1.put("fov", 90.0);
 		demoManager.addChangeSet(new ChangeSet(0, AddCamera.class.getName(), cam1));
-
+		
 		demoManager.save("minimal.demo");
+		demoManager.addChangeSet(new ChangeSet(0, LoadChangeSet.class.getName(), new CommandConfiguration("filename", "changesets/FinalPresentation.demo", "iteration", 60)));
+		demoManager.save("finalpresentation.demo");
 
 		try {
 			demoManager.run();

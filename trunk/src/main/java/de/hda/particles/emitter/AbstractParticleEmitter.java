@@ -3,12 +3,14 @@ package de.hda.particles.emitter;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
+import de.hda.particles.domain.Identifiable;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 
-public abstract class AbstractParticleEmitter implements ParticleEmitter {
+public abstract class AbstractParticleEmitter implements ParticleEmitter, Identifiable {
 
 	protected ParticleSystem particleSystem;
 	protected ParticleEmitterConfiguration configuration = new ParticleEmitterConfiguration();
+	protected Integer id = 0;
 	protected Integer rate = 3;
 	protected Vector3f position = new Vector3f();
 	protected Vector3f particleDefaultVelocity = new Vector3f();
@@ -17,6 +19,16 @@ public abstract class AbstractParticleEmitter implements ParticleEmitter {
 	protected Integer particleLifetime = 5;
 	protected Integer pastIterations = 0;
 	
+	@Override
+	public Integer getId() {
+		return id;
+	}
+	
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public Integer getRate() {
 		return rate;

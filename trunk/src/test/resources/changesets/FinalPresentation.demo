@@ -1,0 +1,30 @@
+{
+  "name" : "Final Presentation",
+  "changeSets" : [ {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.StopEmitters",
+    "configuration" : { }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.LoadChangeSet",
+    "configuration" : {
+    	"filename" : "changesets/GravityPointNetwork.demo"
+    }
+  }, {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.LoadChangeSet",
+    "configuration" : {
+    	"filename" : "changesets/PointEmitterNetwork.demo"
+    }
+  }, {
+    "iteration" : 100,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.LoadChangeSet",
+    "configuration" : {
+    	"filename" : "changesets/PointEmitterAnimation.demo"
+    }
+  } ]
+}

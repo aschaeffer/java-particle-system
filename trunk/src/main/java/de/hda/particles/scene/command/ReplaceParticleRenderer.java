@@ -20,6 +20,9 @@ public class ReplaceParticleRenderer implements Command {
 	@Override
 	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
 		String type = (String) configuration.get("class");
+		if (type == null) return null;
+		Integer index = (Integer) configuration.get("index");
+		if (index == null) return null;
 		try {
 			Class<? extends ParticleRenderer> clazz = (Class<? extends ParticleRenderer>) Class.forName(type);
 			List<Scene> scenes = context.getByType(Scene.class);
@@ -28,7 +31,7 @@ public class ReplaceParticleRenderer implements Command {
 				Scene scene = iterator.next();
 				// scene.beginModification();
 				scene.getParticleSystem().beginModification();
-				scene.getParticleRendererManager().replace(clazz, (Integer) configuration.get("index"));
+				scene.getParticleRendererManager().replace(clazz, index);
 				scene.getParticleSystem().endModification();
 				// scene.endModification();
 				logger.info("replaced particle renderer");

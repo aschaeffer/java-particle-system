@@ -1,6 +1,7 @@
 package de.hda.particles.scene.demo;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -128,16 +129,31 @@ public abstract class AbstractDemoManager extends FpsLimiter implements DemoMana
 		}
 		if (currentIteration % 1000 == 0)
 			logger.debug("iteration " + currentIteration);
-		List<ChangeSet> changeSets = demo.getChangeSets();
+		List<ChangeSet> changeSets = new ArrayList<ChangeSet>(demo.getChangeSets());
 		ListIterator<ChangeSet> iterator = changeSets.listIterator(0);
 		while (iterator.hasNext()) {
 			ChangeSet changeSet = iterator.next();
 			if (changeSet.getIteration() >= lastIteration && changeSet.getIteration() - changeSet.getTransitionIterations() < currentIteration) {
-				// DemoHandle handle = 
-				changeSet.getCommand().execute(context, changeSet.getConfiguration(), changeSet.getTransitionIterations());
+				if (changeSet.getCommand() == null) {
+					logger.error("Error: no command instance initialized in changeset " + changeSet.getType() + " at iteration " + changeSet.getIteration());
+					iterator.remove();
+					continue;
+				}
+				try {
+					// DemoHandle handle =
+					logger.debug("iteration " + currentIteration + ": execute changeset " + changeSet.getType());
+					changeSet.getCommand().execute(context, changeSet.getConfiguration(), changeSet.getTransitionIterations());
+				} catch (Exception e) {
+					logger.error("error in executing changeset " + changeSet.getType() + " at iteration " + currentIteration + ": " + e.getMessage(), e);
+				}
 			}
 		}
 		lastIteration = currentIteration;
+	}
+	
+	@Override
+	public Integer getPastIterations() {
+		return currentIteration;
 	}
 
 	@Override

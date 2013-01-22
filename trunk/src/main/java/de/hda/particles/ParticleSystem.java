@@ -93,6 +93,7 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public void addParticleModifier(ParticleModifier modifier);
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration);
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz);
+	public void addFrameListener(FrameListener frameListener);
 	public void addParticleListener(ParticleLifetimeListener particleListener);
 	public void addFeatureListener(FeatureListener featureListener);
 	public void addFaceListener(FaceLifetimeListener faceListener);
@@ -117,6 +118,7 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	public void removeParticleModifier(Class<? extends ParticleModifier> clazz);
 	public void removeParticleFeature(ParticleFeature particleFeature);
 	public void removeParticleFeature(Class<? extends ParticleFeature> clazz);
+	public void removeFrameListener(FrameListener frameListener);
 	public void removeParticleListener(ParticleLifetimeListener particleListener);
 	public void removeFeatureListener(FeatureListener featureListener);
 	public void removeFaceListener(FaceLifetimeListener faceListener);

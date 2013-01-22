@@ -7,7 +7,8 @@ import de.hda.particles.scene.demo.DemoHandle;
 public interface Command {
 
 	/**
-	 * 
+	 * No constructors for command implementations!!!
+	 *  
 	 * @param context DemoContext
 	 * @param configuration Command Configuration
 	 * @return id

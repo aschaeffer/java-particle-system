@@ -1,0 +1,414 @@
+{
+  "name" : "Point Emitter Animation",
+  "changeSets" : [ {
+    "iteration" : 0,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.RemoveParticles",
+    "configuration" : { }
+  }, {
+    "iteration" : 1,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.StartEmitters",
+    "configuration" : { }
+  }, {
+    "iteration" : 1500,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.StopEmitters",
+    "configuration" : { }
+  }, {
+    "iteration" : 1501,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.RemoveParticles",
+    "configuration" : { }
+  }, {
+    "iteration" : 1502,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddFeature",
+    "configuration" : {
+      "class" : "de.hda.particles.features.ParticleInitialVelocityScatter",
+      "configuration" : { }
+    }
+  }, {
+    "iteration" : 1503,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.StartEmitters",
+    "configuration" : { }
+  }, {
+    "iteration" : 2200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.RemoveParticles",
+    "configuration" : { }
+  }, {
+    "iteration" : 2200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 405,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 2200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 406,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 2200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 407,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 2200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 408,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 2250,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 401,
+    	"configuration" : {
+	    	"particleRenderer": 3,
+    		"velocity_x" : 0.0,
+    		"velocity_y" : 5.0,
+    		"velocity_z" : -5.0,
+    		"configuration" : {
+	    		"scatter_x" : 0.0,
+    			"scatter_y" : 0.0,
+    			"scatter_z" : 2.0
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 2300,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 402,
+    	"configuration" : {
+	    	"particleRenderer": 3,
+    		"velocity_x" : -5.0,
+    		"velocity_y" : 10.0,
+    		"velocity_z" : 0.0,
+    		"configuration" : {
+	    		"scatter_x" : 2.0,
+    			"scatter_y" : 0.0,
+    			"scatter_z" : 0.0
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 2350,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 403,
+    	"configuration" : {
+	    	"particleRenderer": 3,
+    		"velocity_x" : 0.0,
+    		"velocity_y" : 15.0,
+    		"velocity_z" : 5.0,
+    		"configuration" : {
+	    		"scatter_x" : 0.0,
+    			"scatter_y" : 0.0,
+    			"scatter_z" : 2.0
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 2400,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 404,
+    	"configuration" : {
+	    	"particleRenderer": 3,
+    		"velocity_x" : 5.0,
+    		"velocity_y" : 20.0,
+    		"velocity_z" : 0.0,
+    		"configuration" : {
+	    		"scatter_x" : 2.0,
+    			"scatter_y" : 0.0,
+    			"scatter_z" : 0.0
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 3200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.RemoveParticles",
+    "configuration" : { }
+  }, {
+    "iteration" : 3200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 402,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 3200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 403,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 13200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 404,
+    	"configuration" : {
+    		"rate" : 0,
+    		"configuration" : {}
+    	}
+    }
+  }, {
+    "iteration" : 3200,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 401,
+    	"configuration" : {
+    		"rate": 2,
+  			"velocity_x" : 0.0,
+  			"velocity_y" : 4.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 4,
+    		"configuration" : {
+	    		"scatter_x" : 0.2,
+    			"scatter_y" : 0.6,
+    			"scatter_z" : 0.2,
+    			"scatterPulse" : 1.2,
+    			"scatterPulseResolution" : 0.08,
+    			"startColor_r" : 255,
+    			"startColor_g" : 64,
+    			"startColor_b" : 255,
+    			"startColor_a" : 24,
+    			"endColor_r" : 64,
+    			"endColor_g" : 255,
+    			"endColor_b" : 64,
+    			"endColor_a" : 64
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 3500,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 402,
+    	"configuration" : {
+    		"rate": 2,
+  			"velocity_x" : 0.0,
+  			"velocity_y" : 4.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 4,
+    		"configuration" : {
+	    		"scatter_x" : 0.4,
+    			"scatter_y" : 1.0,
+    			"scatter_z" : 0.4,
+    			"scatterPulse" : 1.2,
+    			"scatterPulseResolution" : 0.08,
+    			"startColor_r" : 0,
+    			"startColor_g" : 0,
+    			"startColor_b" : 255,
+    			"startColor_a" : 64,
+    			"endColor_r" : 255,
+    			"endColor_g" : 255,
+    			"endColor_b" : 0,
+    			"endColor_a" : 64
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 3800,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 403,
+    	"configuration" : {
+    		"rate": 2,
+  			"velocity_x" : 0.0,
+  			"velocity_y" : 8.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 4,
+    		"configuration" : {
+	    		"scatter_x" : 0.8,
+    			"scatter_y" : 2.0,
+    			"scatter_z" : 0.8,
+    			"scatterPulse" : 1.2,
+    			"scatterPulseResolution" : 0.08,
+    			"startColor_r" : 0,
+    			"startColor_g" : 255,
+    			"startColor_b" : 0,
+    			"startColor_a" : 64,
+    			"endColor_r" : 0,
+    			"endColor_g" : 255,
+    			"endColor_b" : 255,
+    			"endColor_a" : 64
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 4100,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 404,
+    	"configuration" : {
+   		 	"rate": 2,
+  			"velocity_x" : 0.0,
+  			"velocity_y" : 16.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 4,
+    		"configuration" : {
+	    		"scatter_x" : 1.6,
+    			"scatter_y" : 4.0,
+    			"scatter_z" : 1.6,
+    			"scatterPulse" : 1.2,
+    			"scatterPulseResolution" : 0.08,
+    			"startColor_r" : 255,
+    			"startColor_g" : 0,
+    			"startColor_b" : 255,
+    			"startColor_a" : 64,
+    			"endColor_r" : 255,
+    			"endColor_g" : 0,
+    			"endColor_b" : 0,
+    			"endColor_a" : 64
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 4700,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 405,
+    	"configuration" : {
+    		"rate": 5,
+	  		"velocity_x" : 0.0,
+  			"velocity_y" : -2.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 5,
+    		"configuration" : {
+	    		"scatter_x" : 5.0,
+    			"scatter_y" : 0.0,
+    			"scatter_z" : 5.0,
+    			"sizeBirth" : 5.0,
+    			"sizeDeath" : 10.0,
+    			"startColor_r" : 255,
+    			"startColor_g" : 0,
+    			"startColor_b" : 0,
+    			"startColor_a" : 64,
+    			"endColor_r" : 255,
+    			"endColor_g" : 255,
+    			"endColor_b" : 0,
+    			"endColor_a" : 64
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 5500,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.AddModifier",
+    "configuration" : {
+       "class" : "de.hda.particles.modifier.color.LinearColorTransformation"
+    }
+  }, {
+    "iteration" : 6000,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 406,
+    	"configuration" : {
+    		"rate": 5,
+	  		"velocity_x" : 0.0,
+  			"velocity_y" : -5.5,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 3,
+    		"configuration" : {
+	    		"scatter_x" : 0.9,
+    			"scatter_y" : 2.0,
+    			"scatter_z" : 0.9,
+    			"scatterPulse" : 2.2,
+    			"scatterPulseResolution" : 0.10,
+    			"startColor_r" : 0,
+    			"startColor_g" : 64,
+    			"startColor_b" : 0,
+    			"startColor_a" : 10,
+    			"endColor_r" : 0,
+    			"endColor_g" : 255,
+    			"endColor_b" : 255,
+    			"endColor_a" : 5
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 7000,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.UpdateEmitterConfiguration",
+    "configuration" : {
+    	"id" : 407,
+    	"configuration" : {
+    		"rate": 5,
+	  		"velocity_x" : -5.0,
+  			"velocity_y" : 0.0,
+  			"velocity_z" : 0.0,
+	    	"particleRenderer": 2,
+    		"configuration" : {
+	    		"scatter_x" : 0.05,
+    			"scatter_y" : 2.0,
+    			"scatter_z" : 0.05,
+    			"startColor_r" : 255,
+    			"startColor_g" : 0,
+    			"startColor_b" : 0,
+    			"startColor_a" : 24,
+    			"endColor_r" : 255,
+    			"endColor_g" : 255,
+    			"endColor_b" : 0,
+    			"endColor_a" : 24
+    		}
+    	}
+    }
+  }, {
+    "iteration" : 10000,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.StopEmitters",
+    "configuration" : { }
+  }, {
+    "iteration" : 10000,
+    "transitionIterations" : 0,
+    "type" : "de.hda.particles.scene.command.RemoveParticles",
+    "configuration" : { }
+  } ]
+}

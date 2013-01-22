@@ -5,9 +5,10 @@ import org.lwjgl.util.vector.Vector3f;
 import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
+import de.hda.particles.domain.Identifiable;
 import de.hda.particles.domain.ParticleEmitterConfiguration;
 
-public interface ParticleEmitter extends Updateable, AutoDependency {
+public interface ParticleEmitter extends Updateable, AutoDependency, Identifiable {
 
 	public Integer getRate();
 	public void setRate(Integer rate);

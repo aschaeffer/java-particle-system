@@ -65,6 +65,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	protected FacePool facePool = new FacePool();
 
 	/**
+	 * The list of frame listeners.
+	 */
+	protected List<FrameListener> frameListeners = new ArrayList<FrameListener>();
+
+	/**
 	 * The list of particle lifetime listeners.
 	 */
 	protected List<ParticleLifetimeListener> particleListeners = new ArrayList<ParticleLifetimeListener>();
@@ -264,6 +269,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	@Override
 	public void addParticleModifier(Class<? extends ParticleModifier> clazz) {
 		addParticleModifier(clazz, new ParticleModifierConfiguration());
+	}
+
+	@Override
+	public void addFrameListener(FrameListener frameListener) {
+		frameListeners.add(frameListener);
 	}
 
 	@Override
@@ -488,6 +498,11 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 	}
 
 	@Override
+	public void removeFrameListener(FrameListener frameListener) {
+		frameListeners.remove(frameListener);
+	}
+
+	@Override
 	public void removeParticleListener(ParticleLifetimeListener particleListener) {
 		particleListeners.remove(particleListener);
 	}
@@ -636,6 +651,13 @@ public abstract class AbstractParticleSystem extends FpsLimiter implements Parti
 				facesIterator.remove();
 			}
 		}
+
+//		// call frame listeners
+//		ListIterator<FrameListener> frameListenersIterator = frameListeners.listIterator();
+//		while (frameListenersIterator.hasNext()) {
+//			frameListenersIterator.next().onFrame();
+//		}
+
 	}
 
 	@Override
