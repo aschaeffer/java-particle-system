@@ -9,6 +9,7 @@ public interface ParticleRenderer extends AutoDependency {
 	void before();
 	void render(Particle particle);
 	void after();
+	void setDirty();
 	void setScene(Scene scene);
 	String getName();
 

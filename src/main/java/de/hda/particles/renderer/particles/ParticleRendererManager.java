@@ -14,12 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.domain.Particle;
+import de.hda.particles.listener.FrameListener;
 import de.hda.particles.listener.ParticleLifetimeListener;
 import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.scene.Scene;
 
-public class ParticleRendererManager extends AbstractRenderer implements Renderer, ParticleLifetimeListener {
+public class ParticleRendererManager extends AbstractRenderer implements Renderer, ParticleLifetimeListener, FrameListener {
 
 	private final ArrayList<ParticleRenderer> particleRenderers = new ArrayList<ParticleRenderer>();
 
@@ -126,6 +127,7 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 	public void setup() {
 		// register listener to get updates about newly created particles and removed particles
 		scene.getParticleSystem().addParticleListener(this);
+		scene.getParticleSystem().addFrameListener(this);
 		ListIterator<ParticleRenderer> iterator = particleRenderers.listIterator(0);
 		while (iterator.hasNext()) {
 			iterator.next().setScene(scene);
@@ -164,7 +166,7 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 				}
 				particleRenderer.after();
 			}
-		} catch (NullPointerException e) {
+		} catch (RuntimeException e) {
 			logger.error("could not render particles: " + e.getMessage(), e);
 		}
 	}
@@ -207,6 +209,18 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 	public void onParticleDeath(Particle particle) {
 		// nothing to do, because the render type manager itself removes particles
 		// from the cache
+	}
+
+	@Override
+	public void onFrame() {
+		try {
+			ListIterator<ParticleRenderer> rIterator = particleRenderers.listIterator(0);
+			while(rIterator.hasNext()) {
+				rIterator.next().setDirty();
+			}
+		} catch (NullPointerException e) {
+			logger.error("could not update particles: " + e.getMessage(), e);
+		}
 	}
 
 }

@@ -1,24 +1,27 @@
 package de.hda.particles.renderer.particles;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-
-import org.lwjgl.opengl.ARBPointParameters;
-import org.lwjgl.opengl.ARBPointSprite;
+//import static org.lwjgl.opengl.GL11.*;
+//
+//import java.nio.ByteBuffer;
+//import java.nio.ByteOrder;
+//import java.nio.FloatBuffer;
+//
+//import org.lwjgl.opengl.ARBPointParameters;
+//import org.lwjgl.opengl.ARBPointSprite;
 import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.ARBPointSprite.*;
-import static org.lwjgl.opengl.ARBPointParameters.*;
-import de.hda.particles.domain.Particle;
+//import static org.lwjgl.opengl.ARBPointSprite.*;
+//import static org.lwjgl.opengl.ARBPointParameters.*;
+//import de.hda.particles.domain.Particle;
 
-public class PoisonParticleRenderer extends AbstractParticleRenderer implements ParticleRenderer {
+public class PoisonParticleRenderer extends AbstractBillboardParticleRenderer implements ParticleRenderer {
 
 	public final static String NAME = "Poison";
 
-	public PoisonParticleRenderer() {}
+	public PoisonParticleRenderer() {
+		super("PNG", "images/particles/ball3.png", 30.0f, 50.0f, 600.0f, 40.0f, GL11.GL_ONE, GL11.GL_POINTS, 0.5f, 0.8f, 0.5f, 0.05f);
+	}
 
+	/*
 	@Override
 	public void before() {
 		glPushMatrix();
@@ -61,6 +64,7 @@ public class PoisonParticleRenderer extends AbstractParticleRenderer implements 
 		 glTexCoord2f(0.5f, 0.5f);
 		 glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 	}
+	*/
 	
 	@Override
 	public String getName() {

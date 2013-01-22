@@ -1,24 +1,27 @@
 package de.hda.particles.renderer.particles;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-
-import org.lwjgl.opengl.ARBPointParameters;
-import org.lwjgl.opengl.ARBPointSprite;
+//import static org.lwjgl.opengl.GL11.*;
+//
+//import java.nio.ByteBuffer;
+//import java.nio.ByteOrder;
+//import java.nio.FloatBuffer;
+//
+//import org.lwjgl.opengl.ARBPointParameters;
+//import org.lwjgl.opengl.ARBPointSprite;
 import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.ARBPointSprite.*;
-import static org.lwjgl.opengl.ARBPointParameters.*;
-import de.hda.particles.domain.Particle;
+//import static org.lwjgl.opengl.ARBPointSprite.*;
+//import static org.lwjgl.opengl.ARBPointParameters.*;
+//import de.hda.particles.domain.Particle;
 
-public class FireBallParticleRenderer extends AbstractParticleRenderer implements ParticleRenderer {
+public class FireBallParticleRenderer extends AbstractBillboardParticleRenderer implements ParticleRenderer {
 
 	public final static String NAME = "FireBall";
 
-	public FireBallParticleRenderer() {}
+	public FireBallParticleRenderer() {
+		super("PNG", "images/particles/ball1.png", 20.0f, 50.0f, 50.0f, 35.0f, GL11.GL_ONE, GL11.GL_POINTS, 0.8f, 0.3f, 0.3f, 0.02f);
+	}
 
+	/*
 	@Override
 	public void before() {
 		glPushMatrix();
@@ -61,6 +64,7 @@ public class FireBallParticleRenderer extends AbstractParticleRenderer implement
 		 glTexCoord2f(0.5f, 0.5f);
 		 glVertex3f(particle.getX(), particle.getY(), particle.getZ());
 	}
+	*/
 	
 	@Override
 	public String getName() {

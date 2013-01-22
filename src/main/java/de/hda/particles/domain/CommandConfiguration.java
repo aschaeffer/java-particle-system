@@ -15,4 +15,10 @@ public class CommandConfiguration extends HashMap<String, Object> {
 		this.put(key, value);
 	}
 
+	public CommandConfiguration(String key1, Object value1, String key2, Object value2) {
+		super();
+		this.put(key1, value1);
+		this.put(key2, value2);
+	}
+
 }

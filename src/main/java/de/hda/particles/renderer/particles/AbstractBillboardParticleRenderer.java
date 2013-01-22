@@ -42,6 +42,10 @@ public abstract class AbstractBillboardParticleRenderer extends AbstractParticle
 	protected Float fadeThresholdSize = 75.0f;
 	protected Integer blendFunction = GL11.GL_ONE;
 	protected Integer renderFunction = GL11.GL_POINTS;
+	protected float r = 1.0f;
+	protected float g = 1.0f;
+	protected float b = 1.0f;
+	protected float a = 0.2f;
 	
 	protected Texture texture;
 
@@ -61,6 +65,23 @@ public abstract class AbstractBillboardParticleRenderer extends AbstractParticle
 		this.fadeThresholdSize = fadeThresholdSize;
 		this.blendFunction = blendFunction;
 		this.renderFunction = renderFunction;
+	}
+
+	public AbstractBillboardParticleRenderer(String textureFormat, String textureFilename, Float minSize, Float maxSize, Float pointSize, Float fadeThresholdSize, Integer blendFunction, Integer renderFunction, float r, float g, float b, float a) {
+		super();
+		flippedBbBuffer = (FloatBuffer) bbBuffer.put(quadratic).flip();
+		this.textureFormat = textureFormat;
+		this.textureFilename = textureFilename;
+		this.minSize = minSize;
+		this.maxSize = maxSize;
+		this.pointSize = pointSize;
+		this.fadeThresholdSize = fadeThresholdSize;
+		this.blendFunction = blendFunction;
+		this.renderFunction = renderFunction;
+		this.r = r;
+		this.g = g;
+		this.b = b;
+		this.a = a;
 	}
 
 	@Override
@@ -85,7 +106,7 @@ public abstract class AbstractBillboardParticleRenderer extends AbstractParticle
 		//Turn off depth masking so particles in front will not occlude particles behind them.
 		glDepthMask(false);
 		if (renderFunction > -1) glBegin(renderFunction);
-		glColor4f(1.0f, 1.0f, 1.0f, 0.2f);
+		glColor4f(r, g, b, a);
 	}
 
 	@Override

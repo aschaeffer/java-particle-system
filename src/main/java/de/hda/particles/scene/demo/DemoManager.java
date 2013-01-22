@@ -16,6 +16,8 @@ public interface DemoManager extends FpsInformation {
 	void loadDiff(String filename);
 	void loadDiffFromResource(String filename);
 	void save(String filename);
+	
+	Integer getPastIterations();
 
 	Demo getDemo();
 	void setDemo(Demo demo);
