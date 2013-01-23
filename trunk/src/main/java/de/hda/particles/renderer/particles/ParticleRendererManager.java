@@ -1,15 +1,7 @@
 package de.hda.particles.renderer.particles;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.*;
 
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,6 +128,7 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 	
 	@Override
 	public void destroy() {
+		scene.getParticleSystem().removeFrameListener(this);
 		scene.getParticleSystem().removeParticleListener(this);
 		particleRenderers.clear();
 		particleRendererCache.clear();
@@ -166,6 +159,8 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 				}
 				particleRenderer.after();
 			}
+		} catch (ConcurrentModificationException e) {
+			logger.error("skipped frame: " + e.getMessage(), e);
 		} catch (RuntimeException e) {
 			logger.error("could not render particles: " + e.getMessage(), e);
 		}

@@ -1,6 +1,9 @@
 package de.hda.particles.renderer;
 
+import java.util.List;
+
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 import org.newdawn.slick.UnicodeFont;
 
 import de.hda.particles.scene.Scene;
@@ -51,7 +54,16 @@ public abstract class AbstractRenderer implements Renderer {
 	}
 	
 	@Override
-	public Object getSelected() {
+	public List<? extends Object> select(Vector4f selectionBox) {
+		return null;
+	}
+	
+	@Override
+	public void unselect() {
+	}
+	
+	@Override
+	public List<? extends Object> getSelected() {
 		return null;
 	}
 	

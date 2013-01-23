@@ -84,6 +84,7 @@ public class ParticleSystemDAO {
 	public void load(ConfigurableParticleSystem particleSystem, File file) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
 		// cleanup
 		particleSystem.removeAllParticles();
+		particleSystem.removeAllFaces();
 		ListIterator<ParticleFeature> removeFeaturesIterator = particleSystem.getParticleFeatures().listIterator();
 		while (removeFeaturesIterator.hasNext()) {
 			particleSystem.removeParticleFeature(removeFeaturesIterator.next());

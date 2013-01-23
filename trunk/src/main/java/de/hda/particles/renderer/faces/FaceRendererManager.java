@@ -9,7 +9,6 @@ import de.hda.particles.domain.Face;
 import de.hda.particles.listener.FaceLifetimeListener;
 import de.hda.particles.renderer.AbstractRenderer;
 import de.hda.particles.renderer.Renderer;
-import de.hda.particles.renderer.particles.ParticleRenderer;
 import de.hda.particles.scene.Scene;
 
 public class FaceRendererManager extends AbstractRenderer implements Renderer, FaceLifetimeListener {
@@ -143,6 +142,8 @@ public class FaceRendererManager extends AbstractRenderer implements Renderer, F
 				}
 				faceRenderer.after();
 			}
+		} catch (ConcurrentModificationException e) {
+			logger.error("skipped frame: " + e.getMessage(), e);
 		} catch (NullPointerException e) {
 			logger.error("could not render faces: " + e.getMessage(), e);
 		}

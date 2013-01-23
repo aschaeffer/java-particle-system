@@ -8,7 +8,7 @@ import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.demo.DemoContext;
 import de.hda.particles.scene.demo.DemoHandle;
 
-public class RemoveParticles implements Command {
+public class RemoveFaces implements Command {
 
 	@Override
 	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
@@ -17,10 +17,10 @@ public class RemoveParticles implements Command {
 		while (iterator.hasNext()) {
 			Scene scene = iterator.next();
 			scene.getParticleSystem().beginModification();
-			scene.getParticleSystem().removeAllParticles();
+			scene.getParticleSystem().removeAllFaces();
 			scene.getParticleSystem().endModification();
 			scene.beginModification();
-			scene.getParticleRendererManager().clear();
+			scene.getFaceRendererManager().clear();
 			scene.endModification();
 		}
 		return null;

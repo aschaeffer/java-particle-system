@@ -41,14 +41,14 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 					glPushMatrix();
 					glTranslated(positionX, positionY, positionZ);
 					Sphere s = new Sphere();
-					if (modifier.equals(selected)) {
+					if (selected.contains(modifier)) {
 						glColor4f(1.0f, 0.3f, 0.3f, 0.8f);
 						s.setDrawStyle(GLU.GLU_LINE);
 					} else {
 						glColor4f(0.3f, 0.8f, 0.8f, 0.8f);
 					}
 					s.draw(10.0f, 16, 16);
-					if (modifier.equals(selected)) {
+					if (selected.contains(modifier)) {
 						Vector3f position = new Vector3f(positionX.floatValue(), positionY.floatValue(), positionZ.floatValue());
 						Vector3f normal = new Vector3f(normalX.floatValue(), normalY.floatValue(), normalZ.floatValue());
 						Vector3f normalizedNormal = new Vector3f();
@@ -82,8 +82,8 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 
 	@Override
 	public Boolean select(Vector3f position) {
-		CollisionPlane oldSelected = selected;
-		selected = null;
+		Boolean selectionWasEmpty = selected.isEmpty();
+		selected.clear();
 		ListIterator<ParticleModifier> iterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
 		while (iterator.hasNext()) {
 			ParticleModifier modifier = iterator.next();
@@ -99,16 +99,16 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 					Float dz = position.getZ() - positionZ.floatValue();
 					Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
 					if (distance < 20.0f) {
-						selected = collisionPlane;
+						selected.add(collisionPlane);
 						scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT, collisionPlane));
 						break;
 					}
 				}
 			}
 		}
-		if (selected != null)
+		if (!selected.isEmpty())
 			return true;
-		if (oldSelected != null)
+		if (!selectionWasEmpty)
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
 		return false;
 	}
@@ -141,31 +141,34 @@ public class CollisionPlaneRenderer extends AbstractMovable<CollisionPlane> impl
 
 	@Override
 	public void move(Vector3f pointerPosition) {
-		if (selected == null)
-			return;
+		if (selected.size() == 0) return;
 		Vector3f cameraPosition = scene.getCameraManager().getPosition();
 		Vector3f cameraToTarget = new Vector3f();
 		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
-		ParticleModifierConfiguration configuration = selected.getConfiguration();
-		Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
-		Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
-		Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
-		Float dx = cameraPosition.getX() - positionX.floatValue();
-		Float dy = cameraPosition.getY() - positionY.floatValue();
-		Float dz = cameraPosition.getZ() - positionZ.floatValue();
-		Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
-		Float distanceCameraToTarget = cameraToTarget.length();
-		Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
-		cameraToTarget.scale(scaleFactor);
-		Vector3f newPosition = new Vector3f();
-		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
-		configuration.put(PositionablePointModifier.POSITION_X, new Double(newPosition.x));
-		configuration.put(PositionablePointModifier.POSITION_Y, new Double(newPosition.y));
-		configuration.put(PositionablePointModifier.POSITION_Z, new Double(newPosition.z));
-		Vector3f normalizedNormal = new Vector3f();
-		cameraToTarget.normalise(normalizedNormal);
-		configuration.put(PositionablePlaneModifier.NORMAL_X, new Double(normalizedNormal.x));
-		configuration.put(PositionablePlaneModifier.NORMAL_Y, new Double(normalizedNormal.y));
-		configuration.put(PositionablePlaneModifier.NORMAL_Z, new Double(normalizedNormal.z));
+		ListIterator<CollisionPlane> iterator = selected.listIterator(0);
+		while (iterator.hasNext()) {
+			CollisionPlane collisionPlane = iterator.next();
+			ParticleModifierConfiguration configuration = collisionPlane.getConfiguration();
+			Double positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+			Double positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+			Double positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
+			Float dx = cameraPosition.getX() - positionX.floatValue();
+			Float dy = cameraPosition.getY() - positionY.floatValue();
+			Float dz = cameraPosition.getZ() - positionZ.floatValue();
+			Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+			Float distanceCameraToTarget = cameraToTarget.length();
+			Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
+			cameraToTarget.scale(scaleFactor);
+			Vector3f newPosition = new Vector3f();
+			Vector3f.add(cameraPosition, cameraToTarget, newPosition);
+			configuration.put(PositionablePointModifier.POSITION_X, new Double(newPosition.x));
+			configuration.put(PositionablePointModifier.POSITION_Y, new Double(newPosition.y));
+			configuration.put(PositionablePointModifier.POSITION_Z, new Double(newPosition.z));
+			Vector3f normalizedNormal = new Vector3f();
+			cameraToTarget.normalise(normalizedNormal);
+			configuration.put(PositionablePlaneModifier.NORMAL_X, new Double(normalizedNormal.x));
+			configuration.put(PositionablePlaneModifier.NORMAL_Y, new Double(normalizedNormal.y));
+			configuration.put(PositionablePlaneModifier.NORMAL_Z, new Double(normalizedNormal.z));
+		}
 	}
 }

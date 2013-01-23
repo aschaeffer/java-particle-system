@@ -66,6 +66,18 @@ public class HUDMenuEntry {
 		return e;
 	}
 
+	public static HUDMenuEntry create(HUDMenuEntry parent, String title, HUDCommandTypes commandType, Object commandPayload, Object commandPayload2, Object commandPayload3) {
+		HUDMenuEntry e = new HUDMenuEntry(parent, title, commandType, commandPayload, commandPayload2, commandPayload3);
+		parent.childs.add(e);
+		return e;
+	}
+
+	public static HUDMenuEntry create(HUDMenuEntry parent, String title, String icon, HUDCommandTypes commandType, Object commandPayload, Object commandPayload2, Object commandPayload3) {
+		HUDMenuEntry e = new HUDMenuEntry(parent, title, icon, commandType, commandPayload, commandPayload2, commandPayload3);
+		parent.childs.add(e);
+		return e;
+	}
+
 	public static HUDMenuEntry createRoot(String title) {
 		HUDMenuEntry e = new HUDMenuEntry(null, title);
 		e.parent = e;
@@ -127,6 +139,19 @@ public class HUDMenuEntry {
 		this.title = title;
 		this.icon = icon;
 		this.command = new HUDCommand(commandType, commandPayload, commandPayload2);
+	}
+
+	private HUDMenuEntry(HUDMenuEntry parent, String title, HUDCommandTypes commandType, Object commandPayload, Object commandPayload2, Object commandPayload3) {
+		this.parent = parent;
+		this.title = title;
+		this.command = new HUDCommand(commandType, commandPayload, commandPayload2, commandPayload3);
+	}
+
+	private HUDMenuEntry(HUDMenuEntry parent, String title, String icon, HUDCommandTypes commandType, Object commandPayload, Object commandPayload2, Object commandPayload3) {
+		this.parent = parent;
+		this.title = title;
+		this.icon = icon;
+		this.command = new HUDCommand(commandType, commandPayload, commandPayload2, commandPayload3);
 	}
 
 }
