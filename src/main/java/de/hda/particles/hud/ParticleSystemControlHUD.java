@@ -79,10 +79,6 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
 			if (!blockClearSelection) {
 				proxyInputCommand(HUDCommandTypes.REMOVE_ALL_PARTICLES);
-//				scene.getParticleSystem().removeAllParticles();
-//				scene.getParticleRendererManager().clear();
-//				scene.getFaceRendererManager().clear();
-				addNotice("All particles and faces removed");
 				blockClearSelection = true;
 			}
 		} else {
@@ -100,11 +96,11 @@ public class ParticleSystemControlHUD extends AbstractHUD implements HUD {
 		if (command.getType() == HUDCommandTypes.REMOVE_ALL_PARTICLES) {
 			scene.getParticleSystem().beginModification();
 			scene.getParticleSystem().removeAllParticles();
+			scene.getParticleSystem().removeAllFaces();
 			scene.getParticleRendererManager().clear();
 			scene.getFaceRendererManager().clear();
 			scene.getParticleSystem().endModification();
 			addNotice("All particles and faces removed");
-			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.NOTICE, "All particles and faces removed"));
 		}
 	}
 

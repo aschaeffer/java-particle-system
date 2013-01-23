@@ -3,6 +3,7 @@ package de.hda.particles.hud;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -94,58 +95,60 @@ public class EditorHUD extends AbstractHUD implements HUD {
 		left = scene.getWidth() - width - 2*currentMargin;
 		fullHeight = ((editorEntries.size() + 1) * (height + 3*currentMargin));
 		
-		if (fullHeight < (scene.getHeight() * 3) / 4) {
-			top = (scene.getHeight() / 2) - (((editorEntries.size() + 1) * (height + 3*currentMargin)) / 2);
-			centered = left + (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
+	    try {
+			if (fullHeight < (scene.getHeight() * 3) / 4) {
+				top = (scene.getHeight() / 2) - (((editorEntries.size() + 1) * (height + 3*currentMargin)) / 2);
+				centered = left + (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
+	
+			    font.drawString(centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+	
+			    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+			    while (iterator.hasNext()) {
+			    	HUDEditorEntry entry = iterator.next();
+			    	top = top + height + 3*currentMargin;
+			    	currentValue = currentEditor.getValue(entry.key);
+					rightAligned = scene.getWidth() - 2*currentMargin - font.getWidth(currentValue);
+					height = font.getHeight(entry.label);
+				    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+				    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+			    }
+			} else {
+				halfHeight = fullHeight / 2;
+				top = (scene.getHeight() / 2) - (halfHeight / 2);
+				top2 = top;
+	    		left2 = left;
+	    		left = 2*currentMargin;
+	
+	    		centered = (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
+			    font.drawString(left + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+			    font.drawString(left2 + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+	
+			    nextColumn = (editorEntries.size() / 2) + 1;
 
-		    font.drawString(centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
-		    while (iterator.hasNext()) {
-		    	HUDEditorEntry entry = iterator.next();
-		    	top = top + height + 3*currentMargin;
-		    	currentValue = currentEditor.getValue(entry.key);
-				rightAligned = scene.getWidth() - 2*currentMargin - font.getWidth(currentValue);
-				height = font.getHeight(entry.label);
-			    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-			    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-		    }
-		} else {
-			halfHeight = fullHeight / 2;
-			top = (scene.getHeight() / 2) - (halfHeight / 2);
-			top2 = top;
-    		left2 = left;
-    		left = 2*currentMargin;
-
-    		centered = (width / 2) - (font.getWidth(currentEditor.getTitle()) / 2);
-		    font.drawString(left + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-		    font.drawString(left2 + centered, top, currentEditor.getTitle(), new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-
-		    nextColumn = (editorEntries.size() / 2) + 1;
-
-		    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
-		    while (iterator.hasNext()) {
-		    	HUDEditorEntry entry = iterator.next();
-		    	if (entry == null) continue;
-		    	if (currentEditor == null) break;
-		    	currentValue = currentEditor.getValue(entry.key);
-		    	if (iterator.previousIndex() == nextColumn - 1) {
-		    		top = top2;
-		    		left = left2;
-		    	}
-		    	if (iterator.previousIndex() >= nextColumn - 1) {
-			    	rightAligned = scene.getWidth() - 2*currentMargin - font.getWidth(currentValue);
-		    	} else {
-			    	rightAligned = 2*currentMargin + width - font.getWidth(currentValue);
-		    	}
-		    	top = top + height + 3*currentMargin;
-				height = font.getHeight(entry.label);
-			    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-			    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
-		    }
-			
-		}
-
+			    ListIterator<HUDEditorEntry> iterator = editorEntries.listIterator(0);
+			    while (iterator.hasNext()) {
+			    	HUDEditorEntry entry = iterator.next();
+			    	if (entry == null) continue;
+			    	if (currentEditor == null) break;
+			    	currentValue = currentEditor.getValue(entry.key);
+			    	if (iterator.previousIndex() == nextColumn - 1) {
+			    		top = top2;
+			    		left = left2;
+			    	}
+			    	if (iterator.previousIndex() >= nextColumn - 1) {
+				    	rightAligned = scene.getWidth() - 2*currentMargin - font.getWidth(currentValue);
+			    	} else {
+				    	rightAligned = 2*currentMargin + width - font.getWidth(currentValue);
+			    	}
+			    	top = top + height + 3*currentMargin;
+					height = font.getHeight(entry.label);
+				    font.drawString(left, top, entry.label, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+				    font.drawString(rightAligned, top, currentValue, new org.newdawn.slick.Color(0.0f, 0.0f, 0.0f, 1.0f));
+			    }
+			}
+	    } catch (ConcurrentModificationException e) {
+	    	// for now: ignore!
+	    }
 	}
 	
 	@Override

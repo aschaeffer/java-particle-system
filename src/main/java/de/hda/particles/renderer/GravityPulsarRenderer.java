@@ -21,6 +21,7 @@ public class GravityPulsarRenderer extends AbstractSelectable<GravityPulsar> imp
 	private Double positionX;
 	private Double positionY;
 	private Double positionZ;
+	private Double pulse = 0.0;
 
 	public GravityPulsarRenderer() {}
 
@@ -40,13 +41,15 @@ public class GravityPulsarRenderer extends AbstractSelectable<GravityPulsar> imp
 					glPushMatrix();
 			        glTranslated(positionX, positionY, positionZ);
 			        Sphere s = new Sphere();
-			        if (modifier.equals(selected)) {
-						glColor4f(1.0f, 0.3f, 0.3f, 0.8f);
+					glColor4f(0.5f, 0.3f, 0.8f, 0.8f);
+			        if (selected.contains(modifier)) {
+						glLineWidth(1.0f);
 				        s.setDrawStyle(GLU.GLU_LINE);
+				        pulse = 8.5 + Math.sin(scene.getParticleSystem().getPastIterations() * 0.03) * 3.0;
+				        s.draw(pulse.floatValue(), 16, 16);
 			        } else {
-						glColor4f(0.8f, 0.3f, 0.8f, 0.8f);
+				        s.draw(10.0f, 16, 16);
 			        }
-			        s.draw(10.0f, 16, 16);
 					glPopMatrix();
 				}
 			}
@@ -55,8 +58,8 @@ public class GravityPulsarRenderer extends AbstractSelectable<GravityPulsar> imp
 
 	@Override
 	public Boolean select(Vector3f position) {
-		GravityPulsar oldSelected = selected;
-		selected = null;
+		Boolean selectionWasEmpty = selected.isEmpty();
+		selected.clear();
 		List<ParticleModifier> currentModifiers = scene.getParticleSystem().getParticleModifiers();
 		ListIterator<ParticleModifier> pIterator = currentModifiers.listIterator(0);
 		while (pIterator.hasNext()) {
@@ -73,16 +76,16 @@ public class GravityPulsarRenderer extends AbstractSelectable<GravityPulsar> imp
 					Float dz = position.getZ() - positionZ.floatValue();
 					Float distance = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
 					if (distance < 20.0f) {
-						selected = gravityPulsar;
+						selected.add(gravityPulsar);
 						scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT, gravityPulsar));
 						break;
 					}
 				}
 			}
 		}
-		if (selected != null)
+		if (!selected.isEmpty())
 			return true;
-		if (oldSelected != null)
+		if (!selectionWasEmpty)
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
 		return false;
 	}
@@ -115,31 +118,32 @@ public class GravityPulsarRenderer extends AbstractSelectable<GravityPulsar> imp
 		scene.getParticleSystem().endModification();
 	}
 
-	
 	@Override
 	public void move(Vector3f pointerPosition) {
-		if (selected == null) return;
-		
+		if (selected.size() == 0) return;
 		Vector3f cameraPosition = scene.getCameraManager().getPosition();
-		
 		Vector3f cameraToTarget = new Vector3f();
 		Vector3f.sub(pointerPosition, cameraPosition, cameraToTarget);
-		ParticleModifierConfiguration configuration = selected.getConfiguration();
-		positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
-		positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
-		positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
-		Float dx = cameraPosition.getX() - positionX.floatValue();
-		Float dy = cameraPosition.getY() - positionY.floatValue();
-		Float dz = cameraPosition.getZ() - positionZ.floatValue();
-		Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
-		Float distanceCameraToTarget = cameraToTarget.length();
-		Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
-		cameraToTarget.scale(scaleFactor);
-		Vector3f newPosition = new Vector3f();
-		Vector3f.add(cameraPosition, cameraToTarget, newPosition);
-		configuration.put(PositionablePointModifier.POSITION_X, new Double(newPosition.x));
-		configuration.put(PositionablePointModifier.POSITION_Y, new Double(newPosition.y));
-		configuration.put(PositionablePointModifier.POSITION_Z, new Double(newPosition.z));
+		ListIterator<GravityPulsar> iterator = selected.listIterator(0);
+		while (iterator.hasNext()) {
+			GravityPulsar gravityPulsar = iterator.next();
+			ParticleModifierConfiguration configuration = gravityPulsar.getConfiguration();
+			positionX = (Double) configuration.get(PositionablePointModifier.POSITION_X);
+			positionY = (Double) configuration.get(PositionablePointModifier.POSITION_Y);
+			positionZ = (Double) configuration.get(PositionablePointModifier.POSITION_Z);
+			Float dx = cameraPosition.getX() - positionX.floatValue();
+			Float dy = cameraPosition.getY() - positionY.floatValue();
+			Float dz = cameraPosition.getZ() - positionZ.floatValue();
+			Float distanceCameraToObject = (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+			Float distanceCameraToTarget = cameraToTarget.length();
+			Float scaleFactor = distanceCameraToObject / distanceCameraToTarget;
+			cameraToTarget.scale(scaleFactor);
+			Vector3f newPosition = new Vector3f();
+			Vector3f.add(cameraPosition, cameraToTarget, newPosition);
+			configuration.put(PositionablePointModifier.POSITION_X, new Double(newPosition.x));
+			configuration.put(PositionablePointModifier.POSITION_Y, new Double(newPosition.y));
+			configuration.put(PositionablePointModifier.POSITION_Z, new Double(newPosition.z));
+		}
 	}
 
 }

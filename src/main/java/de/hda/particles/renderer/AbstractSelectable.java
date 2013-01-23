@@ -1,10 +1,14 @@
 package de.hda.particles.renderer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 public abstract class AbstractSelectable<T> extends AbstractRenderer {
 
-	protected T selected;
+	protected List<T> selected = new ArrayList<T>();
 
 	@Override
 	public Boolean isSelectable() {
@@ -13,12 +17,23 @@ public abstract class AbstractSelectable<T> extends AbstractRenderer {
 
 	@Override
 	public Boolean select(Vector3f position) {
-		selected = null;
+		selected.clear();
 		return false;
 	}
 
 	@Override
-	public T getSelected() {
+	public List<? extends Object> select(Vector4f selectionBox) {
+		selected.clear();
+		return selected;
+	}
+
+	@Override
+	public void unselect() {
+		selected.clear();
+	}
+	
+	@Override
+	public List<T> getSelected() {
 		return selected;
 	}
 

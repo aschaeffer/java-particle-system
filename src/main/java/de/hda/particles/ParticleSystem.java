@@ -67,8 +67,8 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	 */
 	public FacePool getFacePool();
 
-	public void addParticleEmitter(ParticleEmitter emitter);
-	public void addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
+	public ParticleEmitter addParticleEmitter(ParticleEmitter emitter);
+	public ParticleEmitter addParticleEmitter(ParticleEmitter emitter, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
 
 	/**
 	 * Adds a particle emitter to the particle system.
@@ -81,7 +81,7 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	 * @param lifetime Initial particle lifetime.
 	 * @param configuration Emitter implementation specific configuration.
 	 */
-	public void addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
+	public ParticleEmitter addParticleEmitter(Class<? extends ParticleEmitter> clazz, Vector3f position, Vector3f velocity, Integer particleRendererIndex, Integer rate, Integer lifetime, ParticleEmitterConfiguration configuration);
 
 	/**
 	 * Adds a particle modifier to the particle system.
@@ -89,20 +89,20 @@ public interface ParticleSystem extends Updateable, Blockable, FpsInformation {
 	 * @param clazz Type of the modifier.
 	 * @param configuration Modifier implementation specific configuration.
 	 */
-	public void addParticleModifier(ParticleModifier modifier, ParticleModifierConfiguration configuration);
-	public void addParticleModifier(ParticleModifier modifier);
-	public void addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration);
-	public void addParticleModifier(Class<? extends ParticleModifier> clazz);
+	public ParticleModifier addParticleModifier(ParticleModifier modifier, ParticleModifierConfiguration configuration);
+	public ParticleModifier addParticleModifier(ParticleModifier modifier);
+	public ParticleModifier addParticleModifier(Class<? extends ParticleModifier> clazz, ParticleModifierConfiguration configuration);
+	public ParticleModifier addParticleModifier(Class<? extends ParticleModifier> clazz);
 	public void addFrameListener(FrameListener frameListener);
 	public void addParticleListener(ParticleLifetimeListener particleListener);
 	public void addFeatureListener(FeatureListener featureListener);
 	public void addFaceListener(FaceLifetimeListener faceListener);
 	public void addEmitterListener(EmitterLifetimeListener emitterListener);
 	public void addModifierListener(ModifierLifetimeListener modifierListener);
-	public void addParticleFeature(ParticleFeature particleFeature);
-	public void addParticleFeature(ParticleFeature particleFeature, Boolean allowDuplicates);
-	public void addParticleFeature(Class<? extends ParticleFeature> clazz);
-	public void addParticleFeature(Class<? extends ParticleFeature> clazz, Boolean allowDuplicates);
+	public ParticleFeature addParticleFeature(ParticleFeature particleFeature);
+	public ParticleFeature addParticleFeature(ParticleFeature particleFeature, Boolean allowDuplicates);
+	public ParticleFeature addParticleFeature(Class<? extends ParticleFeature> clazz);
+	public ParticleFeature addParticleFeature(Class<? extends ParticleFeature> clazz, Boolean allowDuplicates);
 	public void addParticle(Particle particle);
 	public void addFixedPoint(FixedPoint fixedPoint);
 	public void addFace(Face face);

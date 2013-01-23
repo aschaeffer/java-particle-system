@@ -99,6 +99,7 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledSoftBodyEmitterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledTerrainGenerationEmitterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledTetrahedronParticleEmitterEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledFieldParticleEmitterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", PooledSphereParticleEmitterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", SphereParticleEmitterEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", GravityPointEditor.class.getName())));
