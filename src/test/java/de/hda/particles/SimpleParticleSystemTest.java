@@ -112,6 +112,7 @@ public class SimpleParticleSystemTest {
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", ParticleGravityTransformationEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", BillboardParticleRendererEditor.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", DisplayEditor.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddEditor.class.getName(), new CommandConfiguration("class", SystemInfoEditor.class.getName())));
 
 		// renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddRenderer.class.getName(), new CommandConfiguration("class", SkyBoxRenderer.class.getName())));
@@ -126,12 +127,11 @@ public class SimpleParticleSystemTest {
 		// demoManager.addChangeSet(new ChangeSet(0, AddModifier.class.getName(), new CommandConfiguration("class", BoundingBoxParticleCulling.class.getName())));
 
 		// particle renderers
-		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", SimplePointParticleRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", FireBallParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", TestShaderParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", PoisonParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", CubeParticleRenderer.class.getName())));
-		// demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", The.class.getName())));
 
 		// face renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddFaceRenderer.class, new CommandConfiguration("class", PolygonFaceRenderer.class.getName())));

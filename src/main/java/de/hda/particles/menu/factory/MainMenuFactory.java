@@ -2,8 +2,8 @@ package de.hda.particles.menu.factory;
 
 import de.hda.particles.camera.*;
 import de.hda.particles.domain.factory.*;
-import de.hda.particles.domain.initializer.PooledFieldParticleEmitterInitializer;
-import de.hda.particles.editor.DisplayEditor;
+import de.hda.particles.domain.initializer.*;
+import de.hda.particles.editor.*;
 import de.hda.particles.emitter.*;
 import de.hda.particles.features.*;
 import de.hda.particles.hud.*;
@@ -181,6 +181,7 @@ public class MainMenuFactory {
 		HUDMenuEntry.create(camera, "Add Top Down Camera", HUDCommandTypes.ADD_CAMERA, TopDownCamera.class);
 		HUDMenuEntry.create(camera, "Add Third Person Spectator Camera", HUDCommandTypes.ADD_CAMERA, ThirdPersonSpectatorCamera.class);
 		HUDMenuEntry.create(camera, "Remove Current Camera", HUDCommandTypes.REMOVE_CAMERA);
+		HUDMenuEntry.create(scene, "System Info", HUDCommandTypes.EDIT, SystemInfoEditor.class);
 		HUDMenuEntry.create(scene, "Load Scene", HUDCommandTypes.LOAD_SCENE);
 		HUDMenuEntry.create(scene, "Save Scene", HUDCommandTypes.SAVE_SCENE);
 		HUDMenuEntry.create(scene, "Remove all Particles", HUDCommandTypes.REMOVE_ALL_PARTICLES);
@@ -190,11 +191,12 @@ public class MainMenuFactory {
 		HUDMenuEntry.create(addEmitters, "Point", HUDCommandTypes.ADD_EMITTER, PooledPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Plane", HUDCommandTypes.ADD_EMITTER, PlaneParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addEmitters, "Sphere / Ring", HUDCommandTypes.ADD_EMITTER, PooledSphereParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
-		HUDMenuEntry.create(addEmitters, "Cloth (MassSpring)", HUDCommandTypes.ADD_EMITTER, PooledClothParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addEmitters, "Cloth (MassSpring)", HUDCommandTypes.ADD_EMITTER, PooledClothParticleEmitter.class, ParticleEmitterConfigurationFactory.class, PooledClothParticleEmitterInitializer.class);
+		HUDMenuEntry.create(addEmitters, "3D Field", HUDCommandTypes.ADD_EMITTER, PooledFieldParticleEmitter.class, ParticleEmitterConfigurationFactory.class, PooledFieldParticleEmitterInitializer.class);
 		HUDMenuEntry addOtherEmitters = HUDMenuEntry.create(addEmitters, "Experimental / Deprecated");
 		HUDMenuEntry.create(addOtherEmitters, "Tetrahedron", HUDCommandTypes.ADD_EMITTER, PooledTetrahedronParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
-		HUDMenuEntry.create(addOtherEmitters, "Field", HUDCommandTypes.ADD_EMITTER, PooledFieldParticleEmitter.class, ParticleEmitterConfigurationFactory.class, PooledFieldParticleEmitterInitializer.class);
-		HUDMenuEntry.create(addOtherEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, WaveParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addOtherEmitters, "Soft Body", HUDCommandTypes.ADD_EMITTER, PooledSoftBodyEmitter.class, ParticleEmitterConfigurationFactory.class, PooledSoftBodyEmitterInitializer.class);
+		HUDMenuEntry.create(addOtherEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, PooledWaveParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Pulse Rate)", HUDCommandTypes.ADD_EMITTER, PooledPulseRatePointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Static)", HUDCommandTypes.ADD_EMITTER, StaticPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Slow)", HUDCommandTypes.ADD_EMITTER, PointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);

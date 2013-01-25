@@ -34,6 +34,7 @@ import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.faces.FaceRendererManager;
 import de.hda.particles.renderer.particles.ParticleRendererManager;
+import de.hda.particles.renderer.shaders.ShaderManager;
 import de.hda.particles.textures.TextureManager;
 import de.hda.particles.timing.FpsInformation;
 import de.hda.particles.timing.FpsLimiter;
@@ -53,6 +54,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	protected FaceRendererManager faceRendererManager = new FaceRendererManager();
 	protected TextureManager textureManager = new TextureManager();
 	protected TextOverlayManager textOverlayManager = new TextOverlayManager();
+	protected ShaderManager shaderManager = new ShaderManager();
 
 	// Scene keeps fps informations of underlying systems
 	protected List<FpsInformation> fpsInformationInstances = new ArrayList<FpsInformation>();
@@ -242,6 +244,15 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 
 	public void setTextOverlayManager(TextOverlayManager textOverlayManager) {
 		this.textOverlayManager = textOverlayManager;
+	}
+	
+	@Override
+	public ShaderManager getShaderManager() {
+		return shaderManager;
+	}
+	
+	public void setShaderManager(ShaderManager shaderManager) {
+		this.shaderManager = shaderManager;
 	}
 
 	@Override
