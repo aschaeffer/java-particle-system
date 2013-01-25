@@ -3,21 +3,21 @@ package de.hda.particles.domain.initializer;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.ParticleEmitterConfiguration;
-import de.hda.particles.emitter.PooledFieldParticleEmitter;
+import de.hda.particles.emitter.PooledSoftBodyEmitter;
 import de.hda.particles.features.ParticleColor;
 import de.hda.particles.scene.Scene;
 
-public class PooledFieldParticleEmitterInitializer {
+public class PooledSoftBodyEmitterInitializer {
 
-	private PooledFieldParticleEmitterInitializer() {}
+	private PooledSoftBodyEmitterInitializer() {}
 
 	public static void init(Scene scene, Object subject) {
-		PooledFieldParticleEmitter emitter = (PooledFieldParticleEmitter) subject;
-		emitter.setParticleLifetime(10);
-		emitter.setRate(7);
+		PooledSoftBodyEmitter emitter = (PooledSoftBodyEmitter) subject;
+		emitter.setParticleLifetime(200000); // really long!
+		emitter.setRate(1);
 		emitter.setParticleRendererIndex(1);
-		emitter.setFaceRendererIndex(0);
-		emitter.setParticleDefaultVelocity(new Vector3f(20.0f, 20.0f, 20.0f));
+		emitter.setFaceRendererIndex(1);
+		emitter.setParticleDefaultVelocity(new Vector3f(0.0f, 0.0f, 0.0f));
 		ParticleEmitterConfiguration configuration = emitter.getConfiguration();
 		configuration.put(ParticleColor.START_COLOR_R, 255);
 		configuration.put(ParticleColor.START_COLOR_G, 200);

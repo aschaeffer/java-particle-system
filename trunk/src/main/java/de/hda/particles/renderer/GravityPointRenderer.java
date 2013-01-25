@@ -7,7 +7,9 @@ import java.util.ListIterator;
 
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import de.hda.particles.domain.ParticleModifierConfiguration;
 import de.hda.particles.hud.HUDCommand;
@@ -85,7 +87,35 @@ public class GravityPointRenderer extends AbstractMovable<GravityPoint> implemen
 			scene.getHudManager().addCommand(new HUDCommand(HUDCommandTypes.EDIT_DONE));
 		return false;
 	}
-
+	
+	@Override
+	public List<? extends Object> select(Vector4f selectionBox) {
+		selected.clear();
+		ListIterator<ParticleModifier> pIterator = scene.getParticleSystem().getParticleModifiers().listIterator(0);
+		while (pIterator.hasNext()) {
+			ParticleModifier modifier = pIterator.next();
+			if (modifier != null) {
+				if (modifier.getClass().equals(GravityPoint.class)) {
+					try {
+						GravityPoint gravityPoint = (GravityPoint) modifier;
+						ParticleModifierConfiguration configuration = gravityPoint.getConfiguration();
+						Vector3f position = new Vector3f(
+							((Double) configuration.get(PositionablePointModifier.POSITION_X)).floatValue(),
+							((Double) configuration.get(PositionablePointModifier.POSITION_Y)).floatValue(),
+							((Double) configuration.get(PositionablePointModifier.POSITION_Z)).floatValue()
+						);
+						Vector2f screenCoordinates = scene.getRendererManager().getScreenCoordinates(position);
+						if (screenCoordinates.x > selectionBox.x && screenCoordinates.x < selectionBox.z &&
+							screenCoordinates.y > selectionBox.y && screenCoordinates.y < selectionBox.w
+						) {
+							selected.add(gravityPoint);
+						}
+					} catch(Exception e) {}
+				}
+			}
+		}
+		return selected;
+	}
 	
 	@Override
 	public void remove(Vector3f position) {

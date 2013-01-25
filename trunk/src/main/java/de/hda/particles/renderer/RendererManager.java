@@ -130,11 +130,15 @@ public class RendererManager extends AbstractRenderer implements Renderer {
 		buffersUpdated = false;
 		if (scene.getTextOverlayManager().getEnabled()) updateBuffers();
 
-		// render all managed renderers
-		currentRenderers = new ArrayList<Renderer>(renderers);
-	    ListIterator<Renderer> rendererIterator = currentRenderers.listIterator(0);
-		while(rendererIterator.hasNext()) {
-			rendererIterator.next().update();
+		try {
+			// render all managed renderers
+			currentRenderers = new ArrayList<Renderer>(renderers);
+		    ListIterator<Renderer> rendererIterator = currentRenderers.listIterator(0);
+			while(rendererIterator.hasNext()) {
+				rendererIterator.next().update();
+			}
+		} catch (Exception e) {
+			logger.warn("frame skipped: " + e.getMessage(), e);
 		}
 		
 		// selection operations

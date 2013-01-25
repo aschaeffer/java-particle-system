@@ -166,31 +166,6 @@ public class ParticleRendererManager extends AbstractRenderer implements Rendere
 		}
 	}
 	
-	public void loadShader(String filename) {
-		/*
-		ClassLoader loader = ParticleRendererManager.class.getClassLoader();
-		InputStream in = loader.getResourceAsStream("shader" + filename);
-		byte[] shadercode = null;
-		try {
-		    DataInputStream dis = new DataInputStream(in);
-		    dis.readFully(shadercode = new byte[in.available()]);
-		    dis.close();
-		    in.close();
-		    ByteBuffer shader = BufferUtils.createByteBuffer(shadercode.length);
-		    shader.put(shadercode);
-		    shader.flip();
-		    int vertexShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBVertexShader.GL_VERTEX_SHADER_ARB);
-		    int pixelShaderID = ARBShaderObjects.glCreateShaderObjectARB(ARBFragmentShader.GL_FRAGMENT_SHADER_ARB);
-		    ARBShaderObjects.glShaderSourceARB(vertexShaderID, vertexShader);
-		    ARBShaderObjects.glCompileShaderARB(vertexShaderID);
-		    ARBShaderObjects.glShaderSourceARB(pixelShaderID, pixelShader);
-		    ARBShaderObjects.glCompileShaderARB(pixelShaderID);
-		} catch (IOException e) {
-			logger.error("can't loading shader " + filename, e);
-		}
-		*/
-	}
-
 	/**
 	 * Inserts newly created particles into cache
 	 */

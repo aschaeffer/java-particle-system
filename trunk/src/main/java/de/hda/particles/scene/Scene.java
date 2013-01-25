@@ -13,6 +13,7 @@ import de.hda.particles.overlay.TextOverlayManager;
 import de.hda.particles.renderer.RendererManager;
 import de.hda.particles.renderer.faces.FaceRendererManager;
 import de.hda.particles.renderer.particles.ParticleRendererManager;
+import de.hda.particles.renderer.shaders.ShaderManager;
 import de.hda.particles.textures.TextureManager;
 import de.hda.particles.timing.FpsInformation;
 
@@ -64,6 +65,7 @@ public interface Scene extends Updateable, Blockable, FpsInformation {
 	FaceRendererManager getFaceRendererManager();
 	TextureManager getTextureManager();
 	TextOverlayManager getTextOverlayManager();
+	ShaderManager getShaderManager();
 	
 	List<FpsInformation> getFpsInformationInstances();
 	void addFpsInformationInstance(FpsInformation fpsInformation);
