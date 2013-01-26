@@ -1,5 +1,7 @@
-varying vec4 v_color;
+#version 130
 
-void main() {
-	gl_FragColor = v_color; // vec4(1.0, 1.0, 0.0, 1.0);
+varying vec4 gsColor;
+
+void main(void) {
+	gl_FragColor = gsColor;
 }
