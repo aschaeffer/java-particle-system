@@ -1,52 +1,32 @@
-#version 400
- 
-layout (points) in;
-layout (triangle_strip, max_vertices = 4) out; // convert to points, line_strip, or triangle_strip
- 
-// NB: in and out pass-through vertex->fragment variables must go here if used
- 
-void main () {
-  for(int i = 0; i < gl_VerticesIn; i++) {
-    // copy attributes
-    gl_Position = gl_in[i].gl_Position;
-    EmitVertex();
-    // NB: pass-through of variables would go here
- 
-    gl_Position.y = gl_in[i].gl_Position.y + 5.0;
-    EmitVertex();
-    gl_Position.y = gl_in[i].gl_Position.y;
-    gl_Position.x = gl_in[i].gl_Position.x - 2.0;
-    EmitVertex();
-    gl_Position.y = gl_in[i].gl_Position.y + 5.0;
-    gl_Position.x = gl_in[i].gl_Position.x - 2.0;
-    EmitVertex();
-  }
-}
-//#version 400
-//
-//layout(points) in;
-//layout(line_strip, max_vertices = 2) out;
-//
-//void main()
-//{
-//	for(int i = 0; i < gl_VerticesIn; i++) {
-//		gl_Position = gl_in[i].gl_Position;
-//		gl_Color = vec4(0.0, 0.0, 1.0, 0.0);
-//		EmitVertex();
-//		EndPrimitive();
-//		gl_Position = vec4(0.0, 0.0, 0.0, 0.0);
-//		EmitVertex();
-//		EndPrimitive();
-//		gl_Position.y = gl_in[i].gl_Position.y + 10.0;
-//		EmitVertex();
-//		EndPrimitive();
-//		gl_Position.y = gl_in[i].gl_Position.y + 10.0;
-//		gl_Position.z = gl_in[i].gl_Position.z + 10.0;
-//		EmitVertex();
-//		EndPrimitive();
-//		gl_Position.z = gl_in[i].gl_Position.z + 10.0;
-//		EmitVertex();
-//		EndPrimitive();
-//	}
-//}
+#version 120
+#extension GL_ARB_geometry_shader4 : enable
 
+uniform float time;
+
+varying in vec4 vsColor;
+varying out vec4 gsColor;
+
+float rand(vec2 n, float f) {
+	return f * 0.5 + f * 0.5 * fract(sin(dot(n.xy ,vec2(12.9898,78.233))) * 43758.5453 + time);
+} 
+
+void main() {
+		gl_Position = gl_ModelViewProjectionMatrix * gl_PositionIn[0];
+		gsColor = vsColor;
+		EmitVertex();
+		EndPrimitive();
+		for (int i=1; i<37; i++) {
+			// gl_Position = gl_PositionIn[0] + vec4(-15 + sin(360.0/i) * 30, 0, -15 + cos(360.0/i) * 30, 0);
+			gl_Position = gl_PositionIn[0] + vec4(rand(gl_PositionIn[0].xz, 30), 0, rand(gl_PositionIn[0].zx, 30), 0);
+    	    gl_Position = gl_ModelViewProjectionMatrix * gl_Position;
+	        gsColor = vsColor;
+			EmitVertex();
+			EndPrimitive();
+		}
+		// gl_Position = gl_PositionIn[0] + vec4(rand(gl_PositionIn[0].xy, 30),rand(gl_PositionIn[0].xy, 30),rand(gl_PositionIn[0].xy, 30),0);
+		// gl_Position = gl_PositionIn[0] + vec4(rand(gl_PositionIn[0].xy, 30),rand(gl_PositionIn[0].xy, 30),rand(gl_PositionIn[0].xy, 30),0);
+        // gl_Position = gl_ModelViewProjectionMatrix * gl_Position;
+        // gsColor = vsColor;
+		// EmitVertex();
+		// EndPrimitive();
+}
