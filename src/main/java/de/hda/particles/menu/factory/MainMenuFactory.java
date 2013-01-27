@@ -197,6 +197,7 @@ public class MainMenuFactory {
 		HUDMenuEntry.create(addOtherEmitters, "Tetrahedron", HUDCommandTypes.ADD_EMITTER, PooledTetrahedronParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Soft Body", HUDCommandTypes.ADD_EMITTER, PooledSoftBodyEmitter.class, ParticleEmitterConfigurationFactory.class, PooledSoftBodyEmitterInitializer.class);
 		HUDMenuEntry.create(addOtherEmitters, "Wave", HUDCommandTypes.ADD_EMITTER, PooledWaveParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
+		HUDMenuEntry.create(addOtherEmitters, "2D Grid", HUDCommandTypes.ADD_EMITTER, PooledGridParticleEmitter.class, ParticleEmitterConfigurationFactory.class, PooledGridParticleEmitterInitializer.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Pulse Rate)", HUDCommandTypes.ADD_EMITTER, PooledPulseRatePointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Static)", HUDCommandTypes.ADD_EMITTER, StaticPointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
 		HUDMenuEntry.create(addOtherEmitters, "Point (Slow)", HUDCommandTypes.ADD_EMITTER, PointParticleEmitter.class, ParticleEmitterConfigurationFactory.class);
