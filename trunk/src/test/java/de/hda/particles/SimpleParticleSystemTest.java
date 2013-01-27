@@ -128,7 +128,7 @@ public class SimpleParticleSystemTest {
 
 		// particle renderers
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
-		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", TestShaderParticleRenderer.class.getName())));
+		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", FireBallParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", PoisonParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", BallParticleRenderer.class.getName())));
 		demoManager.addChangeSet(new ChangeSet(0, AddParticleRenderer.class, new CommandConfiguration("class", CubeParticleRenderer.class.getName())));
