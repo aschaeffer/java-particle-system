@@ -11,8 +11,8 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
-import de.hda.particles.domain.factory.PositionPathBufferingConfigurationFactory;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
+import de.hda.particles.configuration.factory.PositionPathBufferingConfigurationFactory;
 import de.hda.particles.features.impl.ParticleColor;
 import de.hda.particles.features.impl.ParticleSize;
 import de.hda.particles.features.impl.PositionPath;

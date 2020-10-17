@@ -8,15 +8,15 @@ import de.hda.particles.emitter.ParticleEmitter;
 
 public interface ParticleFeature {
 
-	public List<HUDEditorEntry> getEditorEntries();
-	public void init(final ParticleEmitter emitter, final Particle particle);
-	public void decrease(final ParticleEmitter emitter, final String fieldName);
-	public void decreaseMin(final ParticleEmitter emitter, final String fieldName);
-	public void increase(final ParticleEmitter emitter, final String fieldName);
-	public void increaseMax(final ParticleEmitter emitter, final String fieldName);
-	public void setDefault(final ParticleEmitter emitter, final String fieldName);
-	public String getValue(final ParticleEmitter emitter, final String fieldName);
-	public Object getObject(final ParticleEmitter emitter, final String fieldName);
-	public Boolean validFieldName(final String fieldName);
+	List<HUDEditorEntry> getEditorEntries();
+	void init(final ParticleEmitter emitter, final Particle particle);
+	void decrease(final ParticleEmitter emitter, final String fieldName);
+	void decreaseMin(final ParticleEmitter emitter, final String fieldName);
+	void increase(final ParticleEmitter emitter, final String fieldName);
+	void increaseMax(final ParticleEmitter emitter, final String fieldName);
+	void setDefault(final ParticleEmitter emitter, final String fieldName);
+	String getValue(final ParticleEmitter emitter, final String fieldName);
+	Object getObject(final ParticleEmitter emitter, final String fieldName);
+	Boolean validFieldName(final String fieldName);
 
 }

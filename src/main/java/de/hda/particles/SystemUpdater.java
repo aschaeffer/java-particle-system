@@ -8,8 +8,8 @@ package de.hda.particles;
  */
 public interface SystemUpdater extends Runnable {
 
-	public void stop();
-	public void stopIn(Integer millis);
-	public Boolean isFinished();
+	void stop();
+	void stopIn(Integer millis);
+	Boolean isFinished();
 
 }

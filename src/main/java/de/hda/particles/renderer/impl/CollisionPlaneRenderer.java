@@ -9,7 +9,7 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.hud.impl.HUDCommand;
 import de.hda.particles.hud.impl.HUDCommandTypes;
 import de.hda.particles.modifier.ParticleModifier;

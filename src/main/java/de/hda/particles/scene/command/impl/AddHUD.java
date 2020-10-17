@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.configuration.impl.CommandConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.demo.impl.DemoContext;

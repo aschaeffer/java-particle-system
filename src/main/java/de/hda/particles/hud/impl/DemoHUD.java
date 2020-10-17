@@ -22,7 +22,7 @@ import org.lwjgl.input.Keyboard;
 import de.hda.particles.camera.Camera;
 import de.hda.particles.dao.DemoDAO;
 import de.hda.particles.domain.ChangeSet;
-import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.configuration.impl.CommandConfiguration;
 import de.hda.particles.domain.Demo;
 import de.hda.particles.editor.Editor;
 import de.hda.particles.emitter.ParticleEmitter;

@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.domain.impl.configuration.CommandConfiguration;
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.CommandConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.demo.impl.DemoContext;

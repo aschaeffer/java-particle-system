@@ -21,7 +21,7 @@ public class SystemRunner {
 	/**
 	 * The list of managed systems.
 	 */
-	private final Map<String, Updateable> updateables = new HashMap<String, Updateable>();
+	private final Map<String, Updatable> updateables = new HashMap<String, Updatable>();
 	
 	/**
 	 * The list of system updaters of the managed systems.
@@ -48,7 +48,7 @@ public class SystemRunner {
 	 * @param name
 	 * @param updateable
 	 */
-	public void add(String name, Updateable updateable) {
+	public void add(String name, Updatable updateable) {
 		logger.info("Create new system updater thread for " + name);
 		updateables.put(name, updateable);
 		ThreadedSystemUpdater systemUpdater = new ThreadedSystemUpdater(name, updateable);

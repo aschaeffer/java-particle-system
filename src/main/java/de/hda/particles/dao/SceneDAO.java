@@ -17,7 +17,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.camera.Camera;
-import de.hda.particles.domain.impl.configuration.SceneConfiguration;
+import de.hda.particles.configuration.impl.SceneConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.renderer.FaceRenderer;

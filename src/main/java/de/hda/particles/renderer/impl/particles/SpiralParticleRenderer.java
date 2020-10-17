@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.domain.factory.PositionPathBufferingConfigurationFactory;
+import de.hda.particles.configuration.factory.PositionPathBufferingConfigurationFactory;
 import de.hda.particles.features.impl.ParticleColor;
 import de.hda.particles.features.impl.ParticleSize;
 import de.hda.particles.features.impl.PositionPath;

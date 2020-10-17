@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.camera.Camera;
-import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.configuration.impl.CommandConfiguration;
 import de.hda.particles.scene.demo.impl.DemoContext;
 import de.hda.particles.scene.demo.impl.DemoHandle;
 

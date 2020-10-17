@@ -5,11 +5,11 @@ public interface Blockable {
 	/**
 	 * Blocks the whole system for modification (thread synchronisation).
 	 */
-	public void beginModification();
+	void beginModification();
 	
 	/**
 	 * Unblocks the system for modifications.
 	 */
-	public void endModification();
+	void endModification();
 
 }

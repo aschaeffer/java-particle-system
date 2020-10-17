@@ -1,6 +1,7 @@
 package de.hda.particles.camera.impl;
 
 import de.hda.particles.camera.Camera;
+import de.hda.particles.camera.CameraManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -9,20 +10,22 @@ import org.lwjgl.util.vector.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CameraManager extends AbstractCamera implements Camera {
+public class CameraManagerImpl extends AbstractCamera implements CameraManager {
 
 	private final List<Camera> cameras = new ArrayList<Camera>();
 	private Camera selectedCamera;
 	
-	private final Logger logger = LoggerFactory.getLogger(CameraManager.class);
+	private final Logger logger = LoggerFactory.getLogger(CameraManagerImpl.class);
 	
-	public CameraManager() {}
+	public CameraManagerImpl() {}
 
+	@Override
 	public void add(Camera camera) {
 		cameras.add(camera);
 		if(selectedCamera == null) selectedCamera = camera;
 	}
 	
+	@Override
 	public void add(Class<? extends Camera> type) {
 		try {
 			Camera camera = type.newInstance();
@@ -37,7 +40,9 @@ public class CameraManager extends AbstractCamera implements Camera {
 		}
 	}
 	
-	public void add(Class<? extends Camera> type, String name, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
+	@Override
+	public void add(Class<? extends Camera> type, String name, Vector3f position, Float yaw, Float pitch, Float roll,
+			Float fov) {
 		try {
 			Camera camera = type.newInstance();
 			camera.setScene(scene);
@@ -57,6 +62,7 @@ public class CameraManager extends AbstractCamera implements Camera {
 		
 	}
 	
+	@Override
 	public void removeSelectedCamera() {
 		if (cameras.size() > 1) {
 			Integer currentIndex = cameras.lastIndexOf(selectedCamera);
@@ -65,6 +71,7 @@ public class CameraManager extends AbstractCamera implements Camera {
 		}
 	}
 
+	@Override
 	public void selectNextCamera() {
 		Integer currentIndex = cameras.lastIndexOf(selectedCamera);
 		if (currentIndex + 1 >= cameras.size()) {
@@ -99,10 +106,12 @@ public class CameraManager extends AbstractCamera implements Camera {
 		selectedCamera = null;
 	}
 	
+	@Override
 	public List<Camera> getCameras() {
 		return cameras;
 	}
 	
+	@Override
 	public Camera getSelectedCamera() {
 		return selectedCamera;
 	}

@@ -1,4 +1,4 @@
-package de.hda.particles.domain.impl.configuration;
+package de.hda.particles.configuration.impl;
 
 import java.util.HashMap;
 import java.util.List;

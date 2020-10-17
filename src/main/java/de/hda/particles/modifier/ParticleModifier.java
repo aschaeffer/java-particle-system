@@ -2,7 +2,7 @@ package de.hda.particles.modifier;
 
 import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 
 /**
  * A particle modifier changes the state of a specific particle or
@@ -16,7 +16,7 @@ public interface ParticleModifier extends ParticleUpdater, AutoDependency {
 	/**
 	 * Called once every iteration.
 	 */
-	public void prepare();
+	void prepare();
 	
 	/**
 	 * Updates a configuration key.
@@ -24,10 +24,10 @@ public interface ParticleModifier extends ParticleUpdater, AutoDependency {
 	 * @param key The key of the configuration item to change.
 	 * @param value The new configuration item value.
 	 */
-	public void updateConfiguration(String key, Object value);
+	void updateConfiguration(String key, Object value);
 
-	public void setParticleSystem(ParticleSystem particleSystem);
-	public ParticleModifierConfiguration getConfiguration();
-	public void setConfiguration(ParticleModifierConfiguration configuration);
+	void setParticleSystem(ParticleSystem particleSystem);
+	ParticleModifierConfiguration getConfiguration();
+	void setConfiguration(ParticleModifierConfiguration configuration);
 
 }

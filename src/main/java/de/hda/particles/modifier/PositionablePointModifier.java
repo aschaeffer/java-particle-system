@@ -4,9 +4,9 @@ import org.lwjgl.util.vector.Vector3f;
 
 public interface PositionablePointModifier extends ParticleModifier {
 
-	public final static String POSITION_X = "position_x";
-	public final static String POSITION_Y = "position_y";
-	public final static String POSITION_Z = "position_z";
+	String POSITION_X = "position_x";
+	String POSITION_Y = "position_y";
+	String POSITION_Z = "position_z";
 
 	Vector3f getPosition();
 	void setPosition(Vector3f position);

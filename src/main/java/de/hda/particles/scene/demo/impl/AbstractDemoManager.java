@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.SystemRunner;
-import de.hda.particles.Updateable;
+import de.hda.particles.Updatable;
 import de.hda.particles.dao.DemoDAO;
 import de.hda.particles.domain.ChangeSet;
 import de.hda.particles.domain.Demo;
 import de.hda.particles.timing.FpsLimiter;
 
-public abstract class AbstractDemoManager extends FpsLimiter implements DemoManager, Updateable {
+public abstract class AbstractDemoManager extends FpsLimiter implements DemoManager, Updatable {
 
 	private final DemoDAO demoDAO = new DemoDAO();
 	private Demo demo = new Demo();

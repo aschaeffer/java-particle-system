@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.domain.Identifiable;
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
 
 public abstract class AbstractParticleEmitter implements ParticleEmitter, Identifiable {
 

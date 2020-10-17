@@ -1,6 +1,6 @@
 package de.hda.particles.hud.impl;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.scene.Scene;

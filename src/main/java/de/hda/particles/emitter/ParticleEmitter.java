@@ -4,33 +4,42 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.Updateable;
+import de.hda.particles.Updatable;
 import de.hda.particles.domain.Identifiable;
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
 
-public interface ParticleEmitter extends Updateable, AutoDependency, Identifiable {
+public interface ParticleEmitter extends Updatable, AutoDependency, Identifiable {
 
-	public Integer getRate();
-	public void setRate(Integer rate);
-	public ParticleSystem getParticleSystem();
-	public void setParticleSystem(ParticleSystem particleSystem);
-	public void setConfiguration(ParticleEmitterConfiguration configuration);
-	public ParticleEmitterConfiguration getConfiguration();
-	public void updateConfiguration(String key, Object value);
-	public Vector3f getPosition();
-	public Float getX();
-	public Float getY();
-	public Float getZ();
-	public void setPosition(Vector3f position);
-	public Vector3f getParticleDefaultVelocity();
-	public void setParticleDefaultVelocity(Vector3f defaultVelocity);
-	public Integer getParticleRendererIndex();
-	public void setParticleRendererIndex(Integer particleRendererIndex);
-	public Integer getFaceRendererIndex();
-	public void setFaceRendererIndex(Integer faceRendererIndex);
-	public long getParticleLifetime();
-	public void setParticleLifetime(Integer defaultLifetime);
-	public Integer getPastIterations();
-	public void setPastIterations(Integer pastIterations);
+	Integer getRate();
+	void setRate(Integer rate);
+
+	ParticleSystem getParticleSystem();
+	void setParticleSystem(ParticleSystem particleSystem);
+
+	void setConfiguration(ParticleEmitterConfiguration configuration);
+	ParticleEmitterConfiguration getConfiguration();
+	void updateConfiguration(String key, Object value);
+
+	Float getX();
+	Float getY();
+	Float getZ();
+
+	Vector3f getPosition();
+	void setPosition(Vector3f position);
+
+	Vector3f getParticleDefaultVelocity();
+	void setParticleDefaultVelocity(Vector3f defaultVelocity);
+
+	Integer getParticleRendererIndex();
+	void setParticleRendererIndex(Integer particleRendererIndex);
+
+	Integer getFaceRendererIndex();
+	void setFaceRendererIndex(Integer faceRendererIndex);
+
+	long getParticleLifetime();
+	void setParticleLifetime(Integer defaultLifetime);
+
+	Integer getPastIterations();
+	void setPastIterations(Integer pastIterations);
 
 }

@@ -2,7 +2,7 @@ package de.hda.particles.domain.initializer;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
 import de.hda.particles.emitter.impl.PooledGridParticleEmitter;
 import de.hda.particles.features.impl.ParticleColor;
 import de.hda.particles.scene.Scene;

@@ -9,29 +9,29 @@ import org.lwjgl.util.vector.Vector3f;
 
 public interface FixedPoint { //  extends Map<Particle, Float>
 
-	public final static float DEFAULT_MASS = 0.5f; // TODO: adjust a suitable default value
-	public final static float DEFAULT_SPRING_FRICTION = 0.01f; // TODO: adjust a suitable default value
-	public final static float DEFAULT_SPRING_CONSTANT = 0.02f; // TODO: adjust a suitable default value
+	float DEFAULT_MASS = 0.5f; // TODO: adjust a suitable default value
+	float DEFAULT_SPRING_FRICTION = 0.01f; // TODO: adjust a suitable default value
+	float DEFAULT_SPRING_CONSTANT = 0.02f; // TODO: adjust a suitable default value
 
-	public float getX();
-	public void setX(float x);
-	public float getY();
-	public void setY(float y);
-	public float getZ();
-	public void setZ(float z);
-	public Vector3f getPosition();
-	public void setPosition(Vector3f position);
-	public float getMass();
-	public void setMass(float mass);
-	public float getSpringFriction();
-	public void setSpringFriction(float friction);
-	public float getSpringConstant();
-	public void setSpringConstant(float springConstant);
-	public List<Pair<Particle, Float>> getSprings();
-	public void setSprings(List<Pair<Particle, Float>> springs);
-	public void addSpring(Pair<Particle, Float> spring);
-	public void removeSpring(Particle particle);
-	public boolean isVisible();
-	public void setVisibility(boolean visibility);
+	float getX();
+	void setX(float x);
+	float getY();
+	void setY(float y);
+	float getZ();
+	void setZ(float z);
+	Vector3f getPosition();
+	void setPosition(Vector3f position);
+	float getMass();
+	void setMass(float mass);
+	float getSpringFriction();
+	void setSpringFriction(float friction);
+	float getSpringConstant();
+	void setSpringConstant(float springConstant);
+	List<Pair<Particle, Float>> getSprings();
+	void setSprings(List<Pair<Particle, Float>> springs);
+	void addSpring(Pair<Particle, Float> spring);
+	void removeSpring(Particle particle);
+	boolean isVisible();
+	void setVisibility(boolean visibility);
 
 }

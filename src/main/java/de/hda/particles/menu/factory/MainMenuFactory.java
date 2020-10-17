@@ -5,7 +5,7 @@ import de.hda.particles.camera.impl.ParticleOriginCamera;
 import de.hda.particles.camera.impl.ParticlePOVCamera;
 import de.hda.particles.camera.impl.ThirdPersonSpectatorCamera;
 import de.hda.particles.camera.impl.TopDownCamera;
-import de.hda.particles.domain.factory.*;
+import de.hda.particles.configuration.factory.*;
 import de.hda.particles.domain.initializer.*;
 import de.hda.particles.editor.impl.DisplayEditor;
 import de.hda.particles.editor.impl.SystemInfoEditor;

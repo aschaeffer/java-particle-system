@@ -17,9 +17,9 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ConfigurableParticleSystem;
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
-import de.hda.particles.domain.impl.configuration.ParticleSystemConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleSystemConfiguration;
 import de.hda.particles.emitter.ParticleEmitter;
 import de.hda.particles.features.ParticleFeature;
 import de.hda.particles.modifier.ParticleModifier;

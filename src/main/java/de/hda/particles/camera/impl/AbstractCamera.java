@@ -99,7 +99,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	// increment the camera's current yaw rotation
-	public void yaw(Float amount) {
+	public void yaw(final Float amount) {
 		// increment the yaw by the amount param
 		yaw += amount;
 		if (yaw > 360.0f) {
@@ -110,7 +110,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	// increment the camera's current pitch rotation
-	public void pitch(Float amount) {
+	public void pitch(final Float amount) {
 		// increment the pitch by the amount param
 		pitch += amount;
 		if (pitch > MAX_PITCH) {
@@ -121,7 +121,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	// increment the camera's current pitch rotation
-	public void roll(Float amount) {
+	public void roll(final Float amount) {
 		// increment the pitch by the amount param
 		roll += amount;
 		if (roll > MAX_ROLL) {
@@ -137,7 +137,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 		}
 	}
 	
-	public void zoom(Float amount) {
+	public void zoom(final Float amount) {
 		fov += amount;
 		if (fov > MAX_FOV) {
 			fov = MAX_FOV;
@@ -173,7 +173,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -183,7 +183,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	@Override
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -208,7 +208,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	@Override
-	public void setPosition(Vector3f position) {
+	public void setPosition(final Vector3f position) {
 		this.position = position;
 	}
 	
@@ -218,7 +218,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 	
 	@Override
-	public void setYaw(Float yaw) {
+	public void setYaw(final Float yaw) {
 		this.yaw = yaw;
 	}
 
@@ -228,7 +228,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	@Override
-	public void setPitch(Float pitch) {
+	public void setPitch(final Float pitch) {
 		this.pitch = pitch;
 	}
 
@@ -238,7 +238,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 	
 	@Override
-	public void setRoll(Float roll) {
+	public void setRoll(final Float roll) {
 		this.roll = roll;
 	}
 
@@ -248,7 +248,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 	
 	@Override
-	public void setFov(Float fov) {
+	public void setFov(final Float fov) {
 		this.fov = fov;
 	}
 
@@ -258,7 +258,7 @@ public abstract class AbstractCamera extends AbstractRenderer implements Camera,
 	}
 
 	@Override
-	public void setMode(Integer mode) {
+	public void setMode(final Integer mode) {
 		this.mode = mode;
 	}
 	

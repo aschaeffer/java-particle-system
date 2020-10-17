@@ -8,7 +8,7 @@ import java.util.ListIterator;
 
 import org.lwjgl.input.Keyboard;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.modifier.impl.BoundingBoxParticleCulling;
 import de.hda.particles.modifier.ParticleModifier;
 

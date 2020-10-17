@@ -4,7 +4,7 @@ import de.hda.particles.scene.command.Command;
 import java.util.List;
 
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.configuration.impl.CommandConfiguration;
 import de.hda.particles.scene.impl.ConfigurableScene;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.scene.demo.impl.DemoContext;

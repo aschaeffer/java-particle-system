@@ -1,14 +1,13 @@
 package de.hda.particles.camera.impl;
 
 import de.hda.particles.camera.Camera;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.scene.Scene;
 
-public class FirstPersonCamera extends AbstractCamera implements Camera {
+public class FirstPersonCamera extends AbstractDeltaTimeCamera implements Camera {
 	
 	public final static Integer MAX_MODES = 2;
 	public final static Integer DEFAULT_MODE = 1;
@@ -18,11 +17,6 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 
 	protected Float deltaX = 0.0f;
 	protected Float deltaY = 0.0f;
-	protected Integer deltaWheel = 0;
-	protected Float deltaTime = 0.0f; // length of frame
-	protected long lastTime = 0; // when the last frame was
-	protected long time = 0;
-	protected Float movementModifier = 1.0f;
 
 	public FirstPersonCamera() {}
 
@@ -36,6 +30,23 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 	public FirstPersonCamera(String name, Scene scene, Vector3f position, Float yaw, Float pitch, Float roll, Float fov) {
 		super(name, scene, position, yaw, pitch, roll, fov);
 		mode = DEFAULT_MODE;
+	}
+
+	public void move() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+			walkForward(movementModifier * movementSpeed * deltaTime);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			walkBackwards(movementModifier * movementSpeed * deltaTime);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			strafeLeft(movementModifier * movementSpeed * deltaTime);
+			roll(-1.0f);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+			strafeRight(movementModifier * movementSpeed * deltaTime);
+			roll(1.0f);
+		}
 	}
 
 	// moves the camera forward relative to its current rotation (yaw)
@@ -84,9 +95,7 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 
 	@Override
 	public void update() {
-		time = Sys.getTime();
-		deltaTime = (time - lastTime) / 1000.0f;
-		lastTime = time;
+		updateTime();
 
 		// distance in mouse movement from the last getDX() / getDY() call.
 		deltaX = new Integer(Mouse.getDX()).floatValue();
@@ -97,39 +106,11 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 		// control camera pitch from y movement from the mouse
 		pitch(deltaY * mouseSensitivity);
 
-		// when passing in the distance to move
-		// we times the movementSpeed with dt this is a time scale
-		// so if its a slow frame u move more then a fast frame
-		// so on a slow computer you move just as fast as on a fast computer
-		movementModifier = 1.0f;
+		updateMovementModifier();
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
-			movementModifier = movementModifier * 10.0f;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			movementModifier = movementModifier * 10.0f;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-			walkForward(movementModifier * movementSpeed * deltaTime);
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			walkBackwards(movementModifier * movementSpeed * deltaTime);
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-			strafeLeft(movementModifier * movementSpeed * deltaTime);
-			roll(-1.0f);
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			strafeRight(movementModifier * movementSpeed * deltaTime);
-			roll(1.0f);
-		}
+		move();
 
-		deltaWheel = Mouse.getDWheel();
-		if (deltaWheel < 0) {
-			zoom(movementModifier * -deltaWheel / 60.0f);
-		} else if (deltaWheel > 0) {
-			zoom(movementModifier * -deltaWheel / 60.0f);
-		}
+		zoom();
 
 		// look through the camera before you draw anything
 		lookThrough();
@@ -139,19 +120,11 @@ public class FirstPersonCamera extends AbstractCamera implements Camera {
 	}
 
 	@Override
-	public void setup() {
-	    Mouse.setGrabbed(true);
-	}
-
-	@Override
-	public void destroy() {
-	    Mouse.setGrabbed(false);
-	}
-	
-	@Override
 	public void nextMode() {
 		mode++;
-		if (mode > MAX_MODES - 1) mode = 0;
+		if (mode > MAX_MODES - 1) {
+			mode = 0;
+		}
 	}
 	
 	@Override

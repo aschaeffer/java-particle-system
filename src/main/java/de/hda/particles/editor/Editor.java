@@ -7,10 +7,10 @@ import de.hda.particles.scene.Scene;
 
 public interface Editor {
 
-	public void setup();
-	public void setScene(Scene scene);
-	public Boolean accept(Class<? extends Object> clazz);
-	public Class<? extends Object> getAcceptable();
+	void setup();
+	void setScene(Scene scene);
+	Boolean accept(Class<?> clazz);
+	Class<?> getAcceptable();
 	List<HUDEditorEntry> getEditorEntries();
 	void select(Object subject);
 	String getTitle();

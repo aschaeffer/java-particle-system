@@ -1,6 +1,6 @@
-package de.hda.particles.domain.factory;
+package de.hda.particles.configuration.factory;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.modifier.PositionablePointModifier;
 import de.hda.particles.modifier.impl.gravity.GravityBase;
 import de.hda.particles.modifier.impl.gravity.GravityPoint;

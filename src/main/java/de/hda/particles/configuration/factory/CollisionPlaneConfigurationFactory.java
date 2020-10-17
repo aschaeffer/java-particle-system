@@ -1,15 +1,13 @@
-package de.hda.particles.domain.factory;
+package de.hda.particles.configuration.factory;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.modifier.PositionablePlaneModifier;
 import de.hda.particles.modifier.PositionablePointModifier;
-import de.hda.particles.modifier.impl.gravity.GravityBase;
-import de.hda.particles.modifier.impl.gravity.GravityPlane;
 import de.hda.particles.scene.Scene;
 
-public class GravityPlaneConfigurationFactory {
+public class CollisionPlaneConfigurationFactory {
 
-	private GravityPlaneConfigurationFactory() {}
+	private CollisionPlaneConfigurationFactory() {}
 
 	public static ParticleModifierConfiguration create(Scene scene) {
 		ParticleModifierConfiguration configuration = new ParticleModifierConfiguration();
@@ -19,9 +17,6 @@ public class GravityPlaneConfigurationFactory {
 		configuration.put(PositionablePlaneModifier.NORMAL_X, 0.0);
 		configuration.put(PositionablePlaneModifier.NORMAL_Y, 1.0);
 		configuration.put(PositionablePlaneModifier.NORMAL_Z, 0.0);
-		configuration.put(GravityBase.GRAVITY, GravityPlane.DEFAULT_GRAVITY);
-		configuration.put(GravityBase.MASS, GravityPlane.DEFAULT_MASS);
-		configuration.put(GravityBase.MAX_FORCE, GravityPlane.DEFAULT_MAX_FORCE);
 		return configuration;
 	}
 

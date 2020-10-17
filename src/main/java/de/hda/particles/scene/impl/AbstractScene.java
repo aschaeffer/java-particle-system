@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.camera.impl.CameraManager;
+import de.hda.particles.camera.impl.CameraManagerImpl;
 import de.hda.particles.editor.impl.EditorManager;
 import de.hda.particles.hud.impl.HUDManager;
 import de.hda.particles.menu.MenuManager;
@@ -41,7 +41,7 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	protected HUDManager hudManager = new HUDManager();
 	protected EditorManager editorManager = new EditorManager();
 	protected MenuManager menuManager = new MenuManager();
-	protected CameraManager cameraManager = new CameraManager();
+	protected CameraManagerImpl cameraManager = new CameraManagerImpl();
 	protected RendererManager rendererManager = new RendererManager();
 	protected ParticleRendererManager particleRendererManager = new ParticleRendererManager();
 	protected FaceRendererManager faceRendererManager = new FaceRendererManager();
@@ -186,11 +186,11 @@ public abstract class AbstractScene extends FpsLimiter implements Scene {
 	}
 
 	@Override
-	public CameraManager getCameraManager() {
+	public CameraManagerImpl getCameraManager() {
 		return cameraManager;
 	}
 
-	public void setCameraManager(CameraManager cameraManager) {
+	public void setCameraManager(CameraManagerImpl cameraManager) {
 		this.cameraManager = cameraManager;
 	}
 

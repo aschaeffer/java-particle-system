@@ -4,6 +4,6 @@ import de.hda.particles.domain.Particle;
 
 public interface ParticleUpdater {
 
-	public void update(Particle particle);
+	void update(Particle particle);
 
 }

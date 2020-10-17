@@ -17,7 +17,7 @@ public class ThreadedSystemUpdater implements SystemUpdater {
 	/**
 	 * The subject to be managed.
 	 */
-	private final Updateable subject;
+	private final Updatable subject;
 	
 	/**
 	 * True, if the system updater is still running.
@@ -50,7 +50,7 @@ public class ThreadedSystemUpdater implements SystemUpdater {
 	 * @param name Name of the system updater.
 	 * @param subject Updateable to be managed.
 	 */
-	public ThreadedSystemUpdater(final String name, final Updateable subject) {
+	public ThreadedSystemUpdater(final String name, final Updatable subject) {
 		this.name = name;
 		this.subject = subject;
 	}

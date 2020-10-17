@@ -1,7 +1,7 @@
 package de.hda.particles.modifier.impl;
 
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.modifier.ParticleModifier;
 
 public abstract class AbstractParticleModifier implements ParticleModifier {

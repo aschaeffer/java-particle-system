@@ -1,7 +1,7 @@
 package de.hda.particles;
 
-import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleEmitterConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;

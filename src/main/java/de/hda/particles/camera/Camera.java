@@ -1,12 +1,13 @@
 package de.hda.particles.camera;
 
+import de.hda.particles.domain.Named;
 import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.domain.Identifiable;
 import de.hda.particles.renderer.Renderer;
 import de.hda.particles.scene.Scene;
 
-public interface Camera extends Renderer, Identifiable {
+public interface Camera extends Renderer, Identifiable, Named {
 
 	void reset();
 	void lookThrough();
@@ -14,13 +15,13 @@ public interface Camera extends Renderer, Identifiable {
 
 	@Override
 	void setScene(Scene scene);
-	String getName();
-	void setName(String name);
-	Vector3f getPosition();
+
 	Float getX();
 	Float getY();
 	Float getZ();
+	Vector3f getPosition();
 	void setPosition(Vector3f position);
+
 	Float getYaw();
 	void setYaw(Float yaw);
 	Float getPitch();

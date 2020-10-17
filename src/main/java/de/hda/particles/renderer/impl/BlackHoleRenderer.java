@@ -7,7 +7,7 @@ import java.util.ListIterator;
 
 import org.lwjgl.util.glu.Sphere;
 
-import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
+import de.hda.particles.configuration.impl.ParticleModifierConfiguration;
 import de.hda.particles.modifier.ParticleModifier;
 import de.hda.particles.modifier.PositionablePointModifier;
 import de.hda.particles.modifier.impl.gravity.BlackHole;
