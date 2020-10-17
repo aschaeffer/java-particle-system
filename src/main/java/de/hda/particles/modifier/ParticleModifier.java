@@ -2,7 +2,7 @@ package de.hda.particles.modifier;
 
 import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
-import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
 
 /**
  * A particle modifier changes the state of a specific particle or

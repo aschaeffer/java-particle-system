@@ -1,0 +1,30 @@
+package de.hda.particles.scene.command.impl;
+
+import de.hda.particles.scene.command.Command;
+import java.util.List;
+import java.util.ListIterator;
+
+import de.hda.particles.camera.Camera;
+import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.scene.demo.impl.DemoContext;
+import de.hda.particles.scene.demo.impl.DemoHandle;
+
+public class RotateCamera360 implements Command {
+
+	@Override
+	public DemoHandle execute(DemoContext context, CommandConfiguration configuration, Integer transitionIterations) {
+		Integer id = (Integer) configuration.get("id");
+		List<Camera> cameras = context.getByType(Camera.class);
+		ListIterator<Camera> iterator = cameras.listIterator(0);
+		while (iterator.hasNext()) {
+			Camera camera = iterator.next();
+			if (camera.getId().equals(id)) {
+				Float yaw = camera.getYaw();
+				yaw += 360.0f / transitionIterations;
+				camera.setYaw(yaw);
+			}
+		}
+		return null;
+	}
+	
+}

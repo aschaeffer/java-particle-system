@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.hda.particles.hud.HUDCommand;
-import de.hda.particles.hud.HUDCommandTypes;
+import de.hda.particles.hud.impl.HUDCommand;
+import de.hda.particles.hud.impl.HUDCommandTypes;
 
 public class HUDMenuEntry {
 

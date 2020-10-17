@@ -1,7 +1,9 @@
 package de.hda.particles.hud;
 
+import de.hda.particles.hud.impl.HUDCommand;
+
 public interface HUDCommandListener {
 
-	public void executeCommand(HUDCommand command);
+	void executeCommand(HUDCommand command);
 
 }

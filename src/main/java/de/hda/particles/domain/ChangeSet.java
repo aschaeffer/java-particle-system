@@ -2,8 +2,9 @@ package de.hda.particles.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.hda.particles.domain.impl.configuration.CommandConfiguration;
 import de.hda.particles.scene.command.Command;
-import de.hda.particles.scene.command.NoOpCommand;
+import de.hda.particles.scene.command.impl.NoOpCommand;
 
 public class ChangeSet {
 

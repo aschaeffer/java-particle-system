@@ -2,10 +2,10 @@ package de.hda.particles.domain.initializer;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import de.hda.particles.domain.ParticleEmitterConfiguration;
-import de.hda.particles.emitter.PooledClothParticleEmitter;
-import de.hda.particles.features.MassSpring;
-import de.hda.particles.features.ParticleColor;
+import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.emitter.impl.PooledClothParticleEmitter;
+import de.hda.particles.features.impl.MassSpring;
+import de.hda.particles.features.impl.ParticleColor;
 import de.hda.particles.scene.Scene;
 
 public class PooledClothParticleEmitterInitializer {

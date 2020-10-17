@@ -1,6 +1,6 @@
 package de.hda.particles.domain.factory;
 
-import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
 import de.hda.particles.scene.Scene;
 
 public class PositionPathBufferingConfigurationFactory {

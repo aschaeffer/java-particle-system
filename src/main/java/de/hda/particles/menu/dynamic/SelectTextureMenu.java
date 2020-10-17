@@ -1,10 +1,11 @@
 package de.hda.particles.menu.dynamic;
 
+import de.hda.particles.hud.impl.HUDCommand;
+import de.hda.particles.hud.impl.HUDCommandTypes;
 import java.util.ListIterator;
 
 import org.lwjgl.input.Keyboard;
 
-import de.hda.particles.hud.*;
 import de.hda.particles.menu.DynamicMenu;
 import de.hda.particles.menu.HUDMenuEntry;
 

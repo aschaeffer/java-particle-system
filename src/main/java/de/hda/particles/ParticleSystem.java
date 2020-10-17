@@ -1,5 +1,7 @@
 package de.hda.particles;
 
+import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
+import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;

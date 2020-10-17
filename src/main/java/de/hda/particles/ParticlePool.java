@@ -2,7 +2,7 @@ package de.hda.particles;
 
 import org.apache.commons.collections.ArrayStack;
 
-import de.hda.particles.domain.DefaultHashMapParticle;
+import de.hda.particles.domain.impl.particle.DefaultHashMapParticle;
 import de.hda.particles.domain.Particle;
 import de.hda.particles.listener.ParticleLifetimeListener;
 

@@ -1,8 +1,8 @@
 package de.hda.particles.scene.command;
 
-import de.hda.particles.domain.CommandConfiguration;
-import de.hda.particles.scene.demo.DemoContext;
-import de.hda.particles.scene.demo.DemoHandle;
+import de.hda.particles.domain.impl.configuration.CommandConfiguration;
+import de.hda.particles.scene.demo.impl.DemoContext;
+import de.hda.particles.scene.demo.impl.DemoHandle;
 
 public interface Command {
 

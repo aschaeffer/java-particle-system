@@ -17,12 +17,12 @@ import org.lwjgl.util.vector.Vector3f;
 
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.camera.Camera;
-import de.hda.particles.domain.SceneConfiguration;
+import de.hda.particles.domain.impl.configuration.SceneConfiguration;
 import de.hda.particles.hud.HUD;
 import de.hda.particles.renderer.Renderer;
-import de.hda.particles.renderer.faces.FaceRenderer;
-import de.hda.particles.renderer.particles.ParticleRenderer;
-import de.hda.particles.scene.ConfigurableScene;
+import de.hda.particles.renderer.FaceRenderer;
+import de.hda.particles.renderer.ParticleRenderer;
+import de.hda.particles.scene.impl.ConfigurableScene;
 import de.hda.particles.scene.Scene;
 import de.hda.particles.overlay.TextOverlay;
 

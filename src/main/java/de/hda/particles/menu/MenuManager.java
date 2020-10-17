@@ -5,7 +5,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hda.particles.hud.HUDCommandTypes;
+import de.hda.particles.hud.impl.HUDCommandTypes;
 import de.hda.particles.scene.Scene;
 
 public class MenuManager {

@@ -6,7 +6,7 @@ import de.hda.particles.AutoDependency;
 import de.hda.particles.ParticleSystem;
 import de.hda.particles.Updateable;
 import de.hda.particles.domain.Identifiable;
-import de.hda.particles.domain.ParticleEmitterConfiguration;
+import de.hda.particles.domain.impl.configuration.ParticleEmitterConfiguration;
 
 public interface ParticleEmitter extends Updateable, AutoDependency, Identifiable {
 

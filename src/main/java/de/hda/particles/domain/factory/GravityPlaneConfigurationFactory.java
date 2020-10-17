@@ -1,10 +1,10 @@
 package de.hda.particles.domain.factory;
 
-import de.hda.particles.domain.ParticleModifierConfiguration;
+import de.hda.particles.domain.impl.configuration.ParticleModifierConfiguration;
 import de.hda.particles.modifier.PositionablePlaneModifier;
 import de.hda.particles.modifier.PositionablePointModifier;
-import de.hda.particles.modifier.gravity.GravityBase;
-import de.hda.particles.modifier.gravity.GravityPlane;
+import de.hda.particles.modifier.impl.gravity.GravityBase;
+import de.hda.particles.modifier.impl.gravity.GravityPlane;
 import de.hda.particles.scene.Scene;
 
 public class GravityPlaneConfigurationFactory {

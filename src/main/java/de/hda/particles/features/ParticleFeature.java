@@ -3,7 +3,7 @@ package de.hda.particles.features;
 import java.util.List;
 
 import de.hda.particles.domain.Particle;
-import de.hda.particles.editor.HUDEditorEntry;
+import de.hda.particles.editor.impl.HUDEditorEntry;
 import de.hda.particles.emitter.ParticleEmitter;
 
 public interface ParticleFeature {

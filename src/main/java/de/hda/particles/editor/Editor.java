@@ -1,5 +1,6 @@
 package de.hda.particles.editor;
 
+import de.hda.particles.editor.impl.HUDEditorEntry;
 import java.util.List;
 
 import de.hda.particles.scene.Scene;

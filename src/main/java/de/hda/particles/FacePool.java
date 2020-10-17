@@ -2,7 +2,7 @@ package de.hda.particles;
 
 import org.apache.commons.collections.ArrayStack;
 
-import de.hda.particles.domain.DefaultFace;
+import de.hda.particles.domain.impl.face.DefaultFace;
 import de.hda.particles.domain.Face;
 import de.hda.particles.listener.FaceLifetimeListener;
 
