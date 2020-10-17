@@ -14,27 +14,19 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<natives.version>0.0.6</natives.version>
 		<lwjgl.version>2.8.5</lwjgl.version>
-		<slick.version>274</slick.version>
+		<slick.version>1.0.2</slick.version>
 		<junit.version>4.10</junit.version>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>mavenNatives</id>
-			<name>Maven Natives Repository</name>
-			<url>http://mavennatives.googlecode.com/svn/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>slick</id>
-			<name>slick</name>
-			<url>http://slick.cokeandcode.com/mavenrepo</url>
+			<id>central</id>
+			<name>Maven Central</name>
+			<url>https://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>xuggle repo</id>
-			<url>http://xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
+			<url>https://www.dcm4che.org/maven2/</url>
 		</repository>
 	</repositories>
 
@@ -51,8 +43,13 @@
 			<version>${lwjgl.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>slick</groupId>
-			<artifactId>slick</artifactId>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl_util</artifactId>
+			<version>${lwjgl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slick2d</groupId>
+			<artifactId>slick2d-core</artifactId>
 			<version>${slick.version}</version>
 		</dependency>
 		<dependency>
@@ -73,11 +70,11 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.7</version>
-            <scope>runtime</scope>
-        </dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.7</version>
+				<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -102,6 +99,13 @@
 			<groupId>xuggle</groupId>
 			<artifactId>xuggle-xuggler</artifactId>
 			<version>5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.jnlp</groupId>
+			<artifactId>jnlp-api</artifactId>
+			<version>5.0</version>
+			<scope>system</scope>
+			<systemPath>${java.home}/lib/javaws.jar</systemPath>
 		</dependency>
  	</dependencies>
 
