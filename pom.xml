@@ -152,27 +152,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!--  plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>set-system-properties</goal>
-						</goals>
-						<configuration>
-							<properties>
-								<property>
-									<name>java.library.path</name>
-									<value>target/natives</value>
-								</property>
-							</properties>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin -->
 		</plugins>
 	</build>
 </project>
