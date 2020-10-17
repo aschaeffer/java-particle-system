@@ -20,6 +20,7 @@
 		<commons.collections.version>[3.2.2,)</commons.collections.version>
 		<commons.math.version>[3.6.1,)</commons.math.version>
 		<jackson.version>[2.11.3,)</jackson.version>
+		<xuggler.version>[5.4,)</xuggler.version>
 	</properties>
 
 	<repositories>
@@ -102,7 +103,7 @@
 		<dependency>
 			<groupId>xuggle</groupId>
 			<artifactId>xuggle-xuggler</artifactId>
-			<version>5.4</version>
+			<version>${xuggler.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.jnlp</groupId>
