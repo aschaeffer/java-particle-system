@@ -17,6 +17,7 @@
 		<slick.version>1.0.2</slick.version>
 		<junit.version>[4.13.1,)</junit.version>
 		<guava.version>[24.1.1,)</guava.version>
+		<commons.collections.version>[3.2.2,)</commons.collections.version>
 	</properties>
 
 	<repositories>
@@ -79,7 +80,7 @@
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
+			<version>${commons.collections.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
