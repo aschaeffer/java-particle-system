@@ -1,6 +1,6 @@
 package de.hda.particles.domain;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import de.hda.particles.scene.command.Command;
 import de.hda.particles.scene.command.NoOpCommand;
